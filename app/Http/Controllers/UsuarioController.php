@@ -94,9 +94,11 @@ class UsuarioController extends Controller
         return view('usuarios.editar',compact('user','roles','userRole'));
     }
 
-    public function cambiarEstado($id)
+
+    public function cambiarEstado($idUsuario)
     {
-         User::where('id',$id)->update(['estado' => 2]);
+         User::where('id',$idUsuario)->update(['estado' => 2]);
+         return redirect('usuarios');
     }
 
     /**

@@ -41,7 +41,10 @@
                                     </td>
 
                                     <td>
-                                      <a class="btn btn-info" href="{{ route('usuarios.cambiarEstado',$usuario->id) }}">Confirmar</a>
+                                        @if ($usuario->estado != 2)
+                                        <a onclick="delecteItem(event)" href="{{ route('usuario.confirmar', ['idUsuario' => $usuario->id]) }}" class="btn btn-danger">Confirmar</a>
+                                        @endif
+                                      {{-- <a class="btn btn-info" href="{{ route('confirmar',$usuario->id) }}">Confirmar</a> --}}
                                       <a class="btn btn-info" href="{{ route('usuarios.edit',$usuario->id) }}">Editar</a>
 
                                       {!! Form::open(['method' => 'DELETE','route' => ['usuarios.destroy', $usuario->id],'style'=>'display:inline']) !!}
@@ -64,3 +67,5 @@
       </div>
     </section>
 @endsection
+
+

@@ -27,6 +27,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('culquiercosa', [App\Http\Controllers\UsuarioController::class, 'cambiarEstado'])->name('confirmar');
+Route::get('usuarios/confirmar/{idUsuario?}', [UsuarioController::class, 'cambiarEstado'])->name('usuario.confirmar')->middleware('auth');
+
+// Route::middleware(['auth:sanctum', 'verified'])->post('portal/preventa/rptResumenEventos', [PreventaController::class, 'rptResumenEventos']);
+
 
 //y creamos un grupo de rutas protegidas para los controladores
 Route::group(['middleware' => ['auth']], function () {
