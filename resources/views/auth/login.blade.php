@@ -2,13 +2,23 @@
 @section('title')
     Admin Login
 @endsection
+{{-- @if(session("mensaje"))
+    <div class="notification">
+        {{session('mensaje')}}
+    </div>
+@endif --}}
 @section('content')
+
     <div class="card card-primary">
         <div class="card-header"><h4>Admin Login</h4></div>
-
         <div class="card-body">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
+                @if (session('error'))
+                    <div  class="alert alert-danger p-0">
+                        {{ session('error') }}
+                </div>
+                @endif
                 @if ($errors->any())
                     <div class="alert alert-danger p-0">
                         <ul>
@@ -59,8 +69,6 @@
                         @endif
                     </div>
                 </div>
-
-
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                         Login

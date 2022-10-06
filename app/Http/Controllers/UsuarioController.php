@@ -6,14 +6,20 @@ use Illuminate\Http\Request;
 
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\SendEmailRequest;
 use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Mail;
 
 class UsuarioController extends Controller
 {
+    use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *
@@ -68,6 +74,26 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index');
     }
 
+    // public function codeaguardar(Request $request){
+    //     dd($request);
+    //     $post = new user();
+    //     $post->nombre = $request->nombre;
+    //     // script para subir la imagen
+    //     if($request->hasFile("photo")){
+
+    //         $imagen = $request->file("photo");
+    //         $nombreimagen = Str::slug($request->nombre).".".$imagen->guessExtension();
+    //         $ruta = public_path("img/post/");
+
+    //         //$imagen->move($ruta,$nombreimagen);
+    //         copy($imagen->getRealPath(),$ruta.$nombreimagen);
+
+    //         $post->imagen = $nombreimagen;
+
+    //     }
+    //     $post->save();
+
+    // }
     /**
      * Display the specified resource.
      *
@@ -95,9 +121,23 @@ class UsuarioController extends Controller
     }
 
 
-    public function cambiarEstado($idUsuario)
+    public function cambiarEstadoDatosConfirm($idUsuario)
     {
          User::where('id',$idUsuario)->update(['estado' => 2]);
+         $dataUser = User::Where('id',$idUsuario)->first();
+         SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
+
+        //  Mail::send('templates.emailValidacionShipments', array('request' => 'Sus datos han validado satisfactoria mente, ya puede ingresar al sistema.'), function ($message) use ($user) {
+        //     $message->from('info@tractocar.com', 'InfoTracto');
+        //     $message->to($dataUser->email)->subject('Credenciales Erroneas en ValidacionShipments');
+        // });
+         return redirect('usuarios');
+    }
+    public function cambiarEstadoDatosRechaz($idUsuario)
+    {
+         User::where('id',$idUsuario)->update(['estado' => 3]);
+         $dataUser = User::Where('id',$idUsuario)->first();
+         SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
          return redirect('usuarios');
     }
 

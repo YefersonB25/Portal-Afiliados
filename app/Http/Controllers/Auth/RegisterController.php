@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -49,6 +52,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -62,14 +66,74 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
+
     protected function create(array $data)
     {
-        return User::create([
-            'name'           => $data['name'],
-            'email'          => $data['email'],
-            'identification' => $data['identification'],
-            'estado'         => 'Pendiente',
-            'password'       => Hash::make($data['password']),
+        $pathPerfil = null;
+        $pathIdenti = null;
+        //? Capturamos la extencion de los archivos
+        if (!empty($data['photo'])) {
+            $extensionPerfil = $data['photo']->getClientOriginalExtension();
+        }
+        if (!empty($data['identificationPhoto'])) {
+            $extensionIdentif = $data['identificationPhoto']->getClientOriginalExtension();
+        }
+
+        //? Capturamos el id del user registrdo
+        $id = User::insertGetId([
+            'name'                  => $data['name'],
+            'email'                 => $data['email'],
+            'identification'        => $data['identification'],
+            'telefono'              => $data['telefono'],
+            'password'              => Hash::make($data['password']),
         ]);
+
+        //? Guardamos los archivos cargados y capturamos la ruta
+        if (!empty($data['photo'])) {
+            $pathPerfil = Storage::putFileAs("$id/perfil", $data['photo'] , 'photo_perfil.'. $extensionPerfil);
+        }
+        if (!empty($data['identificationPhoto'])) {
+            $pathIdenti = Storage::putFileAs("$id/indentificacion", $data['photo'] , 'photo_documento.'. $extensionIdentif);
+        }
+
+        //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
+        if (!empty($data['photo']) && !empty($data['identificationPhoto'])) {
+
+            User::where('id', $id)
+                    ->update([
+                    'photo'                 => $pathPerfil,
+                    'identificationPhoto'   => $pathIdenti,
+        ]);
+        }
+        if (!empty($data['photo'])) {
+
+            User::where('id', $id)
+                       ->update([
+                       'photo'   => $pathPerfil,
+                   ]);
+        }
+
+
+    }
+
+    public function codeaguardar(Request $request){
+        dd($request);
+        // $post = new user();
+        // $post->nombre = $request->nombre;
+        // // script para subir la imagen
+        // if($request->hasFile("photo")){
+
+        //     $imagen = $request->file("photo");
+        //     $nombreimagen = Str::slug($request->nombre).".".$imagen->guessExtension();
+        //     $ruta = public_path("img/post/");
+
+        //     //$imagen->move($ruta,$nombreimagen);
+        //     copy($imagen->getRealPath(),$ruta.$nombreimagen);
+
+        //     $post->imagen = $nombreimagen;
+
+        // }
+        // $post->save();
+
     }
 }
