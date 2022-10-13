@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $nuevas_solicitudes = User::where('estado', 1)->count();
+        $solicitudes_confirmadas = User::where('estado', 2)->count();
+        $solicitudes_rechazadas = User::where('estado', 3)->count();
+        $total_usuarios = User::count();
+
+
+
+
+        return view('home',['nuevas_solicitudes'=>$nuevas_solicitudes, 'solicitudes_confirmadas'=>$solicitudes_confirmadas, 'solicitudes_rechazadas'=>$solicitudes_rechazadas, 'total_usuarios'=>$total_usuarios]);
     }
 }

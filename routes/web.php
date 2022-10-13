@@ -6,6 +6,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ConsultarAfiliadoController;
+use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\UsuarioAsociadoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,19 +30,34 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::middleware(['auth:sanctum', 'verified', 'can:/portal/fourkitesReport'])->get('/portal/automatizacion_cliente/fourkitesReport', ReportFourkites::class)->name('/portal/automatizacion_cliente/fourkitesReport');
 
-// Route::post('culquiercosa', [App\Http\Controllers\UsuarioController::class, 'cambiarEstado'])->name('confirmar');
-Route::get('usuarios/confirmar/{idUsuario?}', [UsuarioController::class, 'cambiarEstado'])->name('usuario.confirmar')->middleware('auth');
+//? Usuarios-Clientes
+Route::get('usuarios/confirmar/{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosConfirm'])->name('usuario.confirmar')->middleware('auth');
+Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario.rechazar')->middleware('auth');
 
-// Route::middleware(['auth:sanctum', 'verified'])->post('portal/preventa/rptResumenEventos', [PreventaController::class, 'rptResumenEventos']);
 
+Route::get('profile', [PerfilController::class, 'index'])->name('profile')->middleware('auth');
+Route::put('profile/{id}', [PerfilController::class, 'update'])->name('profile.update')->middleware('auth');
+Route::post('userAsociado', [UsuarioAsociadoController::class, 'create'])->name('userAsociado.create')->middleware('auth');
+
+Route::get('consultaOTM', [ConsultarAfiliadoController::class, 'index'])->name('consultar')->middleware('auth');
+// Route::get('consultaOTM/afiliado', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('afiliado.consulta')->middleware('auth');
+
+// Route::get('usuarios{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario')->middleware('auth');
+// Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'edit'])->name('usuario')->middleware('auth');
+// Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'update'])->name('usuario')->middleware('auth');
+// Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'destroy'])->name('usuario')->middleware('auth');
 
 Route::get('usuarios/config/{id}', [UsuarioController::class, 'checkout'])->name('check')->middleware('auth');
 
 
 //y creamos un grupo de rutas protegidas para los controladores
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth'], 'can:/blog'], function () {
+Route::resource('blogs',  BlogController::class);
+});
+
+Route::group(['middleware' => ['auth'], 'can:/usuarios'], function () {
     Route::resource('roles', RolController::class);
     Route::resource('usuarios', UsuarioController::class);
-    Route::resource('blogs', BlogController::class);
 });

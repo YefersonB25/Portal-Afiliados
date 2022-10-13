@@ -1,7 +1,7 @@
 $(document).on('click', '.edit-profile', function (event) {
     $('#editProfileUserId').val(loggedInUser.id);
-    $('#pfName').val(loggedInUser.name);
-    $('#pfEmail').val(loggedInUser.email);
+    $('#pfEmail').val(loggedInUser.name);
+    $('#pfTelefono').val(loggedInUser.email);
     $('#EditProfileModal').appendTo('body').modal('show');
 });
 
