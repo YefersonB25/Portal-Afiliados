@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -69,6 +70,8 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+        $roles = Role::get();
+
         $pathPerfil = null;
         $pathIdenti = null;
         //? Capturamos la extencion de los archivos
@@ -87,13 +90,18 @@ class RegisterController extends Controller
             'telefono'              => $data['telefono'],
             'password'              => Hash::make($data['password']),
         ]);
+        //? le asignamos el rol
+        $usuario = User::findOrFail($id);
+        $usuario->roles()->sync($roles[1]->id);
 
         //? Guardamos los archivos cargados y capturamos la ruta
         if (!empty($data['photo'])) {
-            $pathPerfil = Storage::putFileAs("$id/perfil", $data['photo'] , 'photo_perfil.'. $extensionPerfil);
+            $carpetaphoto = "$id/perfil";
+            Storage::putFileAs("public/$carpetaphoto", $data['photo'] , 'photo_perfil.'. $extensionPerfil);
         }
         if (!empty($data['identificationPhoto'])) {
-            $pathIdenti = Storage::putFileAs("$id/indentificacion", $data['photo'] , 'photo_documento.'. $extensionIdentif);
+            $carpetaidentif = "$id/identificacion";
+            Storage::putFileAs("public/$carpetaidentif", $data['photo'] , 'photo_documento.'. $extensionIdentif);
         }
 
         //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
@@ -101,16 +109,17 @@ class RegisterController extends Controller
 
             User::where('id', $id)
                     ->update([
-                    'photo'                 => $pathPerfil,
-                    'identificationPhoto'   => $pathIdenti,
-        ]);
+                    'photo'                 => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                    'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                    ]);
+
         }
         if (!empty($data['photo'])) {
 
             User::where('id', $id)
                        ->update([
                        'photo'   => $pathPerfil,
-                   ]);
+                       ]);
         }
 
 

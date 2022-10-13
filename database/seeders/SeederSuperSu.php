@@ -28,20 +28,34 @@ class SeederSuperSu extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
 
-        $permisos = [
-            'ver-rol',
-            'crear-rol',
-            'editar-rol',
-            'borrar-rol',
-        ];
+        // $permisos = [
+        //     'ver-rol',
+        //     'crear-rol',
+        //     'editar-rol',
+        //     'borrar-rol',
+        //     'ver-usuarios',
+        //     'crear-usuarios',
+        //     'editar-usuarios',
+        //     'borrar-usuarios',
+        // ];
 
-        foreach ($permisos as $permiso) {
-            Permission::create(['name' => $permiso]);
-        }
+
+        // foreach ($permisos as $permiso) {
+        //     Permission::create(['name' => $permiso]);
+        // }
 
         $roleAdmin              = Role::create(['name' => 'Administrador']);
         $rolCliente             = Role::create(['name' => 'Cliente']);
-        $roleAdmin->syncPermissions($permisos);
+        // $roleAdmin->syncPermissions($permisos);
+
+        Permission::create(['name' => '/usuarios', 'grupo' => 'Clientes-Usuarios', 'description' => 'Seguimiento Solicitudes'])
+        ->syncRoles([
+          $roleAdmin,
+        ]);
+        Permission::create(['name' => '/blog', 'grupo' => 'Clientes-Usuarios', 'description' => 'Seguimiento Solicitudes'])
+        ->syncRoles([
+          $rolCliente,
+        ]);
 
 
         $userSu = User::where('email', '=', 'ybolanos@tractocar.com')->first();
@@ -50,9 +64,18 @@ class SeederSuperSu extends Seeder
         } else {
             User::create([
                 'name' => 'Yeferson Bolaños Cardales',
+                'identification' => '2342432',
                 'email' => 'ybolanos@tractocar.com',
+                'estado' => '2',
                 'password' => bcrypt('123456')
             ])->assignRole('Administrador');
+            User::create([
+                'name' => 'Testing',
+                'identification' => '2342432',
+                'email' => 'test@test.com',
+                'estado' => '2',
+                'password' => bcrypt('123456')
+            ])->assignRole('Cliente');
         }
     }
 }

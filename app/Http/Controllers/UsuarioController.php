@@ -9,16 +9,25 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\SendEmailRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
 
 class UsuarioController extends Controller
 {
     use SoftDeletes;
+
+    function __construct()
+    {
+         $this->middleware('permission:/usuarios')->only('index');
+        //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
+        //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
+        //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
+    }
 
     /**
      * Display a listing of the resource.
@@ -30,9 +39,9 @@ class UsuarioController extends Controller
         //Sin paginación
         /* $usuarios = User::all();
         return view('usuarios.index',compact('usuarios')); */
-
         //Con paginación
-        $usuarios = User::paginate(5);
+
+        $usuarios = User::orderBy('estado')->get();
         return view('usuarios.index',compact('usuarios'));
 
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
@@ -140,6 +149,7 @@ class UsuarioController extends Controller
          SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
          return redirect('usuarios');
     }
+
 
     /**
      * Update the specified resource in storage.

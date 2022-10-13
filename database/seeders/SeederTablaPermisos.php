@@ -23,6 +23,12 @@ class SeederTablaPermisos extends Seeder
             'editar-rol',
             'borrar-rol',
 
+            //Operaciones sobre tabla usuarios
+            'ver-usuarios',
+            'crear-usuarios',
+            'editar-usuarios',
+            'borrar-usuarios',
+
             //Operacions sobre tabla blogs
             'ver-blog',
             'crear-blog',
