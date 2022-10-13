@@ -30,9 +30,9 @@
                                                         <button class="btn btn-outline-secondary" type="submit" id="disparador-consultar">Button</button>
                                                         <input type="text" class="form-control" name="numeroIdentificacion" id="numeroIdentificacion" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                                                     </div>
-                                                    <div class="spinner-border text-warning" role="status">
+                                                    {{-- <div class="spinner-border text-warning" role="status">
                                                         <span class="visually-hidden">Loading...</span>
-                                                      </div>
+                                                      </div> --}}
                                                 </div>
                                                 <table id="tablaAfiliados" class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
                                                     <thead>

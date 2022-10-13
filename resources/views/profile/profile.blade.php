@@ -743,7 +743,7 @@
                                 <div class="tab-pane" id="accountSettings">
                                     <div class="card">
                                         <div class="card-body">
-                                            <form method="POST" class="form-horizontal" data-select2-id="11" action="{{ route('register') }}">
+                                            <form method="POST" enctype="multipart/form-data" class="form-horizontal" data-select2-id="11" action="{{ route('userAsociado.create') }}">
                                                 <div class="mb-4 main-content-label">Account</div>
                                                 @csrf
                                                 <div class="form-group ">
@@ -849,7 +849,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group ">
+                                                {{-- <div class="form-group ">
                                                     <div class="row row-sm">
                                                         <div class="col-md-3">
                                                             <label for="userName" class="form-label">Password Confirmation</label>
@@ -863,7 +863,7 @@
                                                         </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="form-group">
                                                     <div class="row row-sm">
                                                         <div class="col-md-3">

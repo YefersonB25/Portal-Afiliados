@@ -59,9 +59,9 @@ class UsuarioAsociadoController extends Controller
      * @return \App\Models\UserAsociado
      */
 
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        dd($data);
+        dd($request);
         //aqui trabajamos con name de las tablas de users
         // $roles = Role::pluck('name','name')->all();
         // return view('usuarios.crear',compact('roles'));
