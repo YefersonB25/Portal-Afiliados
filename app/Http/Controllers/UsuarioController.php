@@ -26,6 +26,8 @@ class UsuarioController extends Controller
         return view('usuarios.index',compact('usuarios')); */
 
         //Con paginación
+
+        
         $usuarios = User::paginate(5);
         return view('usuarios.index',compact('usuarios'));
 
@@ -95,11 +97,11 @@ class UsuarioController extends Controller
     }
 
 
-    public function cambiarEstado($idUsuario)
-    {
-         User::where('id',$idUsuario)->update(['estado' => 2]);
-         return redirect('usuarios');
-    }
+    // public function cambiarEstado($idUsuario)
+    // {
+    //      User::where('id',$idUsuario)->update(['estado' => 2]);
+    //      return redirect('usuarios');
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -143,6 +145,19 @@ class UsuarioController extends Controller
     {
         User::find($id)->delete();
         return redirect()->route('usuarios.index');
+    }
+
+    public function cambiarEstado($idUsuario)
+    {
+        User::where('id',$idUsuario)->update(['estado' => 2]);
+        return response()->json('The post successfully updated');
+
+        // $post = Post::find($id);
+        // $post->update($request->all());
+ 
+    }
+    public function checkout($cedula) {
+        dd($cedula);
     }
 
 }

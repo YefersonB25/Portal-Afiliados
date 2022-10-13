@@ -17,3 +17,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('status', [UsuarioController::class, 'cambiarEstado'])->name('status');
+
+// Route::post('posts', 'usuarioController@index');
+// Route::group(['prefix' => 'post'], function () {
+//     Route::post('add', 'PostController@add');
+//     Route::get('edit/{id}', 'PostController@edit');
+//     Route::post('update/{id}', 'PostController@update');
+//     Route::delete('delete/{id}', 'PostController@delete');
+// });
+
+// Route::group(['middleware' => ['auth']], function () {
+//     Route::resource('roles', RolController::class);
+//     Route::resource('usuarios', UsuarioController::class);
+//     Route::resource('blogs', BlogController::class);
+// });
