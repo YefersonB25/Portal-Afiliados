@@ -114,11 +114,12 @@ class RegisterController extends Controller
                     ]);
 
         }
+
         if (!empty($data['photo'])) {
 
             User::where('id', $id)
                        ->update([
-                       'photo'   => $pathPerfil,
+                       'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
 

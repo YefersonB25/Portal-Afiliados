@@ -743,7 +743,7 @@
                                 <div class="tab-pane" id="accountSettings">
                                     <div class="card">
                                         <div class="card-body">
-                                            <form method="POST" enctype="multipart/form-data" class="form-horizontal" data-select2-id="11" action="{{ route('userAsociado.create') }}">
+                                            <form method="POST" id="rgisterform" action="{{route('userAsociado.create')}}" enctype="multipart/form-data" class="form-horizontal" data-select2-id="11">
                                                 <div class="mb-4 main-content-label">Account</div>
                                                 @csrf
                                                 <div class="form-group ">
@@ -1092,6 +1092,36 @@
     </tbody>
 @endsection
 @section('scripts')
+{{-- Registramos el usiario Asociado --}}
+{{-- <script>
+  $('#rgisterform').on('submit', function(e) {
+    e.preventDefault(); // Para evitar que haga el submit por default
+    var datosFormulario = $(this).serialize();
+
+    $.ajax({
+        type: "POST",
+        url: "{{ route('userAsociado.create') }}",
+        data: datosFormulario,
+        success: function(response) {
+            console.log(response.data);
+            if(data == "success"){
+                $.notify({
+                    icon: 'pe-7s-close-circle',
+                    message: "Sucessfully saved the Image Sorting"
+                },{
+                    type: 'success',
+                    timer: 500
+                });
+            }
+            $('#formulario')[0].reset();
+            $("#cargando").html(data);
+        },
+        error:function(error){
+            console.error(error);
+        }
+    });
+  });
+</script> --}}
 {{-- <script>
     function validarInput() {
     document.getElementById("btnPrEditSave").disabled = !document.getElementById("pfEmail", "pfTelefono").value.length;
@@ -1130,3 +1160,4 @@
     });
 
 </script> --}}
+@endsection

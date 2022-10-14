@@ -39,10 +39,10 @@ Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'cambiar
 
 Route::get('profile', [PerfilController::class, 'index'])->name('profile')->middleware('auth');
 Route::put('profile/{id}', [PerfilController::class, 'update'])->name('profile.update')->middleware('auth');
-Route::post('userAsociado', [UsuarioAsociadoController::class, 'create'])->name('userAsociado.create')->middleware('auth');
+Route::post('profile/userAsociado', [UsuarioAsociadoController::class, 'create'])->name('userAsociado.create')->middleware('auth');
 
 Route::get('consultaOTM', [ConsultarAfiliadoController::class, 'index'])->name('consultar')->middleware('auth');
-// Route::get('consultaOTM/afiliado', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('register.userAsociado')->middleware('auth');
+Route::get('consultaOTM/afiliado/{identif}', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('consultar.afiliado')->middleware('auth');
 
 // Route::get('usuarios{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario')->middleware('auth');
 // Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'edit'])->name('usuario')->middleware('auth');

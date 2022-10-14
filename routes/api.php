@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ConsultarAfiliadoController;
+use App\Http\Controllers\UsuarioAsociadoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('consultaOTM/afiliado', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('afiliado.consulta');
+Route::post('profile/userAsociado', [UsuarioAsociadoController::class, 'create'])->name('userAsociado.create');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

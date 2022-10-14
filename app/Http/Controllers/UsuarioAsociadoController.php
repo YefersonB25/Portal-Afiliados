@@ -10,7 +10,6 @@ use App\Http\Helpers\SendEmailRequest;
 use App\Models\User;
 use App\Models\UserAsociado;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\RegistersUsersAsociados;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +20,6 @@ use Illuminate\Support\Facades\Storage;
 class UsuarioAsociadoController extends Controller
 {
     use SoftDeletes;
-
 
     function __construct()
     {
@@ -59,48 +57,40 @@ class UsuarioAsociadoController extends Controller
      * @return \App\Models\UserAsociado
      */
 
-    protected function create(Request $request)
+    public function create(Request $request)
     {
-        dd($request);
         //aqui trabajamos con name de las tablas de users
         // $roles = Role::pluck('name','name')->all();
         // return view('usuarios.crear',compact('roles'));
-
         $pathPerfil = null;
-        $pathIdenti = null;
         //? Capturamos la extencion de los archivos
-        if (!empty($data['photo'])) {
-            $extensionPerfil = $data['photo']->getClientOriginalExtension();
-        }
-        if (!empty($data['identificationPhoto'])) {
-            $extensionIdentif = $data['identificationPhoto']->getClientOriginalExtension();
+        if (!empty($request->photo)) {
+            $extensionPerfil = $request->photo->getClientOriginalExtension();
         }
 
         //? Capturamos el id del user registrdo
         $id = UserAsociado::insertGetId([
             'id_user_asociado'      => Auth::user()->id,
-            'name'                  => $data['name'],
-            'email'                 => $data['email'],
-            'identification'        => $data['identification'],
-            'telefono'              => $data['telefono'],
-            'password'              => Hash::make($data['password']),
+            'name'                  => $request->name,
+            'email'                 => $request->email,
+            'identification'        => $request->identification,
+            'telefono'              => $request->telefono,
+            'password'              => Hash::make($request['password']),
         ]);
         //? le asignamos el rol
-        $usuario = User::findOrFail($id);
+        // $usuario = User::findOrFail($id);
         // $usuario->roles()->sync($roles[1]->id);
 
         //? Guardamos los archivos cargados y capturamos la ruta
-        if (!empty($data['photo'])) {
+        if (!empty($request->photo)) {
             $carpetaphoto = "$id/perfil";
-            Storage::putFileAs("public/$carpetaphoto", $data['photo'] , 'photo_perfil.'. $extensionPerfil);
-        }
+            Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
 
-        //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
-        if (!empty($data['photo'])) {
+            //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
             UserAsociado::where('id', $id)
-                       ->update([
-                       'photo'   => $pathPerfil,
-                       ]);
+                        ->update([
+                        'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                        ]);
         }
 
     }

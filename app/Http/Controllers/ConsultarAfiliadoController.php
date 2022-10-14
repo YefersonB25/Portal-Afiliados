@@ -154,8 +154,8 @@ class ConsultarAfiliadoController extends Controller
 
     public function consultaOTM(Request $request)
     {
-
-        $identificacion = $request->inputValue;
+        // dd($request->identif);
+        $identificacion = $request->identif;
         $params = [
             'limit'   => '1',
             'showPks' => 'true',
@@ -170,15 +170,16 @@ class ConsultarAfiliadoController extends Controller
 
         if ($responseDataArray != []) {
             $responseData = $responseDataArray[0];
+            // dd($responseData);
             // dd($responseData->firstName, $responseData->lastName ,$responseData->contactXid, $responseData->emailAddress, $responseData->phone1);
-            return response()->json(array('responseData' => $responseData), 200);
+            // return response()->json(array('responseData' => $responseData), 200);
 
-            // return view('usuarios.consultar',['responseData' => $responseData]);
+            return view('usuarios.consultar',['responseData' => $responseData]);
         }
         else
         {
 
-            return response()->json(array('responseData' => null), 500);
+            // return response()->json(array('responseData' => null), 500);
 
         }
     }

@@ -78,7 +78,7 @@
                                                                 </td> --}}
                                                                 <td>
 
-                                                                    <a href="{{ route('consultar') }}" class="btn btn-info openBtn" id="consultaOTM">
+                                                                    <a href="consultaOTM/afiliado/{{$usuario->identification}}" class="btn btn-info openBtn" id="consultaOTM">
                                                                         <i class="fa fa-weibo" aria-hidden="true"></i>
                                                                     </a>
                                                                     @if ($usuario->estado != 2)
