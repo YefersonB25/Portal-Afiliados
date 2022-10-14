@@ -57,11 +57,6 @@
                                                         <td>{{$arrayResult['contactXid']}}</td>
                                                         <td>{{$arrayResult['emailAddress']}}</td>
                                                         <td>{{$arrayResult['phone']}}</td>
-                                                        {{-- <td>{{$responseData->firstName}}
-                                                            {{$responseData->lastName}}</td>
-                                                        <td>{{ $responseData->contactXid }}</td>
-                                                        <td>{{$responseData->emailAddress}}</td>
-                                                        <td>{{$responseData->phone1}}</td> --}}
                                                     </tr>
                                                 </tbody>
                                             </table>
