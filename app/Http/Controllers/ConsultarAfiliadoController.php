@@ -23,7 +23,7 @@ class ConsultarAfiliadoController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:/usuarios')->only('index');
+        $this->middleware('permission:/usuarios')->only('index');
         //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
         //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
@@ -154,7 +154,6 @@ class ConsultarAfiliadoController extends Controller
 
     public function consultaOTM(Request $request)
     {
-        // dd($request->identif);
         $identificacion = $request->identif;
         $params = [
             'limit'   => '1',
@@ -162,25 +161,27 @@ class ConsultarAfiliadoController extends Controller
             'fields'  => 'contactXid,firstName,lastName,emailAddress,phone1'
         ];
 
-        $response = Http::withBasicAuth('TCL.ELKINMREST','zG9g8JLzR65EQfUT'
-        )->withHeaders(['Content-Type' => 'application/vnd.oracle.resource+json;type=singular'])->get("https://otmgtm-test-ekhk.otm.us2.oraclecloud.com/logisticsRestApi/resources-int/v2/locations/TCL.$identificacion/contacts",$params);
+        $response = Http::withBasicAuth(
+            'TCL.ELKINMREST',
+            'zG9g8JLzR65EQfUT'
+        )
+            ->withHeaders(['Content-Type' => 'application/vnd.oracle.resource+json;type=singular'])
+            ->get("https://otmgtm-test-ekhk.otm.us2.oraclecloud.com/logisticsRestApi/resources-int/v2/locations/TCL.$identificacion/contacts", $params);
 
-        // dd($response);
-        $responseDataArray = $response->object()->items;
-
-        if ($responseDataArray != []) {
-            $responseData = $responseDataArray[0];
-            // dd($responseData);
-            // dd($responseData->firstName, $responseData->lastName ,$responseData->contactXid, $responseData->emailAddress, $responseData->phone1);
-            // return response()->json(array('responseData' => $responseData), 200);
-
-            return view('usuarios.consultar',['responseData' => $responseData]);
-        }
-        else
-        {
-
-            // return response()->json(array('responseData' => null), 500);
-
+        $responseDataArray = $response->object();
+        if ($responseDataArray->count > 0) {
+            $result = $responseDataArray->items[0];
+            $arrayResult =
+                [
+                    'firstName'     => $result->firstName,
+                    'lastName'      => $result->lastName,
+                    'phone'         => $result->phone1,
+                    'emailAddress'  => $result->emailAddress,
+                    'contactXid'  => $result->contactXid,
+                ];
+            return view('usuarios.consultar', ['arrayResult' => $arrayResult]);
+        } else {
+            dd('user no found');
         }
     }
 
@@ -227,5 +228,4 @@ class ConsultarAfiliadoController extends Controller
         // User::find($id)->delete();
         // return redirect()->route('usuarios.index');
     }
-
 }
