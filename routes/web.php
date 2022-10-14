@@ -49,6 +49,9 @@ Route::get('consultaOTM/afiliado/{identif}', [ConsultarAfiliadoController::class
 // Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'update'])->name('usuario')->middleware('auth');
 // Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'destroy'])->name('usuario')->middleware('auth');
 
+Route::get('usuarios/config/{id}', [UsuarioController::class, 'checkout'])->name('check')->middleware('auth');
+
+
 //y creamos un grupo de rutas protegidas para los controladores
 Route::group(['middleware' => ['auth'], 'can:/blog'], function () {
 Route::resource('blogs',  BlogController::class);

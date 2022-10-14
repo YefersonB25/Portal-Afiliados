@@ -195,4 +195,17 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index');
     }
 
+    public function cambiarEstado($idUsuario)
+    {
+        User::where('id',$idUsuario)->update(['estado' => 2]);
+        return response()->json('The post successfully updated');
+
+        // $post = Post::find($id);
+        // $post->update($request->all());
+ 
+    }
+    public function checkout($cedula) {
+        dd($cedula);
+    }
+
 }
