@@ -15,8 +15,8 @@ use Spatie\Permission\Traits\HasRoles;
 
 class UserAsociado extends Authenticatable
 {
-    use SoftDeletes;
-    // use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    
+    use HasApiTokens, HasFactory, Notifiable, HasRoles,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

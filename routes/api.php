@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultarAfiliadoController;
 use App\Http\Controllers\UsuarioAsociadoController;
 use Illuminate\Http\Request;
@@ -24,6 +25,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('status', [UsuarioController::class, 'cambiarEstado'])->name('status');
+
+
+Route::post('/auth/register', [AuthController::class, 'register']);
+
+Route::post('/auth/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/me', function (Request $request) {
+        return auth()->user();
+    });
+
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
+});
+
 
 // Route::post('posts', 'usuarioController@index');
 // Route::group(['prefix' => 'post'], function () {
