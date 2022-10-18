@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Helpers\OracleRestErp;
+use App\Http\Helpers\OracleRestOtm;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -39,6 +40,7 @@ class TestingCommand extends Command
      */
     public function handle()
     {
+        OracleRestOtm::getLocationsCustomers(1143413441);
         /*
             *Status: PaidStatus
             ?Paid = Pagada,
