@@ -53,6 +53,7 @@ Route::get('consultaOTM/afiliado/{identif}', [ConsultarAfiliadoController::class
 Route::get('usuarios', [UsuarioController::class, 'index'], 'can:/usuario.index')->name('usuario.index')->middleware('auth');
 Route::get('usuarios/eliminar/{idUsuario?}', [UsuarioController::class, 'destroy'], 'can:/usuario.index')->name('usuario.eliminar')->middleware('auth');
 
+//? Consultar code
 
 Route::get('usuarios/config/{id}', [UsuarioController::class, 'checkout'])->name('check')->middleware('auth');
 

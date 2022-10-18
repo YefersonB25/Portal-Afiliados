@@ -40,26 +40,6 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <table id="tablaAfiliados"
-                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="border-bottom-0">Nombre</th>
-                                                        <th class="border-bottom-0">Identificacion</th>
-                                                        <th class="border-bottom-0">E-mail</th>
-                                                        <th class="border-bottom-0">Telefono</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>{{$arrayResult['firstName'] .' '.$arrayResult['firstName']}}
-                                                        </td>
-                                                        <td>{{$arrayResult['contactXid']}}</td>
-                                                        <td>{{$arrayResult['emailAddress']}}</td>
-                                                        <td>{{$arrayResult['phone']}}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
                                         </div>
                                     </div>
                                 </div>
