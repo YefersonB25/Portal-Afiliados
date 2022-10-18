@@ -23,7 +23,7 @@ class UsuarioAsociadoController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:/usuarios')->only('index');
+         $this->middleware('permission:/blog')->only('index');
         //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
         //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
@@ -83,7 +83,7 @@ class UsuarioAsociadoController extends Controller
 
         //? Guardamos los archivos cargados y capturamos la ruta
         if (!empty($request->photo)) {
-            $carpetaphoto = "$id/perfil";
+            $carpetaphoto = "usuariosAsociados/$id/perfil";
             Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
 
             //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
@@ -224,10 +224,10 @@ class UsuarioAsociadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function elininarUserAsociado($id)
     {
         User::find($id)->delete();
-        return redirect()->route('usuarios.index');
+        return redirect()->route('profile');
     }
 
 }

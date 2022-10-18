@@ -16,6 +16,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class UsuarioController extends Controller
 {
@@ -23,7 +24,7 @@ class UsuarioController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:/usuarios')->only('index');
+         $this->middleware('permission:/usuario.index')->only('index');
         //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
         //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
@@ -41,7 +42,7 @@ class UsuarioController extends Controller
         return view('usuarios.index',compact('usuarios')); */
         //Con paginación
 
-        $usuarios = User::orderBy('estado')->get();
+        $usuarios = User::where('estado', '<' , 4)->orderBy('estado')->get();
         return view('usuarios.index',compact('usuarios'));
 
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
@@ -57,6 +58,48 @@ class UsuarioController extends Controller
         //aqui trabajamos con name de las tablas de users
         $roles = Role::pluck('name','name')->all();
         return view('usuarios.crear',compact('roles'));
+    }
+
+    public function createUserAsociado(Request $request)
+    {
+        $userlogeado = Auth::user()->id;
+        $countUserAsociado = User::where([['id_parentesco',$userlogeado],['deleted_at', NULL]],)->count();
+        if ($countUserAsociado <= 3) {
+            //? Capturamos la extencion de los archivos
+            if (!empty($request->photo)) {
+                $extensionPerfil = $request->photo->getClientOriginalExtension();
+            }
+
+            //? Capturamos el id del user registrdo
+            $id = User::insertGetId([
+                'id_parentesco'      => Auth::user()->id,
+                'name'                  => $request->name,
+                'email'                 => $request->email,
+                'identification'        => $request->identification,
+                'telefono'              => $request->telefono,
+                'estado'                => 4,
+                'password'              => Hash::make($request['password']),
+            ]);
+            //? le asignamos el rol
+            // $usuario = User::findOrFail($id);
+            // $usuario->roles()->sync($roles[1]->id);
+
+            //? Guardamos los archivos cargados y capturamos la ruta
+            if (!empty($request->photo)) {
+                $carpetaphoto = "usuariosAsociados/$id/perfil";
+                Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
+
+                //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
+                User::where('id', $id)
+                            ->update([
+                            'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                            ]);
+            }
+            session()->flash('message');
+            return back();
+        }
+        session()->flash('messageError');
+        return back();
     }
 
     /**
@@ -202,7 +245,7 @@ class UsuarioController extends Controller
 
         // $post = Post::find($id);
         // $post->update($request->all());
- 
+
     }
     public function checkout($cedula) {
         dd($cedula);

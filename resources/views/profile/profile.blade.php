@@ -17,7 +17,7 @@
                                         <div class="col-lg-12 col-md-12 col-xl-6">
                                             <div class="d-flex flex-wrap align-items-center">
                                                 <div class="profile-img-main rounded">
-                                                    <img src="../assets/images/faces/6.jpg" alt="img" class="m-0 p-1 rounded hrem-6">
+                                                    <img src="{{asset("$userInfo->photo")}}" alt="avatar" class="avatar avatar-xl rounded">
                                                 </div>
                                                 <div class="ms-4">
                                                     <h4>{{$userInfo->name}}</h4>
@@ -47,7 +47,7 @@
                                                     <div class="media-body">
                                                         <span class="text-muted">Usuarios asociados</span>
                                                         <div class="fw-semibold fs-25">
-                                                            937k
+                                                            {{$countUserAsociado}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -71,12 +71,10 @@
                                         <div class="tab-menu-heading">
                                             <div class="tabs-menu1">
                                                 <ul class="nav">
-                                                    <li><a href="#profileMain" class="active show" data-bs-toggle="tab">Profile</a></li>
-                                                    <li><a href="#editProfile" data-bs-toggle="tab">Edit Profile</a></li>
-                                                    <li><a href="#timeline" data-bs-toggle="tab">Timeline</a></li>
-                                                    <li><a href="#gallery" data-bs-toggle="tab">Gallery</a></li>
-                                                    <li><a href="#friends" data-bs-toggle="tab">Friends</a></li>
-                                                    <li><a href="#accountSettings" data-bs-toggle="tab">Account Settings</a></li>
+                                                    <li><a href="#profileMain" class="active show" data-bs-toggle="tab">Perfil</a></li>
+                                                    <li><a href="#editProfile" data-bs-toggle="tab">Editar Perfil</a></li>
+                                                    <li><a href="#friends" data-bs-toggle="tab">UsuariosAsociados</a></li>
+                                                    <li><a href="#accountSettings" data-bs-toggle="tab">Registrar Usuario</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -482,17 +480,18 @@
                                 </div> --}}
                                 <div class="tab-pane" id="friends">
                                     <div class="row row-sm">
+                                        @foreach ($userAsociados as $asociado)
                                         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                                             <div class="card custom-card border">
                                                 <div class="card-body user-lock text-center">
                                                     <div class="dropdown text-end">
                                                         <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fe fe-more-vertical text-muted"></i> </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="#"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
+                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="{{url("profile/userAsociado/{$asociado->id}")}}"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
                                                     </div>
                                                     <a href="#">
-                                                        <img alt="avatar" class="avatar avatar-xl rounded" src="../assets/images/faces/1.jpg">
-                                                        <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">Lisbon Taylor</h4>
-                                                        <span class="text-muted">Web designer</span>
+                                                        <img alt="avatar" class="avatar avatar-xl rounded" src="{{asset("$asociado->photo")}}">
+                                                        <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">{{$asociado->name}}</h4>
+                                                        <span class="text-muted">{{$asociado->identification}}</span>
                                                     </a>
                                                     <div class="footer-container-main border-0 my-2">
                                                         <div class="footer p-0 icons-bg border-0">
@@ -514,232 +513,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                            <div class="card custom-card border">
-                                                <div class="card-body  user-lock text-center">
-                                                    <div class="dropdown text-end">
-                                                        <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fe fe-more-vertical text-muted"></i> </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="#"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
-                                                    </div>
-                                                    <a href="#">
-                                                        <img alt="avatar" class="avatar avatar-xl rounded" src="../assets/images/faces/11.jpg">
-                                                        <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">jordan Ramsay</h4>
-                                                        <span class="text-muted">Web designer</span>
-                                                    </a>
-                                                    <div class="footer-container-main border-0 my-2">
-                                                        <div class="footer p-0 icons-bg border-0">
-                                                            <div class="social">
-                                                                <ul class="text-center">
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Linkedin"><i class="fa fa-linkedin"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                            <div class="card custom-card border">
-                                                <div class="card-body  user-lock text-center">
-                                                    <div class="dropdown text-end">
-                                                        <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fe fe-more-vertical text-muted"></i> </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="#"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
-                                                    </div>
-                                                    <a href="#">
-                                                        <img alt="avatar" class="avatar avatar-xl rounded" src="../assets/images/faces/12.jpg">
-                                                        <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">Corey Richard</h4>
-                                                        <span class="text-muted">Web designer</span>
-                                                    </a>
-                                                    <div class="footer-container-main border-0 my-2">
-                                                        <div class="footer p-0 icons-bg border-0">
-                                                            <div class="social">
-                                                                <ul class="text-center">
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Linkedin"><i class="fa fa-linkedin"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                            <div class="card custom-card border">
-                                                <div class="card-body  user-lock text-center">
-                                                    <div class="dropdown text-end">
-                                                        <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fe fe-more-vertical text-muted"></i> </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="#"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
-                                                    </div>
-                                                    <a href="#">
-                                                        <img alt="avatar" class="avatar avatar-xl rounded" src="../assets/images/faces/5.jpg">
-                                                        <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">Lana Del Rey</h4>
-                                                        <span class="text-muted">Web designer</span>
-                                                    </a>
-                                                    <div class="footer-container-main border-0 my-2">
-                                                        <div class="footer p-0 icons-bg border-0">
-                                                            <div class="social">
-                                                                <ul class="text-center">
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Linkedin"><i class="fa fa-linkedin"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                            <div class="card custom-card border">
-                                                <div class="card-body user-lock text-center">
-                                                    <div class="dropdown text-end">
-                                                        <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fe fe-more-vertical text-muted"></i> </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="#"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
-                                                    </div>
-                                                    <a href="#">
-                                                        <img alt="avatar" class="avatar avatar-xl rounded" src="../assets/images/faces/7.jpg">
-                                                        <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">Mariana Gold</h4>
-                                                        <span class="text-muted">Web designer</span>
-                                                    </a>
-                                                    <div class="footer-container-main border-0 my-2">
-                                                        <div class="footer p-0 icons-bg border-0">
-                                                            <div class="social">
-                                                                <ul class="text-center">
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Linkedin"><i class="fa fa-linkedin"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                            <div class="card custom-card border">
-                                                <div class="card-body  user-lock text-center">
-                                                    <div class="dropdown text-end">
-                                                        <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fe fe-more-vertical text-muted"></i> </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="#"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
-                                                    </div>
-                                                    <a href="#">
-                                                        <img alt="avatar" class="avatar avatar-xl rounded" src="../assets/images/faces/13.jpg">
-                                                        <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">Travis Bickle</h4>
-                                                        <span class="text-muted">Web designer</span>
-                                                    </a>
-                                                    <div class="footer-container-main border-0 my-2">
-                                                        <div class="footer p-0 icons-bg border-0">
-                                                            <div class="social">
-                                                                <ul class="text-center">
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Linkedin"><i class="fa fa-linkedin"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                            <div class="card custom-card border">
-                                                <div class="card-body  user-lock text-center">
-                                                    <div class="dropdown text-end">
-                                                        <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fe fe-more-vertical text-muted"></i> </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="#"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
-                                                    </div>
-                                                    <a href="#">
-                                                        <img alt="avatar" class="avatar avatar-xl rounded" src="../assets/images/faces/8.jpg">
-                                                        <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">Emilie Benett</h4>
-                                                        <span class="text-muted">Web designer</span>
-                                                    </a>
-                                                    <div class="footer-container-main border-0 my-2">
-                                                        <div class="footer p-0 icons-bg border-0">
-                                                            <div class="social">
-                                                                <ul class="text-center">
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Linkedin"><i class="fa fa-linkedin"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                                            <div class="card custom-card border">
-                                                <div class="card-body  user-lock text-center">
-                                                    <div class="dropdown text-end">
-                                                        <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fe fe-more-vertical text-muted"></i> </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="#"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
-                                                    </div>
-                                                    <a href="#">
-                                                        <img alt="avatar" class="avatar avatar-xl rounded" src="../assets/images/faces/4.jpg">
-                                                        <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">James Thomas</h4>
-                                                        <span class="text-muted">Web designer</span>
-                                                    </a>
-                                                    <div class="footer-container-main border-0 my-2">
-                                                        <div class="footer p-0 icons-bg border-0">
-                                                            <div class="social">
-                                                                <ul class="text-center">
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a class="social-icon" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Linkedin"><i class="fa fa-linkedin"></i></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
+                                 {{-- Registro de Asociado --}}
                                 <div class="tab-pane" id="accountSettings">
                                     <div class="card">
                                         <div class="card-body">
@@ -1080,6 +857,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Fin de registro --}}
                             </div>
                         </div><!-- COL-END -->
                     </div>
@@ -1160,4 +938,24 @@
     });
 
 </script> --}}
+@if (Session::has('message'))
+   <script>
+       Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Usuario registrado correctamente',
+        showConfirmButton: false,
+        timer: 2500
+        })
+   </script>
+@endif
+@if (Session::has('messageError'))
+   <script>
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Solo puede registrar como máximo 4 Usuario, para más información comuníquese con el Administrador!',
+        })
+   </script>
+@endif
 @endsection

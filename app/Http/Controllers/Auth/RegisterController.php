@@ -96,11 +96,11 @@ class RegisterController extends Controller
 
         //? Guardamos los archivos cargados y capturamos la ruta
         if (!empty($data['photo'])) {
-            $carpetaphoto = "$id/perfil";
+            $carpetaphoto = "proveedores/$id/perfil";
             Storage::putFileAs("public/$carpetaphoto", $data['photo'] , 'photo_perfil.'. $extensionPerfil);
         }
         if (!empty($data['identificationPhoto'])) {
-            $carpetaidentif = "$id/identificacion";
+            $carpetaidentif = "proveedores/$id/identificacion";
             Storage::putFileAs("public/$carpetaidentif", $data['photo'] , 'photo_documento.'. $extensionIdentif);
         }
 
@@ -127,7 +127,7 @@ class RegisterController extends Controller
     }
 
     public function codeaguardar(Request $request){
-        dd($request);
+        // dd($request);
         // $post = new user();
         // $post->nombre = $request->nombre;
         // // script para subir la imagen

@@ -13,10 +13,10 @@ class RolController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-rol|crear-rol|editar-rol|borrar-rol', ['only' => ['index']]);
-        $this->middleware('permission:crear-rol', ['only' => ['create', 'store']]);
-        $this->middleware('permission:editar-rol', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:borrar-rol', ['only' => ['destroy']]);
+        // $this->middleware('permission:ver-rol|crear-rol|editar-rol|borrar-rol', ['only' => ['index']]);
+        // $this->middleware('permission:crear-rol', ['only' => ['create', 'store']]);
+        // $this->middleware('permission:editar-rol', ['only' => ['edit', 'update']]);
+        // $this->middleware('permission:borrar-rol', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class RolController extends Controller
         //Con paginación
         $roles = Role::paginate(5);
         return view('roles.index', compact('roles'));
-        //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $roles->links() !!} 
+        //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $roles->links() !!}
     }
 
     /**
