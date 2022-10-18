@@ -17,13 +17,17 @@ class AuthController extends Controller
         $attr = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed',
+            'identificacion' => 'required|numeric',
+            'telefono' => 'required|numeric',
         ]);
 
         $user = User::create([
             'name' => $attr['name'],
             'password' => bcrypt($attr['password']),
-            'email' => $attr['email']
+            'email' => $attr['email'],
+            'identificacion' => $attr['identificacion'],
+            'telefono' => $attr['telefono'],
         ]);
 
         return $this->success([
@@ -34,7 +38,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $attr = $request->validate([
-            'email' => 'required|string|email|',
+            'email' => 'required|string|email',
             'password' => 'required|string|min:6'
         ]);
 
@@ -52,7 +56,7 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
 
         return [
-            'message' => 'Tokens Revoked'
+            'message' => 'Logged Out'
         ];
     }
 }

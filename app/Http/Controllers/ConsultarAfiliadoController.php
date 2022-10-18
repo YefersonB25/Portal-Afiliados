@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\OracleRestOtm;
 use App\Http\Helpers\SendEmailRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -161,12 +162,7 @@ class ConsultarAfiliadoController extends Controller
             'fields'  => 'contactXid,firstName,lastName,emailAddress,phone1'
         ];
 
-        $response = Http::withBasicAuth(
-            'TCL.ELKINMREST',
-            'zG9g8JLzR65EQfUT'
-        )
-            ->withHeaders(['Content-Type' => 'application/vnd.oracle.resource+json;type=singular'])
-            ->get("https://otmgtm-test-ekhk.otm.us2.oraclecloud.com/logisticsRestApi/resources-int/v2/locations/TCL.$identificacion/contacts", $params);
+        $response = OracleRestOtm::getLocationsCustomers($identificacion, $params);
 
         $responseDataArray = $response->object();
         if ($responseDataArray->count > 0) {
