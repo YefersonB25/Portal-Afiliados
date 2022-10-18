@@ -36,18 +36,23 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('usuarios/confirmar/{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosConfirm'])->name('usuario.confirmar')->middleware('auth');
 Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario.rechazar')->middleware('auth');
 
-
-Route::get('profile', [PerfilController::class, 'index'])->name('profile')->middleware('auth');
+//? Perfil
+Route::get('profile', [PerfilController::class, 'index'])->name('profile');
 Route::put('profile/{id}', [PerfilController::class, 'update'])->name('profile.update')->middleware('auth');
-Route::post('profile/userAsociado', [UsuarioAsociadoController::class, 'create'])->name('userAsociado.create')->middleware('auth');
 
+//? Usuarios Asociados
+Route::post('profile/userAsociado', [UsuarioController::class, 'createUserAsociado'])->name('userAsociado.create')->middleware('auth');
+Route::get('profile/userAsociado/{id}', [UsuarioAsociadoController::class, 'elininarUserAsociado'])->name('userAsociado.delete')->middleware('auth');
+
+//? Consulta OTM
 Route::get('consultaOTM', [ConsultarAfiliadoController::class, 'index'])->name('consultar')->middleware('auth');
 Route::get('consultaOTM/afiliado/{identif}', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('consultar.afiliado')->middleware('auth');
 
 // Route::get('usuarios{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario')->middleware('auth');
 // Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'edit'])->name('usuario')->middleware('auth');
-// Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'update'])->name('usuario')->middleware('auth');
-// Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'destroy'])->name('usuario')->middleware('auth');
+Route::get('usuarios', [UsuarioController::class, 'index'], 'can:/usuario.index')->name('usuario.index')->middleware('auth');
+Route::get('usuarios/eliminar/{idUsuario?}', [UsuarioController::class, 'destroy'], 'can:/usuario.index')->name('usuario.eliminar')->middleware('auth');
+
 
 Route::get('usuarios/config/{id}', [UsuarioController::class, 'checkout'])->name('check')->middleware('auth');
 
@@ -57,7 +62,7 @@ Route::group(['middleware' => ['auth'], 'can:/blog'], function () {
 Route::resource('blogs',  BlogController::class);
 });
 
-Route::group(['middleware' => ['auth'], 'can:/usuarios'], function () {
+Route::group(['middleware' => ['auth'], 'can:/profile'], function () {
     Route::resource('roles', RolController::class);
-    Route::resource('usuarios', UsuarioController::class);
+    // Route::resource('usuarios', UsuarioController::class);
 });

@@ -23,7 +23,7 @@ class ConsultarAfiliadoController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:/usuarios')->only('index');
+        $this->middleware('permission:/blog')->only('index');
         //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
         //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
@@ -154,7 +154,7 @@ class ConsultarAfiliadoController extends Controller
 
     public function consultaOTM(Request $request)
     {
-        $identificacion = $request->identif;
+        $identificacion = Crypt::decryptString($request->identif);
         $params = [
             'limit'   => '1',
             'showPks' => 'true',
@@ -181,7 +181,10 @@ class ConsultarAfiliadoController extends Controller
                 ];
             return view('usuarios.consultar', ['arrayResult' => $arrayResult]);
         } else {
-            dd('user no found');
+            // return back()->with('success', 'Login Successfully!');
+            // Session::flash('message', "Special message goes here");
+            session()->flash('message', "Special message goes here");
+            return back();
         }
     }
 

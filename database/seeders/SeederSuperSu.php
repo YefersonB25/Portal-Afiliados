@@ -46,15 +46,21 @@ class SeederSuperSu extends Seeder
 
         $roleAdmin              = Role::create(['name' => 'Administrador']);
         $rolCliente             = Role::create(['name' => 'Cliente']);
+
         // $roleAdmin->syncPermissions($permisos);
 
-        Permission::create(['name' => '/usuarios', 'grupo' => 'Clientes-Usuarios', 'description' => 'Seguimiento Solicitudes'])
+        Permission::create(['name' => '/usuario.index', 'grupo' => 'proveedores-Usuarios', 'description' => 'Seguimiento Solicitudes'])
         ->syncRoles([
           $roleAdmin,
         ]);
-        Permission::create(['name' => '/blog', 'grupo' => 'Clientes-Usuarios', 'description' => 'Seguimiento Solicitudes'])
+        Permission::create(['name' => '/blog', 'grupo' => 'Informacion-Facturas', 'description' => 'Seguimiento Facturas'])
         ->syncRoles([
           $rolCliente,
+        ]);
+        Permission::create(['name' => '/profile', 'grupo' => 'Informacion-Personal', 'description' => 'informacion'])
+        ->syncRoles([
+          $rolCliente,
+          $roleAdmin,
         ]);
 
 

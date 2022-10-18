@@ -77,8 +77,10 @@
                                                                 @endif
                                                                 </td> --}}
                                                                 <td>
-
-                                                                    <a href="consultaOTM/afiliado/{{$usuario->identification}}" class="btn btn-info openBtn" id="consultaOTM">
+                                                                    @php
+                                                                        $identificacion = Crypt::encryptString($usuario->identification)
+                                                                    @endphp
+                                                                    <a href="consultaOTM/afiliado/{{$identificacion}}" class="btn btn-info openBtn" id="consultaOTM">
                                                                         <i class="fa fa-weibo" aria-hidden="true"></i>
                                                                     </a>
                                                                     @if ($usuario->estado != 2)
@@ -96,11 +98,11 @@
                                                                         </a>
                                                                     @endif
                                                                     {{-- <a class="btn btn-info" href="{{ route('confirmar',$usuario->id) }}">Confirmar</a> --}}
-                                                                    <a class="btn btn-info op" href="{{ route('usuarios.edit',$usuario->id) }}">
+                                                                    {{-- <a class="btn btn-info op" href="{{ route('usuarios.edit',$usuario->id) }}">
                                                                         <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                                    </a>
+                                                                    </a> --}}
 
-                                                                    {!! Form::open(['method' => 'DELETE','route' => ['usuarios.destroy', $usuario->id],'style'=>'display:inline']) !!}
+                                                                    {!! Form::open(['method' => 'DELETE','route' => ['usuario.eliminar', $usuario->id],'style'=>'display:inline']) !!}
                                                                         {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
 
                                                                     {!! Form::close() !!}
@@ -177,6 +179,16 @@
 
 @endsection
 @section('scripts')
+@if (Session::has('message'))
+   <script>
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No se encontro registro en OTM con el numero de identificacion del proveedor seleccionado!',
+        })
+   </script>
+@endif
+
         {{-- <script>
             // $('#myModal').modal(options)
             $('#exampleModal').on('shown.bs.modal', function () {
@@ -202,8 +214,6 @@
         //         $('#myModal').modal({show:true});
         //     });
         // });
-
-
     </script>
 
 @endsection

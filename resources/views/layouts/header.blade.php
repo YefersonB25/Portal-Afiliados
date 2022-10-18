@@ -434,7 +434,9 @@
                             <div class="dropdown d-md-flex profile-1">
                                 <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex animate">
                                     <span>
-                                        <img src="../assets/images/faces/6.jpg" alt="profile-user"
+                                        {{-- <img src="{{asset("$userInfo->photo")}}" alt="avatar" class="avatar avatar-xl rounded"> --}}
+
+                                        <img src="{{asset(\Illuminate\Support\Facades\Auth::user()->photo)}}" alt="profile-user"
                                             class="avatar  profile-user brround cover-image">
                                     </span>
                                     <div class="text-center p-1 d-flex d-lg-none-max">

@@ -21,7 +21,7 @@ class PerfilController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:/usuarios')->only('index');
+        $this->middleware('permission:/profile')->only('index');
         //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
         //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
@@ -37,8 +37,10 @@ class PerfilController extends Controller
 
         $userlogeado = Auth::user()->id;
         $userInfo = User::where('id', $userlogeado)->first();
-        return view('profile.profile',compact('userInfo'));
+        $userAsociados = User::where('id_parentesco', $userlogeado)->get();
+        $countUserAsociado = User::where([['id_parentesco',$userlogeado],['deleted_at', NULL]],)->count();
 
+        return view('profile.profile', ['userInfo' => $userInfo, 'userAsociados' => $userAsociados, 'countUserAsociado' => $countUserAsociado]);
     }
 
     /**
@@ -49,8 +51,8 @@ class PerfilController extends Controller
     public function create()
     {
         //aqui trabajamos con name de las tablas de users
-        $roles = Role::pluck('name','name')->all();
-        return view('profile.profile',compact('roles'));
+        $roles = Role::pluck('name', 'name')->all();
+        return view('profile.profile', compact('roles'));
     }
 
     /**
@@ -117,31 +119,31 @@ class PerfilController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
 
-        return view('perfil.profile',compact('user','roles','userRole'));
+        return view('perfil.profile', compact('user', 'roles', 'userRole'));
     }
 
 
     public function cambiarEstadoDatosConfirm($idUsuario)
     {
-         User::where('id',$idUsuario)->update(['estado' => 2]);
-         $dataUser = User::Where('id',$idUsuario)->first();
-         SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
+        User::where('id', $idUsuario)->update(['estado' => 2]);
+        $dataUser = User::Where('id', $idUsuario)->first();
+        SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
 
         //  Mail::send('templates.emailValidacionShipments', array('request' => 'Sus datos han validado satisfactoria mente, ya puede ingresar al sistema.'), function ($message) use ($user) {
         //     $message->from('info@tractocar.com', 'InfoTracto');
         //     $message->to($dataUser->email)->subject('Credenciales Erroneas en ValidacionShipments');
         // });
-         return redirect('usuarios');
+        return redirect('usuarios');
     }
     public function cambiarEstadoDatosRechaz($idUsuario)
     {
-         User::where('id',$idUsuario)->update(['estado' => 3]);
-         $dataUser = User::Where('id',$idUsuario)->first();
-         SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
-         return redirect('usuarios');
+        User::where('id', $idUsuario)->update(['estado' => 3]);
+        $dataUser = User::Where('id', $idUsuario)->first();
+        SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
+        return redirect('usuarios');
     }
 
     /**
@@ -161,8 +163,8 @@ class PerfilController extends Controller
         // ]);
         $infuUser = User::findOrFail($id);
 
-        $infuUser->email           =$request->get('pfEmail');
-        $infuUser->telefono        =$request->get('pfTelefono');
+        $infuUser->email           = $request->get('pfEmail');
+        $infuUser->telefono        = $request->get('pfTelefono');
 
         $infuUser->save();
 
@@ -179,7 +181,7 @@ class PerfilController extends Controller
 
         // $user->assignRole($request->input('roles'));
 
-        return redirect()->back()->with('mensaje','ok');
+        return redirect()->back()->with('mensaje', 'ok');
     }
 
     /**
@@ -193,5 +195,4 @@ class PerfilController extends Controller
         User::find($id)->delete();
         return redirect()->route('usuarios.index');
     }
-
 }

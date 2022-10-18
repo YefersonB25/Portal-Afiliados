@@ -92,3 +92,10 @@
     <!-- CONTAINER CLOSED -->
     </body>
 @endsection
+@section('scripts')
+ @if(session("message"))
+    <script>
+        Swal.fire('Datos Registrados correctamente, espere a que se verifique su información, esto podría tardar unos minutos, al correo registrado le estará llegando la confirmación.')
+    </script>
+@endif
+@endsection
