@@ -82,8 +82,6 @@ class TestingCommand extends Command
     }
     protected function getSupplier($TaxpayerId)
     {
-
-        //? Parametros para Supplier
         $params = [
             'q'        => "(TaxpayerId = '{$TaxpayerId}')",
             'fields'   => 'SupplierId,TaxpayerId,SupplierPartyId,Supplier,SupplierNumber',
