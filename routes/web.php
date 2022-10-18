@@ -59,10 +59,14 @@ Route::get('usuarios/config/{id}', [UsuarioController::class, 'checkout'])->name
 
 //y creamos un grupo de rutas protegidas para los controladores
 Route::group(['middleware' => ['auth'], 'can:/blog'], function () {
-Route::resource('blogs',  BlogController::class);
+    Route::resource('blogs',  BlogController::class);
 });
 
 Route::group(['middleware' => ['auth'], 'can:/profile'], function () {
     Route::resource('roles', RolController::class);
     // Route::resource('usuarios', UsuarioController::class);
+});
+
+$router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function () use ($router) {
+    $router->get('logs', 'LogViewerController@index');
 });
