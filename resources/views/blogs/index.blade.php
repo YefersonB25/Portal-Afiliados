@@ -302,18 +302,21 @@
             </div>
         </div>
     </body>
-
-
-    @section('scripts')
-    <script>
-        $("#pagadas").click(function() {
+    {{-- $.ajax({
+        url: "facturas/pagadas",
+        // data:  ,
+        method: 'get',
+        success: (response) => {
+            if (response.statusCode == 200) {
+                console.log('response');
+            }
             if( $("#oculto-pagadas").css("display") == 'none' )
             $("#oculto-pagadas").show("slow");
             else
             $("#oculto-pagadas").hide("slow");
 
-             // validamos que no se muestren todat al tiempo
-             if($("#oculto-canceladas").css("display") != 'none')
+            // validamos que no se muestren todat al tiempo
+            if($("#oculto-canceladas").css("display") != 'none')
             $("#oculto-canceladas").hide("slow");
 
             if($("#oculto-pagadas-con-novedad").css("display") != 'none')
@@ -321,6 +324,43 @@
 
             if($("#oculto-por-pagar").css("display") != 'none')
             $("#oculto-por-pagar").hide("slow");
+
+            // let responseData = response.responseData
+            // plantillaTablaAfiliados =
+            // `
+            // <tr>
+            //     <td>${ responseData.firstName } ${ responseData.lastName}</td>
+            //     <td>${ responseData.contactXid }</td>
+            //     <td>${ responseData.emailAddress }</td>
+            //     <td>${ responseData.phone1 }</td>
+            // </tr>
+            // `
+
+            // /** insertamos el html dentro de la etiqueta */
+            // $('#tablaAfiliados').append(plantillaTablaAfiliados)
+        },
+        error: function (data) {
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No se encontro ningun registro en OTM con el numero de identificacion ingresado!',
+        })
+    }) --}}
+
+    @section('scripts')
+    <script>
+        $("#pagadas").click(function() {
+            // console.log('response');
+            $.ajax({
+                type: 'get',
+                url: {{ route('falturas.pagadas') }}
+                // data: token => input('token'),
+                success: (response) => {
+                    if (response.success == true) {
+                    console.log('response1');
+                }
+            }
+            })
         });
 
         $("#por-pagar").click(function() {

@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('consultaOTM/afiliado', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('afiliado.consulta');
+Route::get('facturas/pagadas', [ConsultarAfiliadoController::class, 'facturas'])->name('falturas.pagadas');
+
+
 // Route::post('profile/userAsociado', [UsuarioAsociadoController::class, 'create'])->name('userAsociado.create');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
