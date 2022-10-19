@@ -40,19 +40,24 @@ class TestingCommand extends Command
      */
     public function handle()
     {
-        OracleRestOtm::getLocationsCustomers(1143413441);
+        // OracleRestOtm::getLocationsCustomers(1143413441);
         /*
             *Status: PaidStatus
-            ?Paid = Pagada,
-            ?Unpaid = Sin pagar (por pagar)
-            ?Partially paid = parsialmente pagada (con novedades);
+            ?Paid           = Pagada,
+            ?Unpaid         = Sin pagar (por pagar),
+            ?Partially paid = parsialmente pagada (con novedades)
         */
         /*
-            *CanceledFlag: 
-            ?true = Cancelado,
-            ?false = Vigente
+            *CanceledFlag: Cancelacion 
+            ?true           = Cancelado,
+            ?false          = Vigente
         */
-
+        /*
+            *InvoiceType: Tipo de pago
+            ?Prepayment     = Anticipo,
+            ?Standard       = Normal Positiva,
+            ?Credit memo    = Nota Credito
+        */
         // $startDate      = Carbon::now()->addHours(5)->subMinutes(10)->format('Y-m-d\TH:i:s.000+00:00');
         // $endDate        = Carbon::now()->addHours(5)->addMinutes(5)->format('Y-m-d\TH:i:s.000+00:00');
         $TaxpayerId     = 1143413441;
@@ -86,6 +91,7 @@ class TestingCommand extends Command
     {
         $params = [
             'q'        => "(TaxpayerId = '{$TaxpayerId}')",
+            'limit'    => '200',
             'fields'   => 'SupplierId,TaxpayerId,SupplierPartyId,Supplier,SupplierNumber',
             'onlyData' => 'true'
         ];
@@ -97,7 +103,8 @@ class TestingCommand extends Command
     {
         $params = [
             'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}')",
-            'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid',
+            'limit'    => '200',
+            'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
             'onlyData' => 'true'
         ];
         $response = OracleRestErp::getInvoiceSuppliers($params);
