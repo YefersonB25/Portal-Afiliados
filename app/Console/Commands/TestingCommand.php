@@ -15,13 +15,25 @@ class TestingCommand extends Command
      * @var string
      */
     protected $signature = 'erp:invoices
-                            {--dates=supplier : Dates supplier; "invoices" Supplier invoices, "total-amount" total amount invoices unpaid}';
+                            {--dates=supplier : Dates supplier; 
+                                "invoices" Supplier invoices, 
+                                "total-amount" total amount invoices unpaid}';
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Status: PaidStatus.
+                                -Paid           = Pagada,
+                                -Unpaid         = Sin pagar (por pagar),
+                                -Partially paid = parsialmente pagada (con novedades)
+                            CanceledFlag: Cancelacion.
+                                -true           = Cancelado,
+                                -false          = Vigente
+                            InvoiceType: Tipo de pago.
+                                Prepayment     = Anticipo,
+                                Standard       = Normal Positiva,
+                                Credit memo    = Nota Credito';
 
     /**
      * Create a new command instance.
@@ -40,28 +52,11 @@ class TestingCommand extends Command
      */
     public function handle()
     {
-        // OracleRestOtm::getLocationsCustomers(1143413441);
-        /*
-            *Status: PaidStatus
-            ?Paid           = Pagada,
-            ?Unpaid         = Sin pagar (por pagar),
-            ?Partially paid = parsialmente pagada (con novedades)
-        */
-        /*
-            *CanceledFlag: Cancelacion 
-            ?true           = Cancelado,
-            ?false          = Vigente
-        */
-        /*
-            *InvoiceType: Tipo de pago
-            ?Prepayment     = Anticipo,
-            ?Standard       = Normal Positiva,
-            ?Credit memo    = Nota Credito
-        */
+
         // $startDate      = Carbon::now()->addHours(5)->subMinutes(10)->format('Y-m-d\TH:i:s.000+00:00');
         // $endDate        = Carbon::now()->addHours(5)->addMinutes(5)->format('Y-m-d\TH:i:s.000+00:00');
         $TaxpayerId     = 1143413441;
-        $SupplierNumber = 10343; //11837,11882
+        $SupplierNumber = 10343; //*11837,11882
         $CanceledFlag   = 'false';
         $PaidStatus     = 'Partially paid';
 
