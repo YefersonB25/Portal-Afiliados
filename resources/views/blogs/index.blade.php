@@ -15,6 +15,7 @@
                                         <div class="card-body">
                                             <!-- CONTAINER -->
                                             <div class="main-container container-fluid">
+                                                {{$SupplierNumber}}
                                                 <div>
                                                     <button class="btn btn-primary mb-3" target="" id="pagadas">
                                                         Facturas pagadas
@@ -47,7 +48,7 @@
                                                                                         <th class="border-bottom-0">Telefono</th>
                                                                                     </tr>
                                                                                 </thead>
-                                                                                <tbody>
+                                                                                <tbody id="tablaCustomers">
                                                                                     {{-- <tr>
                                                                                         <td>{{$arrayResult['firstName'] .' '.$arrayResult['firstName']}}
                                                                                         </td>
@@ -349,17 +350,40 @@
 
     @section('scripts')
     <script>
-        $("#pagadas").click(function() {
-            // console.log('response');
+        $('#pagadas').on('click', function(e){
+            e.preventDefault();
+            let plantillaTablaEstudiantes = ''
+
+             //console.log({{$SupplierNumber}});
             $.ajax({
-                type: 'get',
-                url: {{ route('falturas.pagadas') }}
-                // data: token => input('token'),
+                type: 'POST',
+                url: "{{ route('falturas.pagadas') }}",
+                data: {
+                    SupplierNumber: {{$SupplierNumber}},
+                    PaidStatus: 'Paid'
+                },
                 success: (response) => {
+                    console.log(response.data);
+
+
+
                     if (response.success == true) {
-                    console.log('response1');
+                        if( $("#oculto-pagadas").css("display") == 'none' )
+                        $("#oculto-pagadas").show("slow");
+                        else
+                        $("#oculto-pagadas").hide("slow");
+
+                        // validamos que no se muestren todat al tiempo
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+                    }
                 }
-            }
             })
         });
 

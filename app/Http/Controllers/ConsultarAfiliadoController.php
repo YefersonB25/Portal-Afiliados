@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\OracleRestErp;
 use App\Http\Helpers\OracleRestOtm;
 use App\Http\Helpers\SendEmailRequest;
 use App\Models\User;
@@ -17,6 +18,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
+use PhpParser\Node\Stmt\TryCatch;
 
 class ConsultarAfiliadoController extends Controller
 {
@@ -52,8 +54,60 @@ class ConsultarAfiliadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function suppliers(Request $request)
     {
+
+        if (!$request->only('PaidStatus')) {
+            return response()->json(['message' => 'Parametro no reconocido'], 401);
+        }
+
+        try {
+            $cc = 1143413441;
+            $users = Auth::user()->identification;
+            $params = [
+                'q'        => "(TaxpayerId = '{$users}')",
+                'limit'    => '200',
+                'fields'   => 'SupplierNumber',
+                'onlyData' => 'true'
+            ];
+            $response = OracleRestErp::procurementGetSuppliers($params);
+
+            $res = $response->json();
+
+            //? Validanos que nos traiga el proveedor
+            if ($res['count'] == 0) {
+                return response()->json(['message' => 'No se encontro el proveedor'], 404);
+            }
+            //? Capturamos el numero de Supplier
+            $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+
+            //? Capturamos el PaidStatus y FlagStatus que nos mandan para consultar las facturas
+            $PaidStatus = $request->PaidStatus;
+            $FlagStatus = !isset($request->FlagStatus) ? 'false' : $request->FlagStatus;
+
+            $params = [
+                'q'        => "(SupplierNumber = $SupplierNumber) and (CanceledFlag = '{$FlagStatus}') and (PaidStatus = '{$PaidStatus}')",
+                'limit'    => '200',
+                'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+                'onlyData' => 'true'
+            ];
+            $invoice = OracleRestErp::getInvoiceSuppliers($params);
+
+            //? Validamos que nos traiga las facturas
+            $nInvoice = $invoice['count'];
+
+            if ($nInvoice == 0) {
+                return response()->json(['message' => 'No se encontraron facturan en ' .$PaidStatus. 'en estado ' .$FlagStatus]);
+            }
+            $invoce =  $invoice->json();
+            return response()->json(['response' => $invoce['items']]);
+
+
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Algo fallo con la comunicacion']);
+        }
+
+
         //aqui trabajamos con name de las tablas de users
         // $roles = Role::pluck('name','name')->all();
         // return view('usuarios.crear',compact('roles'));
@@ -65,12 +119,29 @@ class ConsultarAfiliadoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function facturas(Request $request)
+    public function customers(Request $request)
     {
-        return response()->json(array('success' => true));
+        //$SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+
+        $params = [
+            'q'        => "(SupplierNumber = $request->SupplierNumber) and (PaidStatus = '{$request->PaidStatus}')",
+            'limit'    => '200',
+            'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+            'onlyData' => 'true'
+        ];
+        $invoice = OracleRestErp::getInvoiceSuppliers($params);
+
+
+        //? Validamos que nos traiga las facturas
+        $nInvoice = $invoice['count'];
+
+        if ($nInvoice == 0) {
+            return response()->json(['data' => 'No se encontraron facturan en ' .$request->PaidStatus. 'en estado ' .$request->PaidStatus]);
+        }
+        $invoce =  $invoice->json();
+        return response()->json(['data' => $invoce]);
+        return response()->json(['success' => true, 'data' => $invoce['items']]);
         // return response()->json(array('semestres' => $semestres), 200);
-
-
     }
 
     // public function codeaguardar(Request $request){

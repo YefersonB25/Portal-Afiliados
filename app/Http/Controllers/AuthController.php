@@ -37,26 +37,33 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $attr = $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string|min:6'
-        ]);
 
-        if (!Auth::attempt($attr)) {
-            return $this->error('Credentials not match', 401);
+        if (!Auth::attempt($request->only('email','password'))) {
+            return response()->json(['error' => 'Invalid login details'], 401);
         }
 
-        return $this->success([
-            'token' => auth()->user()->createToken('API Token')->plainTextToken
-        ]);
+        if(Auth::attempt($request->only('email','password'))){
+            $response = User::select('estado')
+                        ->where('email', $request->email)
+                        ->first();
+
+            if ($response->estado == 2) {
+                return response()->json([
+                    'acces_token' => auth()->user()->createToken('API Token')->plainTextToken,
+                    'token_type' => 'Bearer',
+                ]);
+
+            }else{
+                return response()->json(['error' => 'Los datos del usuario aún no han sido validados'], 401);
+            }
+        }
     }
 
     public function logout()
     {
         auth()->user()->tokens()->delete();
 
-        return [
-            'message' => 'Logged Out'
-        ];
+        return response()->json(['message' => 'successfully logged out']);
+
     }
 }

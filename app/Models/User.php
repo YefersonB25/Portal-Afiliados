@@ -54,6 +54,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function getIdeintifier(){
+        return $this->getKey();
+    }
+
+    public function getCustomCleaims(){
+        return [];
+    }
+
+
     public function estadoname()
     {
         return $this->belongsTo(estado::class, 'estado', 'id');
