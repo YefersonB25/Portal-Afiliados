@@ -70,6 +70,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+
         $roles = Role::get();
 
         $pathPerfil = null;
@@ -90,6 +91,7 @@ class RegisterController extends Controller
             'telefono'              => $data['telefono'],
             'password'              => Hash::make($data['password']),
         ]);
+
         //? le asignamos el rol
         $usuario = User::findOrFail($id);
         $usuario->roles()->sync($roles[1]->id);
@@ -106,15 +108,12 @@ class RegisterController extends Controller
 
         //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
         if (!empty($data['photo']) && !empty($data['identificationPhoto'])) {
-
             User::where('id', $id)
                     ->update([
                     'photo'                 => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                     'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
                     ]);
-
         }
-
         if (!empty($data['photo'])) {
 
             User::where('id', $id)
@@ -122,7 +121,6 @@ class RegisterController extends Controller
                        'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
-
 
     }
 

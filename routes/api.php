@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('consultaOTM/afiliado', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('afiliado.consulta');
-Route::get('facturas/pagadas', [ConsultarAfiliadoController::class, 'facturas'])->name('falturas.pagadas');
+Route::post('facturas/pagadas', [ConsultarAfiliadoController::class, 'customers'])->name('falturas.pagadas');
+
+
 
 
 // Route::post('profile/userAsociado', [UsuarioAsociadoController::class, 'create'])->name('userAsociado.create');
@@ -38,6 +40,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/me', function (Request $request) {
         return auth()->user();
     });
+
+    Route::middleware('auth:sanctum')->post('suppliers', [ConsultarAfiliadoController::class, 'suppliers']);
+    // Route::middleware('auth:sanctum')->get('customers', [ConsultarAfiliadoController::class, 'customers']);
+
+
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 });

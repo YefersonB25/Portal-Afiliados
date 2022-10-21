@@ -23,11 +23,11 @@
                     </span>
                     <form method="POST" class="login100-form validate-form" action="{{ route('login') }}">
                         @csrf
-                            @if (session('error'))
+                           {{-- @if (session('error'))
                                 <div  class="alert alert-danger p-0">
                                     {{ session('error') }}
                                 </div>
-                            @endif
+                            @endif --}}
                         <div class="wrap-input100 validate-input">
                             <input aria-describedby="emailHelpBlock" id="email" type="email"
                                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} input100" name="email"
@@ -93,9 +93,9 @@
     </body>
 @endsection
 @section('scripts')
- @if(session("message"))
+ @if(session("error"))
     <script>
-        Swal.fire('Datos Registrados correctamente, espere a que se verifique su información, esto podría tardar unos minutos, al correo registrado le estará llegando la confirmación.')
+        Swal.fire('Espere a que se verifique su información, esto podría tardar unos minutos, al correo registrado le estará llegando la confirmación.')
     </script>
 @endif
 @endsection

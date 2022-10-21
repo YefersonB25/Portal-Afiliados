@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\OracleRestErp;
 use Illuminate\Http\Request;
 
 use App\Models\Blog;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -22,9 +24,25 @@ class BlogController extends Controller
      */
     public function index()
     {
-         //Con paginación
-         $blogs = Blog::paginate(5);
-         return view('blogs.index',compact('blogs'));
+
+         $users = Auth::user()->identification;
+            $params = [
+                'q'        => "(TaxpayerId = '{$users}')",
+                'limit'    => '200',
+                'fields'   => 'SupplierNumber',
+                'onlyData' => 'true'
+            ];
+            $response = OracleRestErp::procurementGetSuppliers($params);
+
+            $res = $response->json();
+
+            //? Validanos que nos traiga el proveedor
+            if ($res['count'] == 0) {
+                return response()->json(['message' => 'No se encontro el proveedor'], 404);
+            }
+            $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+
+         return view('blogs.index', ['SupplierNumber' => $SupplierNumber]);
          //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $blogs->links() !!}
     }
 
