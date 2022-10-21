@@ -120,20 +120,30 @@ class ConsultarAfiliadoController extends Controller
     public function customers(Request $request)
     {
         //$SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
-        $params = [
-            'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (PaidStatus = '{$request->PaidStatus}')",
-            'limit'    => '200',
-            'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
-            'onlyData' => 'true'
-        ];
-        $invoice = OracleRestErp::getInvoiceSuppliers($params);
+        if ($request->PaidStatus == '') {
+            $params = [
+                'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')",
+                'limit'    => '200',
+                'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+                'onlyData' => 'true'
+            ];
+            $invoice = OracleRestErp::getInvoiceSuppliers($params);
+        }else {
+            $params = [
+                'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')",
+                'limit'    => '200',
+                'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+                'onlyData' => 'true'
+            ];
+            $invoice = OracleRestErp::getInvoiceSuppliers($params);
+        }
         //return response()->json(['success' => true, 'data', 'data' => $invoice]);
 
         //? Validamos que nos traiga las facturas
         $nInvoice = $invoice['count'];
 
         if ($nInvoice == 0) {
-            return response()->json(['data' => 'No se encontraron facturan en ' . $request->PaidStatus]);
+            return response()->json(['success' => false ,'data' => 'No se encontraron facturan en ' . $request->PaidStatus]);
         }
 
         $invoce =  $invoice->json();

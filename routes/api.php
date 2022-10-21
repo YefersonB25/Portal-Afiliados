@@ -23,6 +23,7 @@ Route::post('facturas/pagadas', [ConsultarAfiliadoController::class, 'customers'
 
 
 
+
 // Route::post('profile/userAsociado', [UsuarioAsociadoController::class, 'create'])->name('userAsociado.create');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -193,7 +193,7 @@
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: "{{ route('falturas.por_pagar') }}",
+            url: "{{ route('falturas.pagadas') }}",
             data: {
                 SupplierNumber: {{$SupplierNumber}},
                 PaidStatus: 'Unpaid',
