@@ -42,21 +42,18 @@
                                                                             <table id="file-datatable" class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                        <th class="border-bottom-0">Nombre</th>
-                                                                                        <th class="border-bottom-0">Identificacion</th>
-                                                                                        <th class="border-bottom-0">E-mail</th>
-                                                                                        <th class="border-bottom-0">Telefono</th>
+                                                                                        <th class="border-bottom-0">AmountPaid</th>
+                                                                                        <th class="border-bottom-0">Description</th>
+                                                                                        <th class="border-bottom-0">InvoiceAmount</th>
+                                                                                        <th class="border-bottom-0">InvoiceDate</th>
+                                                                                        <th class="border-bottom-0">InvoiceType</th>
+                                                                                        <th class="border-bottom-0">Supplier</th>
+                                                                                        <th class="border-bottom-0">SupplierNumber</th>
+
                                                                                     </tr>
                                                                                 </thead>
-                                                                                <tbody id="tablaCustomers">
-                                                                                    {{-- <tr>
-                                                                                        <td>{{$arrayResult['firstName'] .' '.$arrayResult['firstName']}}
-                                                                                        </td>
-                                                                                        <td>{{$arrayResult['contactXid']}}</td>
-                                                                                        <td>{{$arrayResult['emailAddress']}}</td>
-                                                                                        <td>{{$arrayResult['phone']}}</td>
-                                                                                    </tr> --}}
-                                                                                </tbody>
+                                                                                {{-- <tbody id="tablaCustomers">
+                                                                                </tbody> --}}
                                                                             </table>
                                                                         </div>
                                                                     </div>
@@ -352,9 +349,8 @@
     <script>
         $('#pagadas').on('click', function(e){
             e.preventDefault();
-            let plantillaTablaEstudiantes = ''
-
-             //console.log({{$SupplierNumber}});
+            let plantillaTablaCustomers = ''
+            //console.log({{$SupplierNumber}});
             $.ajax({
                 type: 'POST',
                 url: "{{ route('falturas.pagadas') }}",
@@ -363,9 +359,44 @@
                     PaidStatus: 'Paid'
                 },
                 success: (response) => {
-                    console.log(response.data);
+                    let invoices = response.data
+                    let invoice = invoices[0]
+                    // const obj = Object.assign([], invoices);
 
+                    // console.log(obj);
 
+                    $('#file-datatable').dataTable( {
+                        data : invoice,
+                        columns: [
+                            {"data" : "invoice.AmountPaid"},
+                            {"data" : "invoice.Description"},
+                            {"data" : "invoice.InvoiceAmount"},
+                            {"data" : "invoice.InvoiceDate"},
+                            {"data" : "invoice.InvoiceType"},
+                            {"data" : "invoice.Supplier"},
+                            {"data" : "invoice.SupplierNumber"},
+                        ],
+                    });
+
+                    // invoices.forEach(invoice => {
+                    //     console.log(invoice.AmountPaid);
+
+                    //      plantillaTablaCustomers =
+                    //      `
+                    //      <tr>
+                    //          <td>${ invoice.AmountPaid }</td>
+                    //          <td>${ invoice.Description }</td>
+                    //          <td>${ invoice.InvoiceAmount }</td>
+                    //          <td>${ invoice.InvoiceDate }</td>
+                    //          <td>${ invoice.InvoiceType }</td>
+                    //          <td>${ invoice.Supplier }</td>
+                    //          <td>${ invoice.SupplierNumber }</td>
+                    //      </tr>
+                    //      `
+
+                    //      /** insertamos el html dentro de la etiqueta */
+                    //      $('#tablaCustomers').append(plantillaTablaCustomers)
+                    // });
 
                     if (response.success == true) {
                         if( $("#oculto-pagadas").css("display") == 'none' )
