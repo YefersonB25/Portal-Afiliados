@@ -14,8 +14,7 @@ class TestingCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'erp:invoices
-                            {--dates=supplier : Dates supplier; 
+    protected $signature = 'erp:invoices {--dates=supplier : Dates supplier; 
                                 "invoices" Supplier invoices, 
                                 "total-amount" total amount invoices unpaid}';
     /**
@@ -59,24 +58,35 @@ class TestingCommand extends Command
         $SupplierNumber = 10343; //*11837,11882
         $CanceledFlag   = 'false';
         $PaidStatus     = 'Partially paid';
-
+        $ArrayPaidStatus = ['Partially paid', 'Unpaid', 'Paid'];
         $options        = $this->options();
+
+
+        $this->comment('Get Count Total Amount All');
+        $response = self::getCountInvoiceTotalAmount($SupplierNumber, $ArrayPaidStatus);
+        dd($response);
+        exit();
 
         switch ($options['dates']) {
             case 'supplier':
                 $this->comment('Get Supplier Information');
                 $response = self::getSupplier($TaxpayerId);
-                $this->comment($response);
+                dd($response);
                 break;
             case 'invoices':
                 $this->comment('Get Invoices Information');
                 $response = self::getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus);
-                $this->comment($response);
+                dd($response);
                 break;
             case 'total-amount':
                 $this->comment('Get Total Amount ' . $PaidStatus);
                 $response = self::getInvoiceTotalAmount($SupplierNumber, $PaidStatus);
-                $this->comment($response);
+                dd($response);
+                break;
+            case 'total-amount':
+                $this->comment('Get Count Total Amount All');
+                $response = self::getCountInvoiceTotalAmount($SupplierNumber, $ArrayPaidStatus);
+                dd($response);
                 break;
         }
 
@@ -121,5 +131,28 @@ class TestingCommand extends Command
             $total = $total + $amountTotal->InvoiceAmount;
         }
         return $total;
+    }
+
+    protected function getCountInvoiceTotalAmount($SupplierNumber, $ArrayPaidStatus)
+    {
+        $collection = [];
+        foreach ($ArrayPaidStatus as $key => $PaidStatus) {
+            $params = [
+                'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = false) and (PaidStatus ='{$PaidStatus}')",
+                'fields'   => 'InvoiceAmount',
+                'onlyData' => 'true'
+            ];
+            $res = OracleRestErp::getInvoiceSuppliers($params);
+            $response = $res->object();
+
+            $total = 0;
+            foreach ($response->items as $amountTotal) {
+                $total = $total + $amountTotal->InvoiceAmount;
+            }
+            $collection[$key] = [
+                $PaidStatus => $total
+            ];
+        }
+        return  $collection;
     }
 }
