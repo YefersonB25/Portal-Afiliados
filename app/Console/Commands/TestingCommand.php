@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Helpers\OracleRestErp;
+use App\Http\Helpers\OracleRestOtm;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -49,13 +50,14 @@ class TestingCommand extends Command
      */
     public function handle()
     {
-
+        $this->info(Carbon::now()->format('Y-m-d\TH:i:s.000+00:00'));
         // $startDate      = Carbon::now()->addHours(5)->subMinutes(10)->format('Y-m-d\TH:i:s.000+00:00');
         // $endDate        = Carbon::now()->addHours(5)->addMinutes(5)->format('Y-m-d\TH:i:s.000+00:00');
-        $TaxpayerId     = 1143413441;
+        $cedula = "1143413441-8";
+        $TaxpayerId     = 1143413441; //Cedula
         $SupplierNumber = 11882; //*11837,11882*10343
         $CanceledFlag   = 'false';
-        $PaidStatus     = 'Partially paid';
+        $PaidStatus     = 'Paid';
         $ArrayPaidStatus = ['Paid', 'Unpaid', 'Partially paid'];
         $options        = $this->options();
 
@@ -76,7 +78,12 @@ class TestingCommand extends Command
                 $this->comment('Get Count Total Amount All');
                 $response = self::getCountInvoiceTotalAmount($SupplierNumber, $ArrayPaidStatus);
                 break;
+            case 'location-otm':
+                $this->comment('Get Location to otm');
+                $response = self::getLocationOtm($cedula);
+                break;
         }
+        $this->info(Carbon::now()->format('Y-m-d\TH:i:s.000+00:00'));
         dd($response);
         return $response;
     }
@@ -88,8 +95,8 @@ class TestingCommand extends Command
             'fields'   => 'SupplierId,TaxpayerId,SupplierPartyId,Supplier,SupplierNumber',
             'onlyData' => 'true'
         ];
-        $response = OracleRestErp::procurementGetSuppliers($params);
-        return $response;
+        $request = OracleRestErp::procurementGetSuppliers($params);
+        return  $request->object()->items;
     }
 
     protected function getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus)
@@ -100,8 +107,8 @@ class TestingCommand extends Command
             'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
             'onlyData' => 'true'
         ];
-        $response = OracleRestErp::getInvoiceSuppliers($params);
-        return $response;
+        $res = OracleRestErp::getInvoiceSuppliers($params);
+        return $res->object()->items;
     }
 
     protected function getInvoiceTotalAmount($SupplierNumber, $PaidStatus)
@@ -134,6 +141,7 @@ class TestingCommand extends Command
             ];
             $res = OracleRestErp::getInvoiceSuppliers($params);
             $response = $res->object();
+            // dd($response->hasMore);
             $total = 0;
             foreach ($response->items as $amountTotal) {
                 $total = $total + $amountTotal->InvoiceAmount;
@@ -145,5 +153,16 @@ class TestingCommand extends Command
             ];
         }
         return $collection;
+    }
+
+    protected function getLocationOtm($LocationXid)
+    {
+        $params = [
+            'limit'   => '1',
+            'showPks' => 'true',
+            'fields'  => 'contactXid,firstName,lastName,emailAddress,phone1'
+        ];
+        $request = OracleRestOtm::getLocationsCustomers($LocationXid, $params);
+        return $request->object()->items;
     }
 }

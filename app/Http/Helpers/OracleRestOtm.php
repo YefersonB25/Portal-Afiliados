@@ -23,7 +23,7 @@ class OracleRestOtm
 
     public static function getLocationsCustomers($locationsGid, $params = null)
     {
-        $path = "logisticsRestApi/resources-int/v2/locations/TCL.'{$locationsGid}'/contacts";
+        $path = "logisticsRestApi/resources-int/v2/locations/TCL.$locationsGid/contacts";
         $erp  = self::getDataAccess();
         $url  = $erp['server'] . $path;
 
