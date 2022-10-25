@@ -53,16 +53,16 @@ class TestingCommand extends Command
     {
         // Example command = php artisan erp:invoices 2019-08-20 --dates=invoices
         $this->info(Carbon::now()->format('Y-m-d \ H:i:s'));
-       
-        $date = $this->argument('start-date');
+        $date           = $this->argument('start-date');
         $startDate      = Carbon::now()->parse($date)->startOfMonth()->format('Y-m-d\TH:i:s.000+00:00');
         $endDate        = Carbon::now()->addHours(5)->addMinutes(5)->format('Y-m-d\TH:i:s.000+00:00');
         $TaxpayerId     = "1143413441-8";
-        $SupplierNumber = 11882; //*11837,11882,10343
+        $SupplierNumber = 11837; //*11837,11882,10343
         $CanceledFlag   = 'false';
         $PaidStatus     = 'Paid';
-        $ArrayPaidStatus = ['Paid', 'Unpaid', 'Partially paid'];
+        $InvoiceId      = 100706;
         $options        = $this->options();
+        $ArrayPaidStatus = ['Paid', 'Unpaid', 'Partially paid'];
 
         switch ($options['dates']) {
             case 'supplier':
@@ -85,6 +85,10 @@ class TestingCommand extends Command
                 $this->alert('Get Location to otm');
                 $response = self::getLocationOtm($TaxpayerId);
                 break;
+            case 'invoice-lines':
+                $this->alert("Get Invoice Lines, InvoiceId = $InvoiceId");
+                $response = self::getInvoiceLines($InvoiceId);
+                break;
         }
         dd($response);
         return $response;
@@ -106,11 +110,22 @@ class TestingCommand extends Command
         $params = [
             'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}') and (LastUpdateDate BETWEEN '{$startDate}' and '{$endDate}')",
             'limit'    => '200',
-            'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+            'fields'   => 'InvoiceId,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
             'onlyData' => 'true'
         ];
-        $res = OracleRestErp::getInvoiceSuppliers($params);
-        return $res->object()->items;
+        $response = OracleRestErp::getInvoiceSuppliers($params);
+        return $response->object()->items;
+    }
+
+    protected function getInvoiceLines($InvoiceId)
+    {
+        $params = [
+            'limit'    => '200',
+            'fields'   => 'LineNumber,LineAmount,AccountingDate,Description,BudgetDate',
+            'onlyData' => 'true'
+        ];
+        $request = OracleRestErp::getInvoicesLines($InvoiceId, $params);
+        return  $request->object()->items;
     }
 
     protected function getInvoiceTotalAmount($SupplierNumber, $PaidStatus)
@@ -121,8 +136,8 @@ class TestingCommand extends Command
             'onlyData' => 'true',
             'limit'    => '500'
         ];
-        $res = OracleRestErp::getInvoiceSuppliers($params);
-        $response = $res->object();
+        $request = OracleRestErp::getInvoiceSuppliers($params);
+        $response = $request->object();
 
         $total = 0;
         foreach ($response->items as $amountTotal) {
