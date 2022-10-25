@@ -35,12 +35,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //? Usuarios-Clientes
 Route::get('usuarios/confirmar/{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosConfirm'])->name('usuario.confirmar')->middleware('auth');
 Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario.rechazar')->middleware('auth');
+Route::get('usuarios', [UsuarioController::class, 'index'], 'can:/usuario.index')->name('usuario.index')->middleware('auth');
+Route::get('usuarios/eliminar/{idUsuario?}', [UsuarioController::class, 'destroy'], 'can:/usuario.index')->name('usuario.eliminar')->middleware('auth');
+Route::get('usuarios/config/{id}', [UsuarioController::class, 'checkout'])->name('check')->middleware('auth');
 
-//? Perfil
+
+//? Perfil - Usuarios Asociados
 Route::get('profile', [PerfilController::class, 'index'])->name('profile');
 Route::put('profile/{id}', [PerfilController::class, 'update'])->name('profile.update')->middleware('auth');
-
-//? Usuarios Asociados
 Route::post('profile/userAsociado', [UsuarioController::class, 'createUserAsociado'])->name('userAsociado.create')->middleware('auth');
 Route::get('profile/userAsociado/{id}', [UsuarioAsociadoController::class, 'elininarUserAsociado'])->name('userAsociado.delete')->middleware('auth');
 
@@ -50,12 +52,9 @@ Route::get('consultaOTM/afiliado/{identif}', [ConsultarAfiliadoController::class
 
 // Route::get('usuarios{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario')->middleware('auth');
 // Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'edit'])->name('usuario')->middleware('auth');
-Route::get('usuarios', [UsuarioController::class, 'index'], 'can:/usuario.index')->name('usuario.index')->middleware('auth');
-Route::get('usuarios/eliminar/{idUsuario?}', [UsuarioController::class, 'destroy'], 'can:/usuario.index')->name('usuario.eliminar')->middleware('auth');
 
 //? Consultar code
 
-Route::get('usuarios/config/{id}', [UsuarioController::class, 'checkout'])->name('check')->middleware('auth');
 
 Route::get('customers', [BlogController::class, 'index', 'can:/blog'])->name('blogs.index')->middleware('auth');
 

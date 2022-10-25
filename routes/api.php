@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultarAfiliadoController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsuarioAsociadoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('consultaOTM/afiliado', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('afiliado.consulta');
 Route::post('facturas/pagadas', [ConsultarAfiliadoController::class, 'customers'])->name('falturas.pagadas');
+Route::post('facturas/total', [ConsultarAfiliadoController::class, 'TotalAmount'])->name('total');
+Route::post('suppliernumber', [ConsultarAfiliadoController::class, 'getSupplierNumber'])->name('supplier.number');
+
+
 
 
 

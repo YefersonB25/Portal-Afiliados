@@ -18,6 +18,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\TryCatch;
 
 class ConsultarAfiliadoController extends Controller
@@ -62,7 +63,7 @@ class ConsultarAfiliadoController extends Controller
         }
 
         try {
-            $cc = 1143413441;
+            // $cc = 1143413441;
             $users = Auth::user()->identification;
             $params = [
                 'q'        => "(TaxpayerId = '{$users}')",
@@ -143,7 +144,15 @@ class ConsultarAfiliadoController extends Controller
         $nInvoice = $invoice['count'];
 
         if ($nInvoice == 0) {
-            return response()->json(['success' => false ,'data' => 'No se encontraron facturan en ' . $request->PaidStatus]);
+            if ($request->PaidStatus == 'Paid') {
+                $status = 'Pagadas';
+            }elseif ($request->PaidStatus == 'Unpaid') {
+                $status = 'No Pagadas';
+
+            }else {
+                $status = 'Parcialmente Pagadas';
+            }
+            return response()->json(['success' => false ,'data' => 'No se encontraron facturas ' . $status]);
         }
 
         $invoce =  $invoice->json();
@@ -152,6 +161,79 @@ class ConsultarAfiliadoController extends Controller
         // return response()->json(array('semestres' => $semestres), 200);
     }
 
+    public function TotalAmount(Request $request)
+    {
+        $collection = [];
+        foreach ($request->PaidStatus as $key => $PaidStatus) {
+            $params = [
+                'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = false) and (PaidStatus ='{$PaidStatus}')",
+                'fields'   => 'InvoiceAmount',
+                'onlyData' => 'true',
+                'limit'    => '500'
+
+            ];
+            $res = OracleRestErp::getInvoiceSuppliers($params);
+            $response = $res->object();
+
+            $total = 0;
+            foreach ($response->items as $amountTotal) {
+                $total = $total + $amountTotal->InvoiceAmount;
+            }
+            $collection[$key] = [
+                $PaidStatus => $total,
+                "count $PaidStatus" => $response->count
+
+            ];
+        }
+        return response()->json(['success' => true, 'data' => $collection]);
+        // $params = [
+        //     'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = $request->FlagStatus))",
+        //     'fields'   => 'InvoiceAmount',
+        //     'onlyData' => 'true'
+        // ];
+
+        // $res = OracleRestErp::getInvoiceSuppliers($params);
+        // $response = $res->object();
+        // $total = 0;
+        // foreach ($response->items as $amountTotal) {
+        //     $total = $total + $amountTotal->InvoiceAmount;
+        // }
+    }
+
+    public function getSupplierNumber (Request $request)
+    {
+        // $user = Auth::user()->id_parentesco;
+
+        if ($request->id_parentesco > 0) {
+            $getUserPadre = User::select('identification')->where('id', $request->id_parentesco)->first();
+            $users = $getUserPadre->identification;
+        }else{
+            $getUserPadre = User::select('identification')->where('id', $request->id_user)->first();
+
+            $users = $getUserPadre->identification;
+        }
+
+         $params = [
+             'q'        => "(TaxpayerId = '{$users}')",
+             'limit'    => '200',
+             'fields'   => 'SupplierNumber',
+             'onlyData' => 'true'
+         ];
+         $response = OracleRestErp::procurementGetSuppliers($params);
+
+         $res = $response->json();
+
+         //? Validanos que nos traiga el proveedor
+         if ($res['count'] == 0) {
+             // return response()->json(['message' => 'No se encontro el proveedor'], 404);
+              session()->flash('message','No se encontro el proveedor');
+              return back();
+         }
+         $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+
+         return response()->json(['success' => true,'data' => $SupplierNumber]);
+
+    }
     // public function codeaguardar(Request $request){
     //     dd($request);
     //     $post = new user();
@@ -224,15 +306,41 @@ class ConsultarAfiliadoController extends Controller
 
     public function consultaOTM(Request $request)
     {
-        $identificacion = Crypt::decryptString($request->identif);
+        $identif = Crypt::decryptString($request->identif);
+
+        // if (!is_numeric($identif)) {
+        //     return false;
+        // }
+        // $arr = array(
+        //     1 => 3, 4 => 17, 7 => 29, 10 => 43, 13 => 59, 2 => 7, 5 => 19,
+        //     8 => 37, 11 => 47, 14 => 67, 3 => 13, 6 => 23, 9 => 41, 12 => 53, 15 => 71
+        // );
+        // $x = 0;
+        // $y = 0;
+        // $z = strlen($identif);
+        // $dv = '';
+
+        // for ($i = 0; $i < $z; $i++) {
+        //     $y = substr($identif, $i, 1);
+        //     $x += ($y * $arr[$z - $i]);
+        // }
+
+        // $y = $x % 11;
+
+        // if ($y > 1) {
+        //     $dv = 11 - $y;
+        //     $identificacion = intval($identif."-".$dv);
+        // } else {
+        //     $dv = $y;
+        //     $identificacion = intval($identif."-".$dv);
+        // }
         $params = [
             'limit'   => '1',
             'showPks' => 'true',
             'fields'  => 'contactXid,firstName,lastName,emailAddress,phone1'
         ];
 
-        $response = OracleRestOtm::getLocationsCustomers($identificacion, $params);
-
+        $response = OracleRestOtm::getLocationsCustomers($identif, $params);
         $responseDataArray = $response->object();
         if ($responseDataArray->count > 0) {
             $result = $responseDataArray->items[0];

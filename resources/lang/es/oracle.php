@@ -1273,6 +1273,7 @@ return
 	'isConsolidateOrEquipment' => 'isConsolidateOrEquipment',
 	'quoteOptionNumber' => 'quoteOptionNumber',
 	'partitionGid' => 'partitionGid',
+    'Partially paid' => 'Parcialmente pagado',
 	'buyItineraryProfileGid' => 'buyItineraryProfileGid',
 	'sellItineraryProfileGid' => 'sellItineraryProfileGid',
 	'bufferType' => 'bufferType',

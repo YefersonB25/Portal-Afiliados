@@ -6,6 +6,7 @@ use App\Http\Helpers\OracleRestErp;
 use Illuminate\Http\Request;
 
 use App\Models\Blog;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
@@ -25,25 +26,41 @@ class BlogController extends Controller
     public function index()
     {
 
-         $users = Auth::user()->identification;
-            $params = [
-                'q'        => "(TaxpayerId = '{$users}')",
-                'limit'    => '200',
-                'fields'   => 'SupplierNumber',
-                'onlyData' => 'true'
-            ];
-            $response = OracleRestErp::procurementGetSuppliers($params);
+        $userParent = Auth::user()->id_parentesco;
+        $user = Auth::user()->id;
 
-            $res = $response->json();
+        if ($userParent > 0) {
+            $getUserPadre = User::select('identification')->where('id', $userParent)->first();
+            $users = $getUserPadre->identification;
+        }else{
+            $getUserPadre = User::select('identification')->where('id', $user)->first();
 
-            //? Validanos que nos traiga el proveedor
-            if ($res['count'] == 0) {
-                return response()->json(['message' => 'No se encontro el proveedor'], 404);
-            }
-            $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+            $users = $getUserPadre->identification;
+        }
 
-         return view('blogs.index', ['SupplierNumber' => $SupplierNumber]);
-         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $blogs->links() !!}
+        $users = $getUserPadre->identification;
+         $params = [
+             'q'        => "(TaxpayerId = '{$users}')",
+             'limit'    => '200',
+             'fields'   => 'SupplierNumber',
+             'onlyData' => 'true'
+         ];
+         $response = OracleRestErp::procurementGetSuppliers($params);
+
+         $res = $response->json();
+
+         //? Validanos que nos traiga el proveedor
+         if ($res['count'] == 0) {
+             // return response()->json(['message' => 'No se encontro el proveedor'], 404);
+              session()->flash('message','No se encontro el proveedor');
+              return back();
+         }
+         $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+
+
+      return view('blogs.index', ['SupplierNumber' => $SupplierNumber]);
+
+
     }
 
     /**

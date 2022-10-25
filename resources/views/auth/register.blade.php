@@ -81,7 +81,7 @@
 
                                 <div class="wrap-input100 validate-input">
                                     <input id="identification"
-                                        type="number"
+                                        type="text"
                                         class="input100{{ $errors->has('identification') ? ' is-invalid' : '' }}"
                                         name="identification"
                                         tabindex="1" placeholder="Numero Identificacion o NIT" value="{{ old('identification') }}"
