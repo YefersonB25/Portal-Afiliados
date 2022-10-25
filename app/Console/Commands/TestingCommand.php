@@ -6,6 +6,8 @@ use App\Http\Helpers\OracleRestErp;
 use App\Http\Helpers\OracleRestOtm;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class TestingCommand extends Command
 {
@@ -16,7 +18,7 @@ class TestingCommand extends Command
      */
     protected $signature = 'erp:invoices {start-date? : Start date for data download.}
                                          {--dates=supplier : Dates supplier; "invoices" Supplier invoices, "total-amount" total amount invoices , "total-amount-all" total amount invoince all}';
-
+    // Example command = php artisan erp:invoices 2019-08-20 --dates=invoices
     /**
      * The console command description.
      *
@@ -51,7 +53,6 @@ class TestingCommand extends Command
      */
     public function handle()
     {
-        // Example command = php artisan erp:invoices 2019-08-20 --dates=invoices
         $this->info(Carbon::now()->format('Y-m-d \ H:i:s'));
         $date           = $this->argument('start-date');
         $startDate      = Carbon::now()->parse($date)->startOfMonth()->format('Y-m-d\TH:i:s.000+00:00');
@@ -95,91 +96,121 @@ class TestingCommand extends Command
     }
     protected function getSupplier($TaxpayerId)
     {
-        $params = [
-            'q'        => "(TaxpayerId = '{$TaxpayerId}')",
-            'limit'    => '200',
-            'fields'   => 'SupplierId,TaxpayerId,SupplierPartyId,Supplier,SupplierNumber',
-            'onlyData' => 'true'
-        ];
-        $request = OracleRestErp::procurementGetSuppliers($params);
-        return  $request->object()->items;
+        try {
+            $params = [
+                'q'        => "(TaxpayerId = '{$TaxpayerId}')",
+                'limit'    => '200',
+                'fields'   => 'SupplierId,TaxpayerId,SupplierPartyId,Supplier,SupplierNumber',
+                'onlyData' => 'true'
+            ];
+            $request = OracleRestErp::procurementGetSuppliers($params);
+            return  $request->object()->items;
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return  $e->getMessage();
+        }
     }
 
     protected function getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus, $startDate, $endDate)
     {
-        $params = [
-            'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}') and (LastUpdateDate BETWEEN '{$startDate}' and '{$endDate}')",
-            'limit'    => '200',
-            'fields'   => 'InvoiceId,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
-            'onlyData' => 'true'
-        ];
-        $response = OracleRestErp::getInvoiceSuppliers($params);
-        return $response->object()->items;
+        try {
+            $params = [
+                'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}') and (LastUpdateDate BETWEEN '{$startDate}' and '{$endDate}')",
+                'limit'    => '200',
+                'fields'   => 'InvoiceId,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+                'onlyData' => 'true'
+            ];
+            $response = OracleRestErp::getInvoiceSuppliers($params);
+            return $response->object()->items;
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return  $e->getMessage();
+        }
     }
 
     protected function getInvoiceLines($InvoiceId)
     {
-        $params = [
-            'limit'    => '200',
-            'fields'   => 'LineNumber,LineAmount,AccountingDate,Description,BudgetDate',
-            'onlyData' => 'true'
-        ];
-        $request = OracleRestErp::getInvoicesLines($InvoiceId, $params);
-        return  $request->object()->items;
+        try {
+            $params = [
+                'limit'    => '200',
+                'fields'   => 'LineNumber,LineAmount,AccountingDate,Description,BudgetDate,LineType',
+                'onlyData' => 'true'
+            ];
+            $request = OracleRestErp::getInvoicesLines($InvoiceId, $params);
+            return  $request->object()->items;
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return  $e->getMessage();
+        }
     }
 
     protected function getInvoiceTotalAmount($SupplierNumber, $PaidStatus)
     {
-        $params = [
-            'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = false) and (PaidStatus = '{$PaidStatus}')",
-            'fields'   => 'InvoiceAmount',
-            'onlyData' => 'true',
-            'limit'    => '500'
-        ];
-        $request = OracleRestErp::getInvoiceSuppliers($params);
-        $response = $request->object();
-
-        $total = 0;
-        foreach ($response->items as $amountTotal) {
-            $total = $total + $amountTotal->InvoiceAmount;
-        }
-        return $total;
-    }
-
-    protected function getCountInvoiceTotalAmount($SupplierNumber, $ArrayPaidStatus)
-    {
-        $collection = [];
-        foreach ($ArrayPaidStatus as $key => $PaidStatus) {
+        try {
             $params = [
-                'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = false) and (PaidStatus ='{$PaidStatus}')",
+                'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = false) and (PaidStatus = '{$PaidStatus}')",
                 'fields'   => 'InvoiceAmount',
                 'onlyData' => 'true',
                 'limit'    => '500'
             ];
-            $res = OracleRestErp::getInvoiceSuppliers($params);
-            $response = $res->object();
-            // dd($response->hasMore);
+            $request = OracleRestErp::getInvoiceSuppliers($params);
+            $response = $request->object();
+
             $total = 0;
             foreach ($response->items as $amountTotal) {
                 $total = $total + $amountTotal->InvoiceAmount;
             }
-
-            $collection[$key] = [
-                $PaidStatus         => $total,
-                "count $PaidStatus" => $response->count
-            ];
+            return $total;
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return  $e->getMessage();
         }
-        return $collection;
+    }
+
+    protected function getCountInvoiceTotalAmount($SupplierNumber, $ArrayPaidStatus)
+    {
+        try {
+            $collection = [];
+            foreach ($ArrayPaidStatus as $key => $PaidStatus) {
+                $params = [
+                    'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = false) and (PaidStatus ='{$PaidStatus}')",
+                    'fields'   => 'InvoiceAmount',
+                    'onlyData' => 'true',
+                    'limit'    => '500'
+                ];
+                $res = OracleRestErp::getInvoiceSuppliers($params);
+                $response = $res->object();
+                // dd($response->hasMore);
+                $total = 0;
+                foreach ($response->items as $amountTotal) {
+                    $total = $total + $amountTotal->InvoiceAmount;
+                }
+
+                $collection[$key] = [
+                    $PaidStatus         => $total,
+                    "count $PaidStatus" => $response->count
+                ];
+            }
+            return $collection;
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return  $e->getMessage();
+        }
     }
 
     protected function getLocationOtm($LocationXid)
     {
-        $params = [
-            'limit'   => '1',
-            'showPks' => 'true',
-            'fields'  => 'contactXid,firstName,lastName,emailAddress,phone1'
-        ];
-        $request = OracleRestOtm::getLocationsCustomers($LocationXid, $params);
-        return $request->object()->items;
+        try {
+            $params = [
+                'limit'   => '1',
+                'showPks' => 'true',
+                'fields'  => 'contactXid,firstName,lastName,emailAddress,phone1'
+            ];
+            $request = OracleRestOtm::getLocationsCustomers($LocationXid, $params);
+            return $request->object()->items;
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return  $e->getMessage();
+        }
     }
 }
