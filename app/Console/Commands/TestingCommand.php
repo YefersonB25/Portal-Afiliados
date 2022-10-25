@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use App\Http\Helpers\OracleRestErp;
 use App\Http\Helpers\OracleRestOtm;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 
 class TestingCommand extends Command
 {
@@ -14,7 +14,8 @@ class TestingCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'erp:invoices {--dates=supplier : Dates supplier; "invoices" Supplier invoices, "total-amount" total amount invoices , "total-amount-all" total amount invoince all}';
+    protected $signature = 'erp:invoices {start-date? : Start date for data download.}
+                                         {--dates=supplier : Dates supplier; "invoices" Supplier invoices, "total-amount" total amount invoices , "total-amount-all" total amount invoince all}';
 
     /**
      * The console command description.
@@ -50,12 +51,14 @@ class TestingCommand extends Command
      */
     public function handle()
     {
-        $this->info(Carbon::now()->format('Y-m-d\TH:i:s.000+00:00'));
-        // $startDate      = Carbon::now()->addHours(5)->subMinutes(10)->format('Y-m-d\TH:i:s.000+00:00');
-        // $endDate        = Carbon::now()->addHours(5)->addMinutes(5)->format('Y-m-d\TH:i:s.000+00:00');
-        $cedula = "1143413441-8";
-        $TaxpayerId     = 1143413441; //Cedula
-        $SupplierNumber = 11882; //*11837,11882*10343
+        // Example command = php artisan erp:invoices 2019-08-20 --dates=invoices
+        $this->info(Carbon::now()->format('Y-m-d \ H:i:s'));
+       
+        $date = $this->argument('start-date');
+        $startDate      = Carbon::now()->parse($date)->startOfMonth()->format('Y-m-d\TH:i:s.000+00:00');
+        $endDate        = Carbon::now()->addHours(5)->addMinutes(5)->format('Y-m-d\TH:i:s.000+00:00');
+        $TaxpayerId     = "1143413441-8";
+        $SupplierNumber = 11882; //*11837,11882,10343
         $CanceledFlag   = 'false';
         $PaidStatus     = 'Paid';
         $ArrayPaidStatus = ['Paid', 'Unpaid', 'Partially paid'];
@@ -63,27 +66,26 @@ class TestingCommand extends Command
 
         switch ($options['dates']) {
             case 'supplier':
-                $this->comment('Get Supplier Information');
+                $this->alert('Get Supplier Information');
                 $response = self::getSupplier($TaxpayerId);
                 break;
             case 'invoices':
-                $this->comment('Get Invoices Information');
-                $response = self::getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus);
+                $this->alert('Get Invoices Information');
+                $response = self::getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus, $startDate, $endDate);
                 break;
             case 'total-amount':
-                $this->comment("Get Total Amount {$PaidStatus}");
+                $this->alert("Get Total Amount $PaidStatus");
                 $response = self::getInvoiceTotalAmount($SupplierNumber, $PaidStatus);
                 break;
             case 'total-amount-all':
-                $this->comment('Get Count Total Amount All');
+                $this->alert('Get Count Total Amount All');
                 $response = self::getCountInvoiceTotalAmount($SupplierNumber, $ArrayPaidStatus);
                 break;
             case 'location-otm':
-                $this->comment('Get Location to otm');
-                $response = self::getLocationOtm($cedula);
+                $this->alert('Get Location to otm');
+                $response = self::getLocationOtm($TaxpayerId);
                 break;
         }
-        $this->info(Carbon::now()->format('Y-m-d\TH:i:s.000+00:00'));
         dd($response);
         return $response;
     }
@@ -99,10 +101,10 @@ class TestingCommand extends Command
         return  $request->object()->items;
     }
 
-    protected function getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus)
+    protected function getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus, $startDate, $endDate)
     {
         $params = [
-            'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}')",
+            'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}') and (LastUpdateDate BETWEEN '{$startDate}' and '{$endDate}')",
             'limit'    => '200',
             'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
             'onlyData' => 'true'
