@@ -46,7 +46,7 @@ class SeederSuperSu extends Seeder
 
         $roleAdmin              = Role::create(['name' => 'Administrador']);
         $rolCliente             = Role::create(['name' => 'Cliente']);
-
+        $rolClienteHijo         = Role::create(['name' => 'ClienteHijo']);
         // $roleAdmin->syncPermissions($permisos);
 
         Permission::create(['name' => '/usuario.index', 'grupo' => 'proveedores-Usuarios', 'description' => 'Seguimiento Solicitudes'])
@@ -55,12 +55,14 @@ class SeederSuperSu extends Seeder
         ]);
         Permission::create(['name' => '/blog', 'grupo' => 'Informacion-Facturas', 'description' => 'Seguimiento Facturas'])
         ->syncRoles([
+            $rolClienteHijo,
           $rolCliente,
         ]);
         Permission::create(['name' => '/profile', 'grupo' => 'Informacion-Personal', 'description' => 'informacion'])
         ->syncRoles([
-          $rolCliente,
-          $roleAdmin,
+            $rolClienteHijo,
+            $rolCliente,
+            $roleAdmin,
         ]);
 
 

@@ -62,7 +62,14 @@ class UsuarioController extends Controller
 
     public function createUserAsociado(Request $request)
     {
+        $this->validate($request,[
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+        ]);
+
         $userlogeado = Auth::user()->id;
+        $roles = Role::get();
+
         $countUserAsociado = User::where([['id_parentesco',$userlogeado],['deleted_at', NULL]],)->count();
         if ($countUserAsociado <= 3) {
             //? Capturamos la extencion de los archivos
@@ -81,8 +88,8 @@ class UsuarioController extends Controller
                 'password'              => Hash::make($request['password']),
             ]);
             //? le asignamos el rol
-            // $usuario = User::findOrFail($id);
-            // $usuario->roles()->sync($roles[1]->id);
+            $usuario = User::findOrFail($id);
+            $usuario->roles()->sync($roles[2]->id);
 
             //? Guardamos los archivos cargados y capturamos la ruta
             if (!empty($request->photo)) {

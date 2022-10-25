@@ -486,12 +486,14 @@
                                                 <div class="card-body user-lock text-center">
                                                     <div class="dropdown text-end">
                                                         <a href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="fe fe-more-vertical text-muted"></i> </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="#"><i class="fe fe-message-square me-2"></i> Message</a> <a class="dropdown-item" href="#"><i class="fe fe-edit-2 me-2"></i> Edit</a> <a class="dropdown-item" href="#"><i class="fe fe-eye me-2"></i> View</a> <a class="dropdown-item" href="{{url("profile/userAsociado/{$asociado->id}")}}"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
+                                                        <div class="dropdown-menu dropdown-menu-right shadow"> <a class="dropdown-item" href="{{url("profile/userAsociado/{$asociado->id}")}}"><i class="fe fe-trash-2 me-2"></i> Delete</a> </div>
                                                     </div>
                                                     <a href="#">
                                                         <img alt="avatar" class="avatar avatar-xl rounded" src="{{asset("$asociado->photo")}}">
                                                         <h4 class="fs-16 mb-0 mt-3 text-dark fw-semibold">{{$asociado->name}}</h4>
-                                                        <span class="text-muted">{{$asociado->identification}}</span>
+                                                        <span class="text-muted">{{$asociado->telefono}}</span>
+                                                        <br>
+                                                        <span class="text-muted">{{$asociado->email}}</span>
                                                     </a>
                                                     <div class="footer-container-main border-0 my-2">
                                                         <div class="footer p-0 icons-bg border-0">

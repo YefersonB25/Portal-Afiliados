@@ -31,4 +31,21 @@ class OracleRestOtm
 
         return $response;
     }
+
+    protected function getInvoiceTotalAmount($SupplierNumber, $PaidStatus)
+    {
+        $params = [
+            'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = false) and (PaidStatus = '{$PaidStatus}')",
+            'fields'   => 'InvoiceAmount',
+            'onlyData' => 'true'
+        ];
+        $res = OracleRestErp::getInvoiceSuppliers($params);
+        $response = $res->object();
+
+        $total = 0;
+        foreach ($response->items as $amountTotal) {
+            $total = $total + $amountTotal->InvoiceAmount;
+        }
+        return $total;
+    }
 }

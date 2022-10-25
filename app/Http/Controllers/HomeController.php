@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\OracleRestErp;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -30,8 +32,8 @@ class HomeController extends Controller
         $total_usuarios = User::count();
 
 
-
-
         return view('home',['nuevas_solicitudes'=>$nuevas_solicitudes, 'solicitudes_confirmadas'=>$solicitudes_confirmadas, 'solicitudes_rechazadas'=>$solicitudes_rechazadas, 'total_usuarios'=>$total_usuarios]);
     }
+
+
 }

@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                             <!-- PAGE-HEADER END -->
-                            @if (Auth::user()->estado == 0)
+                            @can('/usuario.index')
                             <!-- ROW-1 -->
                             <div class="row">
                                 <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
@@ -121,9 +121,9 @@
                                 </div>
                             </div>
                             <!-- ROW-1 END-->
-                            @endif
+                            @endcan
 
-                            @if (Auth::user()->estado == 2)
+                            @can('/blog')
                             <!-- ROW-1 -->
                             <div class="row">
                                 <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
@@ -131,14 +131,8 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
-                                                    <h3 class="mb-2 fw-semibold">1,12,324</h3>
-                                                    <p class="text-muted fs-13 mb-0">Daily Visitors</p>
-                                                    <p class="text-muted mb-0 mt-2 fs-12">
-                                                        <span class="icn-box text-success fw-semibold fs-13 me-1">
-                                                            <i class='fa fa-long-arrow-up'></i>
-                                                            42%</span>
-                                                        since last month
-                                                    </p>
+                                                    <h3 id="mtPagadas" class="mb-2 fw-semibold"></h3>
+                                                    <p class="text-muted fs-13 mb-0">Monto de Facturas pagadas</p>
                                                 </div>
                                                 <div class="col col-auto top-icn dash">
                                                     <div class="counter-icon bg-primary dash ms-auto box-shadow-primary">
@@ -154,14 +148,8 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
-                                                    <h3 class="mb-2 fw-semibold">12,563</h3>
-                                                    <p class="text-muted fs-13 mb-0">Total Orders</p>
-                                                    <p class="text-muted mb-0 mt-2 fs-12">
-                                                        <span class="icn-box text-danger fw-semibold fs-13 me-1">
-                                                            <i class='fa fa-long-arrow-down'></i>
-                                                            12%</span>
-                                                        since last month
-                                                    </p>
+                                                    <h3 id="mtPorPagar" class="mb-2 fw-semibold"></h3>
+                                                    <p class="text-muted fs-13 mb-0">Monto de Facturas por Pagar</p>
                                                 </div>
                                                 <div class="col col-auto top-icn dash">
                                                     <div class="counter-icon bg-secondary dash ms-auto box-shadow-secondary">
@@ -177,14 +165,8 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
-                                                    <h3 class="mb-2 fw-semibold">$5,178</h3>
-                                                    <p class="text-muted fs-13 mb-0">Conversion Rate</p>
-                                                    <p class="text-muted mb-0 mt-2 fs-12">
-                                                        <span class="icn-box text-success fw-semibold fs-13 me-1">
-                                                            <i class='fa fa-long-arrow-up'></i>
-                                                            27%</span>
-                                                        since last month
-                                                    </p>
+                                                    <h3 id="mtPagadasConNovedad" class="mb-2 fw-semibold"></h3>
+                                                    <p class="text-muted fs-13 mb-0">Monto de Facturas Pagadas con Novedad</p>
                                                 </div>
                                                 <div class="col col-auto top-icn dash">
                                                     <div class="counter-icon bg-info dash ms-auto box-shadow-info">
@@ -200,14 +182,8 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
-                                                    <h3 class="mb-2 fw-semibold">$43,987</h3>
-                                                    <p class="text-muted fs-13 mb-0">Avg Orders</p>
-                                                    <p class="text-muted mb-0 mt-2 fs-12">
-                                                        <span class="icn-box text-success fw-semibold fs-13 me-1">
-                                                            <i class='fa fa-long-arrow-up'></i>
-                                                            9%</span>
-                                                        since last month
-                                                    </p>
+                                                    <h3 id="totalFt" class="mb-2 fw-semibold"></h3>
+                                                    <p class="text-muted fs-13 mb-0">Numero Total de Facturas</p>
                                                 </div>
                                                 <div class="col col-auto top-icn dash">
                                                     <div class="counter-icon bg-warning dash ms-auto box-shadow-warning">
@@ -220,7 +196,7 @@
                                 </div>
                             </div>
                             <!-- ROW-1 END-->
-                            @endif
+                            @endcan
 
                             <!-- ROW-2 -->
                             <div class="row">
@@ -858,4 +834,85 @@
         </div>
     </body>
 @endsection
+@section('scripts')
+@if (Session::has('message'))
+<script>
+    Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: '{{Session::get('message')}}',
+    })
+</script>
+@endif
 
+<script>
+    window.onload = function() {
+        $.ajax({
+            type: "POST",
+            url: "{{ route('supplier.number') }}",
+            data: {id_parentesco: "{{ Auth::user()->id_parentesco}}",
+                id_user: "{{ Auth::user()->id}}"},
+            success: function(response) {
+                let data = response.data;
+                if(response.success == true)
+                {
+                    let = plantillaMtPagadas = ''
+                    let = plantillaMtPorPagar = ''
+                    let = plantillaMtPagadasConNovedad = ''
+                    let = plantillaTotalFt = ''
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('total') }}",
+                        data: {
+                            SupplierNumber:data,
+                            PaidStatus: ['Partially paid', 'Unpaid', 'Paid'],
+                            FlagStatus: 'false'
+                        },
+
+                        success: function(response) {
+                            let datos = response.data;
+                            if (response.success == true) {
+                                let dollarUSLocale = Intl.NumberFormat('en-US');
+                                let mtPagadas = dollarUSLocale.format(datos[2]['Paid']);
+                                let mtPorPagar = dollarUSLocale.format(datos[1]['Unpaid']);
+                                let mtPagadasConNovedad = dollarUSLocale.format(datos[0]['Partially paid']);
+                                let totalFt = datos[0]['count Partially paid'] + datos[1]['count Unpaid'] + datos[2]['count Paid'];
+
+                                plantillaMtPagadas =
+                                `
+                                <h3 class="mb-2 fw-semibold">$${mtPagadas}</h3>
+                                `
+                                $('#mtPagadas').append(plantillaMtPagadas)
+
+                                plantillaMtPorPagar =
+                                `
+                                <h3 class="mb-2 fw-semibold">$${mtPorPagar}</h3>
+                                `
+                                $('#mtPorPagar').append(plantillaMtPorPagar)
+
+                                plantillaMtPagadasConNovedad =
+                                `
+                                <h3 class="mb-2 fw-semibold">$${mtPagadasConNovedad}</h3>
+                                `
+                                $('#mtPagadasConNovedad').append(plantillaMtPagadasConNovedad)
+
+                                plantillaTotalFt =
+                                `
+                                <h3 class="mb-2 fw-semibold">$${totalFt}</h3>
+                                `
+                                $('#totalFt').append(plantillaTotalFt)
+                                // console.log(datos[2]['Paid']);
+                            }
+                        },
+                        error: function(error){
+                            console.error(error);
+                        }
+                    })
+                }
+            }
+        })
+    }
+        </script>
+
+@endsection
