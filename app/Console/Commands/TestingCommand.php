@@ -117,7 +117,7 @@ class TestingCommand extends Command
             $params = [
                 'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}') and (LastUpdateDate BETWEEN '{$startDate}' and '{$endDate}')",
                 'limit'    => '200',
-                'fields'   => 'InvoiceId,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+                'fields'   => 'InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence',
                 'onlyData' => 'true'
             ];
             $response = OracleRestErp::getInvoiceSuppliers($params);
