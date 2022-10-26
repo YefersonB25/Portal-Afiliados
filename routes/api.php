@@ -22,6 +22,8 @@ Route::post('consultaOTM/afiliado', [ConsultarAfiliadoController::class, 'consul
 Route::post('facturas/pagadas', [ConsultarAfiliadoController::class, 'customers'])->name('falturas.pagadas');
 Route::post('facturas/total', [ConsultarAfiliadoController::class, 'TotalAmount'])->name('total');
 Route::post('suppliernumber', [ConsultarAfiliadoController::class, 'getSupplierNumber'])->name('supplier.number');
+Route::post('invoiceLines', [ConsultarAfiliadoController::class, 'getInvoiceLines'])->name('invoice.lines');
+
 
 
 

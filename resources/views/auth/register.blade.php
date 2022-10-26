@@ -3,7 +3,7 @@
     Register
 @endsection
 @section('content')
-    <body class="ltr login-img">
+    <body class="ltr">
         <div class="page">
             <div>
                 <!-- CONTAINER OPEN -->
@@ -20,20 +20,6 @@
                                     Registrarse
                                 </span>
                                 @csrf
-                                <label for="formFile" class="form-label">Foto </label>
-                                <div class="wrap-input100 validate-input">
-                                    <input id="photo"
-                                            accept="image/jpeg,image/jpg,image/png"
-                                            type="file"
-                                            class="form-control"
-                                            name="photo"
-                                            tabindex="1" placeholder="Enter Photo" value="{{ old('name') }}"
-                                            autofocus required>
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('name') }}
-                                    </div>
-                                </div>
-
                                 <div class="wrap-input100 validate-input">
                                     <input id="firstName" type="text"
                                         class="input100{{ $errors->has('name') ? ' is-invalid' : '' }}"
@@ -52,7 +38,7 @@
                                 <div class="wrap-input100 validate-input">
                                     <input id="email" type="email"
                                         class="input100{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                        placeholder="Enter Email address" name="email" tabindex="1"
+                                        placeholder="Email" name="email" tabindex="1"
                                         value="{{ old('email') }}"
                                         required autofocus>
                                     <div class="invalid-feedback">
@@ -81,7 +67,7 @@
 
                                 <div class="wrap-input100 validate-input">
                                     <input id="identification"
-                                        type="text"
+                                        type="number"
                                         class="input100{{ $errors->has('identification') ? ' is-invalid' : '' }}"
                                         name="identification"
                                         tabindex="1" placeholder="Numero Identificacion o NIT" value="{{ old('identification') }}"
@@ -96,7 +82,7 @@
                                 </div>
 
                                 <div class="wrap-input100 validate-input">
-                                    <label for="formFile" class="form-label">Copia del documento de identidad</label>
+                                    <label for="formFile" class="form-label">Copia del documento de identidad extension requerida(.PDF)</label>
                                     <input id="identificationPhoto"
                                         accept=".pdf"
                                         type="file"
@@ -104,6 +90,20 @@
                                         name="identificationPhoto"
                                         tabindex="1" placeholder="Enter Identification" value="{{ old('identificationPhoto') }}"
                                         autofocus>
+                                </div>
+
+                                <label for="formFile" class="form-label">Foto Perfil</label>
+                                <div class="wrap-input100 validate-input">
+                                    <input id="photo"
+                                            accept="image/jpeg,image/jpg,image/png"
+                                            type="file"
+                                            class="form-control"
+                                            name="photo"
+                                            tabindex="1" placeholder="Enter Photo" value="{{ old('name') }}"
+                                            autofocus>
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('name') }}
+                                    </div>
                                 </div>
 
                                 <div class="wrap-input100 validate-input">
@@ -135,27 +135,14 @@
                                 <div class="col-md-12 mt-4">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                                            Register
+                                            Registrarse
                                         </button>
                                     </div>
                                 </div>
                                 <div class="mt-5 text-muted text-center">
-                                    Already have an account ? <a href="{{ route('login') }}">SignIn</a>
+                                    Ya tienes una cuenta? <a href="{{ route('login') }}">Iniciar</a>
                                 </div>
                             </form>
-                        </div>
-                        <div class="card-footer">
-                            <div class="d-flex justify-content-center my-3">
-                                <a href="javascript:void(0)" class="social-login  text-center me-4">
-                                    <i class="fa fa-google"></i>
-                                </a>
-                                <a href="javascript:void(0)" class="social-login  text-center me-4">
-                                    <i class="fa fa-facebook"></i>
-                                </a>
-                                <a href="javascript:void(0)" class="social-login  text-center">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
