@@ -122,24 +122,20 @@ class ConsultarAfiliadoController extends Controller
      */
     public function customers(Request $request)
     {
+        $params      =  [
+            'limit'    => '200',
+            'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
+            'onlyData' => 'true'
+        ];
         //$SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
         if ($request->PaidStatus == '') {
-            $params = [
-                'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')",
-                'limit'    => '200',
-                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
-                'onlyData' => 'true'
-            ];
-            $invoice = OracleRestErp::getInvoiceSuppliers($params);
+            $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')";
         } else {
-            $params = [
-                'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')",
-                'limit'    => '200',
-                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
-                'onlyData' => 'true'
-            ];
-            $invoice = OracleRestErp::getInvoiceSuppliers($params);
+            $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')";
         }
+        $invoice = OracleRestErp::getInvoiceSuppliers($params);
+
+        // $invoice = OracleRestErp::getInvoiceSuppliers($params);
         //return response()->json(['success' => true, 'data', 'data' => $invoice]);
 
         //? Validamos que nos traiga las facturas
@@ -311,7 +307,6 @@ class ConsultarAfiliadoController extends Controller
         // dd($request->getParam('numeroIdentificacion'));
         // print_r($request->getParam('numeroIdentificacion'));
         // $identificacion = $request;
-
     }
 
     /**
@@ -381,6 +376,7 @@ class ConsultarAfiliadoController extends Controller
         }
         return $identificacion;
     }
+
     public function consultaOTM(Request $request)
     {
         try {
@@ -429,7 +425,6 @@ class ConsultarAfiliadoController extends Controller
             if ($responseDataArrayErp->count > 0) {
                 $resultErp = $responseDataArrayErp->items[0];
                 $resultAddressErp = $resultErp->addresses[0];
-
                 $arrayResultErp =
                     [
                         'TaxpayerId'    => $resultErp->TaxpayerId,
@@ -448,7 +443,6 @@ class ConsultarAfiliadoController extends Controller
                         'phone'         => null
                     ];
             }
-
             return view('usuarios.consultar', [
                 'arrayResultErp'  => $arrayResultErp,
                 'arrayResultOtm'  => $arrayResultOtm
@@ -458,12 +452,6 @@ class ConsultarAfiliadoController extends Controller
             session()->flash('message', "Special message goes here");
             return back();
         }
-        // else {
-        //     // return back()->with('success', 'Login Successfully!');
-        //     // Session::flash('message', "Special message goes here");
-        //     session()->flash('message', "Special message goes here");
-        //     return back();
-        // }
     }
 
     /**
