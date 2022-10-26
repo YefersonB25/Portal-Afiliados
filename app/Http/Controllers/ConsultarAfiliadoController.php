@@ -10,6 +10,7 @@ use App\Http\Helpers\OracleRestErp;
 use App\Http\Helpers\OracleRestOtm;
 use App\Http\Helpers\SendEmailRequest;
 use App\Models\User;
+use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -125,7 +127,7 @@ class ConsultarAfiliadoController extends Controller
             $params = [
                 'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')",
                 'limit'    => '200',
-                'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
                 'onlyData' => 'true'
             ];
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
@@ -133,7 +135,7 @@ class ConsultarAfiliadoController extends Controller
             $params = [
                 'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')",
                 'limit'    => '200',
-                'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
                 'onlyData' => 'true'
             ];
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
@@ -234,6 +236,42 @@ class ConsultarAfiliadoController extends Controller
          return response()->json(['success' => true,'data' => $SupplierNumber]);
 
     }
+
+    public function getInvoiceLines(Request $request){
+        $dataInvoiceFull = [];
+        $data = [];
+        $data = [
+            'Description'       => $request->Description,
+            'InvoiceDate'       => $request->InvoiceDate,
+            'InvoiceType'       => $request->InvoiceType,
+            'InvoiceAmount'     => $request->InvoiceAmount,
+            'AmountPaid'        => $request->AmountPaid,
+            'InvoiceId'         => $request->InvoiceId,
+            'Supplier'          => $request->Supplier,
+        ];
+
+        try {
+            $params = [
+                'limit'    => '200',
+                'fields'   => 'LineNumber,LineAmount,AccountingDate,Description,BudgetDate,LineType',
+                'onlyData' => 'true'
+            ];
+
+            $reques = OracleRestErp::getInvoicesLines($request->InvoiceId, $params);
+            $requesData = $reques->object()->items;
+
+            $dataInvoiceFull = [
+                'invoiceLines'  => $requesData,
+                'invoiceData'   => $data,
+            ];
+            return response()->json(['success' => true,'data' => $dataInvoiceFull]);
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return response()->json(['success' => false,'data' => $e->getMessage()]);
+
+        }
+
+    }
     // public function codeaguardar(Request $request){
     //     dd($request);
     //     $post = new user();
@@ -308,49 +346,50 @@ class ConsultarAfiliadoController extends Controller
     {
         $identif = Crypt::decryptString($request->identif);
 
-        // if (!is_numeric($identif)) {
-        //     return false;
-        // }
-        // $arr = array(
-        //     1 => 3, 4 => 17, 7 => 29, 10 => 43, 13 => 59, 2 => 7, 5 => 19,
-        //     8 => 37, 11 => 47, 14 => 67, 3 => 13, 6 => 23, 9 => 41, 12 => 53, 15 => 71
-        // );
-        // $x = 0;
-        // $y = 0;
-        // $z = strlen($identif);
-        // $dv = '';
+        if (!is_numeric($identif)) {
+            return false;
+        }
+        $arr = array(
+            1 => 3, 4 => 17, 7 => 29, 10 => 43, 13 => 59, 2 => 7, 5 => 19,
+            8 => 37, 11 => 47, 14 => 67, 3 => 13, 6 => 23, 9 => 41, 12 => 53, 15 => 71
+        );
+        $x = 0;
+        $y = 0;
+        $z = strlen($identif);
+        $dv = '';
 
-        // for ($i = 0; $i < $z; $i++) {
-        //     $y = substr($identif, $i, 1);
-        //     $x += ($y * $arr[$z - $i]);
-        // }
+        for ($i = 0; $i < $z; $i++) {
+            $y = substr($identif, $i, 1);
+            $x += ($y * $arr[$z - $i]);
+        }
 
-        // $y = $x % 11;
+        $y = $x % 11;
 
-        // if ($y > 1) {
-        //     $dv = 11 - $y;
-        //     $identificacion = intval($identif."-".$dv);
-        // } else {
-        //     $dv = $y;
-        //     $identificacion = intval($identif."-".$dv);
-        // }
+        if ($y > 1) {
+            $dv = 11 - $y;
+            $identificacion = $identif."-".$dv;
+        } else {
+            $dv = $y;
+            $identificacion = $identif."-".$dv;
+        }
         $params = [
             'limit'   => '1',
             'showPks' => 'true',
             'fields'  => 'contactXid,firstName,lastName,emailAddress,phone1'
         ];
 
-        $response = OracleRestOtm::getLocationsCustomers($identif, $params);
+        $response = OracleRestOtm::getLocationsCustomers($identificacion, $params);
         $responseDataArray = $response->object();
         if ($responseDataArray->count > 0) {
             $result = $responseDataArray->items[0];
+
             $arrayResult =
                 [
-                    'firstName'     => $result->firstName,
-                    'lastName'      => $result->lastName,
-                    'phone'         => $result->phone1,
-                    'emailAddress'  => $result->emailAddress,
-                    'contactXid'  => $result->contactXid,
+                    'firstName'     => isset($result->firstName) ? $result->firstName : 'null',
+                    'lastName'      => isset($result->lastName) ? $result->lastName : 'null',
+                    'phone'         => isset($result->phone1) ? $result->phone1 : 'null',
+                    'emailAddress'  => isset($result->emailAddress) ? $result->emailAddress : 'null',
+                    'contactXid'  => isset($result->contactXid) ? $result->contactXid : 'null',
                 ];
             return view('usuarios.consultar', ['arrayResult' => $arrayResult]);
         } else {

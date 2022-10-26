@@ -3,7 +3,7 @@
 [Master Stylesheet]
 
 Project        :   Noa – Bootstrap  Admin & Dashboard Template
-Copyright      :   Spruko Technologies Private Limited 
+Copyright      :   Spruko Technologies Private Limited
 Author         :   Spruko
 Author URL     :   https://themeforest.net/user/spruko
 Support	       :   support@spruko.com
@@ -49471,7 +49471,7 @@ body.rtl {
 }
 
 /*# sourceMappingURL=bootstrap-datepicker.css.map */
-/*! X-editable - v1.5.1 
+/*! X-editable - v1.5.1
 * In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery
 * http://github.com/vitalets/x-editable
 * Copyright (c) 2013 Vitaliy Potapov; Licensed MIT */
@@ -49493,8 +49493,8 @@ body.rtl {
     width: auto;
 }
 
-/* 
-BS3 width:1005 for inputs breaks editable form in popup 
+/*
+BS3 width:1005 for inputs breaks editable form in popup
 See: https://github.com/vitalets/x-editable/issues/393
 */
 .editable-buttons {
@@ -56160,7 +56160,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 
 /*
  * bootstrap-tagsinput v0.8.0
- * 
+ *
  */
 .bootstrap-tagsinput {
     background-color: #fff;
@@ -57286,7 +57286,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
  * datepicker_header
 */
 /*
- * datepicker_inner_container 
+ * datepicker_inner_container
 */
 /*
  * datepicker_inner_container > datepicker_calendar

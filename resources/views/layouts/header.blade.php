@@ -3,53 +3,8 @@
         <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
     </ul>
 </form>
-{{-- <ul class="navbar-nav navbar-right"> --}}
-    {{-- @if(\Illuminate\Support\Facades\Auth::user())
-        <li class="dropdown">
-            <a href="#" data-toggle="dropdown"
-               class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="{{ asset('img/logo.png') }}"
-                     class="rounded-circle mr-1 thumbnail-rounded user-thumbnail ">
-                <div class="d-sm-none d-lg-inline-block">
-                    ¡Hola! {{\Illuminate\Support\Facades\Auth::user()->first_name}}</div>
-            </a>
-
-            <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">
-                    Bienvenido, {{\Illuminate\Support\Facades\Auth::user()->name}}</div>
-                <a class="dropdown-item has-icon edit-profile" href="#" data-id="{{ \Auth::id() }}">
-                    <i class="fa fa-user"></i>Editar Perfil de Usuario</a>
-                <a class="dropdown-item has-icon" data-toggle="modal" data-target="#changePasswordModal" href="#" data-id="{{ \Auth::id() }}"><i
-                            class="fa fa-lock"> </i>Cambiar Password</a>
-                <a href="{{ url('logout') }}" class="dropdown-item has-icon text-danger"
-                   onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-form').submit();">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
-                    {{ csrf_field() }}
-                </form>
-            </div>
-        </li>
-    @else
-        <li class="dropdown"><a href="#" data-toggle="dropdown"
-                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <div class="d-sm-none d-lg-inline-block">{{ __('messages.common.hello') }}</div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">{{ __('messages.common.login') }}
-                    / {{ __('messages.common.register') }}</div>
-                <a href="{{ route('login') }}" class="dropdown-item has-icon">
-                    <i class="fas fa-sign-in-alt"></i> {{ __('messages.common.login') }}
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="{{ route('register') }}" class="dropdown-item has-icon">
-                    <i class="fas fa-user-plus"></i> {{ __('messages.common.register') }}
-                </a>
-            </div>
-        </li>
-    @endif --}}
-
 {{-- </ul> --}}
+
 <div class="app-header header sticky">
     <div class="container-fluid main-container">
         <div class="d-flex">
@@ -104,13 +59,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- COUNTRY -->
-                            {{-- <div class="dropdown d-md-flex main-header-notification flag-dropdown">
-                                <a class="nav-link icon text-center country-nav-link" data-bs-target="#country-selector" data-bs-toggle="modal">
-                                    <img class="header-icons language" alt="" src="{{asset('assets/images/flags/co_flag.jpg')}}">
-                                </a>
-                            </div> --}}
-                            <!-- SEARCH -->
                             <div class="dropdown  d-flex">
                                 <a class="nav-link icon theme-layout nav-link-bg layout-setting">
                                     <span class="dark-layout">
@@ -209,160 +157,6 @@
                                 </a>
                             </div>
                             <!-- FULL-SCREEN -->
-                            {{-- <div class="dropdown  d-flex shopping-cart">
-                                <a href="javascript:void(0);" class="nav-link icon text-center"  data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M9,18c-1.1045532,0-2,0.8954468-2,2s0.8954468,2,2,2c1.1040039-0.0014038,1.9985962-0.8959961,2-2C11,18.8954468,10.1045532,18,9,18z M9,21c-0.5523071,0-1-0.4476929-1-1s0.4476929-1,1-1c0.552124,0.0003662,0.9996338,0.447876,1,1C10,20.5523071,9.5523071,21,9,21z M17,18c-1.1045532,0-2,0.8954468-2,2s0.8954468,2,2,2c1.1040039-0.0014038,1.9985962-0.8959961,2-2C19,18.8954468,18.1045532,18,17,18z M17,21c-0.5523071,0-1-0.4476929-1-1s0.4476929-1,1-1c0.552124,0.0003662,0.9996338,0.447876,1,1C18,20.5523071,17.5523071,21,17,21z M19.4985352,12.0502319l1.9848633-7.4213257c0.0111694-0.0419312,0.0167847-0.085083,0.0167847-0.128479C21.5002441,4.2241211,21.2763062,4.000061,21,4H5.9198608L5.4835205,2.371582C5.4249268,2.1530151,5.2268677,2.0009766,5.0005493,2.0009766H3.5048218C3.5031128,2.0009766,3.501709,2,3.5,2C3.223877,2,3,2.223877,3,2.5S3.223877,3,3.5,3v0.0009766L4.6162109,3l2.579834,9.6288452C7.2546387,12.8477783,7.453064,13,7.6796875,13H11h6.8603516H19c0.8284302,0,1.5,0.6715698,1.5,1.5S19.8284302,16,19,16H5c-0.276123,0-0.5,0.223877-0.5,0.5S4.723877,17,5,17h14c1.3807373,0,2.5-1.1192627,2.5-2.5C21.5,13.2900391,20.6403809,12.2813721,19.4985352,12.0502319z M18.4761963,12h-0.6158447H11H8.0634766L6.1878052,5h14.1608276L18.4761963,12z"/></svg>
-                                    <span class="badge bg-info header-badge">4</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <div class="drop-heading border-bottom">
-                                        <div class="d-flex">
-                                            <h6 class="mt-1 mb-0 fs-15 text-dark">Shopping Cart</h6>
-                                            <div class="ms-auto">
-                                                <span class="xm-title badge bg-secondary text-white fw-normal fs-11 badge-pill"> <a href="javascript:void(0);" class="showall-text text-white">Remove All</a> </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="header-dropdown-list cart-menu ps4 overflow-hidden">
-                                        <a class="dropdown-item d-flex p-4" href="cart.html">
-                                            <span class="avatar avatar-lg br-5 me-3 align-self-center cover-image" data-bs-image-src="../assets/images/ecommerce/1.jpg"></span>
-                                            <div class="wp-60 cart-desc mt-1">
-                                                <p class="fs-13 mb-0 lh-1 mb-1 text-dark fw-500">TrueBasket Metal Single Pot</p>
-                                                <p class="fs-12 fw-300 lh-1 mb-0">Status: <span class="text-green">In Stock</span></p>
-                                                <span class="fs-12 fw-300 lh-1 mb-0">Quantity: 01</span>
-                                            </div>
-                                            <div class="ms-auto text-end d-flex fs-16">
-                                                <span class="fs-16 text-dark d-none d-sm-block fw-semibold">
-                                                    $129
-                                                </span>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex p-4" href="cart.html">
-                                            <span class="avatar avatar-lg br-5 me-3 align-self-center cover-image" data-bs-image-src="../assets/images/ecommerce/2.jpg"></span>
-                                            <div class="wp-60 cart-desc mt-1">
-                                                <p class="fs-13 mb-0 lh-1 mb-1 text-dark fw-500">Authentic chair with Canopy</p>
-                                                <p class="fs-12 fw-300 lh-1 mb-0">Status: <span class="text-green">In Stock</span></p>
-                                                <span class="fs-12 fw-300 lh-1 mb-0">Quantity: 03</span>
-                                            </div>
-                                            <div class="ms-auto text-end d-flex fs-16">
-                                                <span class="fs-16 text-dark d-none d-sm-block fw-semibold">
-                                                    $99
-                                                </span>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex p-4" href="cart.html">
-                                            <span class="avatar avatar-lg br-5 me-3 align-self-center cover-image" data-bs-image-src="../assets/images/ecommerce/3.jpg"></span>
-                                            <div class="wp-60 cart-desc mt-1">
-                                                <p class="fs-13 mb-0 lh-1 mb-1 text-dark fw-500">Casual Sneakers Canvas</p>
-                                                <p class="fs-12 fw-300 lh-1 mb-0">Status: <span class="text-green">In Stock</span></p>
-                                                <span class="fs-12 fw-300 lh-1 mb-0">Quantity: 03</span>
-                                            </div>
-                                            <div class="ms-auto text-end d-flex fs-16">
-                                                <span class="fs-16 text-dark d-none d-sm-block fw-semibold">
-                                                    $299
-                                                </span>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex p-4" href="cart.html">
-                                            <span class="avatar avatar-lg br-5 me-3 align-self-center cover-image" data-bs-image-src="../assets/images/ecommerce/4.jpg"></span>
-                                            <div class="wp-60 cart-desc mt-1">
-                                                <p class="fs-13 mb-0 lh-1 mb-1 text-dark fw-500">Branded Head Phones</p>
-                                                <p class="fs-12 fw-300 lh-1 mb-0">Status: <span class="text-danger">No Stock</span></p>
-                                                <span class="fs-12 fw-300 lh-1 mb-0">Quantity: 01</span>
-                                            </div>
-                                            <div class="ms-auto text-end d-flex fs-16">
-                                                <span class="fs-16 text-dark d-none d-sm-block fw-semibold">
-                                                    $249
-                                                </span>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex p-4" href="cart.html">
-                                            <span class="avatar avatar-lg br-5 me-3 align-self-center cover-image" data-bs-image-src="../assets/images/ecommerce/5.jpg"></span>
-                                            <div class="wp-60 cart-desc mt-1">
-                                                <p class="fs-13 mb-0 lh-1 mb-1 text-dark fw-500">camera lens (16mm f/1.4)</p>
-                                                <p class="fs-12 fw-300 lh-1 mb-0">Status: <span class="text-green">In Stock</span></p>
-                                                <span class="fs-12 fw-300 lh-1 mb-0">Quantity: 02</span>
-                                            </div>
-                                            <div class="ms-auto text-end d-flex fs-16">
-                                                <span class="fs-16 text-dark d-none d-sm-block fw-semibold">
-                                                    $1,279
-                                                </span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-divider m-0"></div>
-                                    <div class="text-center p-3">
-                                        <a class="btn btn-primary">Checkout</a>
-                                    </div>
-                                    </div>
-                            </div> --}}
-                            <!-- CART -->
-                            {{-- <div class="dropdown d-md-flex message">
-                                <a href="javascript:void(0);" class="nav-link icon text-center" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M17.4541016,11H6.5458984c-0.276123,0-0.5,0.223877-0.5,0.5s0.223877,0.5,0.5,0.5h10.9082031c0.276123,0,0.5-0.223877,0.5-0.5S17.7302246,11,17.4541016,11z M19.5,2h-15C3.119812,2.0012817,2.0012817,3.119812,2,4.5v11c0.0012817,1.380188,1.119812,2.4987183,2.5,2.5h12.7930298l3.8534546,3.8535156C21.2402344,21.9473267,21.3673706,22,21.5,22c0.276123,0,0.5-0.223877,0.5-0.5v-17C21.9987183,3.119812,20.880188,2.0012817,19.5,2z M21,20.2929688l-3.1464844-3.1464844C17.7597656,17.0526733,17.6326294,17,17.5,17h-13c-0.828064-0.0009155-1.4990845-0.671936-1.5-1.5v-11C3.0009155,3.671936,3.671936,3.0009155,4.5,3h15c0.828064,0.0009155,1.4990845,0.671936,1.5,1.5V20.2929688z M17.4541016,8H6.5458984c-0.276123,0-0.5,0.223877-0.5,0.5s0.223877,0.5,0.5,0.5h10.9082031c0.276123,0,0.5-0.223877,0.5-0.5S17.7302246,8,17.4541016,8z"/></svg>
-                                    <span class="pulse-danger"></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-popper="none">
-                                    <div class="drop-heading border-bottom">
-                                        <div class="d-flex">
-                                            <h6 class="mt-1 mb-0 fs-15 text-dark">Messages</h6>
-                                            <div class="ms-auto">
-                                                <span class="xm-title badge bg-secondary text-white fw-normal fs-11 badge-pill"> <a href="javascript:void(0);" class="showall-text text-white">Clear</a> </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="message-menu ps2 overflow-hidden">
-                                        <a class="dropdown-item d-flex" href="chat.html">
-                                            <span class="avatar avatar-md brround me-3 align-self-center cover-image" data-bs-image-src="../assets/images/users/1.jpg" style="background: url(&quot;../assets/images/users/1.jpg&quot;) center center;"></span>
-                                            <div class="wd-90p">
-                                                <div class="d-flex">
-                                                    <h5 class="mb-1">Hawaii Hilton</h5>
-                                                    <small class="text-muted ms-auto text-end"> 11.07 am </small>
-                                                </div>
-                                                <span class="fs-12 text-muted">Wanted to submit project by tomorrow....</span>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex" href="chat.html">
-                                            <span class="avatar avatar-md brround me-3 align-self-center cover-image" data-bs-image-src="../assets/images/users/15.jpg" style="background: url(&quot;../assets/images/users/15.jpg&quot;) center center;">
-                                            </span>
-                                            <div class="wd-90p">
-                                                <div class="d-flex">
-                                                    <h5 class="mb-1">Hermoini</h5>
-                                                    <small class="text-muted ms-auto text-end"> 12.32 am </small>
-                                                </div>
-                                                <span class="fs-12 text-muted">Planning for next big update......</span>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex" href="chat.html">
-                                            <span class="avatar avatar-md brround me-3 align-self-center cover-image" data-bs-image-src="../assets/images/users/12.jpg" style="background: url(&quot;../assets/images/users/12.jpg&quot;) center center;">
-                                            </span>
-                                            <div class="wd-90p">
-                                                <div class="d-flex">
-                                                    <h5 class="mb-1">Buenda osas</h5>
-                                                    <small class="text-muted ms-auto text-end"> 2:17 am </small>
-                                                </div>
-                                                <span class="fs-12 text-muted">Ready to submit future data...</span>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item d-flex" href="chat.html">
-                                            <span class="avatar avatar-md brround me-3 align-self-center cover-image" data-bs-image-src="../assets/images/users/4.jpg" style="background: url(&quot;../assets/images/users/4.jpg&quot;) center center;">
-                                            </span>
-                                            <div class="wd-90p">
-                                                <div class="d-flex">
-                                                    <h5 class="mb-1">Gabby gibson</h5>
-                                                    <small class="text-muted ms-auto text-end"> 7:55 am </small>
-                                                </div>
-                                                <span class="fs-12 text-muted">Cleared all statistics from last year......</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-divider m-0"></div>
-                                    <div class="text-center p-3">
-                                        <a class="btn btn-primary">View All Messages</a>
-                                    </div>
-                                </div>
-                            </div> --}}
-                            <!-- Messages-->
                             <div class="dropdown d-md-flex notifications">
                                 <a class="nav-link icon" data-bs-toggle="dropdown">
                                     <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M18,14.1V10c0-3.1-2.4-5.7-5.5-6V2.5C12.5,2.2,12.3,2,12,2s-0.5,0.2-0.5,0.5V4C8.4,4.3,6,6.9,6,10v4.1c-1.1,0.2-2,1.2-2,2.4v2C4,18.8,4.2,19,4.5,19h3.7c0.5,1.7,2,3,3.8,3c1.8,0,3.4-1.3,3.8-3h3.7c0.3,0,0.5-0.2,0.5-0.5v-2C20,15.3,19.1,14.3,18,14.1z M7,10c0-2.8,2.2-5,5-5s5,2.2,5,5v4H7V10z M13,20.8c-1.6,0.5-3.3-0.3-3.8-1.8h5.6C14.5,19.9,13.8,20.5,13,20.8z M19,18H5v-1.5C5,15.7,5.7,15,6.5,15h11c0.8,0,1.5,0.7,1.5,1.5V18z"/></svg>
@@ -433,12 +227,6 @@
                             @if(\Illuminate\Support\Facades\Auth::user())
                             <div class="dropdown d-md-flex profile-1">
                                 <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex animate">
-                                    <span>
-                                        {{-- <img src="{{asset("$userInfo->photo")}}" alt="avatar" class="avatar avatar-xl rounded"> --}}
-
-                                        <img src="{{asset(\Illuminate\Support\Facades\Auth::user()->photo)}}" alt="profile-user"
-                                            class="avatar  profile-user brround cover-image">
-                                    </span>
                                     <div class="text-center p-1 d-flex d-lg-none-max">
                                         <h6 class="mb-0" id="profile-heading">{{\Illuminate\Support\Facades\Auth::user()->name}}<i class="user-angle ms-1 fa fa-angle-down "></i></h6>
                                     </div>
@@ -488,7 +276,6 @@
                                 </div>
                             </li>
                             @endif
-
                             <!-- Profile -->
                         </div>
                     </div>
@@ -497,3 +284,5 @@
         </div>
     </div>
 </div>
+
+

@@ -36,9 +36,7 @@
         <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
     </div>
     <div id="app">
-        <nav class="">
             @include('layouts.header')
-        </nav>
 
         <div class="">
             @include('layouts.sidebar')
