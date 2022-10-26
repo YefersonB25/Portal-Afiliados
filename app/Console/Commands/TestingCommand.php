@@ -57,7 +57,7 @@ class TestingCommand extends Command
         $date           = $this->argument('start-date');
         $startDate      = Carbon::now()->parse($date)->startOfMonth()->format('Y-m-d\TH:i:s.000+00:00');
         $endDate        = Carbon::now()->addHours(5)->addMinutes(5)->format('Y-m-d\TH:i:s.000+00:00');
-        $TaxpayerId     = "1143413441-8";
+        $TaxpayerId     = "1143413441";
         $SupplierNumber = 11837; //*11837,11882,10343
         $CanceledFlag   = 'false';
         $PaidStatus     = 'Paid';
@@ -100,7 +100,8 @@ class TestingCommand extends Command
             $params = [
                 'q'        => "(TaxpayerId = '{$TaxpayerId}')",
                 'limit'    => '200',
-                'fields'   => 'SupplierId,TaxpayerId,SupplierPartyId,Supplier,SupplierNumber',
+                'fields'   => 'SupplierId,SupplierPartyId,TaxpayerId,Supplier,SupplierNumber;addresses:SupplierAddressId,AddressName,Email,PhoneNumber,Status,City,State',
+                // 'fields'   => 'SupplierId,TaxpayerId,SupplierPartyId,Supplier,SupplierNumber',
                 'onlyData' => 'true'
             ];
             $request = OracleRestErp::procurementGetSuppliers($params);
@@ -117,7 +118,7 @@ class TestingCommand extends Command
             $params = [
                 'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}') and (LastUpdateDate BETWEEN '{$startDate}' and '{$endDate}')",
                 'limit'    => '200',
-                'fields'   => 'InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence',
+                'fields'   => 'InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
                 'onlyData' => 'true'
             ];
             $response = OracleRestErp::getInvoiceSuppliers($params);
