@@ -131,7 +131,7 @@ class ConsultarAfiliadoController extends Controller
                 'onlyData' => 'true'
             ];
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
-        }else {
+        } else {
             $params = [
                 'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')",
                 'limit'    => '200',
@@ -148,13 +148,12 @@ class ConsultarAfiliadoController extends Controller
         if ($nInvoice == 0) {
             if ($request->PaidStatus == 'Paid') {
                 $status = 'Pagadas';
-            }elseif ($request->PaidStatus == 'Unpaid') {
+            } elseif ($request->PaidStatus == 'Unpaid') {
                 $status = 'No Pagadas';
-
-            }else {
+            } else {
                 $status = 'Parcialmente Pagadas';
             }
-            return response()->json(['success' => false ,'data' => 'No se encontraron facturas ' . $status]);
+            return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . $status]);
         }
 
         $invoce =  $invoice->json();
@@ -202,42 +201,42 @@ class ConsultarAfiliadoController extends Controller
         // }
     }
 
-    public function getSupplierNumber (Request $request)
+    public function getSupplierNumber(Request $request)
     {
         // $user = Auth::user()->id_parentesco;
 
         if ($request->id_parentesco > 0) {
             $getUserPadre = User::select('identification')->where('id', $request->id_parentesco)->first();
             $users = $getUserPadre->identification;
-        }else{
+        } else {
             $getUserPadre = User::select('identification')->where('id', $request->id_user)->first();
 
             $users = $getUserPadre->identification;
         }
 
-         $params = [
-             'q'        => "(TaxpayerId = '{$users}')",
-             'limit'    => '200',
-             'fields'   => 'SupplierNumber',
-             'onlyData' => 'true'
-         ];
-         $response = OracleRestErp::procurementGetSuppliers($params);
+        $params = [
+            'q'        => "(TaxpayerId = '{$users}')",
+            'limit'    => '200',
+            'fields'   => 'SupplierNumber',
+            'onlyData' => 'true'
+        ];
+        $response = OracleRestErp::procurementGetSuppliers($params);
 
-         $res = $response->json();
+        $res = $response->json();
 
-         //? Validanos que nos traiga el proveedor
-         if ($res['count'] == 0) {
-             // return response()->json(['message' => 'No se encontro el proveedor'], 404);
-              session()->flash('message','No se encontro el proveedor');
-              return back();
-         }
-         $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+        //? Validanos que nos traiga el proveedor
+        if ($res['count'] == 0) {
+            // return response()->json(['message' => 'No se encontro el proveedor'], 404);
+            session()->flash('message', 'No se encontro el proveedor');
+            return back();
+        }
+        $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
 
-         return response()->json(['success' => true,'data' => $SupplierNumber]);
-
+        return response()->json(['success' => true, 'data' => $SupplierNumber]);
     }
 
-    public function getInvoiceLines(Request $request){
+    public function getInvoiceLines(Request $request)
+    {
         $dataInvoiceFull = [];
         $data = [];
         $data = [
@@ -264,13 +263,11 @@ class ConsultarAfiliadoController extends Controller
                 'invoiceLines'  => $requesData,
                 'invoiceData'   => $data,
             ];
-            return response()->json(['success' => true,'data' => $dataInvoiceFull]);
+            return response()->json(['success' => true, 'data' => $dataInvoiceFull]);
         } catch (Exception $e) {
             Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
-            return response()->json(['success' => false,'data' => $e->getMessage()]);
-
+            return response()->json(['success' => false, 'data' => $e->getMessage()]);
         }
-
     }
     // public function codeaguardar(Request $request){
     //     dd($request);
@@ -341,10 +338,9 @@ class ConsultarAfiliadoController extends Controller
     //      SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
     //      return redirect('usuarios');
     // }
-
-    public function consultaOTM(Request $request)
+    public function queryNit($document)
     {
-        $identif = Crypt::decryptString($request->identif);
+        $identif = Crypt::decryptString($document);
 
         if (!is_numeric($identif)) {
             return false;
@@ -367,37 +363,96 @@ class ConsultarAfiliadoController extends Controller
 
         if ($y > 1) {
             $dv = 11 - $y;
-            $identificacion = $identif."-".$dv;
+            $identificacion = $identif . "-" . $dv;
         } else {
             $dv = $y;
-            $identificacion = $identif."-".$dv;
+            $identificacion = $identif . "-" . $dv;
         }
-        $params = [
-            'limit'   => '1',
-            'showPks' => 'true',
-            'fields'  => 'contactXid,firstName,lastName,emailAddress,phone1'
-        ];
+        return $identificacion;
+    }
+    public function consultaOTM(Request $request)
+    {
+        try {
+            $identificacion = self::queryNit($request->identif);
 
-        $response = OracleRestOtm::getLocationsCustomers($identificacion, $params);
-        $responseDataArray = $response->object();
-        if ($responseDataArray->count > 0) {
-            $result = $responseDataArray->items[0];
+            $paramsOtm = [
+                'limit'   => '1',
+                'expand' => 'contacts',
+                'showPks' => 'true',
+                'fields'  => 'locationXid,locationName,isActive,contacts'
+            ];
 
-            $arrayResult =
-                [
-                    'firstName'     => isset($result->firstName) ? $result->firstName : 'null',
-                    'lastName'      => isset($result->lastName) ? $result->lastName : 'null',
-                    'phone'         => isset($result->phone1) ? $result->phone1 : 'null',
-                    'emailAddress'  => isset($result->emailAddress) ? $result->emailAddress : 'null',
-                    'contactXid'  => isset($result->contactXid) ? $result->contactXid : 'null',
-                ];
-            return view('usuarios.consultar', ['arrayResult' => $arrayResult]);
-        } else {
-            // return back()->with('success', 'Login Successfully!');
-            // Session::flash('message', "Special message goes here");
+            $responseOtm = OracleRestOtm::getLocationsCustomers($identificacion, $paramsOtm);
+            $responseDataArrayOtm = $responseOtm->object();
+            if ($responseOtm->successful()) {
+                $resultLocationOtm = $responseDataArrayOtm;
+                $resultLocationContactsOtm = $resultLocationOtm->contacts->items[0];
+                $arrayResultOtm =
+                    [
+                        'locationXid'   => $resultLocationOtm->locationXid,
+                        'fullName'      => $resultLocationOtm->locationName,
+                        'isActive'      => $resultLocationOtm->isActive,
+                        'emailAddress'  => isset($resultLocationContactsOtm->emailAddress) ? $resultLocationContactsOtm->emailAddress : null,
+                        'phone'         => isset($resultLocationContactsOtm->phone1) ? $resultLocationContactsOtm->phone1 : null,
+                    ];
+            } else {
+                Log::error(__METHOD__ . '. General error: ' . $responseOtm->body());
+                $arrayResultOtm =
+                    [
+                        'locationXid'   => null,
+                        'fullName'      => null,
+                        'isActive'      => null,
+                        'emailAddress'  => null,
+                        'phone'         => null,
+                    ];
+            }
+            $paramsErp = [
+                'q'        => "(TaxpayerId = '{$identificacion}')",
+                'limit'    => '200',
+                'fields'   => 'TaxpayerId,Supplier,SupplierNumber;addresses:Email,PhoneNumber,Status',
+                'onlyData' => 'true'
+            ];
+
+            $responseErp = OracleRestErp::procurementGetSuppliers($paramsErp);
+            $responseDataArrayErp = $responseErp->object();
+            if ($responseDataArrayErp->count > 0) {
+                $resultErp = $responseDataArrayErp->items[0];
+                $resultAddressErp = $resultErp->addresses[0];
+
+                $arrayResultErp =
+                    [
+                        'TaxpayerId'    => $resultErp->TaxpayerId,
+                        'fullName'      => $resultErp->Supplier,
+                        'isActive'      => $resultAddressErp->Status,
+                        'emailAddress'  => $resultAddressErp->Email,
+                        'phone'         => $resultAddressErp->PhoneNumber
+                    ];
+            } else {
+                $arrayResultErp =
+                    [
+                        'TaxpayerId'    => null,
+                        'fullName'      => null,
+                        'isActive'      => null,
+                        'emailAddress'  => null,
+                        'phone'         => null
+                    ];
+            }
+
+            return view('usuarios.consultar', [
+                'arrayResultErp'  => $arrayResultErp,
+                'arrayResultOtm'  => $arrayResultOtm
+            ]);
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
             session()->flash('message', "Special message goes here");
             return back();
         }
+        // else {
+        //     // return back()->with('success', 'Login Successfully!');
+        //     // Session::flash('message', "Special message goes here");
+        //     session()->flash('message', "Special message goes here");
+        //     return back();
+        // }
     }
 
     /**

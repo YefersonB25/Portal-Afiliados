@@ -28,34 +28,34 @@ Route::get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::middleware(['auth:sanctum', 'verified', 'can:/portal/fourkitesReport'])->get('/portal/automatizacion_cliente/fourkitesReport', ReportFourkites::class)->name('/portal/automatizacion_cliente/fourkitesReport');
 
 //? Usuarios-Clientes
-Route::get('usuarios/confirmar/{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosConfirm'])->name('usuario.confirmar')->middleware('auth');
-Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario.rechazar')->middleware('auth');
-Route::get('usuarios', [UsuarioController::class, 'index'], 'can:/usuario.index')->name('usuario.index')->middleware('auth');
-Route::get('usuarios/eliminar/{idUsuario?}', [UsuarioController::class, 'destroy'], 'can:/usuario.index')->name('usuario.eliminar')->middleware('auth');
-Route::get('usuarios/config/{id}', [UsuarioController::class, 'checkout'])->name('check')->middleware('auth');
-
+Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('auth')->group(function () {
+    Route::get('/', 'index', 'can:/usuario.index')->name('usuario.index');
+    Route::get('config/{id}', 'checkout')->name('check');
+    Route::get('confirmar/{idUsuario?}', 'cambiarEstadoDatosConfirm')->name('usuario.confirmar');
+    Route::get('rechazar/{idUsuario?}', 'cambiarEstadoDatosRechaz')->name('usuario.rechazar');
+    Route::get('eliminar/{idUsuario?}', 'destroy', 'can:/usuario.index')->name('usuario.eliminar');
+    Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
+    Route::get('userAsociado/{id}', 'elininarUserAsociado')->name('userAsociado.delete');
+});
 
 //? Perfil - Usuarios Asociados
-Route::get('profile', [PerfilController::class, 'index'])->name('profile');
-Route::put('profile/{id}', [PerfilController::class, 'update'])->name('profile.update')->middleware('auth');
-Route::post('profile/userAsociado', [UsuarioController::class, 'createUserAsociado'])->name('userAsociado.create')->middleware('auth');
-Route::get('profile/userAsociado/{id}', [UsuarioAsociadoController::class, 'elininarUserAsociado'])->name('userAsociado.delete')->middleware('auth');
+Route::prefix('profile')->controller(PerfilController::class)->middleware('auth')->group(function () {
+    Route::get('/', 'index')->name('profile');
+    Route::put('{id}', 'update')->name('profile.update');
+});
 
 //? Consulta OTM
-Route::get('consultaOTM', [ConsultarAfiliadoController::class, 'index'])->name('consultar')->middleware('auth');
-Route::get('consultaOTM/afiliado/{identif}', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('consultar.afiliado')->middleware('auth');
-
+Route::prefix('consultaOTM')->controller(ConsultarAfiliadoController::class)->middleware('auth')->group(function () {
+    Route::get('/', 'index')->name('consultar');
+    Route::get('afiliado/{identif}', 'consultaOTM')->name('consultar.afiliado');
+});
 // Route::get('usuarios{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario')->middleware('auth');
 // Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'edit'])->name('usuario')->middleware('auth');
 
 //? Consultar code
-
-
 Route::get('customers', [BlogController::class, 'index', 'can:/blog'])->name('blogs.index')->middleware('auth');
 
 //y creamos un grupo de rutas protegidas para los controladores
