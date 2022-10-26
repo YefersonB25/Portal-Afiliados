@@ -383,6 +383,7 @@ class ConsultarAfiliadoController extends Controller
                         'emailAddress'  => null,
                         'phone'         => null,
                     ];
+
             }
             $paramsErp = [
                 'q'        => "(TaxpayerId = '{$identificacion}')",
