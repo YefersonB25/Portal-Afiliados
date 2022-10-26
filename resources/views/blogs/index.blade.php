@@ -20,13 +20,13 @@
                                                         Facturas pagadas
                                                     </button>
                                                     <button class="btn btn-success mb-3" target="" id="por-pagar">
-                                                        Facturas por pagar
+                                                        Facturas parcialmente pagadas
                                                     </button>
                                                     <button class="btn btn-warning mb-3" target="" id="pagadas-con-novedad">
-                                                        Facturas pagadas con novedad
+                                                        Facturas con saldo pendinte
                                                     </button>
                                                     <button class="btn btn-danger mb-3" target="" id="canceladas">
-                                                        Facturas canceladas
+                                                        Facturas Anuladas
                                                     </button>
                                                 </div>
 
@@ -215,9 +215,6 @@
 <script>
     $('#pagadas').on('click', function(e){
         e.preventDefault();
-        window.addEventListener("load", function (e) {
-                $("#global-loader2").fadeOut("slow");
-            })
         tblColectionData =  $('#TablePagadas').DataTable({
             "ordering": true,
             retrieve: true,
