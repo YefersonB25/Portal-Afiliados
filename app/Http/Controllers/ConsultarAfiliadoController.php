@@ -241,13 +241,24 @@ class ConsultarAfiliadoController extends Controller
         $dataInvoiceFull = [];
         $data = [];
         $data = [
-            'Description'       => $request->Description,
-            'InvoiceDate'       => $request->InvoiceDate,
-            'InvoiceType'       => $request->InvoiceType,
-            'InvoiceAmount'     => $request->InvoiceAmount,
-            'AmountPaid'        => $request->AmountPaid,
-            'InvoiceId'         => $request->InvoiceId,
-            'Supplier'          => $request->Supplier,
+            'Description'                       => $request->Description,
+            'InvoiceDate'                       => $request->InvoiceDate,
+            'InvoiceType'                       => $request->InvoiceType,
+            'InvoiceAmount'                     => $request->InvoiceAmount,
+            'AmountPaid'                        => $request->AmountPaid,
+            'InvoiceId'                         => $request->InvoiceId,
+            'Supplier'                          => $request->Supplier,
+            'InvoiceNumber'                     => $request->InvoiceNumber,
+            'CanceledFlag'                      => $request->CanceledFlag,
+            'SupplierSite'                      => $request->SupplierSite,
+            'Party'                             => $request->Party,
+            'PartySite'                         => $request->PartySite,
+            'PaidStatus'                        => $request->PaidStatus,
+            'ValidationStatus'                  => $request->ValidationStatus,
+            'AccountingDate'                    => $request->AccountingDate,
+            'DocumentCategory'                  => $request->DocumentCategory,
+            'DocumentSequence'                  => $request->DocumentSequence,
+
         ];
 
         try {

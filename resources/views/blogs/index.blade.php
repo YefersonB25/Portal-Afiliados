@@ -122,74 +122,11 @@
 
                                                         </div><!--end row-->
                                                     </div><!--end card-body-->
-                                                    {{-- <div class="card-body">
+                                                    <div class="card-body" id="body">
 
-                                                        @if($payable->CanceledFlag == 1)
-                                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                            <strong>@lang('locale.Canceled')!</strong> @lang('locale.The invoice has been canceled').
-                                                        </div>
-                                                        @endif
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="float-left">
-                                                                    <address class="font-13">
-                                                                        <strong class="font-14"> @lang('locale.Supplier') :</strong><br>
-                                                                        {{ $payable->Supplier }}<br>
-                                                                        {{ $payable->SupplierSite }}<br>
-                                                                    </address>
-                                                                    <address class="font-13">
-                                                                        <strong class="font-14">@lang('locale.Third-party sites'):</strong><br>
-                                                                        {{ $payable->Party }}<br>
-                                                                        {{ $payable->PartySite }}<br>
-                                                                    </address>
-                                                                </div>
-                                                            </div><!--end col-->
 
-                                                            <div class="col-md-4">
-                                                                <div class="float-left">
-                                                                    <h6><b>@lang('locale.Invoice Type') :</b> {{ __('locale.'.$payable->InvoiceType) }}</h6>
-                                                                    <h6 class="mb-0"><b>@lang('locale.Payment status') :</b>
-                                                                        @switch($payable->PaidStatus)
-                                                                            @case('Paid')
-                                                                                <i class="fas fa-hand-holding-usd mr-2 text-success font-16"></i>
-                                                                                @break
+                                                        <div class="row" id="row1">
 
-                                                                            @case('Partially paid')
-                                                                                <i class="fas fa-hand-holding-usd mr-2 text-warning font-16"></i>
-                                                                                @break
-
-                                                                            @default
-                                                                                <i class="fas fa-hand-holding-usd mr-2 text-danger font-16"></i>
-                                                                        @endswitch
-
-                                                                        {{ __('locale.'.$payable->PaidStatus) }}</h6>
-
-                                                                    <h6><b>@lang('locale.Validation Status') :</b>
-                                                                        @switch($payable->ValidationStatus)
-                                                                            @case('Validated')
-                                                                                <i class="far fa-check-circle mr-2 text-success font-16"></i>
-                                                                                @break
-
-                                                                            @case('Not validated')
-                                                                                <i class="far fa-check-circle mr-2 text-warning font-16"></i>
-                                                                                @break
-
-                                                                            @default
-                                                                                <i class="far fa-check-circle mr-2 text-danger font-16"></i>
-                                                                        @endswitch
-                                                                        {{ __('locale.'.$payable->ValidationStatus) }}</h6>
-                                                                </div>
-                                                            </div><!--end col-->
-
-                                                            <div class="col-md-4">
-                                                                <div class="text-left bg-light p-3 mb-3">
-                                                                    <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
-                                                                    <h6 class="font-13">@lang('locale.Accounting Date') : {{ $payable->AccountingDate }}</h6>
-                                                                    <h6 class="font-13">@lang('locale.Document Category') :  {{ __('locale.'.$payable->DocumentCategory) }}</h6>
-                                                                    <h6 class="font-13">@lang('locale.Document Sequence') : {{ $payable->DocumentSequence }}</h6>
-
-                                                                </div>
-                                                            </div><!--end col-->
                                                         </div><!--end row-->
 
                                                         <div class="row">
@@ -202,16 +139,8 @@
                                                                                 <th>@lang('locale.Amount')</th>
                                                                             </tr><!--end tr-->
                                                                         </thead>
-                                                                        <tbody>
-                                                                            @foreach ($payable_lines as $line)
-                                                                            <tr>
-                                                                                <td >
-                                                                                    <h5 class="mt-0 mb-1">{{ __('locale.'.$line->LineType) }}</h5>
-                                                                                    <p class="mb-0 text-muted">{{ $line->Description }}.</p>
-                                                                                </td>
-                                                                                <td>$ {{ number_format($line->LineAmount, 2) }}</td>
-                                                                            </tr><!--end tr-->
-                                                                            @endforeach
+                                                                        <tbody id="row2">
+
 
                                                                         </tbody>
                                                                     </table><!--end table-->
@@ -226,7 +155,7 @@
                                                             </div> <!--end col-->
                                                         </div><!--end row-->
                                                         <hr>
-                                                        <div class="row">
+                                                        {{-- <div class="row">
                                                             <div class="col-lg-12">
                                                                 <div class="table-responsive project-invoice">
                                                                     <table class="table table-bordered mb-0">
@@ -255,20 +184,15 @@
                                                                     </table><!--end table-->
                                                                 </div>  <!--end /div-->
                                                             </div>  <!--end col-->
-                                                        </div><!--end row-->
+                                                        </div><!--end row--> --}}
 
                                                         <hr>
                                                         <div class="row d-flex justify-content-center">
                                                             <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
                                                                 <div class="text-center"><small class="font-12">Tractocar Logistics SAS.</small></div>
                                                             </div><!--end col-->
-                                                            <div class="col-lg-12 col-xl-4">
-                                                                <div class="float-right d-print-none">
-                                                                    <a href="#" class="btn btn-gradient-danger">@lang('locale.Close')</a>
-                                                                </div>
-                                                            </div><!--end col-->
                                                         </div><!--end row-->
-                                                    </div><!--end card-body--> --}}
+                                                    </div><!--end card-body-->
                                                 </div><!--end card-->
                                             </div><!--end col-->
                                         </div><!--end row-->
@@ -305,44 +229,15 @@
                 {title: "Tipo de Factura", data: "InvoiceType" },
                 {title: "Fecha Factura", data: "InvoiceDate" },
 
-                { data: "InvoiceNumber" },
-                { data: "CanceledFlag" },
-                { data: "Supplier" },
-                { data: "SupplierSite" },
-                { data: "Party" },
-                { data: "PartySite" },
-                { data: "PaidStatus" },
-                { data: "ValidationStatus" },
-                { data: "AccountingDate" },
-                { data: "DocumentCategory" },
-                { data: "DocumentSequence" }
-
             ],
             columnDefs: [
-                {
-                    responsivePriority: 1,
-                    targets: 0,
-                    visible: false,
-                    searchable: false,
-                },
+                { responsivePriority: 1, targets: 0 },
                 { responsivePriority: 1, targets: 1 },
                 { responsivePriority: 1, targets: 2 },
                 { responsivePriority: 1, targets: 3 },
                 { responsivePriority: 1, targets: 4 },
                 { responsivePriority: 1, targets: 5 },
                 { responsivePriority: 1, targets: 6 },
-
-                { responsivePriority: 1, targets: 7 },
-                { responsivePriority: 1, targets: 8 },
-                { responsivePriority: 1, targets: 9 },
-                { responsivePriority: 1, targets: 10 },
-                { responsivePriority: 1, targets: 11 },
-                { responsivePriority: 1, targets: 12 },
-                { responsivePriority: 1, targets: 13 },
-                { responsivePriority: 1, targets: 14 },
-                { responsivePriority: 1, targets: 15 },
-                { responsivePriority: 1, targets: 16 },
-
             ],
             responsive: {
                 details: 'false',
@@ -360,7 +255,7 @@
             success: function(response) {
                 let datos = response.data;
                 if (response.success == true) {
-                    console.log(datos);
+                    // console.log(datos);
                     tblColectionData.clear().draw();
                     tblColectionData.rows.add(datos).draw();
 
@@ -391,6 +286,9 @@
         $(tbody).on("click", "button.ver", function(){
             let invoice = table.row($(this).parents("tr") ).data();
             plantillaDate = '';
+            plantiilabody = '';
+            plantillarow1 = '';
+            plantillarow2 = '';
             $.ajax({
                 type: "POST",
                 url: "{{ route('invoice.lines') }}",
@@ -398,34 +296,99 @@
                 success : function(response) {
                     let invoice = response.data.invoiceData
                     let lines = response.data.invoiceLines
+
                     if (response.success == true) {
-                        console.log(invoice);
+                        // console.log(invoice);
+                        // console.log(invoice.PaidStatus);
+
                         $('#date').html('')
                         plantillaDate = `
-
-                        <div class="col-md-4 align-self-center">
-                            <img src="{{asset('assets/images/logos-tractocar/negative-blue-small.png')}}" alt="logo-small" class="logo-sm mr-2" height="56">
-                            {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
-                            <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
-                        </div><!--end col-->
-                        <div class="col-md-4 ms-auto">
-                            <ul class="list-inline mb-0 contact-detail float-right" >
-                                <li class="list-inline-item">
-                                    <div class="pl-3">
-                                        <h6 class="mb-0"><b>@lang('locale.Invoice Date') : ${invoice.InvoiceDate}</b> </h6>
-                                        <h6><b>@lang('locale.Invoice Number'):</b> # ${invoice.InvoiceId}</h6>
-                                    </div>
-                                </li>
-                                <li class="list-inline-item">
-                                    <div class="pl-3">
-                                        <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> $${invoice.InvoiceAmount}</h5>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div><!--end col-->
+                            <div class="col-md-4 align-self-center">
+                                <img src="{{asset('assets/images/logos-tractocar/negative-blue-small.png')}}" alt="logo-small" class="logo-sm mr-2" height="56">
+                                {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
+                                <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
+                            </div><!--end col-->
+                            <div class="col-md-4 ms-auto">
+                                <ul class="list-inline mb-0 contact-detail float-right" >
+                                    <li class="list-inline-item">
+                                        <div class="pl-3">
+                                            <h6 class="mb-0"><b>@lang('locale.Invoice Date') : ${invoice.InvoiceDate}</b> </h6>
+                                            <h6><b>@lang('locale.Invoice Number'):</b> # ${invoice.InvoiceId}</h6>
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <div class="pl-3">
+                                            <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> $${invoice.InvoiceAmount}</h5>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--end col-->
 
                         `
                         $('#date').append(plantillaDate)
+
+                        if (invoice.CanceledFlag == 1) {
+
+                            plantiilabody = `
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>@lang('locale.Canceled')!</strong> @lang('locale.The invoice has been canceled').
+                                    </div>
+                            `
+                            $('#body').append(plantiilabody)
+                        }
+                        plantillarow1 = `
+                            <div class="col-md-4">
+                                <div class="float-left">
+                                    <address class="font-13">
+                                        <strong class="font-14"> @lang('locale.Supplier') :</strong><br>
+                                        ${ invoice.Supplier }<br>
+                                        ${ invoice.SupplierSite }<br>
+                                    </address>
+                                    <address class="font-13">
+                                        <strong class="font-14">@lang('locale.Third-party sites'):</strong><br>
+                                        ${ invoice.Party }<br>
+                                        ${ invoice.PartySite }<br>
+                                    </address>
+                                </div>
+                            </div><!--end col-->
+
+                            <div class="col-md-4">
+                                <div class="float-left">
+                                    <h6><b>@lang('locale.Invoice Type') :</b> "${invoice.InvoiceType}"</h6>
+                                    <h6 class="mb-0"><b>@lang('locale.Payment status') : </b>
+                                        ${invoice.PaidStatus}
+                                    </h6>
+
+                                    <h6><b>@lang('locale.Validation Status') :</b>
+                                        ${invoice.ValidationStatus}
+                                    </h6>
+                                </div>
+                            </div><!--end col-->
+
+                            <div class="col-md-4">
+                                <div class="text-left bg-light p-3 mb-3">
+                                    <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
+                                    <h6 class="font-13">@lang('locale.Accounting Date') : ${ invoice.AccountingDate }</h6>
+                                    <h6 class="font-13">@lang('locale.Document Category') : ${invoice.DocumentCategory}</h6>
+                                    <h6 class="font-13">@lang('locale.Document Sequence') : ${ invoice.DocumentSequence }</h6>
+                                </div>
+                            </div><!--end col-->
+                        `
+                        $('#row1').append(plantillarow1)
+
+                        lines.forEach(line => {
+
+                            plantillarow2 = `
+                                <tr>
+                                    <td >
+                                        <h5 class="mt-0 mb-1">${ line.LineType }</h5>
+                                        <p class="mb-0 text-muted">${ line.Description }.</p>
+                                    </td>
+                                    <td>$ ${ line.LineAmount }</td>
+                                </tr><!--end tr-->
+                            `
+                            $('#row2').append(plantillarow2)
+                        });
 
                     }
                 },
