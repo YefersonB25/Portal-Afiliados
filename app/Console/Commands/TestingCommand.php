@@ -101,7 +101,6 @@ class TestingCommand extends Command
                 'q'        => "(TaxpayerId = '{$TaxpayerId}')",
                 'limit'    => '200',
                 'fields'   => 'SupplierId,SupplierPartyId,TaxpayerId,Supplier,SupplierNumber;addresses:SupplierAddressId,AddressName,Email,PhoneNumber,Status,City,State',
-                // 'fields'   => 'SupplierId,TaxpayerId,SupplierPartyId,Supplier,SupplierNumber',
                 'onlyData' => 'true'
             ];
             $request = OracleRestErp::procurementGetSuppliers($params);
