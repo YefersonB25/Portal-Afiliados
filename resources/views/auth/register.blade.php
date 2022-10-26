@@ -70,7 +70,7 @@
                                         type="number"
                                         class="input100{{ $errors->has('identification') ? ' is-invalid' : '' }}"
                                         name="identification"
-                                        tabindex="1" placeholder="Numero Identificacion o NIT" value="{{ old('identification') }}"
+                                        tabindex="1" placeholder="Numero Identificacion" value="{{ old('identification') }}"
                                         autofocus required>
                                     <div class="invalid-feedback">
                                         {{ $errors->first('identification') }}
@@ -79,6 +79,12 @@
                                     <span class="symbol-input100">
                                         <i class="fa fa-address-card" aria-hidden="true"></i>
                                     </span>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="seleccionNit" value="true" id="seleccionNit">
+                                    <label class="form-check-label" for="seleccionNit">
+                                        Nit
+                                    </label>
                                 </div>
 
                                 <div class="wrap-input100 validate-input">

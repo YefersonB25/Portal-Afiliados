@@ -400,10 +400,17 @@ class ConsultarAfiliadoController extends Controller
         }
         return $identificacion;
     }
+
     public function consultaOTM(Request $request)
     {
         try {
-            $identificacion = self::queryNit($request->identif);
+
+            $seleccion_nit = Crypt::decryptString($request->seleccion_nit);
+            if ($seleccion_nit == true) {
+                $identificacion = self::queryNit($request->identif);
+            }else{
+                $identificacion = Crypt::decryptString($request->identif);
+            }
 
             $paramsOtm = [
                 'limit'   => '1',
@@ -435,6 +442,7 @@ class ConsultarAfiliadoController extends Controller
                         'emailAddress'  => null,
                         'phone'         => null,
                     ];
+
             }
             $paramsErp = [
                 'q'        => "(TaxpayerId = '{$identificacion}')",

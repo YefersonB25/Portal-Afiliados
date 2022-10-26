@@ -78,9 +78,10 @@
                                                                 </td> --}}
                                                                 <td>
                                                                     @php
-                                                                        $identificacion = Crypt::encryptString($usuario->identification)
+                                                                        $identificacion = Crypt::encryptString($usuario->identification);
+                                                                        $seleccion_nit  = Crypt::encryptString($usuario->seleccion_nit);
                                                                     @endphp
-                                                                    <a href="consultaOTM/afiliado/{{$identificacion}}" class="btn btn-info openBtn" id="consultaOTM">
+                                                                    <a href="consultaOTM/afiliado/{{$identificacion}}/{{$seleccion_nit}}" class="btn btn-info openBtn" id="consultaOTM">
                                                                         <i class="fa fa-weibo" aria-hidden="true"></i>
                                                                     </a>
                                                                     @if ($usuario->estado != 2)

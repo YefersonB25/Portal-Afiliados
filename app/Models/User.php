@@ -28,6 +28,7 @@ class User extends Authenticatable
         'photo',
         'name',
         'identification',
+        'seleccion_nit',
         'telefono',
         'identificationPhoto',
         'estado',
