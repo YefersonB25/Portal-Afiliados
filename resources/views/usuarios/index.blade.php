@@ -8,15 +8,41 @@
                 <div class="app-content main-content mt-0">
                     <div class="side-app">
                         <!-- CONTAINER -->
-                        <div class="main-container container-fluid">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <div class="row g-2">
+                                        <h3 class="card-title">Fitros</h3>
+                                            <form class="form-horizontal" method="post" action="{{route('user.filtros')}}" novalidate>
+                                                @csrf
+                                                <div class="row mb-2">
+                                                    <div class="col-md">
+                                                        <label for="estado" class="form-label">Filtrar por estado</label>
+                                                        <select type="text" name="estado" id="estado" class="form-select" tabindex="3" value="{{ old('estado') }}" autofocus onInput="validarInput()">
+                                                            <option selected>Todos</option>
+                                                            @foreach ($estados as $estado)
+                                                                <option value="{{$estado->id}}">{{$estado->descripcion}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div class="invalid-feedback">
+                                                            {{ $errors->first('estado') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" id="btnPrEditSave">Filtrar</button>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Row -->
                             <div class="row row-sm">
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-header border-bottom">
-                                            <h3 class="card-title">File Export</h3>
+                                            <h3 class="card-title">Tabla de solicitudes</h3>
                                             {{-- <a class="btn btn-warning" href="{{ route('usuarios.create') }}">Nuevo</a> --}}
                                         </div>
+
                                         <div class="card-body">
                                             <div class="table-responsive export-table">
                                                 <table id="file-datatable" class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
@@ -208,6 +234,7 @@
                 document.getElementById('foto').attributes[1].nodeValue = url
             })
         }
+
 
         // //? Cargamos los datos que traemos de OTM al modal en el controlador
         // $('.openBtn').on('click',function(){

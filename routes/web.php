@@ -39,6 +39,8 @@ Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('aut
     Route::get('eliminar/{idUsuario?}', 'destroy', 'can:/usuario.index')->name('usuario.eliminar');
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
     Route::get('userAsociado/{id}', 'elininarUserAsociado')->name('userAsociado.delete');
+    Route::post('filtros', 'filtros')->name('user.filtros');
+
 });
 
 //? Perfil - Usuarios Asociados

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\SendEmailRequest;
+use App\Models\Estado;
 use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role;
@@ -43,7 +44,8 @@ class UsuarioController extends Controller
         //Con paginación
 
         $usuarios = User::where('estado', '<' , 4)->orderBy('estado')->get();
-        return view('usuarios.index',compact('usuarios'));
+        $estados = Estado::all();
+        return view('usuarios.index',['usuarios' => $usuarios, 'estados' => $estados]);
 
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
@@ -159,9 +161,18 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function filtros(Request $request)
     {
-        //
+        $this->validate($request, [
+            'estado' => 'required',
+        ]);
+        if ($request->estado  != 'Todos') {
+            $usuarios = User::where('estado', $request->estado)->get();
+            $estados = Estado::all();
+
+            return view('usuarios.index',['usuarios' => $usuarios, 'estados' => $estados]);
+        }
+        return redirect('usuarios');
     }
 
     /**
