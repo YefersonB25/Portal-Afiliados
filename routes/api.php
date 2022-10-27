@@ -18,13 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('consultaOTM/afiliado', [ConsultarAfiliadoController::class, 'consultaOTM'])->name('afiliado.consulta');
-Route::post('facturas/pagadas', [ConsultarAfiliadoController::class, 'customers'])->name('falturas.pagadas');
-Route::post('facturas/total', [ConsultarAfiliadoController::class, 'TotalAmount'])->name('total');
-Route::post('suppliernumber', [ConsultarAfiliadoController::class, 'getSupplierNumber'])->name('supplier.number');
-Route::post('invoiceLines', [ConsultarAfiliadoController::class, 'getInvoiceLines'])->name('invoice.lines');
-
-
+Route::controller(ConsultarAfiliadoController::class)->group(function () {
+    Route::post('facturas/total', 'TotalAmount')->name('total');
+    Route::post('invoiceLines', 'getInvoiceLines')->name('invoice.lines');
+    Route::post('facturas/pagadas', 'customers')->name('falturas.pagadas');
+    Route::post('suppliernumber', 'getSupplierNumber')->name('supplier.number');
+    Route::post('consultaOTM/afiliado', 'consultaOTM')->name('afiliado.consulta');
+});
 
 
 
@@ -51,8 +51,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::middleware('auth:sanctum')->post('suppliers', [ConsultarAfiliadoController::class, 'suppliers']);
     // Route::middleware('auth:sanctum')->get('customers', [ConsultarAfiliadoController::class, 'customers']);
-
-
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 });

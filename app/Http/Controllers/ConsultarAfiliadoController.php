@@ -8,20 +8,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\OracleRestErp;
 use App\Http\Helpers\OracleRestOtm;
-use App\Http\Helpers\SendEmailRequest;
+use App\Http\Helpers\RequestNit;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
-use PhpParser\Node\Stmt\TryCatch;
 
 class ConsultarAfiliadoController extends Controller
 {
@@ -122,31 +115,21 @@ class ConsultarAfiliadoController extends Controller
      */
     public function customers(Request $request)
     {
+        $params      =  [
+            'limit'    => '200',
+            'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
+            'onlyData' => 'true'
+        ];
         //$SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
         try {
             if ($request->PaidStatus == '') {
-                $params = [
-                    'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')",
-                    'limit'    => '200',
-                    'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,PaymentMethod,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
-                    'onlyData' => 'true'
-                ];
-                $invoice = OracleRestErp::getInvoiceSuppliers($params);
+                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')";
             } else {
-                $params = [
-                    'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')",
-                    'limit'    => '200',
-                    'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,PaymentMethod,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
-                    'onlyData' => 'true'
-                ];
-                $invoice = OracleRestErp::getInvoiceSuppliers($params);
+                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')";
             }
-            //return response()->json(['success' => true, 'data', 'data' => $invoice]);
-
+            $invoice = OracleRestErp::getInvoiceSuppliers($params);
             //? Validamos que nos traiga las facturas
-            $nInvoice = $invoice['count'];
-
-            if ($nInvoice == 0) {
+            if ($invoice['count'] == 0) {
                 if ($request->PaidStatus == 'Paid') {
                     $status = 'Pagadas';
                 } elseif ($request->PaidStatus == 'Unpaid') {
@@ -165,7 +148,6 @@ class ConsultarAfiliadoController extends Controller
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
             return response()->json(['message' => 'Algo fallo con la comunicacion']);
         }
-
     }
 
     public function TotalAmount(Request $request)
@@ -197,7 +179,6 @@ class ConsultarAfiliadoController extends Controller
         } catch (\Throwable $th) {
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
             return response()->json(['message' => 'Algo fallo con la comunicacion']);
-
         }
 
         // $params = [
@@ -250,7 +231,6 @@ class ConsultarAfiliadoController extends Controller
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
             return response()->json(['message' => 'Algo fallo con la comunicacion']);
         }
-
     }
 
     public function getInvoiceLines(Request $request)
@@ -330,7 +310,6 @@ class ConsultarAfiliadoController extends Controller
         // dd($request->getParam('numeroIdentificacion'));
         // print_r($request->getParam('numeroIdentificacion'));
         // $identificacion = $request;
-
     }
 
     /**
@@ -368,50 +347,12 @@ class ConsultarAfiliadoController extends Controller
     //      SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
     //      return redirect('usuarios');
     // }
-    public function queryNit($document)
-    {
-        $identif = Crypt::decryptString($document);
-
-        if (!is_numeric($identif)) {
-            return false;
-        }
-        $arr = array(
-            1 => 3, 4 => 17, 7 => 29, 10 => 43, 13 => 59, 2 => 7, 5 => 19,
-            8 => 37, 11 => 47, 14 => 67, 3 => 13, 6 => 23, 9 => 41, 12 => 53, 15 => 71
-        );
-        $x = 0;
-        $y = 0;
-        $z = strlen($identif);
-        $dv = '';
-
-        for ($i = 0; $i < $z; $i++) {
-            $y = substr($identif, $i, 1);
-            $x += ($y * $arr[$z - $i]);
-        }
-
-        $y = $x % 11;
-
-        if ($y > 1) {
-            $dv = 11 - $y;
-            $identificacion = $identif . "-" . $dv;
-        } else {
-            $dv = $y;
-            $identificacion = $identif . "-" . $dv;
-        }
-        return $identificacion;
-    }
 
     public function consultaOTM(Request $request)
     {
         try {
-
-            $seleccion_nit = Crypt::decryptString($request->seleccion_nit);
-            if ($seleccion_nit == true) {
-                $identificacion = self::queryNit($request->identif);
-            }else{
-                $identificacion = Crypt::decryptString($request->identif);
-            }
-
+            $identificacion = RequestNit::getNit($request->identif);
+            // dd($identificacion);
             $paramsOtm = [
                 'limit'   => '1',
                 'expand' => 'contacts',
@@ -456,7 +397,6 @@ class ConsultarAfiliadoController extends Controller
             if ($responseDataArrayErp->count > 0) {
                 $resultErp = $responseDataArrayErp->items[0];
                 $resultAddressErp = $resultErp->addresses[0];
-
                 $arrayResultErp =
                     [
                         'TaxpayerId'    => $resultErp->TaxpayerId,
@@ -475,7 +415,6 @@ class ConsultarAfiliadoController extends Controller
                         'phone'         => null
                     ];
             }
-
             return view('usuarios.consultar', [
                 'arrayResultErp'  => $arrayResultErp,
                 'arrayResultOtm'  => $arrayResultOtm
@@ -485,12 +424,6 @@ class ConsultarAfiliadoController extends Controller
             session()->flash('message', "Special message goes here");
             return back();
         }
-        // else {
-        //     // return back()->with('success', 'Login Successfully!');
-        //     // Session::flash('message', "Special message goes here");
-        //     session()->flash('message', "Special message goes here");
-        //     return back();
-        // }
     }
 
     /**

@@ -13,7 +13,7 @@ class BlogController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:/blog')->only('index');
+        $this->middleware('permission:/blog')->only('index');
         //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
         //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
@@ -32,35 +32,33 @@ class BlogController extends Controller
         if ($userParent > 0) {
             $getUserPadre = User::select('identification')->where('id', $userParent)->first();
             $users = $getUserPadre->identification;
-        }else{
+        } else {
             $getUserPadre = User::select('identification')->where('id', $user)->first();
 
             $users = $getUserPadre->identification;
         }
 
         $users = $getUserPadre->identification;
-         $params = [
-             'q'        => "(TaxpayerId = '{$users}')",
-             'limit'    => '200',
-             'fields'   => 'SupplierNumber',
-             'onlyData' => 'true'
-         ];
-         $response = OracleRestErp::procurementGetSuppliers($params);
+        $params = [
+            'q'        => "(TaxpayerId = '{$users}')",
+            'limit'    => '200',
+            'fields'   => 'SupplierNumber',
+            'onlyData' => 'true'
+        ];
+        $response = OracleRestErp::procurementGetSuppliers($params);
 
-         $res = $response->json();
+        $res = $response->json();
 
-         //? Validanos que nos traiga el proveedor
-         if ($res['count'] == 0) {
-             // return response()->json(['message' => 'No se encontro el proveedor'], 404);
-              session()->flash('message','No se encontro el proveedor');
-              return back();
-         }
-         $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
-
-
-      return view('blogs.index', ['SupplierNumber' => $SupplierNumber]);
+        //? Validanos que nos traiga el proveedor
+        if ($res['count'] == 0) {
+            // return response()->json(['message' => 'No se encontro el proveedor'], 404);
+            session()->flash('message', 'No se encontro el proveedor');
+            return back();
+        }
+        $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
 
 
+        return view('blogs.index', ['SupplierNumber' => $SupplierNumber]);
     }
 
     /**
@@ -110,7 +108,7 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        return view('blogs.editar',compact('blog'));
+        return view('blogs.editar', compact('blog'));
     }
 
     /**
@@ -122,7 +120,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-         request()->validate([
+        request()->validate([
             'titulo' => 'required',
             'contenido' => 'required',
         ]);

@@ -2,210 +2,247 @@
 
 @section('content')
 
-    <body class="ltr app sidebar-mini light-mode">
-        <div class="page">
-            <div class="page-main">
-                <div class="app-content main-content mt-0">
-					<div class="side-app">
-						<!-- CONTAINER -->
-                        <body class="ltr app sidebar-mini light-mode">
-                            <div class="row row-sm">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <!-- CONTAINER -->
-                                            <div class="main-container container-fluid">
-                                                <div>
-                                                    <button class="btn btn-primary mb-3" target="" id="pagadas">
-                                                        Facturas pagadas
-                                                    </button>
-                                                    <button class="btn btn-success mb-3" target="" id="por-pagar">
-                                                        Facturas parcialmente pagadas
-                                                    </button>
-                                                    <button class="btn btn-warning mb-3" target="" id="pagadas-con-novedad">
-                                                        Facturas con saldo pendinte
-                                                    </button>
-                                                    <button class="btn btn-danger mb-3" target="" id="canceladas">
-                                                        Facturas Anuladas
-                                                    </button>
-                                                </div>
+<body class="ltr app sidebar-mini light-mode">
+    <div class="page">
+        <div class="page-main">
+            <div class="app-content main-content mt-0">
+                <div class="side-app">
+                    <!-- CONTAINER -->
 
-                                                <div class="card" id="oculto-pagadas" style="display: none">
-                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                        PAGADAS</h3>
-                                                    <div class="card-body">
-                                                        <div class="row row-sm">
-                                                            <div class="col-lg-12">
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        <div class="table-responsive">
-                                                                            <table id="TablePagadas"  class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card" id="oculto-por-pagar" style="display: none">
-                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS POR
-                                                        PAGAR</h3>
-                                                    <div class="card-body">
-                                                        <div class="row row-sm">
-                                                            <div class="col-lg-12">
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        <div class="table-responsive">
-                                                                            <table id="TablePorPagar" class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
-                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                        PAGADAS CON NOVEDAD</h3>
-                                                    <div class="card-body">
-                                                        <div class="row row-sm">
-                                                            <div class="col-lg-12">
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        <div class="table-responsive">
-                                                                            <table id="TablePagadasNovedad" class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card" id="oculto-canceladas" style="display: none">
-                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                        CANCELADAS</h3>
-                                                    <div class="card-body">
-                                                        <div class="row row-sm">
-                                                            <div class="col-lg-12">
-                                                                <div class="card">
-                                                                    <div class="card-body">
-                                                                        <div class="table-responsive">
-                                                                            <table id="TableCanceladas" class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                    <body class="ltr app sidebar-mini light-mode">
+                        <div class="row row-sm">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- CONTAINER -->
+                                        <div class="main-container container-fluid">
+                                            <div>
+                                                <button class="btn btn-primary mb-3" target="" id="pagadas">
+                                                    Facturas pagadas
+                                                </button>
+                                                <button class="btn btn-success mb-3" target="" id="por-pagar">
+                                                    Facturas parcialmente pagadas
+                                                </button>
+                                                <button class="btn btn-warning mb-3" target="" id="pagadas-con-novedad">
+                                                    Facturas con saldo pendinte
+                                                </button>
+                                                <button class="btn btn-danger mb-3" target="" id="canceladas">
+                                                    Facturas Anuladas
+                                                </button>
                                             </div>
+
+                                            <div class="card" id="oculto-pagadas" style="display: none">
+                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                    PAGADAS</h3>
+                                                <div class="card-body">
+                                                    <div class="row row-sm">
+                                                        <div class="col-lg-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="table-responsive">
+                                                                        <table id="TablePagadas"
+                                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card" id="oculto-por-pagar" style="display: none">
+                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS POR
+                                                    PAGAR</h3>
+                                                <div class="card-body">
+                                                    <div class="row row-sm">
+                                                        <div class="col-lg-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="table-responsive">
+                                                                        <table id="TablePorPagar"
+                                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
+                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                    PAGADAS CON NOVEDAD</h3>
+                                                <div class="card-body">
+                                                    <div class="row row-sm">
+                                                        <div class="col-lg-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="table-responsive">
+                                                                        <table id="TablePagadasNovedad"
+                                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card" id="oculto-canceladas" style="display: none">
+                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                    CANCELADAS</h3>
+                                                <div class="card-body">
+                                                    <div class="row row-sm">
+                                                        <div class="col-lg-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="table-responsive">
+                                                                        <table id="TableCanceladas"
+                                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                                <div id="global-loader1">
-                                    <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
-                                </div>
-                                <div class="modal-dialog modal-xl">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-lg-12 mx-auto">
-                                                <div class="card">
-                                                    <div class="card-body invoice-head">
-                                                        <div class="row" id="date">
+                        </div>
+                        <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
+                            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                            <div id="global-loader1">
+                                <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
+                            </div>
+                            <div class="modal-dialog modal-xl">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-12 mx-auto">
+                                            <div class="card">
+                                                <div class="card-body invoice-head">
+                                                    <div class="row" id="date">
 
-                                                        </div><!--end row-->
-                                                    </div><!--end card-body-->
-                                                    <div class="card-body" id="body">
+                                                    </div>
+                                                    <!--end row-->
+                                                </div>
+                                                <!--end card-body-->
+                                                <div class="card-body" id="body">
 
-                                                        <div class="row" id="row1">
-                                                        </div><!--end row-->
+                                                    <div class="row" id="row1">
+                                                    </div>
+                                                    <!--end row-->
 
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="table-responsive project-invoice">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <thead class="thead-light">
-                                                                            <tr>
-                                                                                <th>@lang('locale.Description')</th>
-                                                                                <th>@lang('locale.Amount')</th>
-                                                                            </tr><!--end tr-->
-                                                                        </thead>
-                                                                        <tbody id="row2">
-
-
-                                                                        </tbody>
-                                                                    </table><!--end table-->
-                                                                </div>  <!--end /div-->
-                                                            </div>  <!--end col-->
-                                                        </div><!--end row-->
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="table-responsive project-invoice">
+                                                                <table class="table table-bordered mb-0">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th>@lang('locale.Description')</th>
+                                                                            <th>@lang('locale.Amount')</th>
+                                                                        </tr>
+                                                                        <!--end tr-->
+                                                                    </thead>
+                                                                    <tbody id="row2">
 
 
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-lg-12">
-                                                                <h5 class="mt-4"><i class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments') :</h5>
-                                                            </div> <!--end col-->
-                                                        </div><!--end row-->
-                                                        <hr>
-                                                        {{-- <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="table-responsive project-invoice">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <thead class="thead-light">
-                                                                            <tr>
-                                                                                <th>@lang('locale.Payment Method') /@lang('locale.Bank Account') </th>
-                                                                                <th>@lang('locale.Due Date')</th>
-                                                                                <th>@lang('locale.Unpaid Amount')</th>
-                                                                                <th>@lang('locale.Gross Amount')</th>
-                                                                            </tr><!--end tr-->
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @foreach ($payable_installments as $installment)
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <h5 class="mt-0 mb-1">{{ $installment->PaymentMethod }}</h5>
-                                                                                    <p class="mb-0 text-muted">{{ $installment->BankAccount }}.</p>
-                                                                                </td>
-                                                                                <td>{{ $installment->DueDate }}</td>
-                                                                                <td>$ {{ number_format($installment->UnpaidAmount, 2) }}</td>
-                                                                                <td>$ {{ number_format($installment->GrossAmount, 2) }}</td>
-                                                                            </tr><!--end tr-->
-                                                                            @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                                <!--end table-->
+                                                            </div>
+                                                            <!--end /div-->
+                                                        </div>
+                                                        <!--end col-->
+                                                    </div>
+                                                    <!--end row-->
 
-                                                                        </tbody>
-                                                                    </table><!--end table-->
-                                                                </div>  <!--end /div-->
-                                                            </div>  <!--end col-->
-                                                        </div><!--end row--> --}}
 
-                                                        <hr>
-                                                        <div class="row d-flex justify-content-center">
-                                                            <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
-                                                                <div class="text-center"><small class="font-12">Tractocar Logistics SAS.</small></div>
-                                                            </div><!--end col-->
-                                                        </div><!--end row-->
-                                                    </div><!--end card-body-->
-                                                </div><!--end card-->
-                                            </div><!--end col-->
-                                        </div><!--end row-->
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-lg-12">
+                                                            <h5 class="mt-4"><i
+                                                                    class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
+                                                                :</h5>
+                                                        </div>
+                                                        <!--end col-->
+                                                    </div>
+                                                    <!--end row-->
+                                                    <hr>
+                                                    {{-- <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="table-responsive project-invoice">
+                                                                <table class="table table-bordered mb-0">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th>@lang('locale.Payment Method')
+                                                                                /@lang('locale.Bank Account') </th>
+                                                                            <th>@lang('locale.Due Date')</th>
+                                                                            <th>@lang('locale.Unpaid Amount')</th>
+                                                                            <th>@lang('locale.Gross Amount')</th>
+                                                                        </tr>
+                                                                        <!--end tr-->
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($payable_installments as $installment)
+                                                                        <tr>
+                                                                            <td>
+                                                                                <h5 class="mt-0 mb-1">{{
+                                                                                    $installment->PaymentMethod }}</h5>
+                                                                                <p class="mb-0 text-muted">{{
+                                                                                    $installment->BankAccount }}.</p>
+                                                                            </td>
+                                                                            <td>{{ $installment->DueDate }}</td>
+                                                                            <td>$ {{
+                                                                                number_format($installment->UnpaidAmount,
+                                                                                2) }}</td>
+                                                                            <td>$ {{
+                                                                                number_format($installment->GrossAmount,
+                                                                                2) }}</td>
+                                                                        </tr>
+                                                                        <!--end tr-->
+                                                                        @endforeach
+
+                                                                    </tbody>
+                                                                </table>
+                                                                <!--end table-->
+                                                            </div>
+                                                            <!--end /div-->
+                                                        </div>
+                                                        <!--end col-->
+                                                    </div>
+                                                    <!--end row--> --}}
+
+                                                    <hr>
+                                                    <div class="row d-flex justify-content-center">
+                                                        <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
+                                                            <div class="text-center"><small class="font-12">Tractocar
+                                                                    Logistics SAS.</small></div>
+                                                        </div>
+                                                        <!--end col-->
+                                                    </div>
+                                                    <!--end row-->
+                                                </div>
+                                                <!--end card-body-->
+                                            </div>
+                                            <!--end card-->
+                                        </div>
+                                        <!--end col-->
                                     </div>
+                                    <!--end row-->
                                 </div>
                             </div>
-                        </body>
-                    </div>
+                        </div>
+                    </body>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
