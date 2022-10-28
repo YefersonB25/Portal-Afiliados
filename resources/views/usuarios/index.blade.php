@@ -107,9 +107,11 @@
                                                                         $identificacion = Crypt::encryptString($usuario->identification);
                                                                         $seleccion_nit  = Crypt::encryptString($usuario->seleccion_nit);
                                                                     @endphp
+                                                                    @if ($usuario->estado != 4)
                                                                     <a href="consultaOTM/afiliado/{{$identificacion}}/{{$seleccion_nit}}" class="btn btn-info openBtn" id="consultaOTM">
                                                                         <i class="fa fa-weibo" aria-hidden="true"></i>
                                                                     </a>
+                                                                    @endif
                                                                     @if ($usuario->estado != 2)
                                                                         <a href="{{ route('usuario.confirmar', ['idUsuario' => $usuario->id]) }}" class="btn btn-primary">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">

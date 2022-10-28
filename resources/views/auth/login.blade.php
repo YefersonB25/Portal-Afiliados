@@ -8,11 +8,11 @@
     </div>
 @endif --}}
 @section('content')
-    <body class="ltr">
+    <body class="ltr logo_img">
         <!-- CONTAINER OPEN -->
         <div class="col col-login mx-auto text-center">
             <a href="" class="text-center">
-                <img src={{ asset('assets/images/brand/logo.png') }} class="header-brand-img" alt="">
+                {{-- <img src={{ asset('assets/images/brand/logo.png') }} class="header-brand-img" alt=""> --}}
             </a>
         </div>
         <div class="container-login100">

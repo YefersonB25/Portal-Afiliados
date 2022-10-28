@@ -19,7 +19,14 @@
     <!--- FONT-ICONS CSS -->
     <link href={{asset('assets/css/icons.css')}} rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-
+    <style>
+        .logo_img{
+            background-image: url("{{asset('assets/images/brand/full-color-xxlarge.jpg')}}");
+            background-size: cover;
+            background-repeat:no-repeat;
+            background-position: center center;
+        }
+    </style>
 </head>
 
 <body>
