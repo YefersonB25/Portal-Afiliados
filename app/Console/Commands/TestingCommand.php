@@ -33,7 +33,7 @@ class TestingCommand extends Command
                                 -false          = Vigente
                             InvoiceType: Tipo de pago.
                                 Prepayment     = Anticipo,
-                                Standard       = Normal Positiva,
+                                Standard       = Normal Positiva(Estandar),
                                 Credit memo    = Nota Credito';
 
     /**
@@ -64,6 +64,7 @@ class TestingCommand extends Command
         $InvoiceId      = 100706;
         $options        = $this->options();
         $ArrayPaidStatus = ['Paid', 'Unpaid', 'Partially paid'];
+        $InviceType = 'standard';
 
         switch ($options['dates']) {
             case 'supplier':
@@ -72,7 +73,7 @@ class TestingCommand extends Command
                 break;
             case 'invoices':
                 $this->alert('Get Invoices Information');
-                $response = self::getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus, $startDate, $endDate);
+                $response = self::getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus, $startDate, $endDate, $InviceType);
                 break;
             case 'total-amount':
                 $this->alert("Get Total Amount $PaidStatus");
@@ -111,11 +112,11 @@ class TestingCommand extends Command
         }
     }
 
-    protected function getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus, $startDate, $endDate)
+    protected function getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus, $startDate, $endDate, $InviceType)
     {
         try {
             $params = [
-                'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}') and (LastUpdateDate BETWEEN '{$startDate}' and '{$endDate}')",
+                'q'        => "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$CanceledFlag}') and (PaidStatus = '{$PaidStatus}') and (LastUpdateDate BETWEEN '{$startDate}' and '{$endDate}' and (InviceType = '{$InviceType}')",
                 'limit'    => '200',
                 'fields'   => 'InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
                 'onlyData' => 'true'

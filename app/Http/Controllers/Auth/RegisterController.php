@@ -85,15 +85,27 @@ class RegisterController extends Controller
             $extensionIdentif = $data['identificationPhoto']->getClientOriginalExtension();
         }
 
+        if (in_array("seleccionNit", $data)) {
+            $id = User::insertGetId([
+                'name'                  => $data['name'],
+                'email'                 => $data['email'],
+                'identification'        => $data['identification'],
+                'seleccion_nit'          => asset($data['seleccionNit'] ? $data['seleccionNit'] : 'null'),
+                'telefono'              => $data['telefono'],
+                'password'              => Hash::make($data['password']),
+            ]);
+        }else{
+            $id = User::insertGetId([
+                'name'                  => $data['name'],
+                'email'                 => $data['email'],
+                'identification'        => $data['identification'],
+                'seleccion_nit'         => "false",
+                'telefono'              => $data['telefono'],
+                'password'              => Hash::make($data['password']),
+            ]);
+        }
         //? Capturamos el id del user registrdo
-        $id = User::insertGetId([
-            'name'                  => $data['name'],
-            'email'                 => $data['email'],
-            'identification'        => $data['identification'],
-            'seleccion_nit'          => $data['seleccionNit'],
-            'telefono'              => $data['telefono'],
-            'password'              => Hash::make($data['password']),
-        ]);
+
 
         //? le asignamos el rol
         $usuario = User::findOrFail($id);
@@ -106,7 +118,7 @@ class RegisterController extends Controller
         }
         if (!empty($data['identificationPhoto'])) {
             $carpetaidentif = "proveedores/$id/identificacion";
-            Storage::putFileAs("public/$carpetaidentif", $data['photo'] , 'photo_documento.'. $extensionIdentif);
+            Storage::putFileAs("public/$carpetaidentif", $data['identificationPhoto'] , 'photo_documento.'. $extensionIdentif);
         }
 
         //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
@@ -122,6 +134,13 @@ class RegisterController extends Controller
             User::where('id', $id)
                        ->update([
                        'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                       ]);
+        }
+        if (!empty($data['identificationPhoto'])) {
+
+            User::where('id', $id)
+                       ->update([
+                       'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
         }
 

@@ -28,32 +28,41 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>CEDULA</td>
-                                                        <td></td>
+                                                        <td>{{$arrayResultLocal['identificacion']}}</td>
                                                         <td>{{$arrayResultOtm['locationXid']}}</td>
                                                         <td>{{$arrayResultErp['TaxpayerId']}}</td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>NOMBRE</td>
-                                                        <td></td>
+                                                        <td>{{$arrayResultLocal['name']}}</td>
                                                         <td>{{$arrayResultOtm['fullName']}}</td>
                                                         <td>{{$arrayResultErp['fullName']}}</td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>EMAIL</td>
-                                                        <td></td>
+                                                        <td>{{$arrayResultLocal['email']}}</td>
                                                         <td>{{$arrayResultOtm['emailAddress']}}</td>
                                                         <td>{{$arrayResultErp['emailAddress']}}</td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>TELEFONO</td>
-                                                        <td></td>
+                                                        <td>{{$arrayResultLocal['telefono']}}</td>
                                                         <td>{{$arrayResultOtm['phone']}}</td>
                                                         <td>{{$arrayResultErp['phone']}}</td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>ESTADO</td>
-                                                        <td></td>
-
+                                                        <td>
+                                                            <span class="badge rounded-pill bg-{{($arrayResultLocal['estado']) != 3 ? 'success' :
+                                                            'danger' }} my-1">{{($arrayResultLocal['estado']) == 2 ?
+                                                                'ACTIVO' :
+                                                                'DESACTIVADO'}}
+                                                            </span>
+                                                        </td>
                                                         <td>
                                                             <span class="badge rounded-pill bg-{{($arrayResultOtm['isActive']) == 1 ? 'success' :
                                                             'danger' }} my-1">{{($arrayResultOtm['isActive']) == 1 ?

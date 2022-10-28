@@ -34,6 +34,25 @@
                                             <div class="card" id="oculto-pagadas" style="display: none">
                                                 <h3 class="text-center" style="text-decoration: underline">FACTURAS
                                                     PAGADAS</h3>
+                                                <div class="card-header border-bottom">
+                                                    <div class="row g-2">
+                                                        <h3 class="card-title">Fitros</h3>
+                                                        <div class="form-horizontal">
+                                                            <div class="row mb-2">
+                                                                <div class="col-md">
+                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
+                                                                    <select type="text" name="tipoFactura" id="tipoFactura" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                        <option selected value="">Todos</option>
+                                                                        <option value="Prepayment">Anticipo</option>
+                                                                        <option value="Standard">Estandar</option>
+                                                                        <option value="Credit memo">Nota Credito</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr">Filtrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="card-body">
                                                     <div class="row row-sm">
                                                         <div class="col-lg-12">
@@ -54,6 +73,25 @@
                                             <div class="card" id="oculto-por-pagar" style="display: none">
                                                 <h3 class="text-center" style="text-decoration: underline">FACTURAS POR
                                                     PAGAR</h3>
+                                                <div class="card-header border-bottom">
+                                                    <div class="row g-2">
+                                                        <h3 class="card-title">Fitros</h3>
+                                                        <div class="form-horizontal">
+                                                            <div class="row mb-2">
+                                                                <div class="col-md">
+                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
+                                                                    <select type="text" name="tipoFactura" id="tipoFactura1" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                        <option selected value="">Todos</option>
+                                                                        <option value="Prepayment">Anticipo</option>
+                                                                        <option value="Standard">Estandar</option>
+                                                                        <option value="Credit memo">Nota Credito</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr1">Filtrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="card-body">
                                                     <div class="row row-sm">
                                                         <div class="col-lg-12">
@@ -74,6 +112,25 @@
                                             <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
                                                 <h3 class="text-center" style="text-decoration: underline">FACTURAS
                                                     PAGADAS CON NOVEDAD</h3>
+                                                <div class="card-header border-bottom">
+                                                    <div class="row g-2">
+                                                        <h3 class="card-title">Fitros</h3>
+                                                        <div class="form-horizontal">
+                                                            <div class="row mb-2">
+                                                                <div class="col-md">
+                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
+                                                                    <select type="text" name="tipoFactura" id="tipoFactura2" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                        <option selected value="">Todos</option>
+                                                                        <option value="Prepayment">Anticipo</option>
+                                                                        <option value="Standard">Estandar</option>
+                                                                        <option value="Credit memo">Nota Credito</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr2">Filtrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="card-body">
                                                     <div class="row row-sm">
                                                         <div class="col-lg-12">
@@ -90,10 +147,28 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="card" id="oculto-canceladas" style="display: none">
                                                 <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                    CANCELADAS</h3>
+                                                CANCELADAS</h3>
+                                                <div class="card-header border-bottom">
+                                                    <div class="row g-2">
+                                                        <h3 class="card-title">Fitros</h3>
+                                                        <div class="form-horizontal">
+                                                            <div class="row mb-2">
+                                                                <div class="col-md">
+                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
+                                                                    <select type="text" name="tipoFactura" id="tipoFactura3" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                        <option selected value="">Todos</option>
+                                                                        <option value="Prepayment">Anticipo</option>
+                                                                        <option value="Standard">Estandar</option>
+                                                                        <option value="Credit memo">Nota Credito</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr3">Filtrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="card-body">
                                                     <div class="row row-sm">
                                                         <div class="col-lg-12">
@@ -250,9 +325,9 @@
 @section('scripts')
 
 <script>
-    $('#pagadas').on('click', function(e){
-        e.preventDefault();
-        tblColectionData =  $('#TablePagadas').DataTable({
+
+    let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType, Card ) {
+        tblColectionData =  $(TableName).DataTable({
             "ordering": true,
             retrieve: true,
             processing: true,
@@ -287,31 +362,89 @@
             url: "{{ route('falturas.pagadas') }}",
             data: {
                 SupplierNumber: {{$SupplierNumber}},
-                PaidStatus: 'Paid',
-                FlagStatus: 'false'
+                FlagStatus: FlagStatus,
+                PaidStatus: PaidStatus,
+                InvoiceType: InvoiceType
             },
-
             success: function(response) {
                 let datos = response.data;
+
                 if (response.success == true) {
-                    // console.log(datos);
                     tblColectionData.clear().draw();
                     tblColectionData.rows.add(datos).draw();
 
-                    if( $("#oculto-pagadas").css("display") == 'none' )
-                    $("#oculto-pagadas").show("slow");
-                    else
-                    $("#oculto-pagadas").hide("slow");
+                    if (Card == "#oculto-pagadas" ) {
+                        console.log('1');
+                        if( $("#oculto-pagadas").css("display") == 'none' )
+                        $("#oculto-pagadas").show("slow");
+                        else
+                        $("#oculto-pagadas").hide("slow");
 
-                    // validamos que no se muestren todas al tiempo
-                    if($("#oculto-canceladas").css("display") != 'none')
-                    $("#oculto-canceladas").hide("slow");
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
 
-                    if($("#oculto-pagadas-con-novedad").css("display") != 'none')
-                    $("#oculto-pagadas-con-novedad").hide("slow");
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
 
-                    if($("#oculto-por-pagar").css("display") != 'none')
-                    $("#oculto-por-pagar").hide("slow");
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+                    }
+                    else if(Card == "#oculto-por-pagar")  {
+                        console.log('2');
+
+                        if( $("#oculto-por-pagar").css("display") == 'none' )
+                        $("#oculto-por-pagar").show("slow");
+                        else
+                        $("#oculto-por-pagar").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+                    }
+                    else if (Card == "#oculto-pagadas-con-novedad") {
+                        console.log('3');
+
+                        if( $("#oculto-pagadas-con-novedad").css("display") == 'none' )
+                        $("#oculto-pagadas-con-novedad").show("slow");
+                        else
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+                    }
+                    else if(Card == "#oculto-canceladas"){
+                        console.log('4');
+
+                        if( $("#oculto-canceladas").css("display") == 'none' )
+                        $("#oculto-canceladas").show("slow");
+                        else
+                        $("#oculto-canceladas").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+                    }
+
                 }else {
                     Swal.fire({
                         icon: 'error',
@@ -324,272 +457,61 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Algo fallo con la comunicacion!',
+                    text: 'Algo fallo con la respuesta!',
                 })
                 console.error(error);
             }
         })
+    }
+
+    $('#btnPrFiltr').on('click', function(e){
+        var InvoiceType = document.getElementById("tipoFactura").value;
+        tblColectionData.clear().draw();
+        LoadData("Paid", "false", "#TablePagadas",InvoiceType,"");
+        obtener_data("#TablePagadas tbody", tblColectionData);
+    });
+    $('#btnPrFiltr1').on('click', function(e){
+        var InvoiceType = document.getElementById("tipoFactura1").value;
+        tblColectionData.clear().draw();
+        LoadData("Unpaid", "false", "#TablePorPagar",InvoiceType,"");
+        obtener_data("#TablePorPagar tbody", tblColectionData);
+    });
+    $('#btnPrFiltr2').on('click', function(e){
+        var InvoiceType = document.getElementById("tipoFactura2").value;
+        tblColectionData.clear().draw();
+        LoadData("Partially paid", "false", "#TablePagadasNovedad",InvoiceType,"");
+        obtener_data("#TablePagadasNovedad tbody", tblColectionData);
+    });
+    $('#btnPrFiltr3').on('click', function(e){
+        e.preventDefault();
+        var InvoiceType = document.getElementById("tipoFactura3").value;
+        tblColectionData.clear().draw();
+        LoadData("", "true", "#TableCanceladas",InvoiceType,"");
+        obtener_data("#TableCanceladas tbody", tblColectionData);
+    })
+
+    $('#pagadas').on('click', function(e){
+        e.preventDefault();
+        LoadData("Paid", "false", "#TablePagadas","","#oculto-pagadas");
         obtener_data("#TablePagadas tbody", tblColectionData);
     });
 
     $("#por-pagar").click(function(e) {
         e.preventDefault();
-        tblColectionData =  $('#TablePorPagar').DataTable({
-            "ordering": true,
-            retrieve: true,
-            paging: false,
-            processing: true,
-            searchDelay: 500,
-            responsive: true,
-            info: true,
-            columns: [
-                {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' data-bs-toggle='modal' href='#exampleModalToggle' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
-                {title: "ID Factura", data: "InvoiceId" },
-                {title: "Descripción", data: "Description" },
-                {title: "Valor Factura", data: "InvoiceAmount" },
-                {title: "Monto Pagado", data: "AmountPaid" },
-                {title: "Tipo de Factura", data: "InvoiceType" },
-                {title: "Fecha Factura", data: "InvoiceDate" }
-
-            ],
-            columnDefs: [
-                { responsivePriority: 1, targets: 0 },
-                { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 1, targets: 2 },
-                { responsivePriority: 1, targets: 3 },
-                { responsivePriority: 1, targets: 4 },
-                { responsivePriority: 1, targets: 5 },
-                { responsivePriority: 1, targets: 6 },
-
-            ],
-            responsive: {
-                details: 'false',
-            },
-        });
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('falturas.pagadas') }}",
-            data: {
-                SupplierNumber: {{$SupplierNumber}},
-                PaidStatus: 'Unpaid',
-                FlagStatus: 'false'
-            },
-
-            success: function(response) {
-                var datos = response.data;
-                if (response.success == true) {
-
-                    tblColectionData.clear().draw();
-                    tblColectionData.rows.add(datos).draw();
-
-                    if( $("#oculto-por-pagar").css("display") == 'none' )
-                    $("#oculto-por-pagar").show("slow");
-                    else
-                    $("#oculto-por-pagar").hide("slow");
-
-                    // validamos que no se muestren todat al tiempo
-                    if($("#oculto-pagadas").css("display") != 'none')
-                    $("#oculto-pagadas").hide("slow");
-
-                    if($("#oculto-pagadas-con-novedad").css("display") != 'none')
-                    $("#oculto-pagadas-con-novedad").hide("slow");
-
-                    if($("#oculto-canceladas").css("display") != 'none')
-                    $("#oculto-canceladas").hide("slow");
-
-                }else
-                    Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: datos,
-                })
-            },
-            error: function(error){
-                Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Algo fallo con la comunicacion!',
-                })
-                console.error(error);
-            }
-        })
+        LoadData("Unpaid", "false", "#TablePorPagar","","#oculto-por-pagar");
         obtener_data("#TablePorPagar tbody", tblColectionData);
-
     });
 
     $("#pagadas-con-novedad").click(function(e) {
         e.preventDefault();
-        tblColectionData =  $('#TablePagadasNovedad').DataTable({
-            "ordering": true,
-            retrieve: true,
-            paging: false,
-            processing: true,
-            searchDelay: 500,
-            responsive: true,
-            info: true,
-            columns: [
-                {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' data-bs-toggle='modal' href='#exampleModalToggle' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
-                {title: "ID Factura", data: "InvoiceId" },
-                {title: "Descripción", data: "Description" },
-                {title: "Valor Factura", data: "InvoiceAmount" },
-                {title: "Monto Pagado", data: "AmountPaid" },
-                {title: "Tipo de Factura", data: "InvoiceType" },
-                {title: "Fecha Factura", data: "InvoiceDate" }
-
-            ],
-            columnDefs: [
-                { responsivePriority: 1, targets: 0 },
-                { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 1, targets: 2 },
-                { responsivePriority: 1, targets: 3 },
-                { responsivePriority: 1, targets: 4 },
-                { responsivePriority: 1, targets: 5 },
-                { responsivePriority: 1, targets: 6 },
-
-            ],
-            responsive: {
-                details: 'false',
-            },
-        });
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('falturas.pagadas') }}",
-            data: {
-                SupplierNumber: {{$SupplierNumber}},
-                PaidStatus: 'Partially paid',
-                FlagStatus: 'false'
-            },
-
-            success: function(response) {
-                var datos = response.data;
-
-                if (response.success == true) {
-
-                    tblColectionData.clear().draw();
-                    tblColectionData.rows.add(datos).draw();
-
-                    if( $("#oculto-pagadas-con-novedad").css("display") == 'none' )
-                    $("#oculto-pagadas-con-novedad").show("slow");
-                    else
-                    $("#oculto-pagadas-con-novedad").hide("slow");
-
-                    // validamos que no se muestren todat al tiempo
-                    if($("#oculto-pagadas").css("display") != 'none')
-                    $("#oculto-pagadas").hide("slow");
-
-                    if($("#oculto-canceladas").css("display") != 'none')
-                    $("#oculto-canceladas").hide("slow");
-
-                    if($("#oculto-por-pagar").css("display") != 'none')
-                    $("#oculto-por-pagar").hide("slow");
-
-                }else
-                    Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: datos,
-                })
-                    // Swal.fire(datos)
-            },
-            error: function(error){
-                Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Algo fallo con la comunicacion!',
-                })
-                console.error(error);
-            }
-        })
+        LoadData("Partially paid", "false", "#TablePagadasNovedad","","#oculto-pagadas-con-novedad");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
-
     });
 
     $("#canceladas").click(function(e) {
         e.preventDefault();
-        tblColectionData =  $('#TableCanceladas').DataTable({
-            "ordering": true,
-            retrieve: true,
-            processing: true,
-            searchDelay: 500,
-            responsive: true,
-            info: true,
-            columns: [
-                {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' data-bs-toggle='modal' href='#exampleModalToggle' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
-                {title: "ID Factura", data: "InvoiceId" },
-                {title: "Descripción", data: "Description" },
-                {title: "Valor Factura", data: "InvoiceAmount" },
-                {title: "Monto Pagado", data: "AmountPaid" },
-                {title: "Tipo de Factura", data: "InvoiceType" },
-                {title: "Fecha Factura", data: "InvoiceDate" }
-
-            ],
-            columnDefs: [
-                { responsivePriority: 1, targets: 0 },
-                { responsivePriority: 1, targets: 1 },
-                { responsivePriority: 1, targets: 2 },
-                { responsivePriority: 1, targets: 3 },
-                { responsivePriority: 1, targets: 4 },
-                { responsivePriority: 1, targets: 5 },
-                { responsivePriority: 1, targets: 6 },
-
-            ],
-            responsive: {
-                details: 'false',
-            },
-        });
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('falturas.pagadas') }}",
-            data: {
-                SupplierNumber: {{$SupplierNumber}},
-                FlagStatus: 'true'
-            },
-
-            success: function(response) {
-                var datos = response.data;
-
-                if (response.success == true) {
-
-                    tblColectionData.clear().draw();
-                    tblColectionData.rows.add(datos).draw();
-
-                    // var sum = $('#TableCanceladas').DataTable().column(2).data().sum();
-                    // $('#total').html(sum);
-                    if( $("#oculto-canceladas").css("display") == 'none' )
-                    $("#oculto-canceladas").show("slow");
-                    else
-                    $("#oculto-canceladas").hide("slow");
-
-                    // validamos que no se muestren todat al tiempo
-                    if($("#oculto-pagadas").css("display") != 'none')
-                    $("#oculto-pagadas").hide("slow");
-
-                    if($("#oculto-pagadas-con-novedad").css("display") != 'none')
-                    $("#oculto-pagadas-con-novedad").hide("slow");
-
-                    if($("#oculto-por-pagar").css("display") != 'none')
-                    $("#oculto-por-pagar").hide("slow");
-
-                }else
-                    Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: datos,
-                })
-                    // Swal.fire(datos)
-
-            },
-            error: function(error){
-                Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Algo fallo con la comunicacion!',
-                })
-                console.error(error);
-            }
-        })
+        LoadData("", "true", "#TableCanceladas","","#oculto-canceladas");
         obtener_data("#TableCanceladas tbody", tblColectionData);
-
     });
 
     let obtener_data = function(tbody, table){

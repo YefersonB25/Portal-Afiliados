@@ -83,8 +83,8 @@
                                                                     @if (!empty($usuario->identificationPhoto))
                                                                     <span>
                                                                         {{-- {{ Storage::get("$usuario->photo") }} --}}
-                                                                        <a href=""  data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                                                        <a href=""  data-bs-toggle="modal" data-bs-target="#exampleModalPdf" class="aPdf">
+                                                                            <i src="{{asset("$usuario->identificationPhoto")}}" class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                                                         </a>
                                                                     </span>
                                                                     @else
@@ -143,56 +143,33 @@
                                         <!-- Modal imagen -->
                                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Foto Perfil</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Foto Perfil</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <embed id="foto" src="" width="100%" height="100%">
+                                                    </div>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <embed id="foto" src="" width="100%" height="100%">
-                                                </div>
-                                                <div class="modal-footer">
-                                                {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button> --}}
-                                                </div>
-                                            </div>
                                             </div>
                                         </div>
-                                        <!-- Modal pdf -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Foto Perfil</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <embed id="foto" src="" width="100%" height="100%">
-                                                </div>
-                                                <div class="modal-footer">
-                                                {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button> --}}
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <!-- Modal Datos OTM -->
-                                        {{-- <div class="modal fade" id="staticBackdropOTM" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Datos de OTM</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <!-- Modal pdf -->
+                                        <div class="modal fade" id="exampleModalPdf" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Copia de documento</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <embed id="pdfdoc" src="" type="application/pdf" width="100%" height="500" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            </div>
-                                        </div> --}}
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -223,6 +200,7 @@
             })
 
         </script> --}}
+
     <script>
         //? cargamos la imagen en el modal
         let alinks = document.getElementsByClassName('aImg')
@@ -232,6 +210,16 @@
                 e.preventDefault()
                 let url = this.children[0].attributes[0].nodeValue
                 document.getElementById('foto').attributes[1].nodeValue = url
+            })
+        }
+
+        let alinksPdf = document.getElementsByClassName('aPdf')
+
+        for (const alinkPdf of alinksPdf) {
+            alinkPdf.addEventListener('click', function(e){
+                e.preventDefault()
+                let url = this.children[0].attributes[0].nodeValue
+                document.getElementById('pdfdoc').attributes[1].nodeValue = url
             })
         }
 

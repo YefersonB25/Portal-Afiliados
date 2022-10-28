@@ -122,12 +122,23 @@ class ConsultarAfiliadoController extends Controller
         ];
         //$SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
         try {
+
             if ($request->PaidStatus == '') {
-                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')";
-            } else {
+                if($request->InvoiceType == ''){
+                    $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')";
+                }else {
+                    $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (InvoiceType = '{$request->InvoiceType}')";
+                }
+            }else{
                 $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')";
             }
+            if($request->InvoiceType != '' && $request->PaidStatus != '') {
+                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}')";
+            }
+
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
+            // return response()->json(['success' => true, 'data' => $invoice['count']]);
+
             //? Validamos que nos traiga las facturas
             if ($invoice['count'] == 0) {
                 if ($request->PaidStatus == 'Paid') {
@@ -137,16 +148,21 @@ class ConsultarAfiliadoController extends Controller
                 } else {
                     $status = 'Parcialmente Pagadas';
                 }
-                return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . $status]);
+                if(!empty($request->InvoiceType)) {
+                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . $status . ' con el tipo de factura ' . $request->InvoiceType ]);
+                }else{
+                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . $status]);
+                }
             }
 
             $invoce =  $invoice->json();
-            // return response()->json(['data' => $invoce]);
+            // return response()->json(['success' => true, 'data' => $invoce]);
+
             return response()->json(['success' => true, 'data' => $invoce['items']]);
             // return response()->json(array('semestres' => $semestres), 200);
         } catch (\Throwable $th) {
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
-            return response()->json(['message' => 'Algo fallo con la comunicacion']);
+            return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
         }
     }
 
@@ -351,8 +367,14 @@ class ConsultarAfiliadoController extends Controller
     public function consultaOTM(Request $request)
     {
         try {
-            $identificacion = RequestNit::getNit($request->identif);
-            // dd($identificacion);
+            $idenUserInfo = Crypt::decryptString($request->identif);
+            $seleccion_nit = Crypt::decryptString($request->seleccion_nit);
+            if ($seleccion_nit == true) {
+                $identificacion = RequestNit::getNit($request->identif);
+            }else{
+                $identificacion = Crypt::decryptString($request->identif);
+            }
+
             $paramsOtm = [
                 'limit'   => '1',
                 'expand' => 'contacts',
@@ -363,6 +385,17 @@ class ConsultarAfiliadoController extends Controller
             $responseOtm = OracleRestOtm::getLocationsCustomers($identificacion, $paramsOtm);
             $responseDataArrayOtm = $responseOtm->object();
             if ($responseOtm->successful()) {
+
+                $userData = User::where('identification', $idenUserInfo)->first();
+
+                $arrayResultLocal = [
+                    'identificacion'    => $userData->identification,
+                    'name'              => $userData->name,
+                    'email'             => $userData->email,
+                    'telefono'          => $userData->telefono,
+                    'estado'            => $userData->estado,
+                ];
+
                 $resultLocationOtm = $responseDataArrayOtm;
                 $resultLocationContactsOtm = $resultLocationOtm->contacts->items[0];
                 $arrayResultOtm =
@@ -416,6 +449,7 @@ class ConsultarAfiliadoController extends Controller
                     ];
             }
             return view('usuarios.consultar', [
+                'arrayResultLocal' => $arrayResultLocal,
                 'arrayResultErp'  => $arrayResultErp,
                 'arrayResultOtm'  => $arrayResultOtm
             ]);
