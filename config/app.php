@@ -178,8 +178,9 @@ return [
         //Agregamos a spatie
         Spatie\Permission\PermissionServiceProvider::class,
 
-        RealRashid\SweetAlert\SweetAlertServiceProvider::class
-    ],
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Propaganistas\LaravelDisposableEmail\DisposableEmailServiceProvider::class,
+        ],
 
     /*
     |--------------------------------------------------------------------------
