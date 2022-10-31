@@ -18,8 +18,13 @@ class Validacion_Rutas_GeneralesTest extends TestCase
          $this->withoutExceptionHandling();
 
 
-        $response = $this->get('/home');
+        // $response = $this->post(route('login'), []);
 
-        $response->assertOk();
+        // $response->assertStatus(302);
+        // $response->assertSessionHasErrors('email');
+
+        // $response = $this->get('/home');
+
+        // $response->assertOk();
     }
 }
