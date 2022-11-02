@@ -54,16 +54,9 @@ Route::prefix('consultaOTM')->controller(ConsultarAfiliadoController::class)->mi
     Route::get('/', 'index')->name('consultar');
     Route::get('afiliado/{identif}/{seleccion_nit}', 'consultaOTM')->name('consultar.afiliado');
 });
-// Route::get('usuarios{idUsuario?}', [UsuarioController::class, 'cambiarEstadoDatosRechaz'])->name('usuario')->middleware('auth');
-// Route::get('usuarios/rechazar/{idUsuario?}', [UsuarioController::class, 'edit'])->name('usuario')->middleware('auth');
 
 //? Consultar code
 Route::get('customers', [BlogController::class, 'index', 'can:/blog'])->name('blogs.index')->middleware('auth');
-
-//y creamos un grupo de rutas protegidas para los controladores
-//Route::group(['middleware' => ['auth'], 'can:/blog'], function () {
-//    Route::resource('blogs',  BlogController::class);
-//});
 
 Route::group(['middleware' => ['auth'], 'can:/profile'], function () {
     Route::resource('roles', RolController::class);

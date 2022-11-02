@@ -50,6 +50,7 @@ class ConsultarAfiliadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //? Consulta facturas api
     public function suppliers(Request $request)
     {
 
@@ -58,7 +59,6 @@ class ConsultarAfiliadoController extends Controller
         }
 
         try {
-            // $cc = 1143413441;
             $users = Auth::user()->identification;
             $params = [
                 'q'        => "(TaxpayerId = '{$users}')",
@@ -74,29 +74,90 @@ class ConsultarAfiliadoController extends Controller
             if ($res['count'] == 0) {
                 return response()->json(['message' => 'No se encontro el proveedor'], 404);
             }
-            //? Capturamos el numero de Supplier
+
             $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
 
-            //? Capturamos el PaidStatus y FlagStatus que nos mandan para consultar las facturas
-            $PaidStatus = $request->PaidStatus;
-            $FlagStatus = !isset($request->FlagStatus) ? 'false' : $request->FlagStatus;
-
-            $params = [
-                'q'        => "(SupplierNumber = $SupplierNumber) and (CanceledFlag = '{$FlagStatus}') and (PaidStatus = '{$PaidStatus}')",
+            $params      =  [
                 'limit'    => '200',
-                'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
                 'onlyData' => 'true'
             ];
-            $invoice = OracleRestErp::getInvoiceSuppliers($params);
+            try {
 
-            //? Validamos que nos traiga las facturas
-            $nInvoice = $invoice['count'];
+                if ($request->PaidStatus == '') {
+                    if($request->InvoiceType == ''){
+                        $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')";
+                    }else {
+                        $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (InvoiceType = '{$request->InvoiceType}')";
+                    }
+                }else{
+                    $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')";
+                }
+                if($request->InvoiceType != '' && $request->PaidStatus != '') {
+                    $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}')";
+                }
 
-            if ($nInvoice == 0) {
-                return response()->json(['message' => 'No se encontraron facturan en ' . $PaidStatus . 'en estado ' . $FlagStatus]);
+                $invoice = OracleRestErp::getInvoiceSuppliers($params);
+                // return response()->json(['success' => true, 'data' => $invoice['count']]);
+
+                //? Validamos que nos traiga las facturas
+                if ($invoice['count'] == 0) {
+                    if ($request->PaidStatus == 'Paid') {
+                        $status = 'Pagadas';
+                    } elseif ($request->PaidStatus == 'Unpaid') {
+                        $status = 'No Pagadas';
+                    } else {
+                        $status = 'Parcialmente Pagadas';
+                    }
+                    if(!empty($request->InvoiceType)) {
+                        return response()->json(['response' => 'No se encontraron facturas ' . $status . ' con el tipo de factura ' . $request->InvoiceType, 'status' => '404' ]);
+                    }else{
+                        return response()->json(['response' => 'No se encontraron facturas ' . $status, 'status' => '404']);
+                    }
+                }
+
+                $invoce =  $invoice->json();
+                // return response()->json(['success' => true, 'data' => $invoce]);
+
+                return response()->json(['response' => $invoce['items'], 'status' => '200']);
+                // return response()->json(array('semestres' => $semestres), 200);
+            } catch (\Throwable $th) {
+                Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+                return response()->json(['response' => 'Algo fallo con la comunicacion', 'status' => '500']);
             }
-            $invoce =  $invoice->json();
-            return response()->json(['response' => $invoce['items']]);
+
+
+
+
+
+
+
+
+            // //? Capturamos el numero de Supplier
+            // $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+
+            // //? Capturamos el PaidStatus y FlagStatus que nos mandan para consultar las facturas
+            // $PaidStatus = $request->PaidStatus;
+            // $FlagStatus = !isset($request->FlagStatus) ? 'false' : $request->FlagStatus;
+
+            // $params = [
+            //     'q'        => "(SupplierNumber = $SupplierNumber) and (CanceledFlag = '{$FlagStatus}') and (PaidStatus = '{$PaidStatus}')",
+            //     'limit'    => '200',
+            //     'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
+            //     'onlyData' => 'true'
+            // ];
+            // $invoice = OracleRestErp::getInvoiceSuppliers($params);
+
+            // //? Validamos que nos traiga las facturas
+            // $nInvoice = $invoice['count'];
+
+            // if ($nInvoice == 0) {
+            //     return response()->json(['message' => 'No se encontraron facturan en ' . $PaidStatus . 'en estado ' . $FlagStatus]);
+            // }
+            // $invoce =  $invoice->json();
+            // return response()->json(['response' => $invoce['items']]);
+            return response()->json(['response' => $res['items'], 'status' => '200']);
+
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Algo fallo con la comunicacion']);
         }
@@ -113,6 +174,7 @@ class ConsultarAfiliadoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function customers(Request $request)
     {
         $params      =  [
