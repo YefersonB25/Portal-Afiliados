@@ -10,11 +10,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
+use Knuckles\Scribe\Attributes\BodyParam;
+use Knuckles\Scribe\Attributes\QueryParam;
 
 class AuthController extends Controller
 {
     use ApiResponser;
 
+    #[QueryParam("Photo", "file", required: false)]
+    #[QueryParam("name", "string", required: true)]
+    #[QueryParam("email", "string", required: true)]
+    #[QueryParam("identification", "integer", required: true)]
+    #[QueryParam("telefono", "integer", required: true)]
+    #[QueryParam("password", "string", required: true)]
+    #[QueryParam("identificationPhoto", "string", required: false)]
     public function register(Request $request)
     {
         // $validator = $request->validate([
@@ -103,7 +112,7 @@ class AuthController extends Controller
 
         //? Capturamos la extencion de los archivos
         return response()->json($id);
-        
+
         if (!empty($request->photo)) {
             $extensionPerfil = $request->photo->getClientOriginalExtension();
         }

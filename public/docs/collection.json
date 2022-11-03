@@ -1,0 +1,525 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "127.0.0.1:8000"
+        }
+    ],
+    "info": {
+        "name": "The Affiliate Portal API",
+        "_postman_id": "56bd2ee4-f353-4ad9-b2d1-a9ad132ad48b",
+        "description": "Start (and never finish) side projects with this API.",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "Healthcheck",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/healthcheck",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/healthcheck"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Check that the service is up. If everything is okay, you'll get a 200 OK response.\n\nOtherwise, the request will fail with a 400 error, and a response listing the failed services.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\"status\": \"down\", \"services\": {\"database\": \"up\", \"redis\": \"down\"}}",
+                            "name": "Service is unhealthy"
+                        },
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "59"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"status\":\"up\",\"services\":{\"database\":\"up\",\"redis\":\"up\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST api\/facturas\/total",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/facturas\/total",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/facturas\/total"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/invoiceLines",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/invoiceLines",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/invoiceLines"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/facturas\/pagadas",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/facturas\/pagadas"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/suppliernumber",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/suppliernumber",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/suppliernumber"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/consultaOTM\/afiliado",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/consultaOTM\/afiliado",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/consultaOTM\/afiliado"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET api\/user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST api\/auth\/register",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/register",
+                            "query": [
+                                {
+                                    "key": "Photo",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp960E.tmp",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "name",
+                                    "value": "dolore",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "aut",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "identification",
+                                    "value": "18",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "telefono",
+                                    "value": "16",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "eligendi",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "identificationPhoto",
+                                    "value": "eligendi",
+                                    "description": "",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/auth\/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp960E.tmp&name=dolore&email=aut&identification=18&telefono=16&password=eligendi&identificationPhoto=eligendi"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/auth\/login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET api\/me",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/me"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Show the form for creating a new resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/suppliers",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/suppliers"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "PUT api\/user\/updated\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/user\/updated\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/user\/updated\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "quia",
+                                    "description": "The ID of the updated."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/auth\/logout",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/auth\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}

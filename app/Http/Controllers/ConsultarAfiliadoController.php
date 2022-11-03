@@ -23,9 +23,6 @@ class ConsultarAfiliadoController extends Controller
     function __construct()
     {
         $this->middleware('permission:/blog')->only('index');
-        //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
-        //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
-        //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
     }
 
     /**
@@ -35,14 +32,9 @@ class ConsultarAfiliadoController extends Controller
      */
     public function index(Request $request)
     {
-        //Sin paginación
-        /* $usuarios = User::all();
-        return view('usuarios.index',compact('usuarios')); */
-        //Con paginación
 
         return view('usuarios.consultar');
 
-        //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
 
     /**
@@ -53,6 +45,8 @@ class ConsultarAfiliadoController extends Controller
     //? Consulta facturas api
     public function suppliers(Request $request)
     {
+
+        $statusErpOtm = "Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.";
 
         if (!$request->only('PaidStatus')) {
             return response()->json(['message' => 'Parametro no reconocido'], 401);
@@ -75,7 +69,7 @@ class ConsultarAfiliadoController extends Controller
                 return response()->json(['message' => 'No se encontro el proveedor'], 404);
             }
 
-            $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+            $SupplierNumber =  (double)$res['items'][0]['SupplierNumber'];
 
             $params      =  [
                 'limit'    => '200',
@@ -102,28 +96,20 @@ class ConsultarAfiliadoController extends Controller
 
                 //? Validamos que nos traiga las facturas
                 if ($invoice['count'] == 0) {
-                    if ($request->PaidStatus == 'Paid') {
-                        $status = 'Pagadas';
-                    } elseif ($request->PaidStatus == 'Unpaid') {
-                        $status = 'No Pagadas';
-                    } else {
-                        $status = 'Parcialmente Pagadas';
-                    }
                     if(!empty($request->InvoiceType)) {
-                        return response()->json(['response' => 'No se encontraron facturas ' . $status . ' con el tipo de factura ' . $request->InvoiceType, 'status' => '404' ]);
+                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.'.$request->PaidStatus) . ' con el tipo de factura ' . trans('locale.'.$request->InvoiceType), 'status' => '404' ]);
                     }else{
-                        return response()->json(['response' => 'No se encontraron facturas ' . $status, 'status' => '404']);
+                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.'.$request->PaidStatus), 'status' => '404']);
                     }
                 }
 
                 $invoce =  $invoice->json();
-                // return response()->json(['success' => true, 'data' => $invoce]);
 
                 return response()->json(['response' => $invoce['items'], 'status' => '200']);
                 // return response()->json(array('semestres' => $semestres), 200);
             } catch (\Throwable $th) {
                 Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
-                return response()->json(['response' => 'Algo fallo con la comunicacion', 'status' => '500']);
+                return response()->json(['response' => 'Algo fallo con la comunicacion']);
             }
 
 
@@ -182,7 +168,6 @@ class ConsultarAfiliadoController extends Controller
             'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
             'onlyData' => 'true'
         ];
-        //$SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
         try {
 
             if ($request->PaidStatus == '') {
@@ -203,17 +188,11 @@ class ConsultarAfiliadoController extends Controller
 
             //? Validamos que nos traiga las facturas
             if ($invoice['count'] == 0) {
-                if ($request->PaidStatus == 'Paid') {
-                    $status = 'Pagadas';
-                } elseif ($request->PaidStatus == 'Unpaid') {
-                    $status = 'No Pagadas';
-                } else {
-                    $status = 'Parcialmente Pagadas';
-                }
+
                 if(!empty($request->InvoiceType)) {
-                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . $status . ' con el tipo de factura ' . $request->InvoiceType ]);
+                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.'.$request->PaidStatus) . ' con el tipo de factura ' . trans('locale.'.$request->InvoiceType) ]);
                 }else{
-                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . $status]);
+                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.'.$request->PaidStatus)]);
                 }
             }
 
@@ -302,7 +281,7 @@ class ConsultarAfiliadoController extends Controller
                 session()->flash('message', 'No se encontro el proveedor');
                 return back();
             }
-            $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+            $SupplierNumber =  (double)$res['items'][0]['SupplierNumber'];
 
             return response()->json(['success' => true, 'data' => $SupplierNumber]);
         } catch (\Throwable $th) {
@@ -357,74 +336,6 @@ class ConsultarAfiliadoController extends Controller
             return response()->json(['message' => 'Algo fallo con la comunicacion']);
         }
     }
-    // public function codeaguardar(Request $request){
-    //     dd($request);
-    //     $post = new user();
-    //     $post->nombre = $request->nombre;
-    //     // script para subir la imagen
-    //     if($request->hasFile("photo")){
-
-    //         $imagen = $request->file("photo");
-    //         $nombreimagen = Str::slug($request->nombre).".".$imagen->guessExtension();
-    //         $ruta = public_path("img/post/");
-
-    //         //$imagen->move($ruta,$nombreimagen);
-    //         copy($imagen->getRealPath(),$ruta.$nombreimagen);
-
-    //         $post->imagen = $nombreimagen;
-
-    //     }
-    //     $post->save();
-
-    // }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request)
-    {
-        // dd($request->getParam('numeroIdentificacion'));
-        // print_r($request->getParam('numeroIdentificacion'));
-        // $identificacion = $request;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        // $user = User::find($id);
-        // $roles = Role::pluck('name','name')->all();
-        // $userRole = $user->roles->pluck('name','name')->all();
-
-        // return view('usuarios.editar',compact('user','roles','userRole'));
-    }
-
-
-    // public function cambiarEstadoDatosConfirm($idUsuario)
-    // {
-    //      User::where('id',$idUsuario)->update(['estado' => 2]);
-    //      $dataUser = User::Where('id',$idUsuario)->first();
-    //      SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
-
-    //     //  Mail::send('templates.emailValidacionShipments', array('request' => 'Sus datos han validado satisfactoria mente, ya puede ingresar al sistema.'), function ($message) use ($user) {
-    //     //     $message->from('info@tractocar.com', 'InfoTracto');
-    //     //     $message->to($dataUser->email)->subject('Credenciales Erroneas en ValidacionShipments');
-    //     // });
-    //      return redirect('usuarios');
-    // }
-    // public function cambiarEstadoDatosRechaz($idUsuario)
-    // {
-    //      User::where('id',$idUsuario)->update(['estado' => 3]);
-    //      $dataUser = User::Where('id',$idUsuario)->first();
-    //      SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
-    //      return redirect('usuarios');
-    // }
 
     public function consultaOTM(Request $request)
     {
@@ -520,49 +431,5 @@ class ConsultarAfiliadoController extends Controller
             session()->flash('message', "Special message goes here");
             return back();
         }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // $this->validate($request, [
-        //     'name' => 'required',
-        //     'email' => 'required|email|unique:users,email,'.$id,
-        //     'password' => 'same:confirm-password',
-        //     'roles' => 'required'
-        // ]);
-
-        // $input = $request->all();
-        // if(!empty($input['password'])){
-        //     $input['password'] = Hash::make($input['password']);
-        // }else{
-        //     $input = Arr::except($input,array('password'));
-        // }
-
-        // $user = User::find($id);
-        // $user->update($input);
-        // DB::table('model_has_roles')->where('model_id',$id)->delete();
-
-        // $user->assignRole($request->input('roles'));
-
-        // return redirect()->route('usuarios.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        // User::find($id)->delete();
-        // return redirect()->route('usuarios.index');
     }
 }

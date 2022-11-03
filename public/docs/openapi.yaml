@@ -1,0 +1,358 @@
+openapi: 3.0.3
+info:
+  title: 'The Affiliate Portal API'
+  description: 'Start (and never finish) side projects with this API.'
+  version: 1.0.0
+servers:
+  -
+    url: '127.0.0.1:8000'
+paths:
+  /api/healthcheck:
+    get:
+      summary: Healthcheck
+      description: "Check that the service is up. If everything is okay, you'll get a 200 OK response.\n\nOtherwise, the request will fail with a 400 error, and a response listing the failed services."
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        400:
+          description: 'Service is unhealthy'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: down
+                  services:
+                    database: up
+                    redis: down
+                properties:
+                  status:
+                    type: string
+                    example: down
+                    description: 'The status of this API (`up` or `down`).'
+                  services:
+                    type: object
+                    example:
+                      database: up
+                      redis: down
+                    description: 'Map of each downstream service and their status (`up` or `down`).'
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: up
+                  services:
+                    database: up
+                    redis: up
+                properties:
+                  status:
+                    type: string
+                    example: up
+                    description: 'The status of this API (`up` or `down`).'
+                  services:
+                    type: object
+                    example:
+                      database: up
+                      redis: up
+                    description: 'Map of each downstream service and their status (`up` or `down`).'
+      tags:
+        - Endpoints
+      security: []
+  /api/facturas/total:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/invoiceLines:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/facturas/pagadas:
+    post:
+      summary: 'Store a newly created resource in storage.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/suppliernumber:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/consultaOTM/afiliado:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/user:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/auth/register:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: query
+          name: Photo
+          description: ''
+          example: null
+          required: false
+          schema:
+            type: string
+            format: binary
+            description: ''
+        -
+          in: query
+          name: name
+          description: ''
+          example: dolore
+          required: true
+          schema:
+            type: string
+            description: ''
+            example: dolore
+        -
+          in: query
+          name: email
+          description: ''
+          example: aut
+          required: true
+          schema:
+            type: string
+            description: ''
+            example: aut
+        -
+          in: query
+          name: identification
+          description: ''
+          example: 18
+          required: true
+          schema:
+            type: integer
+            description: ''
+            example: 18
+        -
+          in: query
+          name: telefono
+          description: ''
+          example: 16
+          required: true
+          schema:
+            type: integer
+            description: ''
+            example: 16
+        -
+          in: query
+          name: password
+          description: ''
+          example: eligendi
+          required: true
+          schema:
+            type: string
+            description: ''
+            example: eligendi
+        -
+          in: query
+          name: identificationPhoto
+          description: ''
+          example: eligendi
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: eligendi
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/auth/login:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/me:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/suppliers:
+    post:
+      summary: 'Show the form for creating a new resource.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/user/updated/{id}':
+    put:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the updated.'
+        example: quia
+        required: true
+        schema:
+          type: string
+  /api/auth/logout:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+tags:
+  -
+    name: Endpoints
+    description: ''

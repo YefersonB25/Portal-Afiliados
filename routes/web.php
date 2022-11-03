@@ -43,6 +43,9 @@ Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('aut
 
 });
 
+Route::view('/docs', 'scribe.index')->name('scribe');
+Route::view('/admin/docs', 'scribe_admin.index')->name('scribe-admin');
+
 //? Perfil - Usuarios Asociados
 Route::prefix('profile')->controller(PerfilController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index')->name('profile');
