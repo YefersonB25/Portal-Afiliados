@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
+use Knuckles\Scribe\Attributes\QueryParam;
 
 class ConsultarAfiliadoController extends Controller
 {
@@ -43,6 +44,11 @@ class ConsultarAfiliadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     //? Consulta facturas api
+
+    #[QueryParam("identification", "integer", required: true)]
+    #[QueryParam("FlagStatus", "It is to check if the invoice is valid or canceled [true, false]" ,"string", required: true)]
+    #[QueryParam("PaidStatus", "It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]" ,"string", required: true)]
+    #[QueryParam("InvoiceType", "It is to consult the invoices by type of invoice." ,"string", required: false)]
     public function suppliers(Request $request)
     {
 
@@ -53,7 +59,10 @@ class ConsultarAfiliadoController extends Controller
         }
 
         try {
-            $users = Auth::user()->identification;
+
+            // $users = Auth::user()->identification;
+            $users = $request->identification;
+
             $params = [
                 'q'        => "(TaxpayerId = '{$users}')",
                 'limit'    => '200',
@@ -207,6 +216,7 @@ class ConsultarAfiliadoController extends Controller
         }
     }
 
+    #[QueryParam("PaidStatus", "array", required: true)]
     public function TotalAmount(Request $request)
     {
         try {
@@ -252,6 +262,7 @@ class ConsultarAfiliadoController extends Controller
         // }
     }
 
+    #[QueryParam("id_user", "int", required: true)]
     public function getSupplierNumber(Request $request)
     {
         // $user = Auth::user()->id_parentesco;
@@ -290,29 +301,30 @@ class ConsultarAfiliadoController extends Controller
         }
     }
 
+    #[QueryParam("Developing", "null")]
     public function getInvoiceLines(Request $request)
     {
 
         $dataInvoiceFull = [];
         $data = [];
         $data = [
-            'Description'                       => $request->Description,
-            'InvoiceDate'                       => $request->InvoiceDate,
-            'InvoiceType'                       => $request->InvoiceType,
-            'InvoiceAmount'                     => $request->InvoiceAmount,
-            'AmountPaid'                        => $request->AmountPaid,
-            'InvoiceId'                         => $request->InvoiceId,
-            'Supplier'                          => $request->Supplier,
-            'InvoiceNumber'                     => $request->InvoiceNumber,
-            'CanceledFlag'                      => $request->CanceledFlag,
-            'SupplierSite'                      => $request->SupplierSite,
-            'Party'                             => $request->Party,
-            'PartySite'                         => $request->PartySite,
-            'PaidStatus'                        => $request->PaidStatus,
-            'ValidationStatus'                  => $request->ValidationStatus,
-            'AccountingDate'                    => $request->AccountingDate,
-            'DocumentCategory'                  => $request->DocumentCategory,
-            'DocumentSequence'                  => $request->DocumentSequence,
+            'Description'                       => $request->invoice['Description'],
+            'InvoiceDate'                       => $request->invoice['InvoiceDate'],
+            'InvoiceType'                       => $request->invoice['InvoiceType'],
+            'InvoiceAmount'                     => $request->invoice['InvoiceAmount'],
+            'AmountPaid'                        => $request->invoice['AmountPaid'],
+            'InvoiceId'                         => $request->invoice['InvoiceId'],
+            'Supplier'                          => $request->invoice['Supplier'],
+            'InvoiceNumber'                     => $request->invoice['InvoiceNumber'],
+            'CanceledFlag'                      => $request->invoice['CanceledFlag'],
+            'SupplierSite'                      => $request->invoice['SupplierSite'],
+            'Party'                             => $request->invoice['Party'],
+            'PartySite'                         => $request->invoice['PartySite'],
+            'PaidStatus'                        => $request->invoice['PaidStatus'],
+            'ValidationStatus'                  => $request->invoice['ValidationStatus'],
+            'AccountingDate'                    => $request->invoice['AccountingDate'],
+            'DocumentCategory'                  => $request->invoice['DocumentCategory'],
+            'DocumentSequence'                  => $request->invoice['DocumentSequence'],
 
         ];
 
@@ -323,7 +335,7 @@ class ConsultarAfiliadoController extends Controller
                 'onlyData' => 'true'
             ];
 
-            $reques = OracleRestErp::getInvoicesLines($request->InvoiceId, $params);
+            $reques = OracleRestErp::getInvoicesLines($request->invoice['InvoiceId'], $params);
             $requesData = $reques->object()->items;
 
             $dataInvoiceFull = [
@@ -337,6 +349,7 @@ class ConsultarAfiliadoController extends Controller
         }
     }
 
+    #[QueryParam("Developing", "null")]
     public function consultaOTM(Request $request)
     {
         try {

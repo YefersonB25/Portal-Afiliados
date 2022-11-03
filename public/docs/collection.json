@@ -10,13 +10,14 @@
     ],
     "info": {
         "name": "The Affiliate Portal API",
-        "_postman_id": "56bd2ee4-f353-4ad9-b2d1-a9ad132ad48b",
+        "_postman_id": "f47a33c3-4c32-40b1-a289-9d12fa2006c8",
         "description": "Start (and never finish) side projects with this API.",
-        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json",
+        "version": "2.0.0"
     },
     "item": [
         {
-            "name": "Endpoints",
+            "name": "",
             "description": "",
             "item": [
                 {
@@ -69,10 +70,6 @@
                                 {
                                     "key": "x-ratelimit-remaining",
                                     "value": "59"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
                                 }
                             ],
                             "code": 200,
@@ -87,8 +84,15 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/facturas\/total",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/facturas\/total"
+                            "query": [
+                                {
+                                    "key": "PaidStatus%5B0%5D",
+                                    "value": "commodi",
+                                    "description": "",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/facturas\/total?PaidStatus%5B0%5D=commodi"
                         },
                         "method": "POST",
                         "header": [
@@ -115,8 +119,15 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/invoiceLines",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/invoiceLines"
+                            "query": [
+                                {
+                                    "key": "Developing",
+                                    "value": "eum",
+                                    "description": "",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/invoiceLines?Developing=eum"
                         },
                         "method": "POST",
                         "header": [
@@ -171,8 +182,15 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/suppliernumber",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/suppliernumber"
+                            "query": [
+                                {
+                                    "key": "id_user",
+                                    "value": "6",
+                                    "description": "",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/suppliernumber?id_user=6"
                         },
                         "method": "POST",
                         "header": [
@@ -199,8 +217,15 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/consultaOTM\/afiliado",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/consultaOTM\/afiliado"
+                            "query": [
+                                {
+                                    "key": "Developing",
+                                    "value": "id",
+                                    "description": "",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/consultaOTM\/afiliado?Developing=id"
                         },
                         "method": "POST",
                         "header": [
@@ -261,10 +286,6 @@
                                 {
                                     "key": "content-type",
                                     "value": "text\/html; charset=UTF-8"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
                                 }
                             ],
                             "code": 302,
@@ -282,48 +303,48 @@
                             "query": [
                                 {
                                     "key": "Photo",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp960E.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7862.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "name",
-                                    "value": "dolore",
+                                    "value": "placeat",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "email",
-                                    "value": "aut",
+                                    "value": "omnis",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identification",
-                                    "value": "18",
+                                    "value": "6",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "telefono",
-                                    "value": "16",
+                                    "value": "10",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "eligendi",
+                                    "value": "provident",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identificationPhoto",
-                                    "value": "eligendi",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7872.tmp",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp960E.tmp&name=dolore&email=aut&identification=18&telefono=16&password=eligendi&identificationPhoto=eligendi"
+                            "raw": "{{baseUrl}}\/api\/auth\/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7862.tmp&name=placeat&email=omnis&identification=6&telefono=10&password=provident&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7872.tmp"
                         },
                         "method": "POST",
                         "header": [
@@ -350,8 +371,21 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/auth\/login",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/login"
+                            "query": [
+                                {
+                                    "key": "email",
+                                    "value": "qui",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "esse",
+                                    "description": "",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/auth\/login?email=qui&password=esse"
                         },
                         "method": "POST",
                         "header": [
@@ -412,10 +446,6 @@
                                 {
                                     "key": "content-type",
                                     "value": "text\/html; charset=UTF-8"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
                                 }
                             ],
                             "code": 302,
@@ -430,8 +460,33 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/suppliers",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/suppliers"
+                            "query": [
+                                {
+                                    "key": "identification",
+                                    "value": "2",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "FlagStatus",
+                                    "value": "animi",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "PaidStatus",
+                                    "value": "consequatur",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "InvoiceType",
+                                    "value": "maiores",
+                                    "description": "string",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/suppliers?identification=2&FlagStatus=animi&PaidStatus=consequatur&InvoiceType=maiores"
                         },
                         "method": "POST",
                         "header": [
@@ -458,13 +513,56 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/user\/updated\/:id",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/user\/updated\/:id",
+                            "query": [
+                                {
+                                    "key": "Photo",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7883.tmp",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "name",
+                                    "value": "excepturi",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "nisi",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "identification",
+                                    "value": "18",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "telefono",
+                                    "value": "8",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "nemo",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "identificationPhoto",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7884.tmp",
+                                    "description": "",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/user\/updated\/:id?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7883.tmp&name=excepturi&email=nisi&identification=18&telefono=8&password=nemo&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7884.tmp",
                             "variable": [
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "quia",
+                                    "value": "ea",
                                     "description": "The ID of the updated."
                                 }
                             ]

@@ -43,8 +43,16 @@ Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('aut
 
 });
 
+// Route::controller(ConsultarAfiliadoController::class)->group(function () {
+//     Route::post('facturas/total', 'TotalAmount')->name('total');
+//     Route::post('invoiceLines', 'getInvoiceLines')->name('invoice.lines');
+//     Route::post('facturas/pagadas', 'customers')->name('falturas.pagadas');
+//     Route::post('suppliernumber', 'getSupplierNumber')->name('supplier.number');
+//     Route::post('consultaOTM/afiliado', 'consultaOTM')->name('afiliado.consulta');
+// });
+
 Route::view('/docs', 'scribe.index')->name('scribe');
-Route::view('/admin/docs', 'scribe_admin.index')->name('scribe-admin');
+// Route::view('/admin/docs', 'scribe_admin.index')->name('scribe-admin');
 
 //? Perfil - Usuarios Asociados
 Route::prefix('profile')->controller(PerfilController::class)->middleware('auth')->group(function () {

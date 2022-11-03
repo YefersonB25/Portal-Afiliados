@@ -8,7 +8,6 @@
             <div class="app-content main-content mt-0">
                 <div class="side-app">
                     <!-- CONTAINER -->
-
                     <body class="ltr app sidebar-mini light-mode">
                         <div class="row row-sm">
                             <div class="col-lg-12">
@@ -361,6 +360,7 @@
             type: 'POST',
             url: "{{ route('falturas.pagadas') }}",
             data: {
+                "_token": "{{ csrf_token() }}",
                 SupplierNumber: {{$SupplierNumber}},
                 FlagStatus: FlagStatus,
                 PaidStatus: PaidStatus,
@@ -374,7 +374,6 @@
                     tblColectionData.rows.add(datos).draw();
 
                     if (Card == "#oculto-pagadas" ) {
-                        console.log('1');
                         if( $("#oculto-pagadas").css("display") == 'none' )
                         $("#oculto-pagadas").show("slow");
                         else
@@ -391,7 +390,6 @@
                         $("#oculto-por-pagar").hide("slow");
                     }
                     else if(Card == "#oculto-por-pagar")  {
-                        console.log('2');
 
                         if( $("#oculto-por-pagar").css("display") == 'none' )
                         $("#oculto-por-pagar").show("slow");
@@ -409,7 +407,6 @@
                         $("#oculto-canceladas").hide("slow");
                     }
                     else if (Card == "#oculto-pagadas-con-novedad") {
-                        console.log('3');
 
                         if( $("#oculto-pagadas-con-novedad").css("display") == 'none' )
                         $("#oculto-pagadas-con-novedad").show("slow");
@@ -427,7 +424,6 @@
                         $("#oculto-por-pagar").hide("slow");
                     }
                     else if(Card == "#oculto-canceladas"){
-                        console.log('4');
 
                         if( $("#oculto-canceladas").css("display") == 'none' )
                         $("#oculto-canceladas").show("slow");
@@ -527,13 +523,15 @@
             $.ajax({
                 type: "POST",
                 url: "{{ route('invoice.lines') }}",
-                data: invoice,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    invoice: invoice
+                    },
                 success : function(response) {
                     let invoice = response.data.invoiceData
                     let lines = response.data.invoiceLines
 
                     if (response.success == true) {
-                        console.log(lines);
                         // console.log(invoice.PaidStatus);
                         $('#date').html('')
                         plantillaDate = `

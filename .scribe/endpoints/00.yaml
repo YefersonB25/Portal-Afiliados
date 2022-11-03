@@ -1,4 +1,4 @@
-name: Endpoints
+name: ''
 description: ''
 endpoints:
   -
@@ -6,7 +6,7 @@ endpoints:
       - GET
     uri: api/healthcheck
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -41,7 +41,6 @@ endpoints:
           content-type: application/json
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '59'
-          access-control-allow-origin: '*'
         description: null
         custom: []
     responseFields:
@@ -69,7 +68,7 @@ endpoints:
       - POST
     uri: api/facturas/total
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -81,8 +80,18 @@ endpoints:
       Api-Version: v1
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      PaidStatus:
+        name: PaidStatus
+        description: ''
+        required: true
+        example:
+          - commodi
+        type: 'string[]'
+        custom: []
+    cleanQueryParameters:
+      PaidStatus:
+        - commodi
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -98,7 +107,7 @@ endpoints:
       - POST
     uri: api/invoiceLines
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -110,8 +119,16 @@ endpoints:
       Api-Version: v1
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      Developing:
+        name: Developing
+        description: ''
+        required: true
+        example: eum
+        type: 'null'
+        custom: []
+    cleanQueryParameters:
+      Developing: eum
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -127,7 +144,7 @@ endpoints:
       - POST
     uri: api/facturas/pagadas
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -156,7 +173,7 @@ endpoints:
       - POST
     uri: api/suppliernumber
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -168,8 +185,16 @@ endpoints:
       Api-Version: v1
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      id_user:
+        name: id_user
+        description: ''
+        required: true
+        example: 6
+        type: integer
+        custom: []
+    cleanQueryParameters:
+      id_user: 6
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -185,7 +210,7 @@ endpoints:
       - POST
     uri: api/consultaOTM/afiliado
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -197,8 +222,16 @@ endpoints:
       Api-Version: v1
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      Developing:
+        name: Developing
+        description: ''
+        required: true
+        example: id
+        type: 'null'
+        custom: []
+    cleanQueryParameters:
+      Developing: id
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -214,7 +247,7 @@ endpoints:
       - GET
     uri: api/user
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -251,7 +284,6 @@ endpoints:
           cache-control: 'no-cache, private'
           location: '127.0.0.1:8000/127.0.0.1:8000/login'
           content-type: 'text/html; charset=UTF-8'
-          access-control-allow-origin: '*'
         description: null
         custom: []
     responseFields: []
@@ -265,7 +297,7 @@ endpoints:
       - POST
     uri: api/auth/register
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -289,52 +321,52 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: dolore
+        example: placeat
         type: string
         custom: []
       email:
         name: email
         description: ''
         required: true
-        example: aut
+        example: omnis
         type: string
         custom: []
       identification:
         name: identification
         description: ''
         required: true
-        example: 18
+        example: 6
         type: integer
         custom: []
       telefono:
         name: telefono
         description: ''
         required: true
-        example: 16
+        example: 10
         type: integer
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: eligendi
+        example: provident
         type: string
         custom: []
       identificationPhoto:
         name: identificationPhoto
         description: ''
         required: false
-        example: eligendi
-        type: string
+        example: null
+        type: file
         custom: []
     cleanQueryParameters:
       Photo: null
-      name: dolore
-      email: aut
-      identification: 18
-      telefono: 16
-      password: eligendi
-      identificationPhoto: eligendi
+      name: placeat
+      email: omnis
+      identification: 6
+      telefono: 10
+      password: provident
+      identificationPhoto: null
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -350,7 +382,7 @@ endpoints:
       - POST
     uri: api/auth/login
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -362,8 +394,24 @@ endpoints:
       Api-Version: v1
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      email:
+        name: email
+        description: ''
+        required: true
+        example: qui
+        type: string
+        custom: []
+      password:
+        name: password
+        description: ''
+        required: true
+        example: esse
+        type: password
+        custom: []
+    cleanQueryParameters:
+      email: qui
+      password: esse
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -379,7 +427,7 @@ endpoints:
       - GET
     uri: api/me
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -416,7 +464,6 @@ endpoints:
           cache-control: 'no-cache, private'
           location: '127.0.0.1:8000/127.0.0.1:8000/login'
           content-type: 'text/html; charset=UTF-8'
-          access-control-allow-origin: '*'
         description: null
         custom: []
     responseFields: []
@@ -430,7 +477,7 @@ endpoints:
       - POST
     uri: api/suppliers
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -442,8 +489,40 @@ endpoints:
       Api-Version: v1
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      identification:
+        name: identification
+        description: ''
+        required: true
+        example: 2
+        type: integer
+        custom: []
+      FlagStatus:
+        name: FlagStatus
+        description: string
+        required: true
+        example: animi
+        type: 'It is to check if the invoice is valid or canceled [true, false]'
+        custom: []
+      PaidStatus:
+        name: PaidStatus
+        description: string
+        required: true
+        example: consequatur
+        type: 'It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]'
+        custom: []
+      InvoiceType:
+        name: InvoiceType
+        description: string
+        required: false
+        example: maiores
+        type: 'It is to consult the invoices by type of invoice.'
+        custom: []
+    cleanQueryParameters:
+      identification: 2
+      FlagStatus: animi
+      PaidStatus: consequatur
+      InvoiceType: maiores
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -459,7 +538,7 @@ endpoints:
       - PUT
     uri: 'api/user/updated/{id}'
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -474,13 +553,69 @@ endpoints:
         name: id
         description: 'The ID of the updated.'
         required: true
-        example: quia
+        example: ea
         type: string
         custom: []
     cleanUrlParameters:
-      id: quia
-    queryParameters: []
-    cleanQueryParameters: []
+      id: ea
+    queryParameters:
+      Photo:
+        name: Photo
+        description: ''
+        required: false
+        example: null
+        type: file
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: false
+        example: excepturi
+        type: string
+        custom: []
+      email:
+        name: email
+        description: ''
+        required: false
+        example: nisi
+        type: string
+        custom: []
+      identification:
+        name: identification
+        description: ''
+        required: false
+        example: 18
+        type: integer
+        custom: []
+      telefono:
+        name: telefono
+        description: ''
+        required: false
+        example: 8
+        type: integer
+        custom: []
+      password:
+        name: password
+        description: ''
+        required: false
+        example: nemo
+        type: string
+        custom: []
+      identificationPhoto:
+        name: identificationPhoto
+        description: ''
+        required: false
+        example: null
+        type: file
+        custom: []
+    cleanQueryParameters:
+      Photo: null
+      name: excepturi
+      email: nisi
+      identification: 18
+      telefono: 8
+      password: nemo
+      identificationPhoto: null
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -496,7 +631,7 @@ endpoints:
       - POST
     uri: api/auth/logout
     metadata:
-      groupName: Endpoints
+      groupName: ''
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''

@@ -23,7 +23,7 @@ class AuthController extends Controller
     #[QueryParam("identification", "integer", required: true)]
     #[QueryParam("telefono", "integer", required: true)]
     #[QueryParam("password", "string", required: true)]
-    #[QueryParam("identificationPhoto", "string", required: false)]
+    #[QueryParam("identificationPhoto", "file", required: false)]
     public function register(Request $request)
     {
         // $validator = $request->validate([
@@ -103,6 +103,13 @@ class AuthController extends Controller
 
     }
 
+    #[QueryParam("Photo", "file", required: false)]
+    #[QueryParam("name", "string", required: false)]
+    #[QueryParam("email", "string", required: false)]
+    #[QueryParam("identification", "integer", required: false)]
+    #[QueryParam("telefono", "integer", required: false)]
+    #[QueryParam("password", "string", required: false)]
+    #[QueryParam("identificationPhoto", "file", required: false)]
     public function update(Request $request, $id)
     {
 
@@ -169,6 +176,8 @@ class AuthController extends Controller
         ]);
     }
 
+    #[QueryParam("email", "string", required: true)]
+    #[QueryParam("password", "password", required: true)]
     public function login(Request $request)
     {
 

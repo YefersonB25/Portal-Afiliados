@@ -222,7 +222,9 @@
         $.ajax({
             type: "POST",
             url: "{{ route('supplier.number') }}",
-            data: {id_parentesco: "{{ Auth::user()->id_parentesco}}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                id_parentesco: "{{ Auth::user()->id_parentesco}}",
                 id_user: "{{ Auth::user()->id}}"},
             success: function(response) {
                 let data = response.data;
@@ -237,6 +239,7 @@
                         type: 'POST',
                         url: "{{ route('total') }}",
                         data: {
+                            "_token": "{{ csrf_token() }}",
                             SupplierNumber:data,
                             PaidStatus: ['Partially paid', 'Unpaid', 'Paid'],
                             FlagStatus: 'false'

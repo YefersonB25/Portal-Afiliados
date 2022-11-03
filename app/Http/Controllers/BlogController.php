@@ -39,6 +39,7 @@ class BlogController extends Controller
         }
 
         $users = $getUserPadre->identification;
+
         $params = [
             'q'        => "(TaxpayerId = '{$users}')",
             'limit'    => '200',
@@ -55,7 +56,7 @@ class BlogController extends Controller
             session()->flash('message', 'No se encontro el proveedor');
             return back();
         }
-        $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+        $SupplierNumber =  (integer)$res['items'][0]['SupplierNumber'];
 
 
         return view('blogs.index', ['SupplierNumber' => $SupplierNumber]);
