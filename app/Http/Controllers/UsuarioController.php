@@ -43,7 +43,7 @@ class UsuarioController extends Controller
         return view('usuarios.index',compact('usuarios')); */
         //Con paginación
 
-        $usuarios = User::where('estado', '<' , 4)->orderBy('estado')->get();
+        $usuarios = User::orderBy('estado')->get();
         $estados = Estado::all();
         return view('usuarios.index',['usuarios' => $usuarios, 'estados' => $estados]);
 
@@ -191,23 +191,23 @@ class UsuarioController extends Controller
     }
 
 
-    public function cambiarEstadoDatosConfirm($idUsuario)
+    public function confirmarDatos($usuarioId, $estado)
     {
-         User::where('id',$idUsuario)->update(['estado' => 2]);
-         $dataUser = User::Where('id',$idUsuario)->first();
-         SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
+        $usuario = User::find($usuarioId);
 
-        //  Mail::send('templates.emailValidacionShipments', array('request' => 'Sus datos han validado satisfactoria mente, ya puede ingresar al sistema.'), function ($message) use ($user) {
-        //     $message->from('info@tractocar.com', 'InfoTracto');
-        //     $message->to($dataUser->email)->subject('Credenciales Erroneas en ValidacionShipments');
-        // });
-         return redirect('usuarios');
-    }
-    public function cambiarEstadoDatosRechaz($idUsuario)
-    {
-         User::where('id',$idUsuario)->update(['estado' => 3]);
-         $dataUser = User::Where('id',$idUsuario)->first();
-         SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
+        switch ($estado) {
+            case 'aprobado':
+                $usuario->update(['estado' => 2]);
+                break;
+            case 'rechazado':
+                $usuario->update(['estado' => 3]);
+                break;
+            default:
+                # code...
+                break;
+        }
+            SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
+
          return redirect('usuarios');
     }
 
@@ -253,7 +253,7 @@ class UsuarioController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->route('usuarios.index');
+        return redirect('usuarios');
     }
 
     public function cambiarEstado($idUsuario)
@@ -266,7 +266,7 @@ class UsuarioController extends Controller
 
     }
     public function checkout($cedula) {
-        dd($cedula);
+        // dd($cedula);
     }
 
 }

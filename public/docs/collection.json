@@ -10,74 +10,16 @@
     ],
     "info": {
         "name": "The Affiliate Portal API",
-        "_postman_id": "f47a33c3-4c32-40b1-a289-9d12fa2006c8",
+        "_postman_id": "ae719ccf-ead7-432f-b7c6-aea310feede2",
         "description": "Start (and never finish) side projects with this API.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json",
         "version": "2.0.0"
     },
     "item": [
         {
-            "name": "",
+            "name": "Endpoints",
             "description": "",
             "item": [
-                {
-                    "name": "Healthcheck",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/healthcheck",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/healthcheck"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "Check that the service is up. If everything is okay, you'll get a 200 OK response.\n\nOtherwise, the request will fail with a 400 error, and a response listing the failed services.",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [],
-                            "code": 400,
-                            "body": "{\"status\": \"down\", \"services\": {\"database\": \"up\", \"redis\": \"down\"}}",
-                            "name": "Service is unhealthy"
-                        },
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "60"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "59"
-                                }
-                            ],
-                            "code": 200,
-                            "body": "{\"status\":\"up\",\"services\":{\"database\":\"up\",\"redis\":\"up\"}}",
-                            "name": ""
-                        }
-                    ]
-                },
                 {
                     "name": "POST api\/facturas\/total",
                     "request": {
@@ -86,13 +28,19 @@
                             "path": "api\/facturas\/total",
                             "query": [
                                 {
-                                    "key": "PaidStatus%5B0%5D",
-                                    "value": "commodi",
+                                    "key": "PaidStatus",
+                                    "value": "explicabo",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "SupplierNumber",
+                                    "value": "quod",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/facturas\/total?PaidStatus%5B0%5D=commodi"
+                            "raw": "{{baseUrl}}\/api\/facturas\/total?PaidStatus=explicabo&SupplierNumber=quod"
                         },
                         "method": "POST",
                         "header": [
@@ -122,12 +70,12 @@
                             "query": [
                                 {
                                     "key": "Developing",
-                                    "value": "eum",
+                                    "value": "eaque",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/invoiceLines?Developing=eum"
+                            "raw": "{{baseUrl}}\/api\/invoiceLines?Developing=eaque"
                         },
                         "method": "POST",
                         "header": [
@@ -184,13 +132,13 @@
                             "path": "api\/suppliernumber",
                             "query": [
                                 {
-                                    "key": "id_user",
-                                    "value": "6",
-                                    "description": "",
+                                    "key": "id",
+                                    "value": "fuga",
+                                    "description": "int",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/suppliernumber?id_user=6"
+                            "raw": "{{baseUrl}}\/api\/suppliernumber?id=fuga"
                         },
                         "method": "POST",
                         "header": [
@@ -220,12 +168,12 @@
                             "query": [
                                 {
                                     "key": "Developing",
-                                    "value": "id",
+                                    "value": "eos",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/consultaOTM\/afiliado?Developing=id"
+                            "raw": "{{baseUrl}}\/api\/consultaOTM\/afiliado?Developing=eos"
                         },
                         "method": "POST",
                         "header": [
@@ -247,54 +195,6 @@
                     "response": []
                 },
                 {
-                    "name": "GET api\/user",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/user",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/user"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "location",
-                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "text\/html; charset=UTF-8"
-                                }
-                            ],
-                            "code": 302,
-                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
-                            "name": ""
-                        }
-                    ]
-                },
-                {
                     "name": "POST api\/auth\/register",
                     "request": {
                         "url": {
@@ -303,48 +203,48 @@
                             "query": [
                                 {
                                     "key": "Photo",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7862.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8833.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "name",
-                                    "value": "placeat",
+                                    "value": "quis",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "email",
-                                    "value": "omnis",
+                                    "value": "ipsam",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identification",
-                                    "value": "6",
+                                    "value": "5",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "telefono",
-                                    "value": "10",
+                                    "value": "18",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "provident",
+                                    "value": "quo",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identificationPhoto",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7872.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8892.tmp",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7862.tmp&name=placeat&email=omnis&identification=6&telefono=10&password=provident&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7872.tmp"
+                            "raw": "{{baseUrl}}\/api\/auth\/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8833.tmp&name=quis&email=ipsam&identification=5&telefono=18&password=quo&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8892.tmp"
                         },
                         "method": "POST",
                         "header": [
@@ -374,18 +274,18 @@
                             "query": [
                                 {
                                     "key": "email",
-                                    "value": "qui",
+                                    "value": "minus",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "esse",
+                                    "value": "et",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/login?email=qui&password=esse"
+                            "raw": "{{baseUrl}}\/api\/auth\/login?email=minus&password=et"
                         },
                         "method": "POST",
                         "header": [
@@ -405,54 +305,6 @@
                         }
                     },
                     "response": []
-                },
-                {
-                    "name": "GET api\/me",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/me",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/me"
-                        },
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": [
-                        {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "location",
-                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "text\/html; charset=UTF-8"
-                                }
-                            ],
-                            "code": 302,
-                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
-                            "name": ""
-                        }
-                    ]
                 },
                 {
                     "name": "Show the form for creating a new resource.",
@@ -463,30 +315,30 @@
                             "query": [
                                 {
                                     "key": "identification",
-                                    "value": "2",
+                                    "value": "16",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "FlagStatus",
-                                    "value": "animi",
+                                    "value": "debitis",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "PaidStatus",
-                                    "value": "consequatur",
+                                    "value": "magnam",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "InvoiceType",
-                                    "value": "maiores",
+                                    "value": "vel",
                                     "description": "string",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/suppliers?identification=2&FlagStatus=animi&PaidStatus=consequatur&InvoiceType=maiores"
+                            "raw": "{{baseUrl}}\/api\/suppliers?identification=16&FlagStatus=debitis&PaidStatus=magnam&InvoiceType=vel"
                         },
                         "method": "POST",
                         "header": [
@@ -508,64 +360,56 @@
                     "response": []
                 },
                 {
-                    "name": "PUT api\/user\/updated\/{id}",
+                    "name": "PUT api\/user\/updated",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/user\/updated\/:id",
+                            "path": "api\/user\/updated",
                             "query": [
                                 {
                                     "key": "Photo",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7883.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A3.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "name",
-                                    "value": "excepturi",
+                                    "value": "qui",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "email",
-                                    "value": "nisi",
+                                    "value": "animi",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identification",
-                                    "value": "18",
+                                    "value": "7",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "telefono",
-                                    "value": "8",
+                                    "value": "13",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "nemo",
+                                    "value": "error",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identificationPhoto",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7884.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A4.tmp",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/user\/updated\/:id?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7883.tmp&name=excepturi&email=nisi&identification=18&telefono=8&password=nemo&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7884.tmp",
-                            "variable": [
-                                {
-                                    "id": "id",
-                                    "key": "id",
-                                    "value": "ea",
-                                    "description": "The ID of the updated."
-                                }
-                            ]
+                            "raw": "{{baseUrl}}\/api\/user\/updated?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A3.tmp&name=qui&email=animi&identification=7&telefono=13&password=error&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A4.tmp"
                         },
                         "method": "PUT",
                         "header": [

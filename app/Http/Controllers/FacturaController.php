@@ -9,7 +9,7 @@ use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class BlogController extends Controller
+class FacturaController extends Controller
 {
     function __construct()
     {
@@ -59,7 +59,7 @@ class BlogController extends Controller
         $SupplierNumber =  (integer)$res['items'][0]['SupplierNumber'];
 
 
-        return view('blogs.index', ['SupplierNumber' => $SupplierNumber]);
+        return view('facturas.index', ['SupplierNumber' => $SupplierNumber]);
     }
 
     /**
@@ -69,7 +69,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blogs.crear');
+        return view('facturas.crear');
     }
 
     /**
@@ -87,7 +87,7 @@ class BlogController extends Controller
 
         Blog::create($request->all());
 
-        return redirect()->route('blogs.index');
+        return redirect()->route('facturas.index');
     }
 
     /**
@@ -109,7 +109,7 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        return view('blogs.editar', compact('blog'));
+        return view('facturas.editar', compact('blog'));
     }
 
     /**
@@ -128,7 +128,7 @@ class BlogController extends Controller
 
         $blog->update($request->all());
 
-        return redirect()->route('blogs.index');
+        return redirect()->route('facturas.index');
     }
 
     /**
@@ -141,6 +141,6 @@ class BlogController extends Controller
     {
         $blog->delete();
 
-        return redirect()->route('blogs.index');
+        return redirect()->route('facturas.index');
     }
 }

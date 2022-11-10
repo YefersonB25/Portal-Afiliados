@@ -30,15 +30,7 @@ use Illuminate\Support\Facades\Route;
  * @responseField status The status of this API (`up` or `down`).
  * @responseField services Map of each downstream service and their status (`up` or `down`).
  */
-Route::get('/healthcheck', function () {
-    return [
-        'status' => 'up',
-        'services' => [
-            'database' => 'up',
-            'redis' => 'up',
-        ],
-    ];
-});
+
 // Route::post('status', [UsuarioController::class, 'cambiarEstado'])->name('status');
 
 Route::controller(ConsultarAfiliadoController::class)->group(function () {
@@ -47,12 +39,9 @@ Route::controller(ConsultarAfiliadoController::class)->group(function () {
     Route::post('facturas/pagadas', 'customers')->name('falturas.pagadas');
     Route::post('suppliernumber', 'getSupplierNumber')->name('supplier.number');
     Route::post('consultaOTM/afiliado', 'consultaOTM')->name('afiliado.consulta');
-});
+    Route::post('proveedor', 'proveedorEncargado')->name('proveedor.encargado');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
-
 
 
 Route::post('/auth/register', [AuthController::class, 'register']);
@@ -60,12 +49,9 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/me', function (Request $request) {
-        return auth()->user();
-    });
 
 Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->post('suppliers', [ConsultarAfiliadoController::class, 'suppliers']);
-Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->put('/user/updated/{id}', [AuthController::class, 'update']);
+Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->put('/user/updated', [AuthController::class, 'update']);
 
 
 Route::post('/auth/logout', [AuthController::class, 'logout']);

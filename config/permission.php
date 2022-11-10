@@ -14,7 +14,7 @@ return [
          */
 
         'permission' => Spatie\Permission\Models\Permission::class,
-
+        // 'permission' => \Backpack\PermissionManager\app\Models\Permission::class,
         /*
          * When using the "HasRoles" trait from this package, we need to know which
          * Eloquent model should be used to retrieve your roles. Of course, it
@@ -25,7 +25,7 @@ return [
          */
 
         'role' => Spatie\Permission\Models\Role::class,
-
+        // 'role' => \Backpack\PermissionManager\app\Models\Role::class,
     ],
 
     'table_names' => [

@@ -34,9 +34,7 @@ class AuthController extends Controller
         //     'password' => ['required', 'string', 'min:8', 'confirmed'],
         // ]);
 
-
         $roles = Role::get();
-
         //? Capturamos la extencion de los archivos
         if (!empty($request->photo)) {
             $extensionPerfil = $request->photo->getClientOriginalExtension();
@@ -45,34 +43,38 @@ class AuthController extends Controller
             $extensionIdentif = $request->identificationPhoto->getClientOriginalExtension();
         }
 
-            $id = User::insertGetId([
-                'name'                  => $request->name,
-                'email'                 => $request->email,
-                'identification'        => $request->identificacion,
-                'seleccion_nit'         => asset($request->seleccion_nit ? $request->seleccion_nit : 'false'),
-                'telefono'              => $request->telefono,
-                'password'              => Hash::make($request->password),
-            ]);
+        if (empty($request->seleccion_nit)) {
+            $seleccion_nit = "false";
+        }
 
-        //? Capturamos el id del user registrdo
+        if(!empty($request->seleccion_nit)) {
+            $seleccion_nit = $request->seleccion_nit;
+        }
+        $usuario = User::create([
+            'name'                  => $request->name,
+            'email'                 => $request->email,
+            'identification'        => $request->identificacion,
+            'seleccion_nit'         => $seleccion_nit,
+            'telefono'              => $request->telefono,
+            'password'              => Hash::make($request->password),
+        ]);
 
         //? le asignamos el rol
-        $usuario = User::findOrFail($id);
         $usuario->roles()->sync($roles[1]->id);
 
         //? Guardamos los archivos cargados y capturamos la ruta
         if (!empty($request->photo)) {
-            $carpetaphoto = "proveedores/$id/perfil";
+            $carpetaphoto = "proveedores/$usuario->id/perfil";
             Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
         }
         if (!empty($request->identificationPhoto)) {
-            $carpetaidentif = "proveedores/$id/identificacion";
+            $carpetaidentif = "proveedores/$usuario->id/identificacion";
             Storage::putFileAs("public/$carpetaidentif", $request->identificationPhoto , 'photo_documento.'. $extensionIdentif);
         }
 
         //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
         if (!empty($request->photo) && !empty($request->identificationPhoto)) {
-            User::where('id', $id)
+            User::where('id', $usuario->id)
                     ->update([
                     'photo'                 => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                     'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
@@ -80,14 +82,14 @@ class AuthController extends Controller
         }
         if (!empty($request->photo)) {
 
-            User::where('id', $id)
+            User::where('id', $usuario->id)
                        ->update([
                        'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
         if (!empty($request->identificationPhoto)) {
 
-            User::where('id', $id)
+            User::where('id', $usuario->id)
                        ->update([
                        'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
@@ -110,7 +112,7 @@ class AuthController extends Controller
     #[QueryParam("telefono", "integer", required: false)]
     #[QueryParam("password", "string", required: false)]
     #[QueryParam("identificationPhoto", "file", required: false)]
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
 
         // $idUser = Auth::user()->id;
@@ -118,7 +120,7 @@ class AuthController extends Controller
         // return response()->json($input);
 
         //? Capturamos la extencion de los archivos
-        return response()->json($id);
+        return response()->json(['data' => $request->name]);
 
         if (!empty($request->photo)) {
             $extensionPerfil = $request->photo->getClientOriginalExtension();
@@ -126,30 +128,30 @@ class AuthController extends Controller
         if (!empty($request->identificationPhoto)) {
             $extensionIdentif = $request->identificationPhoto->getClientOriginalExtension();
         }
-            $user = User::findOrFail($id);
+            $user = User::findOrFail($request->id);
 
-            $user->name                  = $request->get('name');
-            $user->email                 = $request->get('email');
-            $user->identification        = $request->get('identificacion');
-            $user->telefono              = $request->get('telefono');
-            $user->password              = Hash::make($request->get('password'));
+            $user->name                  = $request->name;
+            $user->email                 = $request->email;
+            $user->identification        = $request->identificacion;
+            $user->telefono              = $request->telefono;
+            $user->password              = Hash::make($request->password);
 
-
+            $user->save();
         //? Capturamos el id del user registrdo
 
         //? Guardamos los archivos cargados y capturamos la ruta
         if (!empty($request->photo)) {
-            $carpetaphoto = "proveedores/$id/perfil";
+            $carpetaphoto = "proveedores/$request->id/perfil";
             Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
         }
         if (!empty($request->identificationPhoto)) {
-            $carpetaidentif = "proveedores/$id/identificacion";
+            $carpetaidentif = "proveedores/$request->id/identificacion";
             Storage::putFileAs("public/$carpetaidentif", $request->identificationPhoto , 'photo_documento.'. $extensionIdentif);
         }
 
         //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
         if (!empty($request->photo) && !empty($request->identificationPhoto)) {
-            User::where('id', $id)
+            User::where('id', $request->id)
                     ->update([
                     'photo'                 => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                     'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
@@ -157,14 +159,14 @@ class AuthController extends Controller
         }
         if (!empty($request->photo)) {
 
-            User::where('id', $id)
+            User::where('id', $request->id)
                        ->update([
                        'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
         if (!empty($request->identificationPhoto)) {
 
-            User::where('id', $id)
+            User::where('id', $request->id)
                        ->update([
                        'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
@@ -188,6 +190,7 @@ class AuthController extends Controller
         if(Auth::attempt($request->only('email','password'))){
             $response = User::where('email', $request->email)
                         ->first();
+
 
             if ($response->estado == 2) {
                 return response()->json([

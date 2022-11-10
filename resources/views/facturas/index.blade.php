@@ -296,7 +296,8 @@
                                                     <div class="row d-flex justify-content-center">
                                                         <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
                                                             <div class="text-center"><small class="font-12">Tractocar
-                                                                    Logistics SAS.</small></div>
+                                                                Logistics SAS.</small>
+                                                            </div>
                                                         </div>
                                                         <!--end col-->
                                                     </div>
@@ -327,6 +328,7 @@
 
     let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType, Card ) {
         tblColectionData =  $(TableName).DataTable({
+            // "autoWidth": false,
             "ordering": true,
             retrieve: true,
             processing: true,
@@ -352,9 +354,9 @@
                 { responsivePriority: 1, targets: 5 },
                 { responsivePriority: 1, targets: 6 },
             ],
-            responsive: {
-                details: 'false',
-            },
+            // responsive: {
+            //     details: 'false',
+            // },
         });
         $.ajax({
             type: 'POST',
@@ -526,7 +528,7 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     invoice: invoice
-                    },
+                },
                 success : function(response) {
                     let invoice = response.data.invoiceData
                     let lines = response.data.invoiceLines

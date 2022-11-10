@@ -74,6 +74,8 @@ class SeederSuperSu extends Seeder
                 'name' => 'Yeferson Bolaños Cardales',
                 'identification' => '2342432',
                 'email' => 'ybolanos@tractocar.com',
+                'telefono' =>  '',
+                'seleccion_nit' => '',
                 'estado' => '2',
                 'password' => bcrypt('123456')
             ])->assignRole('Administrador');
@@ -81,6 +83,8 @@ class SeederSuperSu extends Seeder
                 'name' => 'Testing',
                 'identification' => '2342432',
                 'email' => 'test@test.com',
+                'telefono' =>  '',
+                'seleccion_nit' => '',
                 'estado' => '2',
                 'password' => bcrypt('123456')
             ])->assignRole('Cliente');

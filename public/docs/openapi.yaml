@@ -7,66 +7,6 @@ servers:
   -
     url: '127.0.0.1:8000'
 paths:
-  /api/healthcheck:
-    get:
-      summary: Healthcheck
-      description: "Check that the service is up. If everything is okay, you'll get a 200 OK response.\n\nOtherwise, the request will fail with a 400 error, and a response listing the failed services."
-      parameters:
-        -
-          in: header
-          name: Api-Version
-          description: ''
-          example: v1
-          schema:
-            type: string
-      responses:
-        400:
-          description: 'Service is unhealthy'
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  status: down
-                  services:
-                    database: up
-                    redis: down
-                properties:
-                  status:
-                    type: string
-                    example: down
-                    description: 'The status of this API (`up` or `down`).'
-                  services:
-                    type: object
-                    example:
-                      database: up
-                      redis: down
-                    description: 'Map of each downstream service and their status (`up` or `down`).'
-        200:
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  status: up
-                  services:
-                    database: up
-                    redis: up
-                properties:
-                  status:
-                    type: string
-                    example: up
-                    description: 'The status of this API (`up` or `down`).'
-                  services:
-                    type: object
-                    example:
-                      database: up
-                      redis: up
-                    description: 'Map of each downstream service and their status (`up` or `down`).'
-      tags:
-        - ''
-      security: []
   /api/facturas/total:
     post:
       summary: ''
@@ -76,16 +16,22 @@ paths:
           in: query
           name: PaidStatus
           description: ''
-          example:
-            - commodi
+          example: explicabo
           required: true
           schema:
-            type: array
+            type: 'array(''Paid'', ''Undpaid'', ''Partially paid'')'
             description: ''
-            example:
-              - commodi
-            items:
-              type: string
+            example: explicabo
+        -
+          in: query
+          name: SupplierNumber
+          description: ''
+          example: quod
+          required: true
+          schema:
+            type: string
+            description: ''
+            example: quod
         -
           in: header
           name: Api-Version
@@ -95,7 +41,7 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
+        - Endpoints
       security: []
   /api/invoiceLines:
     post:
@@ -106,12 +52,12 @@ paths:
           in: query
           name: Developing
           description: ''
-          example: eum
+          example: eaque
           required: true
           schema:
             type: 'null'
             description: ''
-            example: eum
+            example: eaque
         -
           in: header
           name: Api-Version
@@ -121,7 +67,7 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
+        - Endpoints
       security: []
   /api/facturas/pagadas:
     post:
@@ -137,7 +83,7 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
+        - Endpoints
       security: []
   /api/suppliernumber:
     post:
@@ -146,14 +92,14 @@ paths:
       parameters:
         -
           in: query
-          name: id_user
-          description: ''
-          example: 6
+          name: id
+          description: int
+          example: fuga
           required: true
           schema:
-            type: integer
-            description: ''
-            example: 6
+            type: 'user ID'
+            description: int
+            example: fuga
         -
           in: header
           name: Api-Version
@@ -163,7 +109,7 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
+        - Endpoints
       security: []
   /api/consultaOTM/afiliado:
     post:
@@ -174,12 +120,12 @@ paths:
           in: query
           name: Developing
           description: ''
-          example: id
+          example: eos
           required: true
           schema:
             type: 'null'
             description: ''
-            example: id
+            example: eos
         -
           in: header
           name: Api-Version
@@ -189,30 +135,7 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
-      security: []
-  /api/user:
-    get:
-      summary: ''
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Api-Version
-          description: ''
-          example: v1
-          schema:
-            type: string
-      responses:
-        302:
-          description: ''
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
-      tags:
-        - ''
+        - Endpoints
       security: []
   /api/auth/register:
     post:
@@ -233,52 +156,52 @@ paths:
           in: query
           name: name
           description: ''
-          example: placeat
+          example: quis
           required: true
           schema:
             type: string
             description: ''
-            example: placeat
+            example: quis
         -
           in: query
           name: email
           description: ''
-          example: omnis
+          example: ipsam
           required: true
           schema:
             type: string
             description: ''
-            example: omnis
+            example: ipsam
         -
           in: query
           name: identification
           description: ''
-          example: 6
+          example: 5
           required: true
           schema:
             type: integer
             description: ''
-            example: 6
+            example: 5
         -
           in: query
           name: telefono
           description: ''
-          example: 10
+          example: 18
           required: true
           schema:
             type: integer
             description: ''
-            example: 10
+            example: 18
         -
           in: query
           name: password
           description: ''
-          example: provident
+          example: quo
           required: true
           schema:
             type: string
             description: ''
-            example: provident
+            example: quo
         -
           in: query
           name: identificationPhoto
@@ -298,7 +221,7 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
+        - Endpoints
       security: []
   /api/auth/login:
     post:
@@ -309,22 +232,22 @@ paths:
           in: query
           name: email
           description: ''
-          example: qui
+          example: minus
           required: true
           schema:
             type: string
             description: ''
-            example: qui
+            example: minus
         -
           in: query
           name: password
           description: ''
-          example: esse
+          example: et
           required: true
           schema:
             type: password
             description: ''
-            example: esse
+            example: et
         -
           in: header
           name: Api-Version
@@ -334,30 +257,7 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
-      security: []
-  /api/me:
-    get:
-      summary: ''
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Api-Version
-          description: ''
-          example: v1
-          schema:
-            type: string
-      responses:
-        302:
-          description: ''
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
-      tags:
-        - ''
+        - Endpoints
       security: []
   /api/suppliers:
     post:
@@ -368,42 +268,42 @@ paths:
           in: query
           name: identification
           description: ''
-          example: 2
+          example: 16
           required: true
           schema:
             type: integer
             description: ''
-            example: 2
+            example: 16
         -
           in: query
           name: FlagStatus
           description: string
-          example: animi
+          example: debitis
           required: true
           schema:
             type: 'It is to check if the invoice is valid or canceled [true, false]'
             description: string
-            example: animi
+            example: debitis
         -
           in: query
           name: PaidStatus
           description: string
-          example: consequatur
+          example: magnam
           required: true
           schema:
             type: 'It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]'
             description: string
-            example: consequatur
+            example: magnam
         -
           in: query
           name: InvoiceType
           description: string
-          example: maiores
+          example: vel
           required: false
           schema:
             type: 'It is to consult the invoices by type of invoice.'
             description: string
-            example: maiores
+            example: vel
         -
           in: header
           name: Api-Version
@@ -413,9 +313,9 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
+        - Endpoints
       security: []
-  '/api/user/updated/{id}':
+  /api/user/updated:
     put:
       summary: ''
       description: ''
@@ -434,52 +334,52 @@ paths:
           in: query
           name: name
           description: ''
-          example: excepturi
+          example: qui
           required: false
           schema:
             type: string
             description: ''
-            example: excepturi
+            example: qui
         -
           in: query
           name: email
           description: ''
-          example: nisi
+          example: animi
           required: false
           schema:
             type: string
             description: ''
-            example: nisi
+            example: animi
         -
           in: query
           name: identification
           description: ''
-          example: 18
+          example: 7
           required: false
           schema:
             type: integer
             description: ''
-            example: 18
+            example: 7
         -
           in: query
           name: telefono
           description: ''
-          example: 8
+          example: 13
           required: false
           schema:
             type: integer
             description: ''
-            example: 8
+            example: 13
         -
           in: query
           name: password
           description: ''
-          example: nemo
+          example: error
           required: false
           schema:
             type: string
             description: ''
-            example: nemo
+            example: error
         -
           in: query
           name: identificationPhoto
@@ -499,17 +399,8 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
+        - Endpoints
       security: []
-    parameters:
-      -
-        in: path
-        name: id
-        description: 'The ID of the updated.'
-        example: ea
-        required: true
-        schema:
-          type: string
   /api/auth/logout:
     post:
       summary: ''
@@ -524,9 +415,9 @@ paths:
             type: string
       responses: {  }
       tags:
-        - ''
+        - Endpoints
       security: []
 tags:
   -
-    name: ''
+    name: Endpoints
     description: ''

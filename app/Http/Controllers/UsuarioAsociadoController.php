@@ -57,43 +57,43 @@ class UsuarioAsociadoController extends Controller
      * @return \App\Models\UserAsociado
      */
 
-    public function create(Request $request)
-    {
-        //aqui trabajamos con name de las tablas de users
-        // $roles = Role::pluck('name','name')->all();
-        // return view('usuarios.crear',compact('roles'));
-        $pathPerfil = null;
-        //? Capturamos la extencion de los archivos
-        if (!empty($request->photo)) {
-            $extensionPerfil = $request->photo->getClientOriginalExtension();
-        }
+    // public function create(Request $request)
+    // {
+    //     //aqui trabajamos con name de las tablas de users
+    //     // $roles = Role::pluck('name','name')->all();
+    //     // return view('usuarios.crear',compact('roles'));
+    //     $pathPerfil = null;
+    //     //? Capturamos la extencion de los archivos
+    //     if (!empty($request->photo)) {
+    //         $extensionPerfil = $request->photo->getClientOriginalExtension();
+    //     }
 
-        //? Capturamos el id del user registrdo
-        $id = UserAsociado::insertGetId([
-            'id_user_asociado'      => Auth::user()->id,
-            'name'                  => $request->name,
-            'email'                 => $request->email,
-            'identification'        => $request->identification,
-            'telefono'              => $request->telefono,
-            'password'              => Hash::make($request['password']),
-        ]);
-        //? le asignamos el rol
-        // $usuario = User::findOrFail($id);
-        // $usuario->roles()->sync($roles[1]->id);
+    //     //? Capturamos el id del user registrdo
+    //     $id = UserAsociado::insertGetId([
+    //         'id_user_asociado'      => Auth::user()->id,
+    //         'name'                  => $request->name,
+    //         'email'                 => $request->email,
+    //         'identification'        => $request->identification,
+    //         'telefono'              => $request->telefono,
+    //         'password'              => Hash::make($request['password']),
+    //     ]);
+    //     //? le asignamos el rol
+    //     // $usuario = User::findOrFail($id);
+    //     // $usuario->roles()->sync($roles[1]->id);
 
-        //? Guardamos los archivos cargados y capturamos la ruta
-        if (!empty($request->photo)) {
-            $carpetaphoto = "usuariosAsociados/$id/perfil";
-            Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
+    //     //? Guardamos los archivos cargados y capturamos la ruta
+    //     if (!empty($request->photo)) {
+    //         $carpetaphoto = "usuariosAsociados/$id/perfil";
+    //         Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
 
-            //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
-            UserAsociado::where('id', $id)
-                        ->update([
-                        'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                        ]);
-        }
+    //         //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
+    //         UserAsociado::where('id', $id)
+    //                     ->update([
+    //                     'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+    //                     ]);
+    //     }
 
-    }
+    // }
 
     /**
      * Store a newly created resource in storage.

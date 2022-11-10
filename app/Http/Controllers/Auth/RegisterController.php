@@ -85,6 +85,14 @@ class RegisterController extends Controller
             $extensionIdentif = $data['identificationPhoto']->getClientOriginalExtension();
         }
 
+        // if (empty($request->seleccion_nit)) {
+        //     $seleccion_nit = "false";
+        // }
+
+        // if(!empty($request->seleccion_nit)) {
+        //     $seleccion_nit = $request->seleccion_nit;
+        // }
+
         if (in_array("seleccionNit", $data)) {
             $id = User::insertGetId([
                 'name'                  => $data['name'],

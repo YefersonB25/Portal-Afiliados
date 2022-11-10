@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\BlogController;
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ConsultarAfiliadoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\UsuarioAsociadoController;
@@ -28,15 +28,13 @@ Route::get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
-// Route::middleware(['auth:sanctum', 'verified', 'can:/portal/fourkitesReport'])->get('/portal/automatizacion_cliente/fourkitesReport', ReportFourkites::class)->name('/portal/automatizacion_cliente/fourkitesReport');
 
 //? Usuarios-Clientes
 Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index', 'can:/usuario.index')->name('usuario.index');
     Route::get('config/{id}', 'checkout')->name('check');
-    Route::get('confirmar/{idUsuario?}', 'cambiarEstadoDatosConfirm')->name('usuario.confirmar');
-    Route::get('rechazar/{idUsuario?}', 'cambiarEstadoDatosRechaz')->name('usuario.rechazar');
-    Route::get('eliminar/{idUsuario?}', 'destroy', 'can:/usuario.index')->name('usuario.eliminar');
+    Route::get('confirmar/{usuario}/{estado}', 'confirmarDatos')->name('usuario.estado');
+    Route::delete('eliminar/{idUsuario?}', 'destroy', 'can:/usuario.index')->name('usuario.eliminar');
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
     Route::get('userAsociado/{id}', 'elininarUserAsociado')->name('userAsociado.delete');
     Route::post('filtros', 'filtros')->name('user.filtros');
@@ -67,7 +65,7 @@ Route::prefix('consultaOTM')->controller(ConsultarAfiliadoController::class)->mi
 });
 
 //? Consultar code
-Route::get('customers', [BlogController::class, 'index', 'can:/blog'])->name('blogs.index')->middleware('auth');
+Route::get('customers', [FacturaController::class, 'index', 'can:/blog'])->name('blogs.index')->middleware('auth');
 
 Route::group(['middleware' => ['auth'], 'can:/profile'], function () {
     Route::resource('roles', RolController::class);

@@ -14,7 +14,7 @@ class LoginTest extends TestCase
      * @return void
      */
 
-    /** test */
+    // /** test */
     // public function it_visit_page_of_login()
     // {
     //     $this->get('/login')
@@ -22,7 +22,7 @@ class LoginTest extends TestCase
     //         ->assertSee('Login');
     // }
 
-    // /** @test */
+    // // /** @test */
     // public function authenticated_to_a_user()
     // {
     //     $user = create('App\User', [

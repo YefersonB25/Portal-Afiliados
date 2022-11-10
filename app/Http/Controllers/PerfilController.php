@@ -37,7 +37,7 @@ class PerfilController extends Controller
 
         $userlogeado = Auth::user()->id;
         $userInfo = User::where('id', $userlogeado)->first();
-        $userAsociados = User::where('id_parentesco', $userlogeado)->get();
+        $userAsociados = User::where([['id_parentesco',$userlogeado],['deleted_at', NULL]])->get();
         $countUserAsociado = User::where([['id_parentesco',$userlogeado],['deleted_at', NULL]],)->count();
 
         return view('profile.profile', ['userInfo' => $userInfo, 'userAsociados' => $userAsociados, 'countUserAsociado' => $countUserAsociado]);
@@ -163,7 +163,7 @@ class PerfilController extends Controller
         // ]);
         $infuUser = User::findOrFail($id);
 
-        $infuUser->email           = $request->get('pfEmail');
+        // $infuUser->email           = $request->get('pfEmail');
         $infuUser->telefono        = $request->get('pfTelefono');
 
         $infuUser->save();

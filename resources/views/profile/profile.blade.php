@@ -245,7 +245,7 @@
                                                     <div class="col-md-12 col-lg-12 col-xl-6">
                                                         <div class="form-group">
                                                             <label for="email" class="form-label">email</label>
-                                                            <input type="text" name="pfEmail" id="pfEmail" class="form-control" tabindex="3" value="{{$userInfo->email}}" onInput="validarInput()">
+                                                            <input type="text" name="pfEmail" id="pfEmail" class="form-control" tabindex="3" value="{{$userInfo->email}}" disabled onInput="validarInput()">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 col-lg-12 col-xl-6">

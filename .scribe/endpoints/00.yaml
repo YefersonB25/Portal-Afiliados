@@ -1,74 +1,12 @@
-name: ''
+name: Endpoints
 description: ''
 endpoints:
-  -
-    httpMethods:
-      - GET
-    uri: api/healthcheck
-    metadata:
-      groupName: ''
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: Healthcheck
-      description: |-
-        Check that the service is up. If everything is okay, you'll get a 200 OK response.
-
-        Otherwise, the request will fail with a 400 error, and a response listing the failed services.
-      authenticated: false
-      custom: []
-    headers:
-      Api-Version: v1
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 400
-        content: '{"status": "down", "services": {"database": "up", "redis": "down"}}'
-        headers: []
-        description: '400, Service is unhealthy'
-        custom: []
-      -
-        status: 200
-        content: '{"status":"up","services":{"database":"up","redis":"up"}}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          x-ratelimit-limit: '60'
-          x-ratelimit-remaining: '59'
-        description: null
-        custom: []
-    responseFields:
-      status:
-        name: status
-        description: 'The status of this API (`up` or `down`).'
-        required: false
-        example: null
-        type: string
-        custom: []
-      services:
-        name: services
-        description: 'Map of each downstream service and their status (`up` or `down`).'
-        required: false
-        example: null
-        type: object
-        custom: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
   -
     httpMethods:
       - POST
     uri: api/facturas/total
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -85,13 +23,19 @@ endpoints:
         name: PaidStatus
         description: ''
         required: true
-        example:
-          - commodi
-        type: 'string[]'
+        example: explicabo
+        type: 'array(''Paid'', ''Undpaid'', ''Partially paid'')'
+        custom: []
+      SupplierNumber:
+        name: SupplierNumber
+        description: ''
+        required: true
+        example: quod
+        type: string
         custom: []
     cleanQueryParameters:
-      PaidStatus:
-        - commodi
+      PaidStatus: explicabo
+      SupplierNumber: quod
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -107,7 +51,7 @@ endpoints:
       - POST
     uri: api/invoiceLines
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -124,11 +68,11 @@ endpoints:
         name: Developing
         description: ''
         required: true
-        example: eum
+        example: eaque
         type: 'null'
         custom: []
     cleanQueryParameters:
-      Developing: eum
+      Developing: eaque
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -144,7 +88,7 @@ endpoints:
       - POST
     uri: api/facturas/pagadas
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -173,7 +117,7 @@ endpoints:
       - POST
     uri: api/suppliernumber
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -186,15 +130,15 @@ endpoints:
     urlParameters: []
     cleanUrlParameters: []
     queryParameters:
-      id_user:
-        name: id_user
-        description: ''
+      id:
+        name: id
+        description: int
         required: true
-        example: 6
-        type: integer
+        example: fuga
+        type: 'user ID'
         custom: []
     cleanQueryParameters:
-      id_user: 6
+      id: fuga
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -210,7 +154,7 @@ endpoints:
       - POST
     uri: api/consultaOTM/afiliado
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -227,11 +171,11 @@ endpoints:
         name: Developing
         description: ''
         required: true
-        example: id
+        example: eos
         type: 'null'
         custom: []
     cleanQueryParameters:
-      Developing: id
+      Developing: eos
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -244,60 +188,10 @@ endpoints:
     custom: []
   -
     httpMethods:
-      - GET
-    uri: api/user
-    metadata:
-      groupName: ''
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Api-Version: v1
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 302
-        content: |-
-          <!DOCTYPE html>
-          <html>
-              <head>
-                  <meta charset="UTF-8" />
-                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
-
-                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
-              </head>
-              <body>
-                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
-              </body>
-          </html>
-        headers:
-          cache-control: 'no-cache, private'
-          location: '127.0.0.1:8000/127.0.0.1:8000/login'
-          content-type: 'text/html; charset=UTF-8'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
       - POST
     uri: api/auth/register
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -321,35 +215,35 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: placeat
+        example: quis
         type: string
         custom: []
       email:
         name: email
         description: ''
         required: true
-        example: omnis
+        example: ipsam
         type: string
         custom: []
       identification:
         name: identification
         description: ''
         required: true
-        example: 6
+        example: 5
         type: integer
         custom: []
       telefono:
         name: telefono
         description: ''
         required: true
-        example: 10
+        example: 18
         type: integer
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: provident
+        example: quo
         type: string
         custom: []
       identificationPhoto:
@@ -361,11 +255,11 @@ endpoints:
         custom: []
     cleanQueryParameters:
       Photo: null
-      name: placeat
-      email: omnis
-      identification: 6
-      telefono: 10
-      password: provident
+      name: quis
+      email: ipsam
+      identification: 5
+      telefono: 18
+      password: quo
       identificationPhoto: null
     bodyParameters: []
     cleanBodyParameters: []
@@ -382,7 +276,7 @@ endpoints:
       - POST
     uri: api/auth/login
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -399,19 +293,19 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: qui
+        example: minus
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: esse
+        example: et
         type: password
         custom: []
     cleanQueryParameters:
-      email: qui
-      password: esse
+      email: minus
+      password: et
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -424,60 +318,10 @@ endpoints:
     custom: []
   -
     httpMethods:
-      - GET
-    uri: api/me
-    metadata:
-      groupName: ''
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Api-Version: v1
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        status: 302
-        content: |-
-          <!DOCTYPE html>
-          <html>
-              <head>
-                  <meta charset="UTF-8" />
-                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
-
-                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
-              </head>
-              <body>
-                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
-              </body>
-          </html>
-        headers:
-          cache-control: 'no-cache, private'
-          location: '127.0.0.1:8000/127.0.0.1:8000/login'
-          content-type: 'text/html; charset=UTF-8'
-        description: null
-        custom: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
       - POST
     uri: api/suppliers
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -494,35 +338,35 @@ endpoints:
         name: identification
         description: ''
         required: true
-        example: 2
+        example: 16
         type: integer
         custom: []
       FlagStatus:
         name: FlagStatus
         description: string
         required: true
-        example: animi
+        example: debitis
         type: 'It is to check if the invoice is valid or canceled [true, false]'
         custom: []
       PaidStatus:
         name: PaidStatus
         description: string
         required: true
-        example: consequatur
+        example: magnam
         type: 'It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]'
         custom: []
       InvoiceType:
         name: InvoiceType
         description: string
         required: false
-        example: maiores
+        example: vel
         type: 'It is to consult the invoices by type of invoice.'
         custom: []
     cleanQueryParameters:
-      identification: 2
-      FlagStatus: animi
-      PaidStatus: consequatur
-      InvoiceType: maiores
+      identification: 16
+      FlagStatus: debitis
+      PaidStatus: magnam
+      InvoiceType: vel
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -536,9 +380,9 @@ endpoints:
   -
     httpMethods:
       - PUT
-    uri: 'api/user/updated/{id}'
+    uri: api/user/updated
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
@@ -548,16 +392,8 @@ endpoints:
       custom: []
     headers:
       Api-Version: v1
-    urlParameters:
-      id:
-        name: id
-        description: 'The ID of the updated.'
-        required: true
-        example: ea
-        type: string
-        custom: []
-    cleanUrlParameters:
-      id: ea
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters:
       Photo:
         name: Photo
@@ -570,35 +406,35 @@ endpoints:
         name: name
         description: ''
         required: false
-        example: excepturi
+        example: qui
         type: string
         custom: []
       email:
         name: email
         description: ''
         required: false
-        example: nisi
+        example: animi
         type: string
         custom: []
       identification:
         name: identification
         description: ''
         required: false
-        example: 18
+        example: 7
         type: integer
         custom: []
       telefono:
         name: telefono
         description: ''
         required: false
-        example: 8
+        example: 13
         type: integer
         custom: []
       password:
         name: password
         description: ''
         required: false
-        example: nemo
+        example: error
         type: string
         custom: []
       identificationPhoto:
@@ -610,11 +446,11 @@ endpoints:
         custom: []
     cleanQueryParameters:
       Photo: null
-      name: excepturi
-      email: nisi
-      identification: 18
-      telefono: 8
-      password: nemo
+      name: qui
+      email: animi
+      identification: 7
+      telefono: 13
+      password: error
       identificationPhoto: null
     bodyParameters: []
     cleanBodyParameters: []
@@ -631,7 +467,7 @@ endpoints:
       - POST
     uri: api/auth/logout
     metadata:
-      groupName: ''
+      groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''

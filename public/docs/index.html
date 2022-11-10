@@ -67,49 +67,40 @@
                     <a href="#authenticating-requests">Authenticating requests</a>
                 </li>
                             </ul>
-                    <ul id="tocify-header-" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="">
-                    <a href="#"></a>
+                    <ul id="tocify-header-endpoints" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
                 </li>
-                                    <ul id="tocify-subheader-" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="-GETapi-healthcheck">
-                                <a href="#-GETapi-healthcheck">Healthcheck</a>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-facturas-total">
+                                <a href="#endpoints-POSTapi-facturas-total">POST api/facturas/total</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-facturas-total">
-                                <a href="#-POSTapi-facturas-total">POST api/facturas/total</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-invoiceLines">
+                                <a href="#endpoints-POSTapi-invoiceLines">POST api/invoiceLines</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-invoiceLines">
-                                <a href="#-POSTapi-invoiceLines">POST api/invoiceLines</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-facturas-pagadas">
+                                <a href="#endpoints-POSTapi-facturas-pagadas">Store a newly created resource in storage.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-facturas-pagadas">
-                                <a href="#-POSTapi-facturas-pagadas">Store a newly created resource in storage.</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-suppliernumber">
+                                <a href="#endpoints-POSTapi-suppliernumber">POST api/suppliernumber</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-suppliernumber">
-                                <a href="#-POSTapi-suppliernumber">POST api/suppliernumber</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-consultaOTM-afiliado">
+                                <a href="#endpoints-POSTapi-consultaOTM-afiliado">POST api/consultaOTM/afiliado</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-consultaOTM-afiliado">
-                                <a href="#-POSTapi-consultaOTM-afiliado">POST api/consultaOTM/afiliado</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-auth-register">
+                                <a href="#endpoints-POSTapi-auth-register">POST api/auth/register</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="-GETapi-user">
-                                <a href="#-GETapi-user">GET api/user</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-auth-login">
+                                <a href="#endpoints-POSTapi-auth-login">POST api/auth/login</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-auth-register">
-                                <a href="#-POSTapi-auth-register">POST api/auth/register</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-suppliers">
+                                <a href="#endpoints-POSTapi-suppliers">Show the form for creating a new resource.</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-auth-login">
-                                <a href="#-POSTapi-auth-login">POST api/auth/login</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-PUTapi-user-updated">
+                                <a href="#endpoints-PUTapi-user-updated">PUT api/user/updated</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="-GETapi-me">
-                                <a href="#-GETapi-me">GET api/me</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-suppliers">
-                                <a href="#-POSTapi-suppliers">Show the form for creating a new resource.</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="-PUTapi-user-updated--id-">
-                                <a href="#-PUTapi-user-updated--id-">PUT api/user/updated/{id}</a>
-                            </li>
-                                                                                <li class="tocify-item level-2" data-unique="-POSTapi-auth-logout">
-                                <a href="#-POSTapi-auth-logout">POST api/auth/logout</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-auth-logout">
+                                <a href="#endpoints-POSTapi-auth-logout">POST api/auth/logout</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -121,7 +112,7 @@
                             <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
                     </ul>
         <ul class="toc-footer" id="last-updated">
-        <li>Last updated: November 3, 2022</li>
+        <li>Last updated: November 8, 2022</li>
     </ul>
 </div>
 
@@ -141,140 +132,11 @@ You can switch the language used with the tabs at the top right (or from the nav
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>This API is not authenticated.</p>
 
-        <h1 id=""></h1>
+        <h1 id="endpoints">Endpoints</h1>
 
     
 
-                                <h2 id="-GETapi-healthcheck">Healthcheck</h2>
-
-<p>
-</p>
-
-<p>Check that the service is up. If everything is okay, you'll get a 200 OK response.</p>
-<p>Otherwise, the request will fail with a 400 error, and a response listing the failed services.</p>
-
-<span id="example-requests-GETapi-healthcheck">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/healthcheck" \
-    --header "Api-Version: v1"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "127.0.0.1:8000/api/healthcheck"
-);
-
-const headers = {
-    "Api-Version": "v1",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-healthcheck">
-            <blockquote>
-            <p>Example response (400, Service is unhealthy):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;status&quot;: &quot;down&quot;,
-    &quot;services&quot;: {
-        &quot;database&quot;: &quot;up&quot;,
-        &quot;redis&quot;: &quot;down&quot;
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary>
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-x-ratelimit-limit: 60
-x-ratelimit-remaining: 59
- </code></pre>
-        </details>         <pre>
-
-<code class="language-json">{
-    &quot;status&quot;: &quot;up&quot;,
-    &quot;services&quot;: {
-        &quot;database&quot;: &quot;up&quot;,
-        &quot;redis&quot;: &quot;up&quot;
-    }
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-healthcheck" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-healthcheck"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-healthcheck"></code></pre>
-</span>
-<span id="execution-error-GETapi-healthcheck" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-healthcheck"></code></pre>
-</span>
-<form id="form-GETapi-healthcheck" data-method="GET"
-      data-path="api/healthcheck"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      data-headers='{"Api-Version":"v1"}'
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-healthcheck', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-healthcheck"
-                    onclick="tryItOut('GETapi-healthcheck');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-healthcheck"
-                    onclick="cancelTryOut('GETapi-healthcheck');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-healthcheck" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/healthcheck</code></b>
-        </p>
-                    </form>
-
-    <h3>Response</h3>
-    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
-    <p>
-            <b><code>status</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-<br>
-<p>The status of this API (<code>up</code> or <code>down</code>).</p>
-        </p>
-                <p>
-            <b><code>services</code></b>&nbsp;&nbsp;
-<small>object</small>&nbsp;
- &nbsp;
-<br>
-<p>Map of each downstream service and their status (<code>up</code> or <code>down</code>).</p>
-        </p>
-                        <h2 id="-POSTapi-facturas-total">POST api/facturas/total</h2>
+                                <h2 id="endpoints-POSTapi-facturas-total">POST api/facturas/total</h2>
 
 <p>
 </p>
@@ -287,7 +149,7 @@ x-ratelimit-remaining: 59
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/facturas/total?PaidStatus[]=commodi" \
+    "127.0.0.1:8000/api/facturas/total?PaidStatus=explicabo&amp;SupplierNumber=quod" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -297,7 +159,8 @@ x-ratelimit-remaining: 59
 );
 
 const params = {
-    "PaidStatus[]": "commodi",
+    "PaidStatus": "explicabo",
+    "SupplierNumber": "quod",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -358,22 +221,31 @@ fetch(url, {
                         <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
                     <p>
                 <b><code>PaidStatus</code></b>&nbsp;&nbsp;
-<small>string[]</small>&nbsp;
+<small>array(&#039;Paid&#039;, &#039;Undpaid&#039;, &#039;Partially paid&#039;)</small>&nbsp;
  &nbsp;
                 <input type="text"
-               name="PaidStatus[0]"
+               name="PaidStatus"
                data-endpoint="POSTapi-facturas-total"
+               value="explicabo"
                data-component="query" hidden>
-        <input type="text"
-               name="PaidStatus[1]"
+    <br>
+
+            </p>
+                    <p>
+                <b><code>SupplierNumber</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text"
+               name="SupplierNumber"
                data-endpoint="POSTapi-facturas-total"
+               value="quod"
                data-component="query" hidden>
     <br>
 
             </p>
                 </form>
 
-                    <h2 id="-POSTapi-invoiceLines">POST api/invoiceLines</h2>
+                    <h2 id="endpoints-POSTapi-invoiceLines">POST api/invoiceLines</h2>
 
 <p>
 </p>
@@ -386,7 +258,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/invoiceLines?Developing=eum" \
+    "127.0.0.1:8000/api/invoiceLines?Developing=eaque" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -396,7 +268,7 @@ fetch(url, {
 );
 
 const params = {
-    "Developing": "eum",
+    "Developing": "eaque",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -462,14 +334,14 @@ fetch(url, {
                 <input type="text"
                name="Developing"
                data-endpoint="POSTapi-invoiceLines"
-               value="eum"
+               value="eaque"
                data-component="query" hidden>
     <br>
 
             </p>
                 </form>
 
-                    <h2 id="-POSTapi-facturas-pagadas">Store a newly created resource in storage.</h2>
+                    <h2 id="endpoints-POSTapi-facturas-pagadas">Store a newly created resource in storage.</h2>
 
 <p>
 </p>
@@ -546,7 +418,7 @@ fetch(url, {
         </p>
                     </form>
 
-                    <h2 id="-POSTapi-suppliernumber">POST api/suppliernumber</h2>
+                    <h2 id="endpoints-POSTapi-suppliernumber">POST api/suppliernumber</h2>
 
 <p>
 </p>
@@ -559,7 +431,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/suppliernumber?id_user=6" \
+    "127.0.0.1:8000/api/suppliernumber?id=fuga" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -569,7 +441,7 @@ fetch(url, {
 );
 
 const params = {
-    "id_user": "6",
+    "id": "fuga",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -629,20 +501,20 @@ fetch(url, {
         </p>
                         <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
                     <p>
-                <b><code>id_user</code></b>&nbsp;&nbsp;
-<small>integer</small>&nbsp;
+                <b><code>id</code></b>&nbsp;&nbsp;
+<small>user ID</small>&nbsp;
  &nbsp;
-                <input type="number"
-               name="id_user"
+                <input type="text"
+               name="id"
                data-endpoint="POSTapi-suppliernumber"
-               value="6"
+               value="fuga"
                data-component="query" hidden>
     <br>
-
+<p>int</p>
             </p>
                 </form>
 
-                    <h2 id="-POSTapi-consultaOTM-afiliado">POST api/consultaOTM/afiliado</h2>
+                    <h2 id="endpoints-POSTapi-consultaOTM-afiliado">POST api/consultaOTM/afiliado</h2>
 
 <p>
 </p>
@@ -655,7 +527,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/consultaOTM/afiliado?Developing=id" \
+    "127.0.0.1:8000/api/consultaOTM/afiliado?Developing=eos" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -665,7 +537,7 @@ fetch(url, {
 );
 
 const params = {
-    "Developing": "id",
+    "Developing": "eos",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -731,117 +603,14 @@ fetch(url, {
                 <input type="text"
                name="Developing"
                data-endpoint="POSTapi-consultaOTM-afiliado"
-               value="id"
+               value="eos"
                data-component="query" hidden>
     <br>
 
             </p>
                 </form>
 
-                    <h2 id="-GETapi-user">GET api/user</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-user">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/user" \
-    --header "Api-Version: v1"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "127.0.0.1:8000/api/user"
-);
-
-const headers = {
-    "Api-Version": "v1",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-user">
-            <blockquote>
-            <p>Example response (302):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary>
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-location: 127.0.0.1:8000/127.0.0.1:8000/login
-content-type: text/html; charset=UTF-8
- </code></pre>
-        </details>         <pre>
-
-<code class="language-json">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;UTF-8&quot; /&gt;
-        &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;url=&#039;127.0.0.1:8000/127.0.0.1:8000/login&#039;&quot; /&gt;
-
-        &lt;title&gt;Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        Redirecting to &lt;a href=&quot;127.0.0.1:8000/127.0.0.1:8000/login&quot;&gt;127.0.0.1:8000/127.0.0.1:8000/login&lt;/a&gt;.
-    &lt;/body&gt;
-&lt;/html&gt;</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-user" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-user"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-user"></code></pre>
-</span>
-<span id="execution-error-GETapi-user" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-user"></code></pre>
-</span>
-<form id="form-GETapi-user" data-method="GET"
-      data-path="api/user"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      data-headers='{"Api-Version":"v1"}'
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-user', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-user"
-                    onclick="tryItOut('GETapi-user');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-user"
-                    onclick="cancelTryOut('GETapi-user');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-user" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/user</code></b>
-        </p>
-                    </form>
-
-                    <h2 id="-POSTapi-auth-register">POST api/auth/register</h2>
+                    <h2 id="endpoints-POSTapi-auth-register">POST api/auth/register</h2>
 
 <p>
 </p>
@@ -854,7 +623,7 @@ content-type: text/html; charset=UTF-8
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/auth/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7862.tmp&amp;name=placeat&amp;email=omnis&amp;identification=6&amp;telefono=10&amp;password=provident&amp;identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7872.tmp" \
+    "127.0.0.1:8000/api/auth/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8833.tmp&amp;name=quis&amp;email=ipsam&amp;identification=5&amp;telefono=18&amp;password=quo&amp;identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8892.tmp" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -864,13 +633,13 @@ content-type: text/html; charset=UTF-8
 );
 
 const params = {
-    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php7862.tmp",
-    "name": "placeat",
-    "email": "omnis",
-    "identification": "6",
-    "telefono": "10",
-    "password": "provident",
-    "identificationPhoto": "C:\Users\ybolaños\AppData\Local\Temp\php7872.tmp",
+    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php8833.tmp",
+    "name": "quis",
+    "email": "ipsam",
+    "identification": "5",
+    "telefono": "18",
+    "password": "quo",
+    "identificationPhoto": "C:\Users\ybolaños\AppData\Local\Temp\php8892.tmp",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -948,7 +717,7 @@ fetch(url, {
                 <input type="text"
                name="name"
                data-endpoint="POSTapi-auth-register"
-               value="placeat"
+               value="quis"
                data-component="query" hidden>
     <br>
 
@@ -960,7 +729,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-auth-register"
-               value="omnis"
+               value="ipsam"
                data-component="query" hidden>
     <br>
 
@@ -972,7 +741,7 @@ fetch(url, {
                 <input type="number"
                name="identification"
                data-endpoint="POSTapi-auth-register"
-               value="6"
+               value="5"
                data-component="query" hidden>
     <br>
 
@@ -984,7 +753,7 @@ fetch(url, {
                 <input type="number"
                name="telefono"
                data-endpoint="POSTapi-auth-register"
-               value="10"
+               value="18"
                data-component="query" hidden>
     <br>
 
@@ -996,7 +765,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-auth-register"
-               value="provident"
+               value="quo"
                data-component="query" hidden>
     <br>
 
@@ -1015,7 +784,7 @@ fetch(url, {
             </p>
                 </form>
 
-                    <h2 id="-POSTapi-auth-login">POST api/auth/login</h2>
+                    <h2 id="endpoints-POSTapi-auth-login">POST api/auth/login</h2>
 
 <p>
 </p>
@@ -1028,7 +797,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/auth/login?email=qui&amp;password=esse" \
+    "127.0.0.1:8000/api/auth/login?email=minus&amp;password=et" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -1038,8 +807,8 @@ fetch(url, {
 );
 
 const params = {
-    "email": "qui",
-    "password": "esse",
+    "email": "minus",
+    "password": "et",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1105,7 +874,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-auth-login"
-               value="qui"
+               value="minus"
                data-component="query" hidden>
     <br>
 
@@ -1117,117 +886,14 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-auth-login"
-               value="esse"
+               value="et"
                data-component="query" hidden>
     <br>
 
             </p>
                 </form>
 
-                    <h2 id="-GETapi-me">GET api/me</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-me">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/me" \
-    --header "Api-Version: v1"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "127.0.0.1:8000/api/me"
-);
-
-const headers = {
-    "Api-Version": "v1",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-me">
-            <blockquote>
-            <p>Example response (302):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary>
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-location: 127.0.0.1:8000/127.0.0.1:8000/login
-content-type: text/html; charset=UTF-8
- </code></pre>
-        </details>         <pre>
-
-<code class="language-json">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;UTF-8&quot; /&gt;
-        &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0;url=&#039;127.0.0.1:8000/127.0.0.1:8000/login&#039;&quot; /&gt;
-
-        &lt;title&gt;Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        Redirecting to &lt;a href=&quot;127.0.0.1:8000/127.0.0.1:8000/login&quot;&gt;127.0.0.1:8000/127.0.0.1:8000/login&lt;/a&gt;.
-    &lt;/body&gt;
-&lt;/html&gt;</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-me" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-me"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-me"></code></pre>
-</span>
-<span id="execution-error-GETapi-me" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-me"></code></pre>
-</span>
-<form id="form-GETapi-me" data-method="GET"
-      data-path="api/me"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      data-headers='{"Api-Version":"v1"}'
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-me', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-me"
-                    onclick="tryItOut('GETapi-me');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-me"
-                    onclick="cancelTryOut('GETapi-me');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-me" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/me</code></b>
-        </p>
-                    </form>
-
-                    <h2 id="-POSTapi-suppliers">Show the form for creating a new resource.</h2>
+                    <h2 id="endpoints-POSTapi-suppliers">Show the form for creating a new resource.</h2>
 
 <p>
 </p>
@@ -1240,7 +906,7 @@ content-type: text/html; charset=UTF-8
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/suppliers?identification=2&amp;FlagStatus=animi&amp;PaidStatus=consequatur&amp;InvoiceType=maiores" \
+    "127.0.0.1:8000/api/suppliers?identification=16&amp;FlagStatus=debitis&amp;PaidStatus=magnam&amp;InvoiceType=vel" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -1250,10 +916,10 @@ content-type: text/html; charset=UTF-8
 );
 
 const params = {
-    "identification": "2",
-    "FlagStatus": "animi",
-    "PaidStatus": "consequatur",
-    "InvoiceType": "maiores",
+    "identification": "16",
+    "FlagStatus": "debitis",
+    "PaidStatus": "magnam",
+    "InvoiceType": "vel",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1319,7 +985,7 @@ fetch(url, {
                 <input type="number"
                name="identification"
                data-endpoint="POSTapi-suppliers"
-               value="2"
+               value="16"
                data-component="query" hidden>
     <br>
 
@@ -1331,7 +997,7 @@ fetch(url, {
                 <input type="text"
                name="FlagStatus"
                data-endpoint="POSTapi-suppliers"
-               value="animi"
+               value="debitis"
                data-component="query" hidden>
     <br>
 <p>string</p>
@@ -1343,7 +1009,7 @@ fetch(url, {
                 <input type="text"
                name="PaidStatus"
                data-endpoint="POSTapi-suppliers"
-               value="consequatur"
+               value="magnam"
                data-component="query" hidden>
     <br>
 <p>string</p>
@@ -1355,43 +1021,43 @@ fetch(url, {
                 <input type="text"
                name="InvoiceType"
                data-endpoint="POSTapi-suppliers"
-               value="maiores"
+               value="vel"
                data-component="query" hidden>
     <br>
 <p>string</p>
             </p>
                 </form>
 
-                    <h2 id="-PUTapi-user-updated--id-">PUT api/user/updated/{id}</h2>
+                    <h2 id="endpoints-PUTapi-user-updated">PUT api/user/updated</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-PUTapi-user-updated--id-">
+<span id="example-requests-PUTapi-user-updated">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "127.0.0.1:8000/api/user/updated/ea?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7883.tmp&amp;name=excepturi&amp;email=nisi&amp;identification=18&amp;telefono=8&amp;password=nemo&amp;identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp7884.tmp" \
+    "127.0.0.1:8000/api/user/updated?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A3.tmp&amp;name=qui&amp;email=animi&amp;identification=7&amp;telefono=13&amp;password=error&amp;identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A4.tmp" \
     --header "Api-Version: v1"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "127.0.0.1:8000/api/user/updated/ea"
+    "127.0.0.1:8000/api/user/updated"
 );
 
 const params = {
-    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php7883.tmp",
-    "name": "excepturi",
-    "email": "nisi",
-    "identification": "18",
-    "telefono": "8",
-    "password": "nemo",
-    "identificationPhoto": "C:\Users\ybolaños\AppData\Local\Temp\php7884.tmp",
+    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php88A3.tmp",
+    "name": "qui",
+    "email": "animi",
+    "identification": "7",
+    "telefono": "13",
+    "password": "error",
+    "identificationPhoto": "C:\Users\ybolaños\AppData\Local\Temp\php88A4.tmp",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1408,60 +1074,47 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-PUTapi-user-updated--id-">
+<span id="example-responses-PUTapi-user-updated">
 </span>
-<span id="execution-results-PUTapi-user-updated--id-" hidden>
+<span id="execution-results-PUTapi-user-updated" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-PUTapi-user-updated--id-"></span>:
+                id="execution-response-status-PUTapi-user-updated"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-PUTapi-user-updated--id-"></code></pre>
+    <pre class="json"><code id="execution-response-content-PUTapi-user-updated"></code></pre>
 </span>
-<span id="execution-error-PUTapi-user-updated--id-" hidden>
+<span id="execution-error-PUTapi-user-updated" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-PUTapi-user-updated--id-"></code></pre>
+    <pre><code id="execution-error-message-PUTapi-user-updated"></code></pre>
 </span>
-<form id="form-PUTapi-user-updated--id-" data-method="PUT"
-      data-path="api/user/updated/{id}"
+<form id="form-PUTapi-user-updated" data-method="PUT"
+      data-path="api/user/updated"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Api-Version":"v1"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('PUTapi-user-updated--id-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-user-updated', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-PUTapi-user-updated--id-"
-                    onclick="tryItOut('PUTapi-user-updated--id-');">Try it out ⚡
+                    id="btn-tryout-PUTapi-user-updated"
+                    onclick="tryItOut('PUTapi-user-updated');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-PUTapi-user-updated--id-"
-                    onclick="cancelTryOut('PUTapi-user-updated--id-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-PUTapi-user-updated"
+                    onclick="cancelTryOut('PUTapi-user-updated');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-PUTapi-user-updated--id-" hidden>Send Request 💥
+                    id="btn-executetryout-PUTapi-user-updated" hidden>Send Request 💥
             </button>
             </h3>
             <p>
             <small class="badge badge-darkblue">PUT</small>
-            <b><code>api/user/updated/{id}</code></b>
+            <b><code>api/user/updated</code></b>
         </p>
-                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <p>
-                <b><code>id</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
-                <input type="text"
-               name="id"
-               data-endpoint="PUTapi-user-updated--id-"
-               value="ea"
-               data-component="url" hidden>
-    <br>
-<p>The ID of the updated.</p>
-            </p>
                         <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
                     <p>
                 <b><code>Photo</code></b>&nbsp;&nbsp;
@@ -1469,7 +1122,7 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="file"
                name="Photo"
-               data-endpoint="PUTapi-user-updated--id-"
+               data-endpoint="PUTapi-user-updated"
                value=""
                data-component="query" hidden>
     <br>
@@ -1481,8 +1134,8 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text"
                name="name"
-               data-endpoint="PUTapi-user-updated--id-"
-               value="excepturi"
+               data-endpoint="PUTapi-user-updated"
+               value="qui"
                data-component="query" hidden>
     <br>
 
@@ -1493,8 +1146,8 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text"
                name="email"
-               data-endpoint="PUTapi-user-updated--id-"
-               value="nisi"
+               data-endpoint="PUTapi-user-updated"
+               value="animi"
                data-component="query" hidden>
     <br>
 
@@ -1505,8 +1158,8 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="number"
                name="identification"
-               data-endpoint="PUTapi-user-updated--id-"
-               value="18"
+               data-endpoint="PUTapi-user-updated"
+               value="7"
                data-component="query" hidden>
     <br>
 
@@ -1517,8 +1170,8 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="number"
                name="telefono"
-               data-endpoint="PUTapi-user-updated--id-"
-               value="8"
+               data-endpoint="PUTapi-user-updated"
+               value="13"
                data-component="query" hidden>
     <br>
 
@@ -1529,8 +1182,8 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text"
                name="password"
-               data-endpoint="PUTapi-user-updated--id-"
-               value="nemo"
+               data-endpoint="PUTapi-user-updated"
+               value="error"
                data-component="query" hidden>
     <br>
 
@@ -1541,7 +1194,7 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="file"
                name="identificationPhoto"
-               data-endpoint="PUTapi-user-updated--id-"
+               data-endpoint="PUTapi-user-updated"
                value=""
                data-component="query" hidden>
     <br>
@@ -1549,7 +1202,7 @@ fetch(url, {
             </p>
                 </form>
 
-                    <h2 id="-POSTapi-auth-logout">POST api/auth/logout</h2>
+                    <h2 id="endpoints-POSTapi-auth-logout">POST api/auth/logout</h2>
 
 <p>
 </p>

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Knuckles\Scribe\Attributes\QueryParam;
+use PhpParser\Node\Stmt\TryCatch;
 
 class ConsultarAfiliadoController extends Controller
 {
@@ -51,7 +52,6 @@ class ConsultarAfiliadoController extends Controller
     #[QueryParam("InvoiceType", "It is to consult the invoices by type of invoice." ,"string", required: false)]
     public function suppliers(Request $request)
     {
-
         $statusErpOtm = "Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.";
 
         if (!$request->only('PaidStatus')) {
@@ -59,7 +59,6 @@ class ConsultarAfiliadoController extends Controller
         }
 
         try {
-
             // $users = Auth::user()->identification;
             $users = $request->identification;
 
@@ -216,7 +215,8 @@ class ConsultarAfiliadoController extends Controller
         }
     }
 
-    #[QueryParam("PaidStatus", "array", required: true)]
+    #[QueryParam("PaidStatus", "array('Paid', 'Undpaid', 'Partially paid')", required: true)]
+    #[QueryParam("SupplierNumber","integer", required: true)]
     public function TotalAmount(Request $request)
     {
         try {
@@ -262,16 +262,17 @@ class ConsultarAfiliadoController extends Controller
         // }
     }
 
-    #[QueryParam("id_user", "int", required: true)]
+    #[QueryParam("id", "user ID" ,"int", required: true)]
     public function getSupplierNumber(Request $request)
     {
-        // $user = Auth::user()->id_parentesco;
+        $user = Auth::user()->id_parentesco;
+
         try {
-            if ($request->id_parentesco > 0) {
-                $getUserPadre = User::select('identification')->where('id', $request->id_parentesco)->first();
+            if ($user > 0) {
+                $getUserPadre = User::select('identification')->where('id', $user)->first();
                 $users = $getUserPadre->identification;
             } else {
-                $getUserPadre = User::select('identification')->where('id', $request->id_user)->first();
+                $getUserPadre = User::select('identification')->where('id', $request->id)->first();
 
                 $users = $getUserPadre->identification;
             }
@@ -444,5 +445,14 @@ class ConsultarAfiliadoController extends Controller
             session()->flash('message', "Special message goes here");
             return back();
         }
+    }
+
+    #[QueryParam("userId", "kinship id, to consult the provider to which it is associated", "integer")]
+    public function proveedorEncargado(Request $request){
+        if($request->userId != ''){
+            $usuario = User::find($request->userId);
+            return response()->json([ 'success' => true, 'data' => $usuario ]);
+        }
+        return response()->json([ 'success' => false, 'data' => 'Algo fallo con la comunicacion']);
     }
 }

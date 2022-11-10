@@ -112,7 +112,7 @@ class TestingCommand extends Command
         }
     }
 
-    protected function getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus, $startDate, $endDate, $InviceType)
+    public static function getInvoiceSuppliers($SupplierNumber, $CanceledFlag, $PaidStatus, $startDate, $endDate, $InviceType)
     {
         try {
             $params = [

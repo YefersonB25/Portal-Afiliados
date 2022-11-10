@@ -225,7 +225,7 @@
             data: {
                 "_token": "{{ csrf_token() }}",
                 id_parentesco: "{{ Auth::user()->id_parentesco}}",
-                id_user: "{{ Auth::user()->id}}"},
+                id: "{{ Auth::user()->id}}"},
             success: function(response) {
                 let data = response.data;
                 if(response.success == true)
