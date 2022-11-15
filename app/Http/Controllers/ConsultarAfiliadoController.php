@@ -447,7 +447,7 @@ class ConsultarAfiliadoController extends Controller
         }
     }
 
-    #[QueryParam("userId", "kinship id, to consult the provider to which it is associated", "integer")]
+    #[QueryParam("userId", "kinship id, to consult the provider to which it is associated", "integer", required: true)]
     public function proveedorEncargado(Request $request){
         if($request->userId != ''){
             $usuario = User::find($request->userId);

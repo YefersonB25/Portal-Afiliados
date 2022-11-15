@@ -518,6 +518,7 @@
                                         @endforeach
                                     </div>
                                 </div>
+
                                  {{-- Registro de Asociado --}}
                                 <div class="tab-pane" id="accountSettings">
                                     <div class="card">
@@ -537,7 +538,7 @@
                                                             class="form-control"
                                                             name="photo"
                                                             tabindex="1" placeholder="Enter Photo" value="{{ old('name') }}"
-                                                            autofocus required>
+                                                            autofocus>
                                                         <div class="invalid-feedback">
                                                             {{ $errors->first('name') }}
                                                         </div>

@@ -67,6 +67,7 @@ class UsuarioController extends Controller
         $this->validate($request,[
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
+            'identification' => 'required',
         ]);
 
         $userlogeado = Auth::user()->id;

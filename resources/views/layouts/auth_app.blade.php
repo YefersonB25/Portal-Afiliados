@@ -6,8 +6,7 @@
     <title>@yield('title') | {{ config('app.name') }}</title>
 
     <!-- FAVICON -->
-	<link rel="shortcut icon" type="image/x-icon" href={{asset('assets/images/brand/favicon.ico')}}/>
-
+    <link rel="shortcut icon" type="image/x-icon" href={{asset('assets/images/brand/logo-1.png')}} />
 
     <!-- BOOTSTRAP CSS -->
     <link id="style" href={{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}} rel="stylesheet" />

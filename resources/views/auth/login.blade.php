@@ -7,6 +7,7 @@
         {{session('mensaje')}}
     </div>
 @endif --}}
+
 @section('content')
     <body class="ltr logo_img">
         <!-- CONTAINER OPEN -->
