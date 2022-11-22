@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
@@ -62,12 +63,14 @@ class UsuarioController extends Controller
         return view('usuarios.crear',compact('roles'));
     }
 
+
     public function createUserAsociado(Request $request)
     {
-        $this->validate($request,[
+        $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
             'identification' => 'required',
+            'password' => 'required','min:8',
         ]);
 
         $userlogeado = Auth::user()->id;
@@ -79,7 +82,6 @@ class UsuarioController extends Controller
             if (!empty($request->photo)) {
                 $extensionPerfil = $request->photo->getClientOriginalExtension();
             }
-
             //? Capturamos el id del user registrdo
             $id = User::insertGetId([
                 'id_parentesco'      => Auth::user()->id,
@@ -90,6 +92,7 @@ class UsuarioController extends Controller
                 'estado'                => 4,
                 'password'              => Hash::make($request['password']),
             ]);
+
             //? le asignamos el rol
             $usuario = User::findOrFail($id);
             $usuario->roles()->sync($roles[2]->id);
@@ -102,7 +105,7 @@ class UsuarioController extends Controller
                 //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
                 User::where('id', $id)
                             ->update([
-                            'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                            'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                             ]);
             }
             session()->flash('message');
@@ -136,26 +139,6 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index');
     }
 
-    // public function codeaguardar(Request $request){
-    //     dd($request);
-    //     $post = new user();
-    //     $post->nombre = $request->nombre;
-    //     // script para subir la imagen
-    //     if($request->hasFile("photo")){
-
-    //         $imagen = $request->file("photo");
-    //         $nombreimagen = Str::slug($request->nombre).".".$imagen->guessExtension();
-    //         $ruta = public_path("img/post/");
-
-    //         //$imagen->move($ruta,$nombreimagen);
-    //         copy($imagen->getRealPath(),$ruta.$nombreimagen);
-
-    //         $post->imagen = $nombreimagen;
-
-    //     }
-    //     $post->save();
-
-    // }
     /**
      * Display the specified resource.
      *
@@ -256,6 +239,7 @@ class UsuarioController extends Controller
         User::find($id)->delete();
         return redirect('usuarios');
     }
+
 
     public function cambiarEstado($idUsuario)
     {

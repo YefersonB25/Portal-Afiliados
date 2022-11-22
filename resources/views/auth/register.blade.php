@@ -148,6 +148,12 @@
                                 <div class="mt-5 text-muted text-center">
                                     Ya tienes una cuenta? <a href="{{ route('login') }}">Iniciar</a>
                                 </div>
+                                {{-- <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="seleccionNit" value="true" id="seleccionNit">
+                                    <label class="form-check-label" for="seleccionNit">
+                                        Autoriza el tratamiento de sus datos
+                                    </label>
+                                </div> --}}
                             </form>
                         </div>
                     </div>

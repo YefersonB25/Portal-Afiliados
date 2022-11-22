@@ -6,10 +6,13 @@ use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
+use DB;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\QueryParam;
 
@@ -76,22 +79,22 @@ class AuthController extends Controller
         if (!empty($request->photo) && !empty($request->identificationPhoto)) {
             User::where('id', $usuario->id)
                     ->update([
-                    'photo'                 => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                    'photo'                 => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                    'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                     ]);
         }
         if (!empty($request->photo)) {
 
             User::where('id', $usuario->id)
                        ->update([
-                       'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                       'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
         if (!empty($request->identificationPhoto)) {
 
             User::where('id', $usuario->id)
                        ->update([
-                       'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                       'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
         }
 
@@ -104,7 +107,6 @@ class AuthController extends Controller
         ]);
 
     }
-
     #[QueryParam("Photo", "file", required: false)]
     #[QueryParam("name", "string", required: false)]
     #[QueryParam("email", "string", required: false)]
@@ -153,22 +155,22 @@ class AuthController extends Controller
         if (!empty($request->photo) && !empty($request->identificationPhoto)) {
             User::where('id', $request->id)
                     ->update([
-                    'photo'                 => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                    'photo'                 => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                    'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                     ]);
         }
         if (!empty($request->photo)) {
 
             User::where('id', $request->id)
                        ->update([
-                       'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                       'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
         if (!empty($request->identificationPhoto)) {
 
             User::where('id', $request->id)
                        ->update([
-                       'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                       'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
         }
 
@@ -212,5 +214,70 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'successfully logged out']);
 
+    }
+
+    //Muestro el formulario para introducir el email
+    public function email()
+    {
+        return view('auth.forgot-password');
+    }
+
+    //Genero y envío el enlace para restaurar la clave
+    public function enlace(Request $request)
+    {
+        //Validación de email
+        $request->validate([
+            'email' => 'required|email|exists:usuarios',
+        ]);
+
+        //Generación de token y almacenado en la tabla password_resets
+        $token = Str::random(64);
+        DB::table('password_resets')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => Carbon::now()
+        ]);
+
+        //Envío de email al usuario
+        Mail::send('email.email', ['token' => $token], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Cambiar contraseña en CMS Laravel');
+        });
+
+        //Retorno
+        return redirect('acceder')->with('success','Te hemos enviado un email a <strong>'.$request->email.'</strong> con un enlace para realizar el cambio de contraseña.');
+
+    }
+
+    //Muestro el formulario para cambiar la clave
+    public function clave($token)
+    {
+        return view('auth.clave', ['token' => $token]);
+    }
+
+    //cambio la clave
+    public function cambiar(Request $request)
+    {
+        //Valido datos
+        $request->validate([
+            'email' => 'required|email|exists:usuarios',
+            'password' => 'required|min:8|max:16|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+        //Compruebo token válido
+        $comprobarToken = DB::table('password_resets')->where(['email' => $request->email, 'token' => $request->token])->first();
+        if(!$comprobarToken){
+            return back()->withInput()->with('danger','El enlace no es válido');
+        }
+
+        //Actualizo password
+        User::where('email', $request->email)->update(['password' => Hash::make($request->password)]);
+
+        //Borro token para que no se pueda volver a usar
+        DB::table('password_resets')->where(['email'=> $request->email])->delete();
+
+        //Retorno
+        return redirect('acceder')->with('success','La contraseña se ha cambiado correctamente.');
     }
 }

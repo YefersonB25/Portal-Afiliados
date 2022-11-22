@@ -87,6 +87,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-consultaOTM-afiliado">
                                 <a href="#endpoints-POSTapi-consultaOTM-afiliado">POST api/consultaOTM/afiliado</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-proveedor">
+                                <a href="#endpoints-POSTapi-proveedor">POST api/proveedor</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-auth-register">
                                 <a href="#endpoints-POSTapi-auth-register">POST api/auth/register</a>
                             </li>
@@ -112,7 +115,7 @@
                             <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
                     </ul>
         <ul class="toc-footer" id="last-updated">
-        <li>Last updated: November 8, 2022</li>
+        <li>Last updated: November 16, 2022</li>
     </ul>
 </div>
 
@@ -149,7 +152,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/facturas/total?PaidStatus=explicabo&amp;SupplierNumber=quod" \
+    "127.0.0.1:8000/api/facturas/total?PaidStatus=totam&amp;SupplierNumber=4" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -159,8 +162,8 @@ You can switch the language used with the tabs at the top right (or from the nav
 );
 
 const params = {
-    "PaidStatus": "explicabo",
-    "SupplierNumber": "quod",
+    "PaidStatus": "totam",
+    "SupplierNumber": "4",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -226,19 +229,19 @@ fetch(url, {
                 <input type="text"
                name="PaidStatus"
                data-endpoint="POSTapi-facturas-total"
-               value="explicabo"
+               value="totam"
                data-component="query" hidden>
     <br>
 
             </p>
                     <p>
                 <b><code>SupplierNumber</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
+<small>integer</small>&nbsp;
  &nbsp;
-                <input type="text"
+                <input type="number"
                name="SupplierNumber"
                data-endpoint="POSTapi-facturas-total"
-               value="quod"
+               value="4"
                data-component="query" hidden>
     <br>
 
@@ -258,7 +261,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/invoiceLines?Developing=eaque" \
+    "127.0.0.1:8000/api/invoiceLines?Developing=qui" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -268,7 +271,7 @@ fetch(url, {
 );
 
 const params = {
-    "Developing": "eaque",
+    "Developing": "qui",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -334,7 +337,7 @@ fetch(url, {
                 <input type="text"
                name="Developing"
                data-endpoint="POSTapi-invoiceLines"
-               value="eaque"
+               value="qui"
                data-component="query" hidden>
     <br>
 
@@ -431,7 +434,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/suppliernumber?id=fuga" \
+    "127.0.0.1:8000/api/suppliernumber?id=quia" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -441,7 +444,7 @@ fetch(url, {
 );
 
 const params = {
-    "id": "fuga",
+    "id": "quia",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -507,7 +510,7 @@ fetch(url, {
                 <input type="text"
                name="id"
                data-endpoint="POSTapi-suppliernumber"
-               value="fuga"
+               value="quia"
                data-component="query" hidden>
     <br>
 <p>int</p>
@@ -610,6 +613,102 @@ fetch(url, {
             </p>
                 </form>
 
+                    <h2 id="endpoints-POSTapi-proveedor">POST api/proveedor</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-proveedor">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "127.0.0.1:8000/api/proveedor?userId=facere" \
+    --header "Api-Version: v1"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "127.0.0.1:8000/api/proveedor"
+);
+
+const params = {
+    "userId": "facere",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Api-Version": "v1",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-proveedor">
+</span>
+<span id="execution-results-POSTapi-proveedor" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-proveedor"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-proveedor"></code></pre>
+</span>
+<span id="execution-error-POSTapi-proveedor" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-proveedor"></code></pre>
+</span>
+<form id="form-POSTapi-proveedor" data-method="POST"
+      data-path="api/proveedor"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Api-Version":"v1"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-proveedor', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-proveedor"
+                    onclick="tryItOut('POSTapi-proveedor');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-proveedor"
+                    onclick="cancelTryOut('POSTapi-proveedor');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-proveedor" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/proveedor</code></b>
+        </p>
+                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                    <p>
+                <b><code>userId</code></b>&nbsp;&nbsp;
+<small>kinship id, to consult the provider to which it is associated</small>&nbsp;
+ &nbsp;
+                <input type="text"
+               name="userId"
+               data-endpoint="POSTapi-proveedor"
+               value="facere"
+               data-component="query" hidden>
+    <br>
+<p>integer</p>
+            </p>
+                </form>
+
                     <h2 id="endpoints-POSTapi-auth-register">POST api/auth/register</h2>
 
 <p>
@@ -623,7 +722,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/auth/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8833.tmp&amp;name=quis&amp;email=ipsam&amp;identification=5&amp;telefono=18&amp;password=quo&amp;identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8892.tmp" \
+    "127.0.0.1:8000/api/auth/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B66.tmp&amp;name=eveniet&amp;email=nobis&amp;identification=19&amp;telefono=18&amp;password=inventore&amp;identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B67.tmp" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -633,13 +732,13 @@ fetch(url, {
 );
 
 const params = {
-    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php8833.tmp",
-    "name": "quis",
-    "email": "ipsam",
-    "identification": "5",
+    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php3B66.tmp",
+    "name": "eveniet",
+    "email": "nobis",
+    "identification": "19",
     "telefono": "18",
-    "password": "quo",
-    "identificationPhoto": "C:\Users\ybolaños\AppData\Local\Temp\php8892.tmp",
+    "password": "inventore",
+    "identificationPhoto": "C:\Users\ybolaños\AppData\Local\Temp\php3B67.tmp",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -717,7 +816,7 @@ fetch(url, {
                 <input type="text"
                name="name"
                data-endpoint="POSTapi-auth-register"
-               value="quis"
+               value="eveniet"
                data-component="query" hidden>
     <br>
 
@@ -729,7 +828,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-auth-register"
-               value="ipsam"
+               value="nobis"
                data-component="query" hidden>
     <br>
 
@@ -741,7 +840,7 @@ fetch(url, {
                 <input type="number"
                name="identification"
                data-endpoint="POSTapi-auth-register"
-               value="5"
+               value="19"
                data-component="query" hidden>
     <br>
 
@@ -765,7 +864,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-auth-register"
-               value="quo"
+               value="inventore"
                data-component="query" hidden>
     <br>
 
@@ -797,7 +896,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/auth/login?email=minus&amp;password=et" \
+    "127.0.0.1:8000/api/auth/login?email=et&amp;password=sequi" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -807,8 +906,8 @@ fetch(url, {
 );
 
 const params = {
-    "email": "minus",
-    "password": "et",
+    "email": "et",
+    "password": "sequi",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -874,7 +973,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-auth-login"
-               value="minus"
+               value="et"
                data-component="query" hidden>
     <br>
 
@@ -886,7 +985,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-auth-login"
-               value="et"
+               value="sequi"
                data-component="query" hidden>
     <br>
 
@@ -906,7 +1005,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/suppliers?identification=16&amp;FlagStatus=debitis&amp;PaidStatus=magnam&amp;InvoiceType=vel" \
+    "127.0.0.1:8000/api/suppliers?identification=17&amp;FlagStatus=culpa&amp;PaidStatus=facere&amp;InvoiceType=eum" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -916,10 +1015,10 @@ fetch(url, {
 );
 
 const params = {
-    "identification": "16",
-    "FlagStatus": "debitis",
-    "PaidStatus": "magnam",
-    "InvoiceType": "vel",
+    "identification": "17",
+    "FlagStatus": "culpa",
+    "PaidStatus": "facere",
+    "InvoiceType": "eum",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -985,7 +1084,7 @@ fetch(url, {
                 <input type="number"
                name="identification"
                data-endpoint="POSTapi-suppliers"
-               value="16"
+               value="17"
                data-component="query" hidden>
     <br>
 
@@ -997,7 +1096,7 @@ fetch(url, {
                 <input type="text"
                name="FlagStatus"
                data-endpoint="POSTapi-suppliers"
-               value="debitis"
+               value="culpa"
                data-component="query" hidden>
     <br>
 <p>string</p>
@@ -1009,7 +1108,7 @@ fetch(url, {
                 <input type="text"
                name="PaidStatus"
                data-endpoint="POSTapi-suppliers"
-               value="magnam"
+               value="facere"
                data-component="query" hidden>
     <br>
 <p>string</p>
@@ -1021,7 +1120,7 @@ fetch(url, {
                 <input type="text"
                name="InvoiceType"
                data-endpoint="POSTapi-suppliers"
-               value="vel"
+               value="eum"
                data-component="query" hidden>
     <br>
 <p>string</p>
@@ -1041,7 +1140,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "127.0.0.1:8000/api/user/updated?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A3.tmp&amp;name=qui&amp;email=animi&amp;identification=7&amp;telefono=13&amp;password=error&amp;identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A4.tmp" \
+    "127.0.0.1:8000/api/user/updated?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B77.tmp&amp;name=consequatur&amp;email=commodi&amp;identification=9&amp;telefono=8&amp;password=rerum&amp;identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B78.tmp" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -1051,13 +1150,13 @@ fetch(url, {
 );
 
 const params = {
-    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php88A3.tmp",
-    "name": "qui",
-    "email": "animi",
-    "identification": "7",
-    "telefono": "13",
-    "password": "error",
-    "identificationPhoto": "C:\Users\ybolaños\AppData\Local\Temp\php88A4.tmp",
+    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php3B77.tmp",
+    "name": "consequatur",
+    "email": "commodi",
+    "identification": "9",
+    "telefono": "8",
+    "password": "rerum",
+    "identificationPhoto": "C:\Users\ybolaños\AppData\Local\Temp\php3B78.tmp",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1135,7 +1234,7 @@ fetch(url, {
                 <input type="text"
                name="name"
                data-endpoint="PUTapi-user-updated"
-               value="qui"
+               value="consequatur"
                data-component="query" hidden>
     <br>
 
@@ -1147,7 +1246,7 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="PUTapi-user-updated"
-               value="animi"
+               value="commodi"
                data-component="query" hidden>
     <br>
 
@@ -1159,7 +1258,7 @@ fetch(url, {
                 <input type="number"
                name="identification"
                data-endpoint="PUTapi-user-updated"
-               value="7"
+               value="9"
                data-component="query" hidden>
     <br>
 
@@ -1171,7 +1270,7 @@ fetch(url, {
                 <input type="number"
                name="telefono"
                data-endpoint="PUTapi-user-updated"
-               value="13"
+               value="8"
                data-component="query" hidden>
     <br>
 
@@ -1183,7 +1282,7 @@ fetch(url, {
                 <input type="text"
                name="password"
                data-endpoint="PUTapi-user-updated"
-               value="error"
+               value="rerum"
                data-component="query" hidden>
     <br>
 

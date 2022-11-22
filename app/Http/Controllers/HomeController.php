@@ -34,6 +34,9 @@ class HomeController extends Controller
 
         return view('home',['nuevas_solicitudes'=>$nuevas_solicitudes, 'solicitudes_confirmadas'=>$solicitudes_confirmadas, 'solicitudes_rechazadas'=>$solicitudes_rechazadas, 'total_usuarios'=>$total_usuarios]);
     }
-
+    public function docs ()
+    {
+        return view('auth/docs/index');
+    }
 
 }

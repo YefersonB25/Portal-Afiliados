@@ -10,6 +10,7 @@ use App\Http\Helpers\OracleRestErp;
 use App\Http\Helpers\OracleRestOtm;
 use App\Http\Helpers\RequestNit;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -171,6 +172,8 @@ class ConsultarAfiliadoController extends Controller
 
     public function customers(Request $request)
     {
+
+
         $params      =  [
             'limit'    => '200',
             'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
@@ -179,7 +182,7 @@ class ConsultarAfiliadoController extends Controller
         try {
 
             if ($request->PaidStatus == '') {
-                if($request->InvoiceType == ''){
+                if($request->InvoiceType == '' && $request->startDate ==  '' && $request->endDate == ''){
                     $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')";
                 }else {
                     $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (InvoiceType = '{$request->InvoiceType}')";
@@ -190,6 +193,8 @@ class ConsultarAfiliadoController extends Controller
             if($request->InvoiceType != '' && $request->PaidStatus != '') {
                 $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}')";
             }
+
+
 
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
             // return response()->json(['success' => true, 'data' => $invoice['count']]);
@@ -222,6 +227,7 @@ class ConsultarAfiliadoController extends Controller
         try {
             $collection = [];
             foreach ($request->PaidStatus as $key => $PaidStatus) {
+
                 $params = [
                     'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = false) and (PaidStatus ='{$PaidStatus}')",
                     'fields'   => 'InvoiceAmount',
@@ -242,6 +248,8 @@ class ConsultarAfiliadoController extends Controller
 
                 ];
             }
+
+
             return response()->json(['success' => true, 'data' => $collection]);
         } catch (\Throwable $th) {
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
@@ -265,15 +273,13 @@ class ConsultarAfiliadoController extends Controller
     #[QueryParam("id", "user ID" ,"int", required: true)]
     public function getSupplierNumber(Request $request)
     {
-        $user = Auth::user()->id_parentesco;
-
         try {
-            if ($user > 0) {
-                $getUserPadre = User::select('identification')->where('id', $user)->first();
-                $users = $getUserPadre->identification;
-            } else {
-                $getUserPadre = User::select('identification')->where('id', $request->id)->first();
 
+            if ($request->id_parentesco > 0) {
+                $getUserPadre = User::select('identification')->where('id', $request->id_parentesco)->first();
+                $users = $getUserPadre->identification;
+            }else{
+                $getUserPadre = User::select('identification')->where('id', $request->id)->first();
                 $users = $getUserPadre->identification;
             }
 
@@ -356,12 +362,12 @@ class ConsultarAfiliadoController extends Controller
         try {
             $idenUserInfo = Crypt::decryptString($request->identif);
             $seleccion_nit = Crypt::decryptString($request->seleccion_nit);
-            if ($seleccion_nit == true) {
+            if ($seleccion_nit == "true") {
                 $identificacion = RequestNit::getNit($request->identif);
-            }else{
+            }
+            if ($seleccion_nit == "false" || $seleccion_nit == "") {
                 $identificacion = Crypt::decryptString($request->identif);
             }
-
             $paramsOtm = [
                 'limit'   => '1',
                 'expand' => 'contacts',

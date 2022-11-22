@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 //agregamos los siguientes controladores
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ConsultarAfiliadoController;
@@ -36,10 +37,12 @@ Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('aut
     Route::get('confirmar/{usuario}/{estado}', 'confirmarDatos')->name('usuario.estado');
     Route::delete('eliminar/{idUsuario?}', 'destroy', 'can:/usuario.index')->name('usuario.eliminar');
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
-    Route::get('userAsociado/{id}', 'elininarUserAsociado')->name('userAsociado.delete');
     Route::post('filtros', 'filtros')->name('user.filtros');
 
 });
+
+Route::get('forgot-password', [AuthController::class, 'email'])->name('forgot-password');
+
 
 // Route::controller(ConsultarAfiliadoController::class)->group(function () {
 //     Route::post('facturas/total', 'TotalAmount')->name('total');
@@ -49,12 +52,16 @@ Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('aut
 //     Route::post('consultaOTM/afiliado', 'consultaOTM')->name('afiliado.consulta');
 // });
 
-Route::view('/docs', 'scribe.index')->name('scribe');
+// Route::view('/docs', 'index')->name('scribe');
+
+// Route::view('/docsa', 'auth/docs/index');
+
 // Route::view('/admin/docs', 'scribe_admin.index')->name('scribe-admin');
 
 //? Perfil - Usuarios Asociados
 Route::prefix('profile')->controller(PerfilController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index')->name('profile');
+    Route::get('userAsociado/{id}', 'eliminarUserAsociado')->name('userAsociado.delete');
     Route::put('{id}', 'update')->name('profile.update');
 });
 

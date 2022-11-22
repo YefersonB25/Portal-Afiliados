@@ -7,6 +7,9 @@
         <div class="page-main">
             <div class="app-content main-content mt-0">
                 <div class="side-app">
+                    <div id="global-loader2" style="display: none">
+                        <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
+                    </div>
                     <!-- CONTAINER -->
                     <body class="ltr app sidebar-mini light-mode">
                         <div class="row row-sm">
@@ -30,6 +33,7 @@
                                                 </button>
                                             </div>
 
+
                                             <div class="card" id="oculto-pagadas" style="display: none">
                                                 <h3 class="text-center" style="text-decoration: underline">FACTURAS
                                                     PAGADAS</h3>
@@ -46,6 +50,14 @@
                                                                         <option value="Standard">Estandar</option>
                                                                         <option value="Credit memo">Nota Credito</option>
                                                                     </select>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
+                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
+                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
                                                                 </div>
                                                             </div>
                                                             <button type="submit" class="btn btn-primary" id="btnPrFiltr">Filtrar</button>
@@ -326,7 +338,7 @@
 
 <script>
 
-    let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType, Card ) {
+    let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType, Card, startDate, endDate ) {
         tblColectionData =  $(TableName).DataTable({
             // "autoWidth": false,
             "ordering": true,
@@ -366,11 +378,12 @@
                 SupplierNumber: {{$SupplierNumber}},
                 FlagStatus: FlagStatus,
                 PaidStatus: PaidStatus,
-                InvoiceType: InvoiceType
+                InvoiceType: InvoiceType,
+                startDate: startDate,
+                endDate: endDate
             },
             success: function(response) {
                 let datos = response.data;
-
                 if (response.success == true) {
                     tblColectionData.clear().draw();
                     tblColectionData.rows.add(datos).draw();
@@ -444,6 +457,7 @@
                     }
 
                 }else {
+                   Loader();
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -462,10 +476,17 @@
         })
     }
 
+    let Loader = function(){
+        let $yourUl = $("#global-loader2");
+        $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
+    }
+
     $('#btnPrFiltr').on('click', function(e){
         var InvoiceType = document.getElementById("tipoFactura").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
-        LoadData("Paid", "false", "#TablePagadas",InvoiceType,"");
+        LoadData("Paid", "false", "#TablePagadas",InvoiceType,"",startDate,endDate);
         obtener_data("#TablePagadas tbody", tblColectionData);
     });
     $('#btnPrFiltr1').on('click', function(e){
@@ -488,26 +509,33 @@
         obtener_data("#TableCanceladas tbody", tblColectionData);
     })
 
+
     $('#pagadas').on('click', function(e){
         e.preventDefault();
+        Loader();
         LoadData("Paid", "false", "#TablePagadas","","#oculto-pagadas");
         obtener_data("#TablePagadas tbody", tblColectionData);
+
     });
 
     $("#por-pagar").click(function(e) {
         e.preventDefault();
+        Loader();
         LoadData("Unpaid", "false", "#TablePorPagar","","#oculto-por-pagar");
         obtener_data("#TablePorPagar tbody", tblColectionData);
     });
 
     $("#pagadas-con-novedad").click(function(e) {
         e.preventDefault();
+        Loader();
         LoadData("Partially paid", "false", "#TablePagadasNovedad","","#oculto-pagadas-con-novedad");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
+
     });
 
     $("#canceladas").click(function(e) {
         e.preventDefault();
+        Loader();
         LoadData("", "true", "#TableCanceladas","","#oculto-canceladas");
         obtener_data("#TableCanceladas tbody", tblColectionData);
     });

@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "The Affiliate Portal API",
-        "_postman_id": "ae719ccf-ead7-432f-b7c6-aea310feede2",
+        "_postman_id": "e7f0f5b0-284b-4089-9baa-a2b27ede1b34",
         "description": "Start (and never finish) side projects with this API.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json",
         "version": "2.0.0"
@@ -29,18 +29,18 @@
                             "query": [
                                 {
                                     "key": "PaidStatus",
-                                    "value": "explicabo",
+                                    "value": "totam",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "SupplierNumber",
-                                    "value": "quod",
+                                    "value": "4",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/facturas\/total?PaidStatus=explicabo&SupplierNumber=quod"
+                            "raw": "{{baseUrl}}\/api\/facturas\/total?PaidStatus=totam&SupplierNumber=4"
                         },
                         "method": "POST",
                         "header": [
@@ -70,12 +70,12 @@
                             "query": [
                                 {
                                     "key": "Developing",
-                                    "value": "eaque",
+                                    "value": "qui",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/invoiceLines?Developing=eaque"
+                            "raw": "{{baseUrl}}\/api\/invoiceLines?Developing=qui"
                         },
                         "method": "POST",
                         "header": [
@@ -133,12 +133,12 @@
                             "query": [
                                 {
                                     "key": "id",
-                                    "value": "fuga",
+                                    "value": "quia",
                                     "description": "int",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/suppliernumber?id=fuga"
+                            "raw": "{{baseUrl}}\/api\/suppliernumber?id=quia"
                         },
                         "method": "POST",
                         "header": [
@@ -195,6 +195,41 @@
                     "response": []
                 },
                 {
+                    "name": "POST api\/proveedor",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/proveedor",
+                            "query": [
+                                {
+                                    "key": "userId",
+                                    "value": "facere",
+                                    "description": "integer",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/proveedor?userId=facere"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
                     "name": "POST api\/auth\/register",
                     "request": {
                         "url": {
@@ -203,25 +238,25 @@
                             "query": [
                                 {
                                     "key": "Photo",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8833.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B66.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "name",
-                                    "value": "quis",
+                                    "value": "eveniet",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "email",
-                                    "value": "ipsam",
+                                    "value": "nobis",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identification",
-                                    "value": "5",
+                                    "value": "19",
                                     "description": "",
                                     "disabled": false
                                 },
@@ -233,18 +268,18 @@
                                 },
                                 {
                                     "key": "password",
-                                    "value": "quo",
+                                    "value": "inventore",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identificationPhoto",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8892.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B67.tmp",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8833.tmp&name=quis&email=ipsam&identification=5&telefono=18&password=quo&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp8892.tmp"
+                            "raw": "{{baseUrl}}\/api\/auth\/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B66.tmp&name=eveniet&email=nobis&identification=19&telefono=18&password=inventore&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B67.tmp"
                         },
                         "method": "POST",
                         "header": [
@@ -274,18 +309,18 @@
                             "query": [
                                 {
                                     "key": "email",
-                                    "value": "minus",
+                                    "value": "et",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "et",
+                                    "value": "sequi",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/login?email=minus&password=et"
+                            "raw": "{{baseUrl}}\/api\/auth\/login?email=et&password=sequi"
                         },
                         "method": "POST",
                         "header": [
@@ -315,30 +350,30 @@
                             "query": [
                                 {
                                     "key": "identification",
-                                    "value": "16",
+                                    "value": "17",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "FlagStatus",
-                                    "value": "debitis",
+                                    "value": "culpa",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "PaidStatus",
-                                    "value": "magnam",
+                                    "value": "facere",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "InvoiceType",
-                                    "value": "vel",
+                                    "value": "eum",
                                     "description": "string",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/suppliers?identification=16&FlagStatus=debitis&PaidStatus=magnam&InvoiceType=vel"
+                            "raw": "{{baseUrl}}\/api\/suppliers?identification=17&FlagStatus=culpa&PaidStatus=facere&InvoiceType=eum"
                         },
                         "method": "POST",
                         "header": [
@@ -368,48 +403,48 @@
                             "query": [
                                 {
                                     "key": "Photo",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A3.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B77.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "name",
-                                    "value": "qui",
+                                    "value": "consequatur",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "email",
-                                    "value": "animi",
+                                    "value": "commodi",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identification",
-                                    "value": "7",
+                                    "value": "9",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "telefono",
-                                    "value": "13",
+                                    "value": "8",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "error",
+                                    "value": "rerum",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "identificationPhoto",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A4.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B78.tmp",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/user\/updated?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A3.tmp&name=qui&email=animi&identification=7&telefono=13&password=error&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp88A4.tmp"
+                            "raw": "{{baseUrl}}\/api\/user\/updated?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B77.tmp&name=consequatur&email=commodi&identification=9&telefono=8&password=rerum&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B78.tmp"
                         },
                         "method": "PUT",
                         "header": [

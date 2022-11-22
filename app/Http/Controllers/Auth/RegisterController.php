@@ -133,22 +133,22 @@ class RegisterController extends Controller
         if (!empty($data['photo']) && !empty($data['identificationPhoto'])) {
             User::where('id', $id)
                     ->update([
-                    'photo'                 => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                    'photo'                 => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                    'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                     ]);
         }
         if (!empty($data['photo'])) {
 
             User::where('id', $id)
                        ->update([
-                       'photo'   => "Storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                       'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
         if (!empty($data['identificationPhoto'])) {
 
             User::where('id', $id)
                        ->update([
-                       'identificationPhoto'   => "Storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                       'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
         }
 

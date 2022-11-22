@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Estado;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -43,6 +44,11 @@ class SeederSuperSu extends Seeder
         // foreach ($permisos as $permiso) {
         //     Permission::create(['name' => $permiso]);
         // }
+        Estado::create(['descripcion' => 'Nuevo']);
+        Estado::create(['descripcion' => 'Confirmado']);
+        Estado::create(['descripcion' => 'Rechazado']);
+        Estado::create(['descripcion' => 'Asociado']);
+
 
         $roleAdmin              = Role::create(['name' => 'Administrador']);
         $rolCliente             = Role::create(['name' => 'Cliente']);

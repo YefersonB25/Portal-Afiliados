@@ -13,7 +13,7 @@ class Estado extends Model
 
     protected $fillable = [
         'id',
-        'description',
+        'descripcion',
     ];
 
 }

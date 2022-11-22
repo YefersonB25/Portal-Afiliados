@@ -23,7 +23,6 @@ class CheckBannd
             $request->session()->invalidate();
 
             $request->session()->regenerateToken();
-            // session()->flash('message', 'Vehiculo enrutado: placa . ' . $this->placa);
 
             return redirect()->route('login')->with('error', 'Los datos de la cuenta aun no han sido validados.');
         }

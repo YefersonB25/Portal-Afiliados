@@ -16,22 +16,22 @@ paths:
           in: query
           name: PaidStatus
           description: ''
-          example: explicabo
+          example: totam
           required: true
           schema:
             type: 'array(''Paid'', ''Undpaid'', ''Partially paid'')'
             description: ''
-            example: explicabo
+            example: totam
         -
           in: query
           name: SupplierNumber
           description: ''
-          example: quod
+          example: 4
           required: true
           schema:
-            type: string
+            type: integer
             description: ''
-            example: quod
+            example: 4
         -
           in: header
           name: Api-Version
@@ -52,12 +52,12 @@ paths:
           in: query
           name: Developing
           description: ''
-          example: eaque
+          example: qui
           required: true
           schema:
             type: 'null'
             description: ''
-            example: eaque
+            example: qui
         -
           in: header
           name: Api-Version
@@ -94,12 +94,12 @@ paths:
           in: query
           name: id
           description: int
-          example: fuga
+          example: quia
           required: true
           schema:
             type: 'user ID'
             description: int
-            example: fuga
+            example: quia
         -
           in: header
           name: Api-Version
@@ -137,6 +137,32 @@ paths:
       tags:
         - Endpoints
       security: []
+  /api/proveedor:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: query
+          name: userId
+          description: integer
+          example: facere
+          required: true
+          schema:
+            type: 'kinship id, to consult the provider to which it is associated'
+            description: integer
+            example: facere
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
   /api/auth/register:
     post:
       summary: ''
@@ -156,32 +182,32 @@ paths:
           in: query
           name: name
           description: ''
-          example: quis
+          example: eveniet
           required: true
           schema:
             type: string
             description: ''
-            example: quis
+            example: eveniet
         -
           in: query
           name: email
           description: ''
-          example: ipsam
+          example: nobis
           required: true
           schema:
             type: string
             description: ''
-            example: ipsam
+            example: nobis
         -
           in: query
           name: identification
           description: ''
-          example: 5
+          example: 19
           required: true
           schema:
             type: integer
             description: ''
-            example: 5
+            example: 19
         -
           in: query
           name: telefono
@@ -196,12 +222,12 @@ paths:
           in: query
           name: password
           description: ''
-          example: quo
+          example: inventore
           required: true
           schema:
             type: string
             description: ''
-            example: quo
+            example: inventore
         -
           in: query
           name: identificationPhoto
@@ -232,22 +258,22 @@ paths:
           in: query
           name: email
           description: ''
-          example: minus
+          example: et
           required: true
           schema:
             type: string
             description: ''
-            example: minus
+            example: et
         -
           in: query
           name: password
           description: ''
-          example: et
+          example: sequi
           required: true
           schema:
             type: password
             description: ''
-            example: et
+            example: sequi
         -
           in: header
           name: Api-Version
@@ -268,42 +294,42 @@ paths:
           in: query
           name: identification
           description: ''
-          example: 16
+          example: 17
           required: true
           schema:
             type: integer
             description: ''
-            example: 16
+            example: 17
         -
           in: query
           name: FlagStatus
           description: string
-          example: debitis
+          example: culpa
           required: true
           schema:
             type: 'It is to check if the invoice is valid or canceled [true, false]'
             description: string
-            example: debitis
+            example: culpa
         -
           in: query
           name: PaidStatus
           description: string
-          example: magnam
+          example: facere
           required: true
           schema:
             type: 'It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]'
             description: string
-            example: magnam
+            example: facere
         -
           in: query
           name: InvoiceType
           description: string
-          example: vel
+          example: eum
           required: false
           schema:
             type: 'It is to consult the invoices by type of invoice.'
             description: string
-            example: vel
+            example: eum
         -
           in: header
           name: Api-Version
@@ -334,52 +360,52 @@ paths:
           in: query
           name: name
           description: ''
-          example: qui
+          example: consequatur
           required: false
           schema:
             type: string
             description: ''
-            example: qui
+            example: consequatur
         -
           in: query
           name: email
           description: ''
-          example: animi
+          example: commodi
           required: false
           schema:
             type: string
             description: ''
-            example: animi
+            example: commodi
         -
           in: query
           name: identification
           description: ''
-          example: 7
+          example: 9
           required: false
           schema:
             type: integer
             description: ''
-            example: 7
+            example: 9
         -
           in: query
           name: telefono
           description: ''
-          example: 13
+          example: 8
           required: false
           schema:
             type: integer
             description: ''
-            example: 13
+            example: 8
         -
           in: query
           name: password
           description: ''
-          example: error
+          example: rerum
           required: false
           schema:
             type: string
             description: ''
-            example: error
+            example: rerum
         -
           in: query
           name: identificationPhoto

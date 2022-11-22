@@ -126,25 +126,25 @@ class PerfilController extends Controller
     }
 
 
-    public function cambiarEstadoDatosConfirm($idUsuario)
-    {
-        User::where('id', $idUsuario)->update(['estado' => 2]);
-        $dataUser = User::Where('id', $idUsuario)->first();
-        SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
+    // public function cambiarEstadoDatosConfirm($idUsuario)
+    // {
+    //     User::where('id', $idUsuario)->update(['estado' => 2]);
+    //     $dataUser = User::Where('id', $idUsuario)->first();
+    //     SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
 
-        //  Mail::send('templates.emailValidacionShipments', array('request' => 'Sus datos han validado satisfactoria mente, ya puede ingresar al sistema.'), function ($message) use ($user) {
-        //     $message->from('info@tractocar.com', 'InfoTracto');
-        //     $message->to($dataUser->email)->subject('Credenciales Erroneas en ValidacionShipments');
-        // });
-        return redirect('usuarios');
-    }
-    public function cambiarEstadoDatosRechaz($idUsuario)
-    {
-        User::where('id', $idUsuario)->update(['estado' => 3]);
-        $dataUser = User::Where('id', $idUsuario)->first();
-        SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
-        return redirect('usuarios');
-    }
+    //     //  Mail::send('templates.emailValidacionShipments', array('request' => 'Sus datos han validado satisfactoria mente, ya puede ingresar al sistema.'), function ($message) use ($user) {
+    //     //     $message->from('info@tractocar.com', 'InfoTracto');
+    //     //     $message->to($dataUser->email)->subject('Credenciales Erroneas en ValidacionShipments');
+    //     // });
+    //     return redirect('usuarios');
+    // }
+    // public function cambiarEstadoDatosRechaz($idUsuario)
+    // {
+    //     User::where('id', $idUsuario)->update(['estado' => 3]);
+    //     $dataUser = User::Where('id', $idUsuario)->first();
+    //     SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
+    //     return redirect('usuarios');
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -190,9 +190,15 @@ class PerfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    // public function destroy($id)
+    // {
+    //     User::find($id)->delete();
+    //     return redirect()->route('usuarios.index');
+    // }
+
+    public function eliminarUserAsociado($id)
     {
         User::find($id)->delete();
-        return redirect()->route('usuarios.index');
+        return back();
     }
 }

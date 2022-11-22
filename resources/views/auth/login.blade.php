@@ -1,13 +1,15 @@
 @extends('layouts.auth_app')
 @section('title')
-    Admin Login
+     Login
 @endsection
 {{-- @if(session("mensaje"))
     <div class="notification">
         {{session('mensaje')}}
     </div>
 @endif --}}
-
+{{-- @php
+ dd ($_SERVER['SERVER_NAME']);
+@endphp --}}
 @section('content')
     <body class="ltr logo_img">
         <!-- CONTAINER OPEN -->
@@ -58,7 +60,7 @@
                             </span>
                         </div>
                         <div class="text-end pt-1">
-                            {{-- <p class="mb-0"><a href="forgot-password.html" class="text-primary ms-1">@lang('locale.password')?</a></p> --}}
+                            <p class="mb-0"><a href="{{ route('forgot-password') }}" class="text-primary ms-1">Has olvidado tu contraseña?</a></p>
                         </div>
                         <div class="container-login100-form-btn">
                             <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">

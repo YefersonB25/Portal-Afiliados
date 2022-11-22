@@ -5,6 +5,9 @@
     <body class="ltr app sidebar-mini">
         <div class="page">
             <div class="page-main">
+                <div id="global-loader2">
+                    <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
+                </div>
                 <!--app-content open-->
                 <div class="app-content main-content mt-0">
                     <div class="side-app">
@@ -125,13 +128,15 @@
 
                             @can('/blog')
                             <!-- ROW-1 -->
+
                             <div class="row">
                                 <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
                                     <div class="card overflow-hidden">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col">
-                                                    <h3 id="mtPagadas" class="mb-2 fw-semibold"></h3>
+                                                    <h3 id="mtPagadas" class="mb-2 fw-semibold">
+                                                    </h3>
                                                     <p class="text-muted fs-13 mb-0">Monto de Facturas pagadas</p>
                                                 </div>
                                                 <div class="col col-auto top-icn dash">
@@ -218,6 +223,10 @@
 @endif
 
 <script>
+    let Loader = function(){
+        let $yourUl = $("#global-loader2");
+        $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
+    }
     window.onload = function() {
         $.ajax({
             type: "POST",
@@ -277,6 +286,7 @@
                                 <h3 class="mb-2 fw-semibold">$${totalFt}</h3>
                                 `
                                 $('#totalFt').append(plantillaTotalFt)
+                                Loader();
                                 // console.log(datos[2]['Paid']);
                             }
                         },
