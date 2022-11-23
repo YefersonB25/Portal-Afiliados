@@ -26,10 +26,10 @@
                                                     Facturas parcialmente pagadas
                                                 </button>
                                                 <button class="btn btn-warning mb-3" target="" id="pagadas-con-novedad">
-                                                    Facturas con saldo pendinte
+                                                    Facturas por pagar
                                                 </button>
                                                 <button class="btn btn-danger mb-3" target="" id="canceladas">
-                                                    Facturas Anuladas
+                                                    Facturas canceladas
                                                 </button>
                                             </div>
 
@@ -82,8 +82,7 @@
                                             </div>
 
                                             <div class="card" id="oculto-por-pagar" style="display: none">
-                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS POR
-                                                    PAGAR</h3>
+                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS</h3>
                                                 <div class="card-header border-bottom">
                                                     <div class="row g-2">
                                                         <h3 class="card-title">Fitros</h3>
@@ -130,7 +129,7 @@
 
                                             <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
                                                 <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                    PAGADAS CON NOVEDAD</h3>
+                                                    POR PAGAR</h3>
                                                 <div class="card-header border-bottom">
                                                     <div class="row g-2">
                                                         <h3 class="card-title">Fitros</h3>
