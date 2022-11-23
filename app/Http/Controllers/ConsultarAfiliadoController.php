@@ -201,7 +201,6 @@ class ConsultarAfiliadoController extends Controller
             }
 
 
-
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
             // return response()->json(['success' => true, 'data' => $invoice['count']]);
 

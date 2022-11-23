@@ -490,6 +490,7 @@
                 }
             },
             error: function(error){
+                Loader();
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -515,12 +516,18 @@
     });
     $('#btnPrFiltr1').on('click', function(e){
         var InvoiceType = document.getElementById("tipoFactura1").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
         LoadData("Unpaid", "false", "#TablePorPagar",InvoiceType,"");
         obtener_data("#TablePorPagar tbody", tblColectionData);
     });
     $('#btnPrFiltr2').on('click', function(e){
         var InvoiceType = document.getElementById("tipoFactura2").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
         LoadData("Partially paid", "false", "#TablePagadasNovedad",InvoiceType,"");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
@@ -528,6 +535,8 @@
     $('#btnPrFiltr3').on('click', function(e){
         e.preventDefault();
         var InvoiceType = document.getElementById("tipoFactura3").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
         LoadData("", "true", "#TableCanceladas",InvoiceType,"");
         obtener_data("#TableCanceladas tbody", tblColectionData);
