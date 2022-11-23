@@ -193,6 +193,12 @@ class ConsultarAfiliadoController extends Controller
             if($request->InvoiceType != '' && $request->PaidStatus != '') {
                 $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}')";
             }
+            if($request->PaidStatus != '' && $request->startDate != '' && $request->endDate != ''){
+                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+            }
+            if($request->PaidStatus != '' && $request->startDate != '' && $request->endDate != '' && $request->InvoiceType != ''){
+                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')  and (InvoiceType = '{$request->InvoiceType}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+            }
 
 
 

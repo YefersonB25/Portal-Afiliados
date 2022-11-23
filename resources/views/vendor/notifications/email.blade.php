@@ -6,13 +6,13 @@
 @if ($level === 'error')
 # @lang('Whoops!')
 @else
-# @lang('Cambiar contraseña')
+# @lang('Hola')
 @endif
 @endif
 
 {{-- Intro Lines --}}
 <p>
-    Has recibido este mensaje porque has solicitado cambiar la contraseña de tu <strong>TC Portal Afiliados.</strong>.
+    Has recibido este mensaje porque has solicitado cambiar la contraseña de tu <strong>Portal Afiliados TC.</strong>.
 </p>
 {{-- Action Button --}}
 @isset($actionText)

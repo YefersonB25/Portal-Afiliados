@@ -98,6 +98,14 @@
                                                                         <option value="Credit memo">Nota Credito</option>
                                                                     </select>
                                                                 </div>
+                                                                <div class="col-md">
+                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
+                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
+                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
+                                                                </div>
                                                             </div>
                                                             <button type="submit" class="btn btn-primary" id="btnPrFiltr1">Filtrar</button>
                                                         </div>
@@ -137,6 +145,14 @@
                                                                         <option value="Credit memo">Nota Credito</option>
                                                                     </select>
                                                                 </div>
+                                                                <div class="col-md">
+                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
+                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
+                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
+                                                                </div>
                                                             </div>
                                                             <button type="submit" class="btn btn-primary" id="btnPrFiltr2">Filtrar</button>
                                                         </div>
@@ -174,6 +190,14 @@
                                                                         <option value="Standard">Estandar</option>
                                                                         <option value="Credit memo">Nota Credito</option>
                                                                     </select>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
+                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
+                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
                                                                 </div>
                                                             </div>
                                                             <button type="submit" class="btn btn-primary" id="btnPrFiltr3">Filtrar</button>
