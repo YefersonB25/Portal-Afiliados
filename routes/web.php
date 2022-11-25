@@ -44,6 +44,7 @@ Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('aut
 Route::get('forgot-password', [AuthController::class, 'email'])->name('forgot-password');
 
 
+
 // Route::controller(ConsultarAfiliadoController::class)->group(function () {
 //     Route::post('facturas/total', 'TotalAmount')->name('total');
 //     Route::post('invoiceLines', 'getInvoiceLines')->name('invoice.lines');

@@ -210,7 +210,7 @@
                                                                 <div class="card-body">
                                                                     <div class="table-responsive">
                                                                         <table id="TableCanceladas"
-                                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                            class="table table-bordered text-nowrap key-buttons border-bottom w-100">
                                                                         </table>
                                                                     </div>
                                                                 </div>
@@ -361,15 +361,81 @@
 
 <script>
 
+
     let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType, Card, startDate, endDate ) {
         tblColectionData =  $(TableName).DataTable({
-            // "autoWidth": false,
-            "ordering": true,
+
             retrieve: true,
-            processing: true,
-            searchDelay: 500,
-            responsive: true,
-            info: true,
+
+            dom: 'Bfrtip',
+            "buttons": [
+                {
+                    extend: 'collection',
+                    text: 'Exportar',
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            className: 'btn',
+                            text: "Excel",
+                            exportOptions: {
+                            columns: ":not(.no-exportar)"
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            className: 'btn',
+                            text: "CSV",
+                            exportOptions: {
+                                columns: ":not(.no-exportar)"
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            className: 'btn',
+                            text: "PDF",
+                            exportOptions: {
+                            columns: ":not(.no-exportar)"
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            className: 'btn',
+                            text: "Imprimir",
+                            exportOptions: {
+                            columns: ":not(.no-exportar)"
+                            }
+                        },
+                    ],
+                }
+            ],
+
+            language: {
+                "sProcessing": "Procesando...",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+
+                "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+                },
+
+                "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+
+            },
+
             columns: [
                 {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' data-bs-toggle='modal' href='#exampleModalToggle' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
                 {title: "ID Factura", data: "InvoiceId" },
@@ -380,6 +446,7 @@
                 {title: "Fecha Factura", data: "InvoiceDate" },
 
             ],
+
             columnDefs: [
                 { responsivePriority: 1, targets: 0 },
                 { responsivePriority: 1, targets: 1 },
@@ -389,9 +456,7 @@
                 { responsivePriority: 1, targets: 5 },
                 { responsivePriority: 1, targets: 6 },
             ],
-            // responsive: {
-            //     details: 'false',
-            // },
+
         });
         $.ajax({
             type: 'POST',

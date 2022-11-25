@@ -5,9 +5,7 @@
     <body class="ltr app sidebar-mini">
         <div class="page">
             <div class="page-main">
-                <div id="global-loader2">
-                    <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
-                </div>
+
                 <!--app-content open-->
                 <div class="app-content main-content mt-0">
                     <div class="side-app">
@@ -128,7 +126,9 @@
 
                             @can('/blog')
                             <!-- ROW-1 -->
-
+                            <div id="global-loader2">
+                                <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
                                     <div class="card overflow-hidden">

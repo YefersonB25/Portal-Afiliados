@@ -14,14 +14,19 @@
     <link rel="shortcut icon" type="image/x-icon" href={{asset('assets/images/brand/logo-1.png')}} />
 
     <!-- TITLE -->
-    <title>Dashboard</title>
+    <title>Portal Afiliados</title>
 
     <!-- BOOTSTRAP CSS -->
     <link id="style" href={{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}} rel="stylesheet" />
-
     <!-- STYLE CSS -->
     <link href={{asset('assets/css/style.css')}} rel="stylesheet" />
     <link href={{asset('assets/css/skin-modes.css')}} rel="stylesheet" />
+
+    <!-- DATA TABLE CSS-->
+    {{-- <link href={{asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}} rel="stylesheet" /> --}}
+    {{-- <link href={{asset('assets/plugins/datatable/css/buttons.bootstrap5.min.css')}}  rel="stylesheet">
+    <link href={{asset('assets/plugins/datatable/responsive.bootstrap5.css')}} rel="stylesheet" /> --}}
+    {{-- <link rel="stylesheet" href="{{asset('assets/plugins/datatable/css/jquery.dataTables.min.css')}}"> --}}
 
     <!--- FONT-ICONS CSS -->
     <link href={{asset('assets/css/icons.css')}} rel="stylesheet" />
@@ -55,26 +60,26 @@
     @include('profile.edit_profile')
 
 </body>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<!-- SWEETALERT2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 <!-- BACK-TO-TOP -->
-<a href="#top" id="back-to-top"><i class="fa fa-long-arrow-up"></i></a>
+    <a href="#top" id="back-to-top"><i class="fa fa-long-arrow-up"></i></a>
 
 <!-- JQUERY JS -->
-<script src={{ asset('assets/js/jquery.min.js') }}></script>
+    <script src={{ asset('assets/js/jquery.min.js') }}></script>
 <!-- BOOTSTRAP JS -->
-<script src={{ asset('assets/plugins/bootstrap/js/popper.min.js') }}></script>
-<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src={{ asset('assets/plugins/bootstrap/js/popper.min.js') }}></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 
 <!-- SIDE-MENU JS-->
-<script src="{{ asset('assets/plugins/sidemenu/sidemenu.js') }}"></script>
+    <script src="{{ asset('assets/plugins/sidemenu/sidemenu.js') }}"></script>
 
 <!-- APEXCHART JS -->
-<script src="{{ asset('assets/js/apexcharts.js') }}"></script>
+    <script src="{{ asset('assets/js/apexcharts.js') }}"></script>
 
 <!-- INTERNAL SELECT2 JS -->
-<script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 
 <!-- DATA TABLE JS-->
 <script src="{{asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
@@ -92,25 +97,26 @@
 <script src="{{asset('assets/js/table-data.js')}}"></script>
 
 <!-- CUSTOM JS -->
-<script src={{ asset('assets/js/custom.js') }}></script>
+    <script src={{ asset('assets/js/custom.js') }}></script>
+
 <!-- CHART-CIRCLE JS-->
-<script src={{ asset('assets/js/circle-progress.min.js') }}></script>
+    <script src={{ asset('assets/js/circle-progress.min.js') }}></script>
 
 <!-- INDEX JS -->
-<script src={{ asset('assets/js/index1.js') }}></script>
+    <script src={{ asset('assets/js/index1.js') }}></script>
 
 <!-- REPLY JS-->
-<script src={{ asset('assets/js/reply.js') }}></script>
+    <script src={{ asset('assets/js/reply.js') }}></script>
 
 <!-- PERFECT SCROLLBAR JS-->
 {{-- <script src={{ asset('assets/plugins/p-scroll/perfect-scrollbar.js') }}></script>
 <script src={{ asset('assets/plugins/p-scroll/pscroll.js') }}></script> --}}
 
 <!-- STICKY JS -->
-<script src={{ asset('assets/js/sticky.js') }}></script>
+    <script src={{ asset('assets/js/sticky.js') }}></script>
 
 <!-- COLOR THEME JS -->
-<script src={{ asset('assets/js/themeColors.js') }}></script>
+    <script src={{ asset('assets/js/themeColors.js') }}></script>
 {{-- <script src="{{ asset('thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}"
     type="text/javascript"></script> --}}
 @yield('scripts')

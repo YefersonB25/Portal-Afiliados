@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
-use App\Http\Helpers\SendEmailRequest;
+use App\Jobs\SendRequestEmailJob;
+use App\Jobs\SendWelcomeEmailJob;
 use App\Models\Estado;
 use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -179,18 +180,32 @@ class UsuarioController extends Controller
     {
         $usuario = User::find($usuarioId);
 
-        switch ($estado) {
-            case 'aprobado':
-                $usuario->update(['estado' => 2]);
-                break;
-            case 'rechazado':
-                $usuario->update(['estado' => 3]);
-                break;
-            default:
-                # code...
-                break;
-        }
-            SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
+        // switch ($estado) {
+        //     case 'aprobado':
+        //         $usuario->update(['estado' => 2]);
+        //         break;
+        //     case 'rechazado':
+        //         $usuario->update(['estado' => 3]);
+        //         break;
+        //     default:
+        //         # code...
+        //         break;
+        // }
+            $request = [
+                'name' => $usuario->name,
+                'email' => $usuario->email,
+                'estado' => $estado
+            ];
+            dispatch(new SendRequestEmailJob($request));
+
+            // $details = [
+            //     'name' => $usuario->name,
+            //     'email' => $usuario->email,
+            //     // 'estado' => $estado
+            // ];
+            // dispatch(new SendWelcomeEmailJob($details));
+
+            // SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
 
          return redirect('usuarios');
     }
