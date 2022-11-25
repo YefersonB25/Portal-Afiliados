@@ -126,7 +126,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
                                                 <h3 class="text-center" style="text-decoration: underline">FACTURAS
                                                     POR PAGAR</h3>
@@ -225,8 +224,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade" id="exampleModalToggle" aria-hidden="true"
-                            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                        <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div id="global-loader1">
                                 <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
                             </div>
@@ -234,6 +232,7 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-lg-12 mx-auto">
+                                            <div class="modal-content">
                                             <div class="card">
                                                 <div class="card-body invoice-head">
                                                     <div class="row" id="date">
@@ -340,6 +339,11 @@
                                                 </div>
                                                 <!--end card-body-->
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
                                             <!--end card-->
                                         </div>
                                         <!--end col-->
