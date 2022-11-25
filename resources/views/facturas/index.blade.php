@@ -224,10 +224,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="global-loader3" style="display: none">
+                            <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
+                        </div>
                         <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div id="global-loader1">
-                                <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
-                            </div>
                             <div class="modal-dialog modal-xl">
                                 <div class="container-fluid">
                                     <div class="row">
@@ -340,7 +340,7 @@
                                                 <!--end card-body-->
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" id="closet-modal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
 
@@ -441,7 +441,7 @@
             },
 
             columns: [
-                {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' data-bs-toggle='modal' href='#exampleModalToggle' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
+                {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
                 {title: "ID Factura", data: "InvoiceId" },
                 {title: "Descripción", data: "Description" },
                 {title: "Valor Factura", data: "InvoiceAmount" },
@@ -574,6 +574,7 @@
         $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
     }
 
+    // Filtros
     $('#btnPrFiltr').on('click', function(e){
         var InvoiceType = document.getElementById("tipoFactura").value;
         var startDate = document.getElementById("startDate").value;
@@ -582,6 +583,7 @@
         LoadData("Paid", "false", "#TablePagadas",InvoiceType,"",startDate,endDate);
         obtener_data("#TablePagadas tbody", tblColectionData);
     });
+
     $('#btnPrFiltr1').on('click', function(e){
         var InvoiceType = document.getElementById("tipoFactura1").value;
         var startDate = document.getElementById("startDate").value;
@@ -592,6 +594,7 @@
         LoadData("Unpaid", "false", "#TablePorPagar",InvoiceType,"");
         obtener_data("#TablePorPagar tbody", tblColectionData);
     });
+
     $('#btnPrFiltr2').on('click', function(e){
         var InvoiceType = document.getElementById("tipoFactura2").value;
         var startDate = document.getElementById("startDate").value;
@@ -600,6 +603,7 @@
         LoadData("Partially paid", "false", "#TablePagadasNovedad",InvoiceType,"");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
     });
+
     $('#btnPrFiltr3').on('click', function(e){
         e.preventDefault();
         var InvoiceType = document.getElementById("tipoFactura3").value;
@@ -609,8 +613,9 @@
         LoadData("", "true", "#TableCanceladas",InvoiceType,"");
         obtener_data("#TableCanceladas tbody", tblColectionData);
     })
+    // Fin
 
-
+    // Cunsultamos las facturas
     $('#pagadas').on('click', function(e){
         e.preventDefault();
         Loader();
@@ -640,12 +645,22 @@
         LoadData("", "true", "#TableCanceladas","","#oculto-canceladas");
         obtener_data("#TableCanceladas tbody", tblColectionData);
     });
+    // Fin
+
+    $("#closet-modal").click(function(e) {
+
+        let $yourUl = $("#global-loader3");
+        $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
+    });
 
     let obtener_data = function(tbody, table){
         $(tbody).on("click", "button.ver", function(){
-            window.addEventListener("load", function (e) {
-                $("#global-loader1").fadeOut("slow");
-            })
+            // Activar el spiner de cargar al momento de visualizar la factura
+            let $yourUl = $("#global-loader3");
+            $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
+            //Fin
+
+            // Cargamos los datos de la factura al modal
             let invoice = table.row($(this).parents("tr") ).data();
             plantillaDate = '';
             plantiilabody = '';
@@ -756,11 +771,12 @@
                         });
 
                     }
+                    $('#exampleModalToggle').modal('show');
                 },
                 error: function(error){
                 console.error(error);
             }
-
+            //Fin
             });
 
         });
