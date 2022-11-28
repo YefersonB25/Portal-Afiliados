@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 //Para la paginacion
+use Studio\Totem\Totem;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Totem::auth(function ($request) {
+            return Auth::check();
+        });
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
     }

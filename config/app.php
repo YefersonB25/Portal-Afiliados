@@ -164,8 +164,9 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         /*
          * Package Service Providers...
+         * 
          */
-
+        Studio\Totem\Providers\TotemServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -180,7 +181,8 @@ return [
 
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Propaganistas\LaravelDisposableEmail\DisposableEmailServiceProvider::class,
-        ],
+
+    ],
 
     /*
     |--------------------------------------------------------------------------
