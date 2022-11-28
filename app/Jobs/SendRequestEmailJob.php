@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\SendEmailRequest;
 use App\Mail\SendEmailWelcome;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,11 +25,10 @@ class SendRequestEmailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct($request = 1)
     {
 
-        $this->request = $request;
-
+        $this->request =  User::find($request)->get();
     }
 
     /**
