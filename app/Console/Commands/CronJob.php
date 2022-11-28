@@ -38,5 +38,6 @@ class CronJob extends Command
      */
     public function handle()
     {
-        Log::info("Cron is working.");    }
+        Log::info("Cron is working.");
+    }
 }

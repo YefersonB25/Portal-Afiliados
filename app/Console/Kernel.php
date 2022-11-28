@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\CronJob::class,
+        Commands\sendEmail::class,
     ];
 
     /**
@@ -22,9 +22,15 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('email:welcome')->everyMinute();
+        // $schedule
+        // ->command('queue:work --max-time=50 --max-jobs=100 --sleep=5')
+        // ->everyMinute()
+        // ->runInBackground()
+        // ->withoutOverlapping(60)
+        // ->sendOutputTo(storage_path('schedule.run.log'));
+        // $schedule->command('email:welcome')->everyMinute();
         // $schedule->command('inspire')->hourly();
     }
 

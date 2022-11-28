@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Laravel\Ui\Presets\React;
 
 class SendRequestEmailJob implements ShouldQueue
 {
@@ -25,10 +26,12 @@ class SendRequestEmailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($request = 1)
+    public function __construct($request)
     {
 
-        $this->request =  User::find($request)->get();
+        // $this->request =  User::find($request)->get();
+        $this->request =  $request;
+
     }
 
     /**
