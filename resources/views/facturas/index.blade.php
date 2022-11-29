@@ -22,17 +22,22 @@
                                                 <button class="btn btn-primary mb-3" target="" id="pagadas">
                                                     Facturas pagadas
                                                 </button>
-                                                <button class="btn btn-success mb-3" target="" id="por-pagar">
+                                                <button class="btn btn-secondary mb-3" target="" id="por-pagar">
                                                     Facturas parcialmente pagadas
                                                 </button>
-                                                <button class="btn btn-warning mb-3" target="" id="pagadas-con-novedad">
+                                                <button class="btn btn-success mb-3" target="" id="pagadas-con-novedad">
                                                     Facturas por pagar
                                                 </button>
-                                                <button class="btn btn-danger mb-3" target="" id="canceladas">
+                                                <button class="btn btn-warning mb-3" target="" id="descuentos">
+                                                    Facturas pagadas con descuentos
+                                                </button>
+                                                <button class="btn btn-danger mb-3" target="" id="descuentos-pendientes">
+                                                    Facturas con descuentos pendientes por pagar
+                                                </button>
+                                                <button class="btn btn-dark mb-3" target="" id="canceladas">
                                                     Facturas canceladas
                                                 </button>
                                             </div>
-
 
                                             <div class="card" id="oculto-pagadas" style="display: none">
                                                 <h3 class="text-center" style="text-decoration: underline">FACTURAS
@@ -80,7 +85,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="card" id="oculto-por-pagar" style="display: none">
                                                 <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS</h3>
                                                 <div class="card-header border-bottom">
@@ -218,7 +222,98 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div class="card" id="oculto-descuentos" style="display: none">
+                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS PAGADAS
+                                                CON DESCUENTO</h3>
+                                                <div class="card-header border-bottom">
+                                                    <div class="row g-2">
+                                                        <h3 class="card-title">Fitros</h3>
+                                                        <div class="form-horizontal">
+                                                            <div class="row mb-2">
+                                                                <div class="col-md">
+                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
+                                                                    <select type="text" name="tipoFactura" id="tipoFactura4" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                        <option selected value="">Todos</option>
+                                                                        <option value="Prepayment">Anticipo</option>
+                                                                        <option value="Standard">Estandar</option>
+                                                                        <option value="Credit memo">Nota Credito</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
+                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
+                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr4">Filtrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row row-sm">
+                                                        <div class="col-lg-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="table-responsive">
+                                                                        <table id="TableDescuento"
+                                                                            class="table table-bordered text-nowrap key-buttons border-bottom w-100">
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card" id="oculto-descuentos-pendientes" style="display: none">
+                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                CON DESCUENTOS PENDIENTES</h3>
+                                                <div class="card-header border-bottom">
+                                                    <div class="row g-2">
+                                                        <h3 class="card-title">Fitros</h3>
+                                                        <div class="form-horizontal">
+                                                            <div class="row mb-2">
+                                                                <div class="col-md">
+                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
+                                                                    <select type="text" name="tipoFactura" id="tipoFactura5" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                        <option selected value="">Todos</option>
+                                                                        <option value="Prepayment">Anticipo</option>
+                                                                        <option value="Standard">Estandar</option>
+                                                                        <option value="Credit memo">Nota Credito</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
+                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
+                                                                </div>
+                                                                <div class="col-md">
+                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
+                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr5">Filtrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row row-sm">
+                                                        <div class="col-lg-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="table-responsive">
+                                                                        <table id="TableDescuentoPendiente"
+                                                                            class="table table-bordered text-nowrap key-buttons border-bottom w-100">
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -365,7 +460,7 @@
 
 <script>
 
-
+    // Datatable
     let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType, Card, startDate, endDate ) {
         tblColectionData =  $(TableName).DataTable({
 
@@ -495,6 +590,7 @@
 
                         if($("#oculto-por-pagar").css("display") != 'none')
                         $("#oculto-por-pagar").hide("slow");
+
                     }
                     else if(Card == "#oculto-por-pagar")  {
 
@@ -547,9 +643,10 @@
                         if($("#oculto-por-pagar").css("display") != 'none')
                         $("#oculto-por-pagar").hide("slow");
                     }
-
+                    LoaderClose();
                 }else {
-                   Loader();
+                    LoaderClose();
+                    Loader();
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -558,6 +655,7 @@
                 }
             },
             error: function(error){
+                LoaderClose();
                 Loader();
                 Swal.fire({
                     icon: 'error',
@@ -568,10 +666,23 @@
             }
         })
     }
-
+    // load inicial, se visualiza al seleccionar un opcion de las facturas
     let Loader = function(){
         let $yourUl = $("#global-loader2");
         $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
+    }
+    // load secundario, se visualiza al momento pasas de una opcion de facturas a otro siempre y cuando se estan visualizando la tabla de facturas
+    let Loader3 = function(){
+        let $yourUl = $("#global-loader3");
+        $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
+    }
+    // load primario individual, se visualiza al momento de filtrar
+    let LoaderOpen = function(){
+        document.getElementById("global-loader3").style.display = "";
+    }
+    // load individual de cierre, cerra los load que quedan abiertos
+    let LoaderClose = function(){
+        document.getElementById("global-loader3").style.display = "none";
     }
 
     // Filtros
@@ -580,6 +691,7 @@
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
+        LoaderOpen();
         LoadData("Paid", "false", "#TablePagadas",InvoiceType,"",startDate,endDate);
         obtener_data("#TablePagadas tbody", tblColectionData);
     });
@@ -589,8 +701,7 @@
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
-        var startDate = document.getElementById("startDate").value;
-        var endDate = document.getElementById("endDate").value;
+        LoaderOpen();
         LoadData("Unpaid", "false", "#TablePorPagar",InvoiceType,"");
         obtener_data("#TablePorPagar tbody", tblColectionData);
     });
@@ -600,6 +711,7 @@
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
+        LoaderOpen();
         LoadData("Partially paid", "false", "#TablePagadasNovedad",InvoiceType,"");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
     });
@@ -610,14 +722,38 @@
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
+        LoaderOpen();
         LoadData("", "true", "#TableCanceladas",InvoiceType,"");
         obtener_data("#TableCanceladas tbody", tblColectionData);
+    })
+
+    $('#btnPrFiltr4').on('click', function(e){
+        e.preventDefault();
+        var InvoiceType = document.getElementById("tipoFactura4").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+        tblColectionData.clear().draw();
+        LoaderOpen();
+        LoadData("", "false", "#TableDescuento",InvoiceType,"");
+        obtener_data("#TableDescuento tbody", tblColectionData);
+    })
+
+    $('#btnPrFiltr5').on('click', function(e){
+        e.preventDefault();
+        var InvoiceType = document.getElementById("tipoFactura5").value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+        tblColectionData.clear().draw();
+        LoaderOpen();
+        LoadData("", "false", "#TableDescuentoPendiente",InvoiceType,"");
+        obtener_data("#TableDescuentoPendiente tbody", tblColectionData);
     })
     // Fin
 
     // Cunsultamos las facturas
     $('#pagadas').on('click', function(e){
         e.preventDefault();
+        Loader3();
         Loader();
         LoadData("Paid", "false", "#TablePagadas","","#oculto-pagadas");
         obtener_data("#TablePagadas tbody", tblColectionData);
@@ -626,6 +762,7 @@
 
     $("#por-pagar").click(function(e) {
         e.preventDefault();
+        Loader3();
         Loader();
         LoadData("Unpaid", "false", "#TablePorPagar","","#oculto-por-pagar");
         obtener_data("#TablePorPagar tbody", tblColectionData);
@@ -633,14 +770,34 @@
 
     $("#pagadas-con-novedad").click(function(e) {
         e.preventDefault();
+        Loader3();
         Loader();
         LoadData("Partially paid", "false", "#TablePagadasNovedad","","#oculto-pagadas-con-novedad");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
 
     });
 
+    // En desarrollo
+    $("#descuentos").click(function(e) {
+        e.preventDefault();
+        Loader3();
+        Loader();
+        LoadData("", "true", "#TableDescuento","","#oculto-descuentos");
+        obtener_data("#TableDescuento tbody", tblColectionData);
+    });
+
+    $("#descuentos-pendientes").click(function(e) {
+        e.preventDefault();
+        Loader3();
+        Loader();
+        LoadData("", "true", "#TableDescuentoPendiente","","#oculto-descuentos-pendientes");
+        obtener_data("#TableDescuentoPendiente tbody", tblColectionData);
+    });
+    // Fin
+
     $("#canceladas").click(function(e) {
         e.preventDefault();
+        Loader3();
         Loader();
         LoadData("", "true", "#TableCanceladas","","#oculto-canceladas");
         obtener_data("#TableCanceladas tbody", tblColectionData);
@@ -648,16 +805,16 @@
     // Fin
 
     $("#closet-modal").click(function(e) {
+        document.getElementById("global-loader3").style.display = "none";
+        $("#global-loader3").modal('hide');//ocultamos el modal
 
-        let $yourUl = $("#global-loader3");
-        $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
     });
 
+    // visualizar facturas individuales
     let obtener_data = function(tbody, table){
         $(tbody).on("click", "button.ver", function(){
             // Activar el spiner de cargar al momento de visualizar la factura
-            let $yourUl = $("#global-loader3");
-            $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
+            document.getElementById("global-loader3").style.display = "";
             //Fin
 
             // Cargamos los datos de la factura al modal
@@ -734,13 +891,22 @@
 
                             <div class="col-md-4">
                                 <div class="float-left">
-                                    <h6><b>@lang('locale.Invoice Type') :</b> "${invoice.InvoiceType}"</h6>
-                                    <h6 class="mb-0"><b>@lang('locale.Payment status') : </b>
-                                        ${invoice.PaidStatus}
+                                    <h6><b>@lang('locale.Invoice Type') :</b>
+                                        ${
+                                            invoice.InvoiceType = "Prepayment" ? 'Anticipo' :
+                                            invoice.InvoiceType = "Standard" ? 'Estandar' : 'Nota Credito'
+                                        }
                                     </h6>
-
+                                    <h6 class="mb-0"><b>@lang('locale.Payment status') : </b>
+                                        ${  invoice.PaidStatus = "Paid" ? 'Pagadas' :
+                                            invoice.PaidStatus = "Unpaid" ? 'No pagadas': 'Parcialmente pagadas'
+                                        }
+                                    </h6>
                                     <h6><b>@lang('locale.Validation Status') :</b>
-                                        ${invoice.ValidationStatus}
+                                        ${
+                                            invoice.ValidationStatus = "Canceled" ? 'Cancelada' :
+                                            invoice.ValidationStatus = "Validated" ? 'Validada' : 'Necesita revalidación'
+                                        }
                                     </h6>
                                 </div>
                             </div><!--end col-->
@@ -749,7 +915,11 @@
                                 <div class="text-left bg-light p-3 mb-3">
                                     <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
                                     <h6 class="font-13">@lang('locale.Accounting Date') : ${ invoice.AccountingDate }</h6>
-                                    <h6 class="font-13">@lang('locale.Document Category') : ${invoice.DocumentCategory}</h6>
+                                    <h6 class="font-13">@lang('locale.Document Category') :
+                                        ${
+                                            invoice.DocumentCategory = "Prepayment Invoices" ? 'Facturas de anticipo' : 'Facturas Estandar'
+                                        }
+                                        </h6>
                                     <h6 class="font-13">@lang('locale.Document Sequence') : ${ invoice.DocumentSequence }</h6>
                                 </div>
                             </div><!--end col-->

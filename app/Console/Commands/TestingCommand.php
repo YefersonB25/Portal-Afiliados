@@ -7,6 +7,7 @@ use App\Http\Helpers\OracleRestOtm;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 
 class TestingCommand extends Command
@@ -34,7 +35,15 @@ class TestingCommand extends Command
                             InvoiceType: Tipo de pago.
                                 Prepayment     = Anticipo,
                                 Standard       = Normal Positiva(Estandar),
-                                Credit memo    = Nota Credito';
+                                Credit memo    = Nota Credito
+                            ValidationStatus: Categoría de documento
+                                -Canceled           = Cancelada
+                                -Validated          = Validada
+                                -Needs revalidation = Necesita revalidación
+                            DocumentCategory: Categoría de document
+                                -Prepayment Invoices            = Facturas de anticipo
+                                -STD INV - Standard Invoices    = Facturas Estandar
+                            ';
 
     /**
      * Create a new command instance.
@@ -53,6 +62,7 @@ class TestingCommand extends Command
      */
     public function handle()
     {
+
         $this->info(Carbon::now()->format('Y-m-d \ H:i:s'));
         $date           = $this->argument('start-date');
         $startDate      = Carbon::now()->parse($date)->startOfMonth()->format('Y-m-d\TH:i:s.000+00:00');

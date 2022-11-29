@@ -9,10 +9,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\Client\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Laravel\Ui\Presets\React;
 
 class SendRequestEmailJob implements ShouldQueue
@@ -26,7 +28,7 @@ class SendRequestEmailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct(FacadesRequest $request)
     {
 
         // $this->request =  User::find($request)->get();

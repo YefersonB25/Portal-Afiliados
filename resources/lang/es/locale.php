@@ -264,6 +264,7 @@ return [
     "Users"                            => "Usuarios",
     "Utilities"                        => "Utilidades",
     "Validated"                        => "Validada",
+    "Needs revalidation"               => "Necesita revalidación",
     "Validation Status"                => "Estado de validación",
     "Value Total"                      => "Valor Total",
     "Value attribute"                  => "Atributo Valor",
