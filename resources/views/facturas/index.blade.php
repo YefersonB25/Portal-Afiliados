@@ -29,10 +29,10 @@
                                                     Facturas por pagar
                                                 </button>
                                                 <button class="btn btn-warning mb-3" target="" id="descuentos">
-                                                    Facturas pagadas con descuentos
+                                                    Facturas nota credito aplicadas
                                                 </button>
                                                 <button class="btn btn-danger mb-3" target="" id="descuentos-pendientes">
-                                                    Facturas con descuentos pendientes por pagar
+                                                    Facturas nota credito por aplicar
                                                 </button>
                                                 <button class="btn btn-dark mb-3" target="" id="canceladas">
                                                     Facturas canceladas
@@ -319,9 +319,11 @@
                                 </div>
                             </div>
                         </div>
+
                         <div id="global-loader3" style="display: none">
                             <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
                         </div>
+
                         <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-xl">
                                 <div class="container-fluid">
@@ -460,8 +462,10 @@
 
 <script>
 
+    let EndTime = 0;
     // Datatable
     let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType, Card, startDate, endDate ) {
+        // let start = performance.now();
         tblColectionData =  $(TableName).DataTable({
 
             retrieve: true,
@@ -542,7 +546,11 @@
                 {title: "Valor Factura", data: "InvoiceAmount" },
                 {title: "Monto Pagado", data: "AmountPaid" },
                 {title: "Tipo de Factura", data: "InvoiceType" },
-                {title: "Fecha Factura", data: "InvoiceDate" },
+                {title: "Fecha Factura",  data: "InvoiceDate" },
+                {title: "Monto a Pagar",  data: "invoiceInstallments.UnpaidAmount" },
+                // {title: "Cuenta bancaria",  data: "BankAccount" },
+
+
 
             ],
 
@@ -570,11 +578,12 @@
                 endDate: endDate
             },
             success: function(response) {
-                let datos = response.data;
+                let datos =  response.data;
+                // var invoiceInstallments = datos[0].invoiceInstallments;
                 if (response.success == true) {
+                    console.log(datos);
                     tblColectionData.clear().draw();
                     tblColectionData.rows.add(datos).draw();
-
                     if (Card == "#oculto-pagadas" ) {
                         if( $("#oculto-pagadas").css("display") == 'none' )
                         $("#oculto-pagadas").show("slow");
@@ -643,8 +652,10 @@
                         if($("#oculto-por-pagar").css("display") != 'none')
                         $("#oculto-por-pagar").hide("slow");
                     }
+                    swal.close();
                     LoaderClose();
                 }else {
+                    swal.close();
                     LoaderClose();
                     Loader();
                     Swal.fire({
@@ -655,6 +666,7 @@
                 }
             },
             error: function(error){
+                swal.close();
                 LoaderClose();
                 Loader();
                 Swal.fire({
@@ -665,6 +677,28 @@
                 console.error(error);
             }
         })
+        // let end=performance.now();
+        // EndTime = end
+    }
+    let Loader3 = function(){
+        Swal.fire({
+        title: 'Cargando Facturas!',
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading()
+            const b = Swal.getHtmlContainer().querySelector('b')
+        },
+        })
+    }
+    let LoaderView = function(){
+        Swal.fire({
+        title: 'Cargando visualización de la factura!',
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading()
+            const b = Swal.getHtmlContainer().querySelector('b')
+        },
+        })
     }
     // load inicial, se visualiza al seleccionar un opcion de las facturas
     let Loader = function(){
@@ -672,7 +706,7 @@
         $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
     }
     // load secundario, se visualiza al momento pasas de una opcion de facturas a otro siempre y cuando se estan visualizando la tabla de facturas
-    let Loader3 = function(){
+    let Loader31 = function(){
         let $yourUl = $("#global-loader3");
         $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
     }
@@ -684,14 +718,13 @@
     let LoaderClose = function(){
         document.getElementById("global-loader3").style.display = "none";
     }
-
     // Filtros
     $('#btnPrFiltr').on('click', function(e){
         var InvoiceType = document.getElementById("tipoFactura").value;
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
-        LoaderOpen();
+        Loader3();
         LoadData("Paid", "false", "#TablePagadas",InvoiceType,"",startDate,endDate);
         obtener_data("#TablePagadas tbody", tblColectionData);
     });
@@ -701,7 +734,7 @@
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
-        LoaderOpen();
+        Loader3();
         LoadData("Unpaid", "false", "#TablePorPagar",InvoiceType,"");
         obtener_data("#TablePorPagar tbody", tblColectionData);
     });
@@ -711,7 +744,7 @@
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
-        LoaderOpen();
+        Loader3();
         LoadData("Partially paid", "false", "#TablePagadasNovedad",InvoiceType,"");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
     });
@@ -722,7 +755,7 @@
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
-        LoaderOpen();
+        Loader3();
         LoadData("", "true", "#TableCanceladas",InvoiceType,"");
         obtener_data("#TableCanceladas tbody", tblColectionData);
     })
@@ -733,7 +766,7 @@
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
-        LoaderOpen();
+        Loader3();
         LoadData("", "false", "#TableDescuento",InvoiceType,"");
         obtener_data("#TableDescuento tbody", tblColectionData);
     })
@@ -744,7 +777,7 @@
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
-        LoaderOpen();
+        Loader3();
         LoadData("", "false", "#TableDescuentoPendiente",InvoiceType,"");
         obtener_data("#TableDescuentoPendiente tbody", tblColectionData);
     })
@@ -753,6 +786,7 @@
     // Cunsultamos las facturas
     $('#pagadas').on('click', function(e){
         e.preventDefault();
+
         Loader3();
         Loader();
         LoadData("Paid", "false", "#TablePagadas","","#oculto-pagadas");
@@ -814,7 +848,8 @@
     let obtener_data = function(tbody, table){
         $(tbody).on("click", "button.ver", function(){
             // Activar el spiner de cargar al momento de visualizar la factura
-            document.getElementById("global-loader3").style.display = "";
+            // document.getElementById("global-loader3").style.display = "";
+            LoaderView();
             //Fin
 
             // Cargamos los datos de la factura al modal
@@ -941,6 +976,7 @@
                         });
 
                     }
+                    swal.close();
                     $('#exampleModalToggle').modal('show');
                 },
                 error: function(error){

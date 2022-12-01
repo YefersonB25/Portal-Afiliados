@@ -401,5 +401,10 @@
 		</div>
 	</center>
 </body>
-
+{{-- <script>
+    // EVITAR REENVIO DE DATOS.
+        if (window.history.replaceState) { // verificamos disponibilidad
+        window.history.replaceState(null, null, window.location.href);
+    }
+    </script> --}}
 </html>
