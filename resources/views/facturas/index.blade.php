@@ -7,306 +7,72 @@
         <div class="page-main">
             <div class="app-content main-content mt-0">
                 <div class="side-app">
-                    <div id="global-loader2" style="display: none">
-                        <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
-                    </div>
                     <!-- CONTAINER -->
-                    <body class="ltr app sidebar-mini light-mode">
-                        <div class="row row-sm">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <!-- CONTAINER -->
-                                        <div class="main-container container-fluid">
-                                            <div>
-                                                <button class="btn btn-primary mb-3" target="" id="pagadas">
-                                                    Facturas pagadas
-                                                </button>
-                                                <button class="btn btn-secondary mb-3" target="" id="por-pagar">
-                                                    Facturas parcialmente pagadas
-                                                </button>
-                                                <button class="btn btn-success mb-3" target="" id="pagadas-con-novedad">
-                                                    Facturas por pagar
-                                                </button>
-                                                <button class="btn btn-warning mb-3" target="" id="descuentos">
-                                                    Facturas nota credito aplicadas
-                                                </button>
-                                                <button class="btn btn-danger mb-3" target="" id="descuentos-pendientes">
-                                                    Facturas nota credito por aplicar
-                                                </button>
-                                                <button class="btn btn-dark mb-3" target="" id="canceladas">
-                                                    Facturas canceladas
-                                                </button>
-                                            </div>
-
-                                            <div class="card" id="oculto-pagadas" style="display: none">
-                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                    PAGADAS</h3>
-                                                <div class="card-header border-bottom">
-                                                    <div class="row g-2">
-                                                        <h3 class="card-title">Fitros</h3>
-                                                        <div class="form-horizontal">
-                                                            <div class="row mb-2">
-                                                                <div class="col-md">
-                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
-                                                                    <select type="text" name="tipoFactura" id="tipoFactura" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
-                                                                        <option selected value="">Todos</option>
-                                                                        <option value="Prepayment">Anticipo</option>
-                                                                        <option value="Standard">Estandar</option>
-                                                                        <option value="Credit memo">Nota Credito</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
-                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
-                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
-                                                                </div>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr">Filtrar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row row-sm">
-                                                        <div class="col-lg-12">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="table-responsive">
-                                                                        <table id="TablePagadas"
-                                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                                        </table>
+                    <p>
+                        <a class="btn btn-primary" id="facturas-all">
+                        Totas las Facturas
+                        </a>
+                        <button class="btn btn-primary" id="facturas-lotes">
+                            Facturas Divididas
+                        </button>
+                    </p>
+                    <div class="collapse" id="FacturasGenerales" style="display: none">
+                        <body class="ltr app sidebar-mini light-mode">
+                            <div class="row row-sm">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <!-- CONTAINER -->
+                                            <div class="main-container container-fluid">
+                                                <div class="card" id="facturas-all">
+                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                        PAGADAS</h3>
+                                                    <div class="card-header border-bottom">
+                                                        <div class="row g-2">
+                                                            <h3 class="card-title">Fitros</h3>
+                                                            <div class="form-horizontal">
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md">
+                                                                        <label for="tipoFactura" class="form-label">tipo de factura</label>
+                                                                        <select type="text" name="tipoFactura" id="tipoFactura" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                            <option selected value="">Todos</option>
+                                                                            <option value="Prepayment">Anticipo</option>
+                                                                            <option value="Standard">Estandar</option>
+                                                                            <option value="Credit memo">Nota Credito</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md">
+                                                                        <label for="ValidationStatus" class="form-label">Estado</label>
+                                                                        <select type="text" name="ValidationStatus" id="ValidationStatus" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                            <option selected value="">Todos</option>
+                                                                            <option value="Canceled">Cancelada</option>
+                                                                            <option value="Validated">Validada</option>
+                                                                            <option value="Needs revalidation">Necesita revalidación</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md">
+                                                                        <label for="startDate" class="form-label">Fecha Inicio</label>
+                                                                        <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
+                                                                    </div>
+                                                                    <div class="col-md">
+                                                                        <label for="endDate" class="form-label">Fecha Fin</label>
+                                                                        <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
                                                                     </div>
                                                                 </div>
+                                                                <button type="submit" class="btn btn-primary" id="btnPrFiltr">Filtrar</button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="card" id="oculto-por-pagar" style="display: none">
-                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS</h3>
-                                                <div class="card-header border-bottom">
-                                                    <div class="row g-2">
-                                                        <h3 class="card-title">Fitros</h3>
-                                                        <div class="form-horizontal">
-                                                            <div class="row mb-2">
-                                                                <div class="col-md">
-                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
-                                                                    <select type="text" name="tipoFactura" id="tipoFactura1" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
-                                                                        <option selected value="">Todos</option>
-                                                                        <option value="Prepayment">Anticipo</option>
-                                                                        <option value="Standard">Estandar</option>
-                                                                        <option value="Credit memo">Nota Credito</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
-                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
-                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
-                                                                </div>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr1">Filtrar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row row-sm">
-                                                        <div class="col-lg-12">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="table-responsive">
-                                                                        <table id="TablePorPagar"
-                                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
-                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                    POR PAGAR</h3>
-                                                <div class="card-header border-bottom">
-                                                    <div class="row g-2">
-                                                        <h3 class="card-title">Fitros</h3>
-                                                        <div class="form-horizontal">
-                                                            <div class="row mb-2">
-                                                                <div class="col-md">
-                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
-                                                                    <select type="text" name="tipoFactura" id="tipoFactura2" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
-                                                                        <option selected value="">Todos</option>
-                                                                        <option value="Prepayment">Anticipo</option>
-                                                                        <option value="Standard">Estandar</option>
-                                                                        <option value="Credit memo">Nota Credito</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
-                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
-                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
-                                                                </div>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr2">Filtrar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row row-sm">
-                                                        <div class="col-lg-12">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="table-responsive">
-                                                                        <table id="TablePagadasNovedad"
-                                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card" id="oculto-canceladas" style="display: none">
-                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                CANCELADAS</h3>
-                                                <div class="card-header border-bottom">
-                                                    <div class="row g-2">
-                                                        <h3 class="card-title">Fitros</h3>
-                                                        <div class="form-horizontal">
-                                                            <div class="row mb-2">
-                                                                <div class="col-md">
-                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
-                                                                    <select type="text" name="tipoFactura" id="tipoFactura3" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
-                                                                        <option selected value="">Todos</option>
-                                                                        <option value="Prepayment">Anticipo</option>
-                                                                        <option value="Standard">Estandar</option>
-                                                                        <option value="Credit memo">Nota Credito</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
-                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
-                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
-                                                                </div>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr3">Filtrar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row row-sm">
-                                                        <div class="col-lg-12">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="table-responsive">
-                                                                        <table id="TableCanceladas"
-                                                                            class="table table-bordered text-nowrap key-buttons border-bottom w-100">
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card" id="oculto-descuentos" style="display: none">
-                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS PAGADAS
-                                                CON DESCUENTO</h3>
-                                                <div class="card-header border-bottom">
-                                                    <div class="row g-2">
-                                                        <h3 class="card-title">Fitros</h3>
-                                                        <div class="form-horizontal">
-                                                            <div class="row mb-2">
-                                                                <div class="col-md">
-                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
-                                                                    <select type="text" name="tipoFactura" id="tipoFactura4" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
-                                                                        <option selected value="">Todos</option>
-                                                                        <option value="Prepayment">Anticipo</option>
-                                                                        <option value="Standard">Estandar</option>
-                                                                        <option value="Credit memo">Nota Credito</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
-                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
-                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
-                                                                </div>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr4">Filtrar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row row-sm">
-                                                        <div class="col-lg-12">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="table-responsive">
-                                                                        <table id="TableDescuento"
-                                                                            class="table table-bordered text-nowrap key-buttons border-bottom w-100">
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card" id="oculto-descuentos-pendientes" style="display: none">
-                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                CON DESCUENTOS PENDIENTES</h3>
-                                                <div class="card-header border-bottom">
-                                                    <div class="row g-2">
-                                                        <h3 class="card-title">Fitros</h3>
-                                                        <div class="form-horizontal">
-                                                            <div class="row mb-2">
-                                                                <div class="col-md">
-                                                                    <label for="tipoFactura" class="form-label">Filtrar por tipo de factura</label>
-                                                                    <select type="text" name="tipoFactura" id="tipoFactura5" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
-                                                                        <option selected value="">Todos</option>
-                                                                        <option value="Prepayment">Anticipo</option>
-                                                                        <option value="Standard">Estandar</option>
-                                                                        <option value="Credit memo">Nota Credito</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="startDate" class="form-label">Fecha Inicio</label>
-                                                                    <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="endDate" class="form-label">Fecha Fin</label>
-                                                                    <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
-                                                                </div>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary" id="btnPrFiltr5">Filtrar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row row-sm">
-                                                        <div class="col-lg-12">
-                                                            <div class="card">
-                                                                <div class="card-body">
-                                                                    <div class="table-responsive">
-                                                                        <table id="TableDescuentoPendiente"
-                                                                            class="table table-bordered text-nowrap key-buttons border-bottom w-100">
-                                                                        </table>
+                                                    <div class="card-body">
+                                                        <div class="row row-sm">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table id="TablaFacturasAll"
+                                                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                            </table>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -318,138 +84,284 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div id="global-loader3" style="display: none">
-                            <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
-                        </div>
-
-                        <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-xl">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-lg-12 mx-auto">
-                                            <div class="modal-content">
-                                            <div class="card">
-                                                <div class="card-body invoice-head">
-                                                    <div class="row" id="date">
-
-                                                    </div>
-                                                    <!--end row-->
+                        </body>
+                    </div>
+                    <div class="collapse" id="FacturasDivididas" style="display: none">
+                        <body class="ltr app sidebar-mini light-mode">
+                            <div class="row row-sm">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <!-- CONTAINER -->
+                                            <div class="main-container container-fluid">
+                                                <!-- Botones de Consulta -->
+                                                <div>
+                                                    <button class="btn btn-primary mb-3" target="" id="pagadas">
+                                                        Facturas pagadas
+                                                    </button>
+                                                    <button class="btn btn-success mb-3" target="" id="pagadas-con-novedad">
+                                                        Facturas por pagar
+                                                    </button>
+                                                    <button class="btn btn-secondary mb-3" target="" id="por-pagar">
+                                                        Facturas parcialmente pagadas
+                                                    </button>
+                                                    <button class="btn btn-warning mb-3" target="" id="descuentos">
+                                                        Facturas nota credito aplicadas
+                                                    </button>
+                                                    <button class="btn btn-danger mb-3" target="" id="descuentos-pendientes">
+                                                        Facturas nota credito por aplicar
+                                                    </button>
+                                                    <button class="btn btn-dark mb-3" target="" id="canceladas">
+                                                        Facturas canceladas
+                                                    </button>
                                                 </div>
-                                                <!--end card-body-->
-                                                <div class="card-body" id="body">
+                                                <!-- Fin -->
 
-                                                    <div class="row" id="row1">
-                                                    </div>
-                                                    <!--end row-->
-
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="table-responsive project-invoice">
-                                                                <table class="table table-bordered mb-0">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                            <th>@lang('locale.Description')</th>
-                                                                            <th>@lang('locale.Amount')</th>
-                                                                        </tr>
-                                                                        <!--end tr-->
-                                                                    </thead>
-                                                                    <tbody id="row2">
-
-
-                                                                    </tbody>
-                                                                </table>
-                                                                <!--end table-->
-                                                            </div>
-                                                            <!--end /div-->
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-
-
-                                                    <div class="row justify-content-center">
-                                                        <div class="col-lg-12">
-                                                            <h5 class="mt-4"><i
-                                                                    class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
-                                                                :</h5>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                    <hr>
-                                                    {{-- <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="table-responsive project-invoice">
-                                                                <table class="table table-bordered mb-0">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                            <th>@lang('locale.Payment Method')
-                                                                                /@lang('locale.Bank Account') </th>
-                                                                            <th>@lang('locale.Due Date')</th>
-                                                                            <th>@lang('locale.Unpaid Amount')</th>
-                                                                            <th>@lang('locale.Gross Amount')</th>
-                                                                        </tr>
-                                                                        <!--end tr-->
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($payable_installments as $installment)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <h5 class="mt-0 mb-1">{{
-                                                                                    $installment->PaymentMethod }}</h5>
-                                                                                <p class="mb-0 text-muted">{{
-                                                                                    $installment->BankAccount }}.</p>
-                                                                            </td>
-                                                                            <td>{{ $installment->DueDate }}</td>
-                                                                            <td>$ {{
-                                                                                number_format($installment->UnpaidAmount,
-                                                                                2) }}</td>
-                                                                            <td>$ {{
-                                                                                number_format($installment->GrossAmount,
-                                                                                2) }}</td>
-                                                                        </tr>
-                                                                        <!--end tr-->
-                                                                        @endforeach
-
-                                                                    </tbody>
-                                                                </table>
-                                                                <!--end table-->
-                                                            </div>
-                                                            <!--end /div-->
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row--> --}}
-
-                                                    <hr>
-                                                    <div class="row d-flex justify-content-center">
-                                                        <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
-                                                            <div class="text-center"><small class="font-12">Tractocar
-                                                                Logistics SAS.</small>
+                                                <div class="card" id="oculto-pagadas" style="display: none">
+                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                        PAGADAS</h3>
+                                                    <div class="card-body">
+                                                        <div class="row row-sm">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table id="TablePagadas"
+                                                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <!--end col-->
                                                     </div>
-                                                    <!--end row-->
                                                 </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" id="closet-modal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <div class="card" id="oculto-por-pagar" style="display: none">
+                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                        POR PAGAR </h3>
+                                                    <div class="card-body">
+                                                        <div class="row row-sm">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table id="TablePorPagar"
+                                                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
+                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS</h3>
+                                                    <div class="card-body">
+                                                        <div class="row row-sm">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table id="TablePagadasNovedad"
+                                                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card" id="oculto-canceladas" style="display: none">
+                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                    CANCELADAS</h3>
+                                                    <div class="card-body">
+                                                        <div class="row row-sm">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table id="TableCanceladas"
+                                                                                class="table table-bordered text-nowrap key-buttons border-bottom w-100">
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card" id="oculto-descuentos" style="display: none">
+                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS PAGADAS
+                                                    CON DESCUENTO</h3>
+                                                    <div class="card-body">
+                                                        <div class="row row-sm">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table id="TableDescuento"
+                                                                                class="table table-bordered text-nowrap key-buttons border-bottom w-100">
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card" id="oculto-descuentos-pendientes" style="display: none">
+                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                    CON DESCUENTOS PENDIENTES</h3>
+                                                    <div class="card-body">
+                                                        <div class="row row-sm">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table id="TableDescuentoPendiente"
+                                                                                class="table table-bordered text-nowrap key-buttons border-bottom w-100">
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-
-                                            <!--end card-->
-                                        </div>
-                                        <!--end col-->
                                     </div>
-                                    <!--end row-->
                                 </div>
                             </div>
+                        </body>
+                    </div>
+                    <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12 mx-auto">
+                                        <div class="modal-content">
+                                        <div class="card">
+                                            <div class="card-body invoice-head">
+                                                <div class="row" id="date">
+
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                            <!--end card-body-->
+                                            <div class="card-body" id="body">
+
+                                                <div class="row" id="row1">
+                                                </div>
+                                                <!--end row-->
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="table-responsive project-invoice">
+                                                            <table class="table table-bordered mb-0">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th>@lang('locale.Description')</th>
+                                                                        <th>@lang('locale.Amount')</th>
+                                                                    </tr>
+                                                                    <!--end tr-->
+                                                                </thead>
+                                                                <tbody id="row2">
+
+
+                                                                </tbody>
+                                                            </table>
+                                                            <!--end table-->
+                                                        </div>
+                                                        <!--end /div-->
+                                                    </div>
+                                                    <!--end col-->
+                                                </div>
+                                                <!--end row-->
+
+
+                                                <div class="row justify-content-center">
+                                                    <div class="col-lg-12">
+                                                        <h5 class="mt-4"><i
+                                                                class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
+                                                            :</h5>
+                                                    </div>
+                                                    <!--end col-->
+                                                </div>
+                                                <!--end row-->
+                                                <hr>
+                                                {{-- <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="table-responsive project-invoice">
+                                                            <table class="table table-bordered mb-0">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th>@lang('locale.Payment Method')
+                                                                            /@lang('locale.Bank Account') </th>
+                                                                        <th>@lang('locale.Due Date')</th>
+                                                                        <th>@lang('locale.Unpaid Amount')</th>
+                                                                        <th>@lang('locale.Gross Amount')</th>
+                                                                    </tr>
+                                                                    <!--end tr-->
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($payable_installments as $installment)
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h5 class="mt-0 mb-1">{{
+                                                                                $installment->PaymentMethod }}</h5>
+                                                                            <p class="mb-0 text-muted">{{
+                                                                                $installment->BankAccount }}.</p>
+                                                                        </td>
+                                                                        <td>{{ $installment->DueDate }}</td>
+                                                                        <td>$ {{
+                                                                            number_format($installment->UnpaidAmount,
+                                                                            2) }}</td>
+                                                                        <td>$ {{
+                                                                            number_format($installment->GrossAmount,
+                                                                            2) }}</td>
+                                                                    </tr>
+                                                                    <!--end tr-->
+                                                                    @endforeach
+
+                                                                </tbody>
+                                                            </table>
+                                                            <!--end table-->
+                                                        </div>
+                                                        <!--end /div-->
+                                                    </div>
+                                                    <!--end col-->
+                                                </div>
+                                                <!--end row--> --}}
+
+                                                <hr>
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
+                                                        <div class="text-center"><small class="font-12">Tractocar
+                                                            Logistics SAS.</small>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                </div>
+                                                <!--end row-->
+                                            </div>
+                                            <!--end card-body-->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="closet-modal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+
+                                        <!--end card-->
+                                    </div>
+                                    <!--end col-->
+                                </div>
+                                <!--end row-->
+                            </div>
                         </div>
-                    </body>
+                    </div>
                 </div>
             </div>
         </div>
@@ -460,11 +372,10 @@
 
 @section('scripts')
 
+<script src="http://momentjs.com/downloads/moment.min.js"></script>
 <script>
-
-    let EndTime = 0;
     // Datatable
-    let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType, Card, startDate, endDate ) {
+    let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType,ValidationStatus, Card, startDate, endDate ) {
         // let start = performance.now();
         tblColectionData =  $(TableName).DataTable({
 
@@ -541,14 +452,51 @@
 
             columns: [
                 {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
-                {title: "ID Factura", data: "InvoiceId" },
+                // {title: "ID Factura", data: "InvoiceId" },
+                {title: "Numero Factura", data: "InvoiceNumber" },
+                {title: "Fecha Factura",  data: "InvoiceDate" },
                 {title: "Descripción", data: "Description" },
+                {title: "Monto a Pagar",
+                    data: function ( d ) {
+                        return JSON.stringify( d.invoiceInstallments[0]["UnpaidAmount"] );}
+                },
+                {title: "ValidationStatus", data: "ValidationStatus"},
                 {title: "Valor Factura", data: "InvoiceAmount" },
                 {title: "Monto Pagado", data: "AmountPaid" },
+                {title: "Cuenta bancaria",
+                    data: function ( d ) {
+                        return d.invoiceInstallments[0]["BankAccount"]}
+                },
+                {title: "Fecha Vencimiento",
+                    data: function ( d ) {
+
+                        // create a new `Date` object
+                        var today = new Date();
+
+                        // `getDate()` returns the day of the month (from 1 to 31)
+                        var day = today.getDate();
+
+                        // `getMonth()` returns the month (from 0 to 11)
+                        var month = today.getMonth() + 1;
+
+                        // `getFullYear()` returns the full year
+                        var year = today.getFullYear();
+
+                        var date1 = new Date(d.invoiceInstallments[0]["DueDate"]);
+                        var date2 = new Date (`${year}-${month}-${day}`);
+                        var dateDefined = date1 - date2;
+                        var dias =  dateDefined/(1000*60*60*24);
+                        if ( dias < 0 && d.PaidStatus != 'Paid') {
+                            return 'dentro de la programacion de pago';
+                        }
+                        if(d.PaidStatus == 'Paid'){
+                            return 'Pagada';
+                        }
+                        return ('El pago se le generara dentro de ' + dias + ' Dias');
+                    }
+                },
                 {title: "Tipo de Factura", data: "InvoiceType" },
-                {title: "Fecha Factura",  data: "InvoiceDate" },
-                {title: "Monto a Pagar",  data: "invoiceInstallments.UnpaidAmount" },
-                // {title: "Cuenta bancaria",  data: "BankAccount" },
+                // {title: "Pago realizado", data: "AccountingDate" }
 
 
 
@@ -574,6 +522,7 @@
                 FlagStatus: FlagStatus,
                 PaidStatus: PaidStatus,
                 InvoiceType: InvoiceType,
+                ValidationStatus: ValidationStatus,
                 startDate: startDate,
                 endDate: endDate
             },
@@ -581,9 +530,10 @@
                 let datos =  response.data;
                 // var invoiceInstallments = datos[0].invoiceInstallments;
                 if (response.success == true) {
-                    console.log(datos);
+                    // console.log(datos);
                     tblColectionData.clear().draw();
                     tblColectionData.rows.add(datos).draw();
+
                     if (Card == "#oculto-pagadas" ) {
                         if( $("#oculto-pagadas").css("display") == 'none' )
                         $("#oculto-pagadas").show("slow");
@@ -599,6 +549,12 @@
 
                         if($("#oculto-por-pagar").css("display") != 'none')
                         $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
 
                     }
                     else if(Card == "#oculto-por-pagar")  {
@@ -617,6 +573,12 @@
 
                         if($("#oculto-canceladas").css("display") != 'none')
                         $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
                     }
                     else if (Card == "#oculto-pagadas-con-novedad") {
 
@@ -634,6 +596,12 @@
 
                         if($("#oculto-por-pagar").css("display") != 'none')
                         $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
                     }
                     else if(Card == "#oculto-canceladas"){
 
@@ -649,14 +617,67 @@
                         if($("#oculto-pagadas-con-novedad").css("display") != 'none')
                         $("#oculto-pagadas-con-novedad").hide("slow");
 
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+
                         if($("#oculto-por-pagar").css("display") != 'none')
                         $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
                     }
+                    else if(Card == "#oculto-descuentos"){
+
+                        if( $("#oculto-descuentos").css("display") == 'none' )
+                        $("#oculto-descuentos").show("slow");
+                        else
+                        $("#oculto-descuentos").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
+                    }
+                    else if(Card == "#oculto-descuentos-pendientes"){
+                        if( $("#oculto-descuentos-pendientes").css("display") == 'none' )
+                        $("#oculto-descuentos-pendientes").show("slow");
+                        else
+                        $("#oculto-descuentos-pendientes").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+                    }
+
                     swal.close();
-                    LoaderClose();
                 }else {
                     swal.close();
-                    LoaderClose();
                     Loader();
                     Swal.fire({
                         icon: 'error',
@@ -667,7 +688,6 @@
             },
             error: function(error){
                 swal.close();
-                LoaderClose();
                 Loader();
                 Swal.fire({
                     icon: 'error',
@@ -677,10 +697,10 @@
                 console.error(error);
             }
         })
-        // let end=performance.now();
-        // EndTime = end
+
     }
-    let Loader3 = function(){
+    // load inicial, se visualiza al seleccionar un opcion de las facturas
+    let Loader = function(){
         Swal.fire({
         title: 'Cargando Facturas!',
         timerProgressBar: true,
@@ -690,6 +710,7 @@
         },
         })
     }
+    // load secundario, se visualiza al momento pasas de una opcion de facturas a otro siempre y cuando se estan visualizando la tabla de facturas
     let LoaderView = function(){
         Swal.fire({
         title: 'Cargando visualización de la factura!',
@@ -700,103 +721,31 @@
         },
         })
     }
-    // load inicial, se visualiza al seleccionar un opcion de las facturas
-    let Loader = function(){
-        let $yourUl = $("#global-loader2");
-        $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
-    }
-    // load secundario, se visualiza al momento pasas de una opcion de facturas a otro siempre y cuando se estan visualizando la tabla de facturas
-    let Loader31 = function(){
-        let $yourUl = $("#global-loader3");
-        $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
-    }
-    // load primario individual, se visualiza al momento de filtrar
-    let LoaderOpen = function(){
-        document.getElementById("global-loader3").style.display = "";
-    }
-    // load individual de cierre, cerra los load que quedan abiertos
-    let LoaderClose = function(){
-        document.getElementById("global-loader3").style.display = "none";
-    }
+
     // Filtros
     $('#btnPrFiltr').on('click', function(e){
         var InvoiceType = document.getElementById("tipoFactura").value;
+        var ValidationStatus = document.getElementById("ValidationStatus").value;
         var startDate = document.getElementById("startDate").value;
         var endDate = document.getElementById("endDate").value;
         tblColectionData.clear().draw();
-        Loader3();
-        LoadData("Paid", "false", "#TablePagadas",InvoiceType,"",startDate,endDate);
-        obtener_data("#TablePagadas tbody", tblColectionData);
+        Loader();
+        LoadData("", "false", "#TablaFacturasAll",InvoiceType,ValidationStatus,"",startDate,endDate);
+        obtener_data("#TablaFacturasAll tbody", tblColectionData);
     });
-
-    $('#btnPrFiltr1').on('click', function(e){
-        var InvoiceType = document.getElementById("tipoFactura1").value;
-        var startDate = document.getElementById("startDate").value;
-        var endDate = document.getElementById("endDate").value;
-        tblColectionData.clear().draw();
-        Loader3();
-        LoadData("Unpaid", "false", "#TablePorPagar",InvoiceType,"");
-        obtener_data("#TablePorPagar tbody", tblColectionData);
-    });
-
-    $('#btnPrFiltr2').on('click', function(e){
-        var InvoiceType = document.getElementById("tipoFactura2").value;
-        var startDate = document.getElementById("startDate").value;
-        var endDate = document.getElementById("endDate").value;
-        tblColectionData.clear().draw();
-        Loader3();
-        LoadData("Partially paid", "false", "#TablePagadasNovedad",InvoiceType,"");
-        obtener_data("#TablePagadasNovedad tbody", tblColectionData);
-    });
-
-    $('#btnPrFiltr3').on('click', function(e){
-        e.preventDefault();
-        var InvoiceType = document.getElementById("tipoFactura3").value;
-        var startDate = document.getElementById("startDate").value;
-        var endDate = document.getElementById("endDate").value;
-        tblColectionData.clear().draw();
-        Loader3();
-        LoadData("", "true", "#TableCanceladas",InvoiceType,"");
-        obtener_data("#TableCanceladas tbody", tblColectionData);
-    })
-
-    $('#btnPrFiltr4').on('click', function(e){
-        e.preventDefault();
-        var InvoiceType = document.getElementById("tipoFactura4").value;
-        var startDate = document.getElementById("startDate").value;
-        var endDate = document.getElementById("endDate").value;
-        tblColectionData.clear().draw();
-        Loader3();
-        LoadData("", "false", "#TableDescuento",InvoiceType,"");
-        obtener_data("#TableDescuento tbody", tblColectionData);
-    })
-
-    $('#btnPrFiltr5').on('click', function(e){
-        e.preventDefault();
-        var InvoiceType = document.getElementById("tipoFactura5").value;
-        var startDate = document.getElementById("startDate").value;
-        var endDate = document.getElementById("endDate").value;
-        tblColectionData.clear().draw();
-        Loader3();
-        LoadData("", "false", "#TableDescuentoPendiente",InvoiceType,"");
-        obtener_data("#TableDescuentoPendiente tbody", tblColectionData);
-    })
     // Fin
 
-    // Cunsultamos las facturas
+    // Botones de consultar las facturas Divididas
     $('#pagadas').on('click', function(e){
         e.preventDefault();
-
-        Loader3();
         Loader();
-        LoadData("Paid", "false", "#TablePagadas","","#oculto-pagadas");
+        LoadData("Paid", "false", "#TablePagadas","Standard","#oculto-pagadas");
         obtener_data("#TablePagadas tbody", tblColectionData);
 
     });
 
     $("#por-pagar").click(function(e) {
         e.preventDefault();
-        Loader3();
         Loader();
         LoadData("Unpaid", "false", "#TablePorPagar","","#oculto-por-pagar");
         obtener_data("#TablePorPagar tbody", tblColectionData);
@@ -804,42 +753,69 @@
 
     $("#pagadas-con-novedad").click(function(e) {
         e.preventDefault();
-        Loader3();
         Loader();
-        LoadData("Partially paid", "false", "#TablePagadasNovedad","","#oculto-pagadas-con-novedad");
+        LoadData("Partially paid", "true", "#TablePagadasNovedad","","#oculto-pagadas-con-novedad");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
 
     });
 
-    // En desarrollo
     $("#descuentos").click(function(e) {
         e.preventDefault();
-        Loader3();
         Loader();
-        LoadData("", "true", "#TableDescuento","","#oculto-descuentos");
+        LoadData("Paid", "false", "#TableDescuento","Credit memo","#oculto-descuentos");
         obtener_data("#TableDescuento tbody", tblColectionData);
     });
 
     $("#descuentos-pendientes").click(function(e) {
         e.preventDefault();
-        Loader3();
         Loader();
-        LoadData("", "true", "#TableDescuentoPendiente","","#oculto-descuentos-pendientes");
+        LoadData("Unpaid", "true", "#TableDescuentoPendiente","Credit memo","#oculto-descuentos-pendientes");
         obtener_data("#TableDescuentoPendiente tbody", tblColectionData);
     });
-    // Fin
 
     $("#canceladas").click(function(e) {
         e.preventDefault();
-        Loader3();
         Loader();
         LoadData("", "true", "#TableCanceladas","","#oculto-canceladas");
         obtener_data("#TableCanceladas tbody", tblColectionData);
     });
     // Fin
 
+    // Botones Principales
+    $("#facturas-all").click(function(e) {
+        e.preventDefault();
+        Loader();
+        LoadData("", "false", "#TablaFacturasAll","","");
+        obtener_data("#TablaFacturasAll tbody", tblColectionData);
+
+        if( $("#FacturasGenerales").css("display") == 'none' )
+        $("#FacturasGenerales").show("slow");
+        else
+        $("#FacturasGenerales").hide("slow");
+
+        // validamos que no se muestren todas al tiempo
+        if($("#FacturasDivididas").css("display") != 'none')
+        $("#FacturasDivididas").hide("slow");
+
+    });
+
+    $("#facturas-lotes").click(function(e) {
+        e.preventDefault();
+        if( $("#FacturasDivididas").css("display") == 'none' )
+        $("#FacturasDivididas").show("slow");
+        else
+        $("#FacturasDivididas").hide("slow");
+
+        // validamos que no se muestren todas al tiempo
+        if($("#FacturasGenerales").css("display") != 'none')
+        $("#FacturasGenerales").hide("slow");
+
+    });
+    // Fin
+
+
     $("#closet-modal").click(function(e) {
-        document.getElementById("global-loader3").style.display = "none";
+        // document.getElementById("global-loader3").style.display = "none";
         $("#global-loader3").modal('hide');//ocultamos el modal
 
     });

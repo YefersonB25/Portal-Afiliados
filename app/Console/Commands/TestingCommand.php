@@ -43,6 +43,8 @@ class TestingCommand extends Command
                             DocumentCategory: Categoría de document
                                 -Prepayment Invoices            = Facturas de anticipo
                                 -STD INV - Standard Invoices    = Facturas Estandar
+
+                                AccountingDate = fecha de pago
                             ';
 
     /**

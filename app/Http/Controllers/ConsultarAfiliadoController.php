@@ -176,35 +176,12 @@ class ConsultarAfiliadoController extends Controller
 
         $params      =  [
             'limit'    => '200',
-            'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
+            'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
             'onlyData' => 'true'
         ];
 
         try {
-            // Facturas Pagadas - Parcialente Pagadas
-                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = 'Standard')";
-            // Facturas Parcialmente Pagadas
-                // $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = 'Standard')";
-
-            // if ($request->PaidStatus == '') {
-            //     if($request->InvoiceType == '' && $request->startDate ==  '' && $request->endDate == ''){
-            //         $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')";
-            //     }else {
-            //         $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (InvoiceType = '{$request->InvoiceType}')";
-            //     }
-            // }else{
-            //     $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = 'Standard')";
-            // }
-            // if($request->InvoiceType != '' && $request->PaidStatus != '') {
-            //     $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}')";
-            // }
-            // if($request->PaidStatus != '' && $request->startDate != '' && $request->endDate != ''){
-            //     $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
-            // }
-            // if($request->PaidStatus != '' && $request->startDate != '' && $request->endDate != '' && $request->InvoiceType != ''){
-            //     $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')  and (InvoiceType = '{$request->InvoiceType}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
-            // }
-
+            $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
 
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
             // return response()->json(['success' => true, 'data' => $invoice['count']]);
