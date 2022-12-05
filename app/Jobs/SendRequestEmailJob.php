@@ -24,7 +24,7 @@ class SendRequestEmailJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct(Request $request)
     {
 
         // $this->request =  User::find($request)->get();

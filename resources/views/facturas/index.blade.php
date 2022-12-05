@@ -460,7 +460,7 @@
                     data: function ( d ) {
                         return JSON.stringify( d.invoiceInstallments[0]["UnpaidAmount"] );}
                 },
-                {title: "ValidationStatus", data: "ValidationStatus"},
+                // {title: "ValidationStatus", data: "ValidationStatus"},
                 {title: "Valor Factura", data: "InvoiceAmount" },
                 {title: "Monto Pagado", data: "AmountPaid" },
                 {title: "Cuenta bancaria",
