@@ -739,7 +739,7 @@
     $('#pagadas').on('click', function(e){
         e.preventDefault();
         Loader();
-        LoadData("Paid", "false", "#TablePagadas","Standard","#oculto-pagadas");
+        LoadData("Paid", "false", "#TablePagadas","Standard","","#oculto-pagadas","","");
         obtener_data("#TablePagadas tbody", tblColectionData);
 
     });
@@ -747,14 +747,14 @@
     $("#por-pagar").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("Unpaid", "false", "#TablePorPagar","","#oculto-por-pagar");
+        LoadData("Unpaid", "false", "#TablePorPagar","","","#oculto-por-pagar","","");
         obtener_data("#TablePorPagar tbody", tblColectionData);
     });
 
     $("#pagadas-con-novedad").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("Partially paid", "true", "#TablePagadasNovedad","","#oculto-pagadas-con-novedad");
+        LoadData("Partially paid", "true", "#TablePagadasNovedad","","","#oculto-pagadas-con-novedad","","");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
 
     });
@@ -762,21 +762,21 @@
     $("#descuentos").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("Paid", "false", "#TableDescuento","Credit memo","#oculto-descuentos");
+        LoadData("Paid", "false", "#TableDescuento","Credit memo","","#oculto-descuentos","","");
         obtener_data("#TableDescuento tbody", tblColectionData);
     });
 
     $("#descuentos-pendientes").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("Unpaid", "true", "#TableDescuentoPendiente","Credit memo","#oculto-descuentos-pendientes");
+        LoadData("Unpaid", "true", "#TableDescuentoPendiente","Credit memo","","#oculto-descuentos-pendientes","","");
         obtener_data("#TableDescuentoPendiente tbody", tblColectionData);
     });
 
     $("#canceladas").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("", "true", "#TableCanceladas","","#oculto-canceladas");
+        LoadData("", "true", "#TableCanceladas","","","#oculto-canceladas","","");
         obtener_data("#TableCanceladas tbody", tblColectionData);
     });
     // Fin
