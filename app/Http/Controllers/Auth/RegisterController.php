@@ -57,8 +57,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
-            'identification' => ['required','numeric'],
-            'telefono' => ['required','numeric'],
+            'number_id' => ['required','numeric'],
+            'phone' => ['required','numeric'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -81,40 +81,19 @@ class RegisterController extends Controller
         if (!empty($data['photo'])) {
             $extensionPerfil = $data['photo']->getClientOriginalExtension();
         }
-        if (!empty($data['identificationPhoto'])) {
-            $extensionIdentif = $data['identificationPhoto']->getClientOriginalExtension();
+        if (!empty($data['photo_id'])) {
+            $extensionIdentif = $data['photo_id']->getClientOriginalExtension();
         }
-
-        // if (empty($request->seleccion_nit)) {
-        //     $seleccion_nit = "false";
-        // }
-
-        // if(!empty($request->seleccion_nit)) {
-        //     $seleccion_nit = $request->seleccion_nit;
-        // }
-
-        if (in_array("seleccionNit", $data)) {
-            $id = User::insertGetId([
+            $user = User::insertGetId([
                 'name'                  => $data['name'],
                 'email'                 => $data['email'],
-                'identification'        => $data['identification'],
-                'seleccion_nit'          => asset($data['seleccionNit'] ? $data['seleccionNit'] : 'null'),
-                'telefono'              => $data['telefono'],
+                'number_id'        => $data['number_id'],
+                'document-type'          => $data['document-type'],
+                'phone'              => $data['phone'],
                 'password'              => Hash::make($data['password']),
             ]);
-        }else{
-            $id = User::insertGetId([
-                'name'                  => $data['name'],
-                'email'                 => $data['email'],
-                'identification'        => $data['identification'],
-                'seleccion_nit'         => "false",
-                'telefono'              => $data['telefono'],
-                'password'              => Hash::make($data['password']),
-            ]);
-        }
-        //? Capturamos el id del user registrdo
-
-
+        
+        dd($user);
         //? le asignamos el rol
         $usuario = User::findOrFail($id);
         $usuario->roles()->sync($roles[1]->id);
@@ -124,17 +103,17 @@ class RegisterController extends Controller
             $carpetaphoto = "proveedores/$id/perfil";
             Storage::putFileAs("public/$carpetaphoto", $data['photo'] , 'photo_perfil.'. $extensionPerfil);
         }
-        if (!empty($data['identificationPhoto'])) {
+        if (!empty($data['photo_id'])) {
             $carpetaidentif = "proveedores/$id/identificacion";
-            Storage::putFileAs("public/$carpetaidentif", $data['identificationPhoto'] , 'photo_documento.'. $extensionIdentif);
+            Storage::putFileAs("public/$carpetaidentif", $data['photo_id'] , 'photo_documento.'. $extensionIdentif);
         }
 
         //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
-        if (!empty($data['photo']) && !empty($data['identificationPhoto'])) {
+        if (!empty($data['photo']) && !empty($data['photo_id'])) {
             User::where('id', $id)
                     ->update([
                     'photo'                 => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                    'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                     ]);
         }
         if (!empty($data['photo'])) {
@@ -144,11 +123,11 @@ class RegisterController extends Controller
                        'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
-        if (!empty($data['identificationPhoto'])) {
+        if (!empty($data['photo_id'])) {
 
             User::where('id', $id)
                        ->update([
-                       'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                       'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
         }
 

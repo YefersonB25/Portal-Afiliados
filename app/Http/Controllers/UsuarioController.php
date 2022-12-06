@@ -180,23 +180,23 @@ class UsuarioController extends Controller
     {
         $usuario = User::find($usuarioId);
 
-        // switch ($estado) {
-        //     case 'aprobado':
-        //         $usuario->update(['estado' => 2]);
-        //         break;
-        //     case 'rechazado':
-        //         $usuario->update(['estado' => 3]);
-        //         break;
-        //     default:
-        //         # code...
-        //         break;
-        // }
-            $request = [
+        switch ($estado) {
+            case 'aprobado':
+                $usuario->update(['estado' => 'Confirmado']);
+                break;
+            case 'rechazado':
+                $usuario->update(['estado' => 'Rechazado']);
+                break;
+            default:
+                # code...
+                break;
+        }
+            $details = [
                 'name' => $usuario->name,
                 'email' => $usuario->email,
                 'estado' => $estado
             ];
-            dispatch(new SendRequestEmailJob($request));
+            dispatch(new SendRequestEmailJob($details));
 
             // $details = [
             //     'name' => $usuario->name,

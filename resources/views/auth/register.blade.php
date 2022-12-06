@@ -51,13 +51,13 @@
                                 </div>
 
                                 <div class="wrap-input100 validate-input">
-                                    <input id="telefono" type="number"
-                                        class="input100{{ $errors->has('telefono') ? ' is-invalid' : '' }}"
-                                        name="telefono"
-                                        tabindex="1" placeholder="Telefono" value="{{ old('telefono') }}"
+                                    <input id="phone" type="number"
+                                        class="input100{{ $errors->has('phone') ? ' is-invalid' : '' }}"
+                                        name="phone"
+                                        tabindex="1" placeholder="phone" value="{{ old('phone') }}"
                                         autofocus required>
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('telefono') }}
+                                        {{ $errors->first('phone') }}
                                     </div>
                                     <span class="focus-input100"></span>
                                     <span class="symbol-input100">
@@ -66,35 +66,37 @@
                                 </div>
 
                                 <div class="wrap-input100 validate-input">
-                                    <input id="identification"
+                                    <input id="number_id"
                                         type="number"
-                                        class="input100{{ $errors->has('identification') ? ' is-invalid' : '' }}"
-                                        name="identification"
-                                        tabindex="1" placeholder="Numero Identificacion" value="{{ old('identification') }}"
+                                        class="input100{{ $errors->has('number_id') ? ' is-invalid' : '' }}"
+                                        name="number_id"
+                                        tabindex="1" placeholder="Numero Identificacion" value="{{ old('number_id') }}"
                                         autofocus required>
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('identification') }}
+                                        {{ $errors->first('number_id') }}
                                     </div>
                                     <span class="focus-input100"></span>
                                     <span class="symbol-input100">
                                         <i class="fa fa-address-card" aria-hidden="true"></i>
                                     </span>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="seleccionNit" value="true" id="seleccionNit">
-                                    <label class="form-check-label" for="seleccionNit">
-                                        Nit
-                                    </label>
+s
+                                <div class="wrap-input100 validate-input">
+                                    <select class="form-select form-select-sm" name="document-type" aria-label=".form-select-sm example">
+                                        <option selected>Seleccione tipo Documento</option>
+                                        <option value="NIT">NIT</option>
+                                        <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
+                                      </select>
                                 </div>
 
                                 <div class="wrap-input100 validate-input">
                                     <label for="formFile" class="form-label">Copia del documento de identidad extension requerida(.PDF)</label>
-                                    <input id="identificationPhoto"
+                                    <input id="photo_id"
                                         accept=".pdf"
                                         type="file"
                                         class="form-control"
-                                        name="identificationPhoto"
-                                        tabindex="1" placeholder="Enter Identification" value="{{ old('identificationPhoto') }}"
+                                        name="photo_id"
+                                        tabindex="1" placeholder="Enter Identification" value="{{ old('photo_id') }}"
                                         autofocus>
                                 </div>
 
@@ -148,12 +150,6 @@
                                 <div class="mt-5 text-muted text-center">
                                     Ya tienes una cuenta? <a href="{{ route('login') }}">Iniciar</a>
                                 </div>
-                                {{-- <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="seleccionNit" value="true" id="seleccionNit">
-                                    <label class="form-check-label" for="seleccionNit">
-                                        Autoriza el tratamiento de sus datos
-                                    </label>
-                                </div> --}}
                             </form>
                         </div>
                     </div>

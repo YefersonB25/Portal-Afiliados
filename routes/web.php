@@ -44,21 +44,6 @@ Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('aut
 Route::get('forgot-password', [AuthController::class, 'email'])->name('forgot-password');
 
 
-
-// Route::controller(ConsultarAfiliadoController::class)->group(function () {
-//     Route::post('facturas/total', 'TotalAmount')->name('total');
-//     Route::post('invoiceLines', 'getInvoiceLines')->name('invoice.lines');
-//     Route::post('facturas/pagadas', 'customers')->name('falturas.pagadas');
-//     Route::post('suppliernumber', 'getSupplierNumber')->name('supplier.number');
-//     Route::post('consultaOTM/afiliado', 'consultaOTM')->name('afiliado.consulta');
-// });
-
-// Route::view('/docs', 'index')->name('scribe');
-
-// Route::view('/docsa', 'auth/docs/index');
-
-// Route::view('/admin/docs', 'scribe_admin.index')->name('scribe-admin');
-
 //? Perfil - Usuarios Asociados
 Route::prefix('profile')->controller(PerfilController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index')->name('profile');
@@ -77,7 +62,6 @@ Route::get('customers', [FacturaController::class, 'index', 'can:/blog'])->name(
 
 Route::group(['middleware' => ['auth'], 'can:/profile'], function () {
     Route::resource('roles', RolController::class);
-    // Route::resource('usuarios', UsuarioController::class);
 });
 
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function () use ($router) {

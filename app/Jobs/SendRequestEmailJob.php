@@ -17,18 +17,18 @@ class SendRequestEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $request;
+    protected $details;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(Request $details)
     {
 
         // $this->request =  User::find($request)->get();
-        $this->request =  $request;
+        $this->details =  $details;
 
     }
 
