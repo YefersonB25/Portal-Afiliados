@@ -181,10 +181,10 @@ class UsuarioController extends Controller
 
         switch ($estado) {
             case 'aprobado':
-                $usuario->update(['estado' => 'Confirmado']);
+                $usuario->update(['estado' => 'CONFIRMADO']);
                 break;
             case 'rechazado':
-                $usuario->update(['estado' => 'Rechazado']);
+                $usuario->update(['estado' => 'RECHAZADO']);
                 break;
             default:
                 # code...

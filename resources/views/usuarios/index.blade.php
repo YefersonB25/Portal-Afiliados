@@ -19,10 +19,10 @@
                                                         <label for="estado" class="form-label">Filtrar por estado</label>
                                                         <select type="text" name="estado" id="estado" class="form-select" tabindex="3" value="{{ old('estado') }}" autofocus onInput="validarInput()">
                                                             <option selected>Todos</option>
-                                                                <option value="Nuevo">Nuevo</option>
-                                                                <option value="Confirmado">Confirmado</option>
-                                                                <option value="Rechazado">Rechazado</option>
-                                                                <option value="Asociado">Asociado</option>
+                                                                <option value="NUEVO">Nuevo</option>
+                                                                <option value="CONFIRMADO">Confirmado</option>
+                                                                <option value="RECHAZADO">Rechazado</option>
+                                                                <option value="ASOCIADO">Asociado</option>
                                                         </select>
                                                         <div class="invalid-feedback">
                                                             {{ $errors->first('estado') }}
@@ -124,12 +124,12 @@
                                                                         $number_id = $usuario->number_id;
                                                                         $document_type  = $usuario->document_type;
                                                                     @endphp
-                                                                    @if ($usuario->estado != 'Asociado')
+                                                                    @if ($usuario->estado != 'ASOCIADO')
                                                                     <a href="consultaOTM/afiliado/{{$number_id}}/{{$document_type}}" class="btn btn-info openBtn" id="consultaOTM">
                                                                         <i class="fa fa-weibo" aria-hidden="true"></i>
                                                                     </a>
                                                                     @endif
-                                                                    @if ($usuario->estado == 'Nuevo')
+                                                                    @if ($usuario->estado == 'NUEVO')
                                                                         <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'aprobado']) }}" class="btn btn-primary">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                                                                                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
@@ -142,7 +142,7 @@
                                                                             </svg>
                                                                         </a>
                                                                     @endif
-                                                                    @if ($usuario->estado == 'Asociado')
+                                                                    @if ($usuario->estado == 'ASOCIADO')
                                                                         <a href="" data-bs-toggle="modal" data-bs-target="#exampleModalProveedor" data-bs-whatever="@mdo" class="btn btn-primary proveedor"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
                                                                             <path fill="currentColor" d="M11 10V12H9V14H7V12H5.8C5.4 13.2 4.3 14 3 14C1.3 14 0 12.7 0 11S1.3 8 3 8C4.3 8 5.4 8.8 5.8 10H11M3 10C2.4 10 2 10.4 2 11S2.4 12 3 12 4 11.6 4 11 3.6 10 3 10M16 14C18.7 14 24 15.3 24 18V20H8V18C8 15.3 13.3 14 16 14M16 12C13.8 12 12 10.2 12 8S13.8 4 16 4 20 5.8 20 8 18.2 12 16 12Z" />
                                                                         </svg></a>
