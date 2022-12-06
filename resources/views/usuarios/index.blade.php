@@ -19,9 +19,10 @@
                                                         <label for="estado" class="form-label">Filtrar por estado</label>
                                                         <select type="text" name="estado" id="estado" class="form-select" tabindex="3" value="{{ old('estado') }}" autofocus onInput="validarInput()">
                                                             <option selected>Todos</option>
-                                                            @foreach ($estados as $estado)
-                                                                <option value="{{$estado->id}}">{{$estado->descripcion}}</option>
-                                                            @endforeach
+                                                                <option value="Nuevo">Nuevo</option>
+                                                                <option value="Confirmado">Confirmado</option>
+                                                                <option value="Rechazado">Rechazado</option>
+                                                                <option value="Asociado">Asociado</option>
                                                         </select>
                                                         <div class="invalid-feedback">
                                                             {{ $errors->first('estado') }}

@@ -46,8 +46,8 @@ class UsuarioController extends Controller
         //Con paginación
 
         $usuarios = User::orderBy('estado')->get();
-        $estados = Estado::all();
-        return view('usuarios.index',['usuarios' => $usuarios, 'estados' => $estados]);
+        // $estados = Estado::all();
+        return view('usuarios.index',['usuarios' => $usuarios]);
 
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
@@ -153,9 +153,8 @@ class UsuarioController extends Controller
         ]);
         if ($request->estado  != 'Todos') {
             $usuarios = User::where('estado', $request->estado)->get();
-            $estados = Estado::all();
 
-            return view('usuarios.index',['usuarios' => $usuarios, 'estados' => $estados]);
+            return view('usuarios.index',['usuarios' => $usuarios]);
         }
         return redirect('usuarios');
     }
