@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\OracleRestErp;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -26,7 +22,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $request_status = DB::table('users')->select('estado', DB::Raw('count(estado) AS count'))->groupBy('users.estado')->get();
+        $request_status = DB::table('users')->where('deleted_at', null)->select('estado', DB::Raw('count(estado) AS count'))->groupBy('users.estado')->get();
 
         return view('home', [
             'request_status' => $request_status,

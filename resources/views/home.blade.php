@@ -33,7 +33,7 @@
                             @endphp
                             @foreach ($request_status as $statu)
                             <div style="display: none">
-                                {{$counter = $statu->count + $statu->count }}
+                                {{$counter = $counter + $statu->count }}
                             </div>
                             <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
                                 <div class="card overflow-hidden">
