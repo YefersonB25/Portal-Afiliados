@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers\OracleRestErp;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -18,7 +15,6 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
-
     /**
      * Show the application dashboard.
      *
@@ -26,17 +22,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $nuevas_solicitudes = User::where('estado', 1)->count();
-        $solicitudes_confirmadas = User::where('estado', 2)->count();
-        $solicitudes_rechazadas = User::where('estado', 3)->count();
-        $total_usuarios = User::count();
+        $request_status = DB::table('users')->where('deleted_at', null)->select('estado', DB::Raw('count(estado) AS count'))->groupBy('users.estado')->get();
 
-
-        return view('home',['nuevas_solicitudes'=>$nuevas_solicitudes, 'solicitudes_confirmadas'=>$solicitudes_confirmadas, 'solicitudes_rechazadas'=>$solicitudes_rechazadas, 'total_usuarios'=>$total_usuarios]);
+        return view('home', [
+            'request_status' => $request_status,
+        ]);
     }
-    public function docs ()
+    public function docs()
     {
         return view('auth/docs/index');
     }
-
 }
