@@ -8,7 +8,8 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
+use Faker\Factory;
+use Faker\Generator as Faker;
 
 class SeederSuperSu extends Seeder
 {
@@ -44,10 +45,10 @@ class SeederSuperSu extends Seeder
         // foreach ($permisos as $permiso) {
         //     Permission::create(['name' => $permiso]);
         // }
-        Estado::create(['descripcion' => 'Nuevo']);
-        Estado::create(['descripcion' => 'Confirmado']);
-        Estado::create(['descripcion' => 'Rechazado']);
-        Estado::create(['descripcion' => 'Asociado']);
+        // Estado::create(['descripcion' => 'Nuevo']);
+        // Estado::create(['descripcion' => 'Confirmado']);
+        // Estado::create(['descripcion' => 'Rechazado']);
+        // Estado::create(['descripcion' => 'Asociado']);
 
 
         $roleAdmin              = Role::create(['name' => 'Administrador']);
@@ -56,20 +57,40 @@ class SeederSuperSu extends Seeder
         // $roleAdmin->syncPermissions($permisos);
 
         Permission::create(['name' => '/usuario.index', 'grupo' => 'proveedores-Usuarios', 'description' => 'Seguimiento Solicitudes'])
-        ->syncRoles([
-          $roleAdmin,
-        ]);
+            ->syncRoles([
+                $roleAdmin,
+            ]);
         Permission::create(['name' => '/blog', 'grupo' => 'Informacion-Facturas', 'description' => 'Seguimiento Facturas'])
-        ->syncRoles([
-            $rolClienteHijo,
-          $rolCliente,
-        ]);
+            ->syncRoles([
+                $rolClienteHijo,
+                $rolCliente,
+            ]);
         Permission::create(['name' => '/profile', 'grupo' => 'Informacion-Personal', 'description' => 'informacion'])
-        ->syncRoles([
-            $rolClienteHijo,
-            $rolCliente,
-            $roleAdmin,
-        ]);
+            ->syncRoles([
+                $rolClienteHijo,
+                $rolCliente,
+                $roleAdmin,
+            ]);
+
+
+        $status = [
+            1 => 'NUEVO',
+            2 => 'CONFIRMADO',
+            3 => 'RECHAZADO'
+        ];
+        //!estos datos son para pruebas de rendimiento con muchos usuarios en el sistema
+        // for ($i = 0; $i < 500; $i++) {
+        //     $faker          = Factory::create();
+        //     User::create([
+        //         'name'           => $faker->firstName(),
+        //         'identification' => random_int(900, 900000),
+        //         'email'          => $faker->email(),
+        //         'telefono'       => random_int(1, 9000000),
+        //         'seleccion_nit'  => '',
+        //         'estado'         => $status[random_int(1, 3)],
+        //         'password'       => bcrypt('123456')
+        //     ])->assignRole('Administrador');
+        // }
 
 
         $userSu = User::where('email', '=', 'ybolanos@tractocar.com')->first();
@@ -77,22 +98,22 @@ class SeederSuperSu extends Seeder
             $userSu->assignRole('Administrador');
         } else {
             User::create([
-                'name' => 'Yeferson Bolaños Cardales',
+                'name'           => 'Yeferson Bolaños Cardales',
                 'identification' => '2342432',
-                'email' => 'ybolanos@tractocar.com',
-                'telefono' =>  '',
-                'seleccion_nit' => '',
-                'estado' => '2',
-                'password' => bcrypt('123456')
+                'email'          => 'ybolanos@tractocar.com',
+                'telefono'       => '3162543022',
+                'seleccion_nit'  => '',
+                'estado'         => 'CONFIRMADO',
+                'password'       => bcrypt('123456')
             ])->assignRole('Administrador');
             User::create([
-                'name' => 'Testing',
+                'name'           => 'Testing',
                 'identification' => '2342432',
-                'email' => 'test@test.com',
-                'telefono' =>  '',
-                'seleccion_nit' => '',
-                'estado' => '2',
-                'password' => bcrypt('123456')
+                'email'          => 'test@test.com',
+                'telefono'       => '',
+                'seleccion_nit'  => '',
+                'estado'         => 'NUEVO',
+                'password'       => bcrypt('123456')
             ])->assignRole('Cliente');
         }
     }
