@@ -59,6 +59,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
             'number_id' => ['required','numeric'],
             'phone' => ['required','numeric'],
+            'document-type' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -84,7 +85,7 @@ class RegisterController extends Controller
         if (!empty($data['photo_id'])) {
             $extensionIdentif = $data['photo_id']->getClientOriginalExtension();
         }
-            $user = User::insertGetId([
+            $id = User::insertGetId([
                 'name'                  => $data['name'],
                 'email'                 => $data['email'],
                 'number_id'        => $data['number_id'],
@@ -92,8 +93,7 @@ class RegisterController extends Controller
                 'phone'              => $data['phone'],
                 'password'              => Hash::make($data['password']),
             ]);
-        
-        dd($user);
+
         //? le asignamos el rol
         $usuario = User::findOrFail($id);
         $usuario->roles()->sync($roles[1]->id);

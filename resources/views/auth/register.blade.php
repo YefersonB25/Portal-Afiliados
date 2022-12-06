@@ -80,13 +80,16 @@
                                         <i class="fa fa-address-card" aria-hidden="true"></i>
                                     </span>
                                 </div>
-s
+
                                 <div class="wrap-input100 validate-input">
-                                    <select class="form-select form-select-sm" name="document-type" aria-label=".form-select-sm example">
-                                        <option selected>Seleccione tipo Documento</option>
+                                    <select class="form-select" name="document-type" aria-label=".form-select-sm example" required>
+                                        <option selected value="">Seleccione tipo Documento</option>
                                         <option value="NIT">NIT</option>
                                         <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
                                       </select>
+                                      <div class="invalid-feedback">
+                                        {{ $errors->first('document-type') }}
+                                    </div>
                                 </div>
 
                                 <div class="wrap-input100 validate-input">

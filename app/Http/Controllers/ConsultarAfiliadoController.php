@@ -346,14 +346,15 @@ class ConsultarAfiliadoController extends Controller
     #[QueryParam("Developing", "null")]
     public function consultaOTM(Request $request)
     {
+        dd($request->number_id);
         try {
-            $idenUserInfo = Crypt::decryptString($request->identif);
-            $seleccion_nit = Crypt::decryptString($request->seleccion_nit);
-            if ($seleccion_nit == "true") {
-                $identificacion = RequestNit::getNit($request->identif);
+            $number_id = Crypt::decryptString($request->number_id);
+            $document_type = Crypt::decryptString($request->document_type);
+            if ($document_type == "NIT") {
+                $number_id = RequestNit::getNit($request->number_id);
             }
-            if ($seleccion_nit == "false" || $seleccion_nit == "") {
-                $identificacion = Crypt::decryptString($request->identif);
+            if ($document_type == "Cedula de Ciudadania") {
+                $number_id = Crypt::decryptString($request->number_id);
             }
             $paramsOtm = [
                 'limit'   => '1',
@@ -362,17 +363,17 @@ class ConsultarAfiliadoController extends Controller
                 'fields'  => 'locationXid,locationName,isActive,contacts'
             ];
 
-            $responseOtm = OracleRestOtm::getLocationsCustomers($identificacion, $paramsOtm);
+            $responseOtm = OracleRestOtm::getLocationsCustomers($number_id, $paramsOtm);
             $responseDataArrayOtm = $responseOtm->object();
             if ($responseOtm->successful()) {
 
-                $userData = User::where('identification', $idenUserInfo)->first();
+                $userData = User::where('number_id', $number_id)->first();
 
                 $arrayResultLocal = [
-                    'identificacion'    => $userData->identification,
+                    'number_id'    => $userData->number_id,
                     'name'              => $userData->name,
                     'email'             => $userData->email,
-                    'telefono'          => $userData->telefono,
+                    'phone'          => $userData->phone,
                     'estado'            => $userData->estado,
                 ];
 
@@ -399,7 +400,7 @@ class ConsultarAfiliadoController extends Controller
 
             }
             $paramsErp = [
-                'q'        => "(TaxpayerId = '{$identificacion}')",
+                'q'        => "(TaxpayerId = '{$number_id}')",
                 'limit'    => '200',
                 'fields'   => 'TaxpayerId,Supplier,SupplierNumber;addresses:Email,PhoneNumber,Status',
                 'onlyData' => 'true'

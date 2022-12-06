@@ -64,14 +64,14 @@
                                                             <tr>
                                                                 {{-- <img src="{{Storage::get("$usuario->photo")}}" class="avatar profile-user brround cover-image"> --}}
                                                                 <td>
-                                                                    @if ($usuario->id_parentesco != 0)
+                                                                    @if ($usuario->parent_id != 0)
                                                                     <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                                        {{$usuario->id_parentesco}}
+                                                                        {{$usuario->parent_id}}
                                                                         <path fill="currentColor" d="M9,5A4,4 0 0,1 13,9A4,4 0 0,1 9,13A4,4 0 0,1 5,9A4,4 0 0,1 9,5M9,15C11.67,15 17,16.34 17,19V21H1V19C1,16.34 6.33,15 9,15M16.76,5.36C18.78,7.56 18.78,10.61 16.76,12.63L15.08,10.94C15.92,9.76 15.92,8.23 15.08,7.05L16.76,5.36M20.07,2C24,6.05 23.97,12.11 20.07,16L18.44,14.37C21.21,11.19 21.21,6.65 18.44,3.63L20.07,2Z" />
                                                                     </svg>
                                                                     @else
                                                                     <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                                        {{$usuario->id_parentesco}}
+                                                                        {{$usuario->parent_id}}
 
                                                                         <path fill="currentColor" d="M2,3.27L3.28,2L22,20.72L20.73,22L16.73,18C16.9,18.31 17,18.64 17,19V21H1V19C1,16.34 6.33,15 9,15C10.77,15 13.72,15.59 15.5,16.77L11.12,12.39C10.5,12.78 9.78,13 9,13A4,4 0 0,1 5,9C5,8.22 5.22,7.5 5.61,6.88L2,3.27M9,5A4,4 0 0,1 13,9V9.17L8.83,5H9M16.76,5.36C18.78,7.56 18.78,10.61 16.76,12.63L15.08,10.94C15.92,9.76 15.92,8.23 15.08,7.05L16.76,5.36M20.07,2C24,6.05 23.97,12.11 20.07,16L18.44,14.37C21.21,11.19 21.21,6.65 18.44,3.63L20.07,2Z" />
                                                                     </svg>
@@ -94,15 +94,15 @@
                                                                 </td>
                                                                 {{-- {{$usuario->getRoleNames()}} --}}
                                                                 <td>{{ $usuario->name }}</td>
-                                                                <td>{{ $usuario->telefono }}</td>
-                                                                <td>{{ $usuario->identification }}</td>
+                                                                <td>{{ $usuario->phone }}</td>
+                                                                <td>{{ $usuario->number_id }}</td>
 
                                                                 <td>
-                                                                    @if (!empty($usuario->identificationPhoto))
+                                                                    @if (!empty($usuario->photo_id))
                                                                     <span>
                                                                         {{-- {{ Storage::get("$usuario->photo") }} --}}
                                                                         <a href=""  data-bs-toggle="modal" data-bs-target="#exampleModalPdf" class="aPdf">
-                                                                            <i src="{{asset("$usuario->identificationPhoto")}}"></i>
+                                                                            <i src="{{asset("$usuario->photo_id")}}"></i>
                                                                             <svg style="width:34px;height:34px" viewBox="0 0 24 24">
                                                                                 <path fill="currentColor" d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M9.5 11.5C9.5 12.3 8.8 13 8 13H7V15H5.5V9H8C8.8 9 9.5 9.7 9.5 10.5V11.5M14.5 13.5C14.5 14.3 13.8 15 13 15H10.5V9H13C13.8 9 14.5 9.7 14.5 10.5V13.5M18.5 10.5H17V11.5H18.5V13H17V15H15.5V9H18.5V10.5M12 10.5H13V13.5H12V10.5M7 10.5H8V11.5H7V10.5Z" />
                                                                             </svg>
@@ -116,26 +116,19 @@
                                                                 </td>
                                                                 <td>{{ $usuario->email }}</td>
                                                                 <td>
-                                                                    {{empty($usuario->estadoname->descripcion) ? 'No definido' : $usuario->estadoname->descripcion}}
+                                                                    {{empty($usuario->estado) ? 'No definido' : $usuario->estado}}
                                                                 </td>
-                                                                {{-- <td>
-                                                                @if(!empty($usuario->getRoleNames()))
-                                                                    @foreach($usuario->getRoleNames() as $rolNombre)
-                                                                    <h5><span class="badge badge-dark">{{ $rolNombre }}</span></h5>
-                                                                    @endforeach
-                                                                @endif
-                                                                </td> --}}
                                                                 <td>
                                                                     @php
-                                                                        $identificacion = Crypt::encryptString($usuario->identification);
-                                                                        $seleccion_nit  = Crypt::encryptString($usuario->seleccion_nit);
+                                                                        $number_id = $usuario->number_id;
+                                                                        $document_type  = $usuario->document_type;
                                                                     @endphp
-                                                                    @if ($usuario->estado != 4)
-                                                                    <a href="consultaOTM/afiliado/{{$identificacion}}/{{$seleccion_nit}}" class="btn btn-info openBtn" id="consultaOTM">
+                                                                    @if ($usuario->estado != 'Asociado')
+                                                                    <a href="consultaOTM/afiliado/{{$number_id}}/{{$document_type}}" class="btn btn-info openBtn" id="consultaOTM">
                                                                         <i class="fa fa-weibo" aria-hidden="true"></i>
                                                                     </a>
                                                                     @endif
-                                                                    @if ($usuario->estado == 1)
+                                                                    @if ($usuario->estado == 'Nuevo')
                                                                         <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'aprobado']) }}" class="btn btn-primary">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                                                                                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
@@ -148,7 +141,7 @@
                                                                             </svg>
                                                                         </a>
                                                                     @endif
-                                                                    @if ($usuario->estado == 4)
+                                                                    @if ($usuario->estado == 'Asociado')
                                                                         <a href="" data-bs-toggle="modal" data-bs-target="#exampleModalProveedor" data-bs-whatever="@mdo" class="btn btn-primary proveedor"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
                                                                             <path fill="currentColor" d="M11 10V12H9V14H7V12H5.8C5.4 13.2 4.3 14 3 14C1.3 14 0 12.7 0 11S1.3 8 3 8C4.3 8 5.4 8.8 5.8 10H11M3 10C2.4 10 2 10.4 2 11S2.4 12 3 12 4 11.6 4 11 3.6 10 3 10M16 14C18.7 14 24 15.3 24 18V20H8V18C8 15.3 13.3 14 16 14M16 12C13.8 12 12 10.2 12 8S13.8 4 16 4 20 5.8 20 8 18.2 12 16 12Z" />
                                                                         </svg></a>
