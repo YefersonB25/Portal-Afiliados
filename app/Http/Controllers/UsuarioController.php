@@ -82,9 +82,9 @@ class UsuarioController extends Controller
                 'id_parentesco'      => Auth::user()->id,
                 'name'                  => $request->name,
                 'email'                 => $request->email,
-                'identification'        => $request->identification,
-                'telefono'              => $request->telefono,
-                'estado'                => 4,
+                'number_id'        => $request->number_id,
+                'phone'              => $request->phone,
+                'estado'                => 'ASOCIADO',
                 'password'              => Hash::make($request['password']),
             ]);
 
@@ -100,7 +100,9 @@ class UsuarioController extends Controller
                 //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
                 User::where('id', $id)
                             ->update([
-                            'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                            'photo'
+
+                            => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                             ]);
             }
             session()->flash('message');
