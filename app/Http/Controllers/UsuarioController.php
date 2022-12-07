@@ -28,9 +28,7 @@ class UsuarioController extends Controller
     function __construct()
     {
          $this->middleware('permission:/usuario.index')->only('index');
-        //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
-        //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
-        //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
+
     }
 
     /**
@@ -40,10 +38,6 @@ class UsuarioController extends Controller
      */
     public function index(Request $request)
     {
-        //Sin paginación
-        /* $usuarios = User::all();
-        return view('usuarios.index',compact('usuarios')); */
-        //Con paginación
 
         $usuarios = User::orderBy('estado')->get();
         // $estados = Estado::all();
