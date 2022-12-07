@@ -117,7 +117,7 @@
                                                                 </td>
                                                                 <td>{{ $usuario->email }}</td>
                                                                 <td>
-                                                                    {{empty($usuario->estado) ? 'No definido' : $usuario->estado}}
+                                                                    {{$usuario->estado}}
                                                                 </td>
                                                                 <td>
                                                                     @php

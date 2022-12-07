@@ -257,7 +257,7 @@ class UsuarioController extends Controller
 
     public function cambiarEstado($idUsuario)
     {
-        User::where('id',$idUsuario)->update(['estado' => 2]);
+        User::where('id',$idUsuario)->update(['estado' => 'CONFIRMADO']);
         return response()->json('The post successfully updated');
 
         // $post = Post::find($id);
