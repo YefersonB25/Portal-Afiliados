@@ -15,16 +15,16 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_parentesco', 20)->nullable();
-            $table->string('photo', 200)->nullable();
-            $table->string('name', 190);
-            $table->string('identification', 20);
-            $table->string('seleccion_nit', 10)->default('false');
-            $table->string('identificationPhoto', 200)->nullable();
             $table->string('email', 190)->unique();
-            $table->string('telefono', 11)->nullable();
+            $table->foreignId('parent_id', 20)->nullable();
+            $table->enum('document_type', ['NIT', 'Cedula de Ciudadania'])->nullable();
+            $table->string('number_id', 20);
+            $table->string('name', 190);
+            $table->string('phone', 11)->nullable();
+            $table->string('photo', 500)->nullable();
+            $table->string('photo_id', 500)->nullable();
+            $table->enum('estado', ['NUEVO','CONFIRMADO','RECHAZADO','ASOCIADO'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->integer('estado')->default('1');
             $table->string('password');
             $table->rememberToken();
             $table->softDeletes();

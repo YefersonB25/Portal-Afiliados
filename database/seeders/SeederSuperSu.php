@@ -73,12 +73,12 @@ class SeederSuperSu extends Seeder
             ]);
 
 
-        $status = [
-            1 => 'NUEVO',
-            2 => 'CONFIRMADO',
-            3 => 'RECHAZADO'
-        ];
-        //!estos datos son para pruebas de rendimiento con muchos usuarios en el sistema
+            //!estos datos son para pruebas de rendimiento con muchos usuarios en el sistema
+        // $status = [
+        //     1 => 'NUEVO',
+        //     2 => 'CONFIRMADO',
+        //     3 => 'RECHAZADO'
+        // ];
         // for ($i = 0; $i < 500; $i++) {
         //     $faker          = Factory::create();
         //     User::create([

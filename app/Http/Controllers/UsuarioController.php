@@ -146,9 +146,8 @@ class UsuarioController extends Controller
         ]);
         if ($request->estado  != 'Todos') {
             $usuarios = User::where('estado', $request->estado)->get();
-            $estados  = Estado::all();
 
-            return view('usuarios.index', ['usuarios' => $usuarios, 'estados' => $estados]);
+            return view('usuarios.index',['usuarios' => $usuarios]);
         }
         return redirect('usuarios');
     }
@@ -175,10 +174,10 @@ class UsuarioController extends Controller
 
         switch ($estado) {
             case 'aprobado':
-                $usuario->update(['estado' => 'Confirmado']);
+                $usuario->update(['estado' => 'CONFIRMADO']);
                 break;
             case 'rechazado':
-                $usuario->update(['estado' => 'Rechazado']);
+                $usuario->update(['estado' => 'RECHAZADO']);
                 break;
             default:
                 # code...
@@ -251,7 +250,7 @@ class UsuarioController extends Controller
 
     public function cambiarEstado($idUsuario)
     {
-        User::where('id', $idUsuario)->update(['estado' => 2]);
+        User::where('id',$idUsuario)->update(['estado' => 'CONFIRMADO']);
         return response()->json('The post successfully updated');
 
         // $post = Post::find($id);
