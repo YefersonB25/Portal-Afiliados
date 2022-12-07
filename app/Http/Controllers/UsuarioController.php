@@ -86,18 +86,21 @@ class UsuarioController extends Controller
                 ]);
                 //? le asignamos el rol
                 $user->roles()->sync(3);
-            });
-            //? Guardamos los archivos cargados y capturamos la ruta
-            if (!empty($request->photo)) {
-                $carpetaphoto = "usuariosAsociados/$id/perfil";
-                Storage::putFileAs("public/$carpetaphoto", $request->photo, 'photo_perfil.' . $extensionPerfil);
+                //? Guardamos los archivos cargados y capturamos la ruta
+                if (!empty($request->photo)) {
+                    $carpetaphoto = "usuariosAsociados/$user->id/perfil";
+                    // Storage::putFileAs("public/$carpetaphoto", $request->photo, 'photo_perfil.' . $extensionPerfil);
 
-                //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
-                User::where('id', $id)
-                    ->update([
-                        'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    ]);
-            }
+                    //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
+                    // User::where('id', $user->id)
+                    //     ->update([
+                    //         'photo'
+
+                    //         => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                    //     ]);
+                }
+            });
+
             session()->flash('message');
             return back();
         }
