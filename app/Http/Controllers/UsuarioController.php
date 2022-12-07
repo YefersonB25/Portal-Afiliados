@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
 use App\Jobs\SendRequestEmailJob;
-use App\Jobs\SendWelcomeEmailJob;
-use App\Models\Estado;
+use App\Models\Relationship;
 use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Models\Role;
@@ -16,8 +15,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -40,7 +37,7 @@ class UsuarioController extends Controller
      */
     public function index(Request $request)
     {
-        $usuarios = User::orderBy('estado')->paginate(20);
+        $usuarios = User::orderBy('status')->paginate(20);
         return view('usuarios.index', ['usuarios' => $usuarios]);
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
@@ -62,35 +59,34 @@ class UsuarioController extends Controller
     {
         $request->validate([
             'name'           => 'required',
-            'email'          => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
+            'email'          => 'required', 'string', 'email', 'max:255', 'unique:users', 'indisposable',
             'identification' => 'required',
             'password'       => 'required', 'min:8',
         ]);
-
-        $userlogeado = Auth::user()->id;
-        $roles = Role::get();
-
-        $countUserAsociado = User::where([['id_parentesco', $userlogeado], ['deleted_at', NULL]],)->count();
-        if ($countUserAsociado <= 3) {
-            //? Capturamos la extencion de los archivos
+        $user_relation = DB::table('relationship')->where('user_id', Auth::user()->id)->count();
+        if ($user_relation <= 3) {
+            //?Capturamos la extencion de los archivos
             if (!empty($request->photo)) {
                 $extensionPerfil = $request->photo->getClientOriginalExtension();
             }
-            //? Capturamos el id del user registrdo
-            $id = User::insertGetId([
-                'id_parentesco'  => Auth::user()->id,
-                'name'           => $request->name,
-                'email'          => $request->email,
-                'identification' => $request->identification,
-                'telefono'       => $request->telefono,
-                'estado'         => 4,
-                'password'       => Hash::make($request['password']),
-            ]);
-
-            //? le asignamos el rol
-            $usuario = User::findOrFail($id);
-            $usuario->roles()->sync($roles[2]->id);
-
+            //?Capturamos el id del user registrdo
+            DB::transaction(function () use ($request) {
+                $user = User::create([
+                    // 'id_parentesco' => Auth::user()->id,
+                    'name'      => $request->name,
+                    'email'     => $request->email,
+                    'number_id' => $request->identification,
+                    'phone'     => $request->telefono,
+                    'status'    => 'ASOCIADO',
+                    'password'  => Hash::make($request['password']),
+                ]);
+                $create_relation = Relationship::create([
+                    'user_id'         => Auth::user()->id,
+                    'user_assigne_id' => $user->id
+                ]);
+                //? le asignamos el rol
+                $user->roles()->sync(3);
+            });
             //? Guardamos los archivos cargados y capturamos la ruta
             if (!empty($request->photo)) {
                 $carpetaphoto = "usuariosAsociados/$id/perfil";
@@ -109,12 +105,6 @@ class UsuarioController extends Controller
         return back();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -133,31 +123,19 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function filtros(Request $request)
     {
         $this->validate($request, [
-            'estado' => 'required',
+            'status' => 'required',
         ]);
         if ($request->estado  != 'Todos') {
-            $usuarios = User::where('estado', $request->estado)->get();
+            $usuarios = User::where('status', $request->estado)->get();
 
-            return view('usuarios.index',['usuarios' => $usuarios]);
+            return view('usuarios.index', ['usuarios' => $usuarios]);
         }
         return redirect('usuarios');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $user     = User::find($id);
@@ -167,17 +145,16 @@ class UsuarioController extends Controller
         return view('usuarios.editar', compact('user', 'roles', 'userRole'));
     }
 
-
     public function confirmarDatos($usuarioId, $estado)
     {
         $usuario = User::find($usuarioId);
 
         switch ($estado) {
             case 'aprobado':
-                $usuario->update(['estado' => 'CONFIRMADO']);
+                $usuario->update(['status' => 'CONFIRMADO']);
                 break;
             case 'rechazado':
-                $usuario->update(['estado' => 'RECHAZADO']);
+                $usuario->update(['status' => 'RECHAZADO']);
                 break;
             default:
                 # code...
@@ -186,7 +163,7 @@ class UsuarioController extends Controller
         $details = [
             'name'   => $usuario->name,
             'email'  => $usuario->email,
-            'estado' => $estado
+            'status' => $estado
         ];
         dispatch(new SendRequestEmailJob($details));
 
@@ -202,14 +179,6 @@ class UsuarioController extends Controller
         return redirect('usuarios');
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -235,28 +204,22 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         User::find($id)->delete();
         return redirect('usuarios');
     }
 
-
     public function cambiarEstado($idUsuario)
     {
-        User::where('id',$idUsuario)->update(['estado' => 'CONFIRMADO']);
+        User::where('id', $idUsuario)->update(['status' => 'CONFIRMADO']);
         return response()->json('The post successfully updated');
 
         // $post = Post::find($id);
         // $post->update($request->all());
 
     }
+
     public function checkout($cedula)
     {
         // dd($cedula);

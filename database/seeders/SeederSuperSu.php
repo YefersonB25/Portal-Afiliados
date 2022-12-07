@@ -73,47 +73,50 @@ class SeederSuperSu extends Seeder
             ]);
 
 
-            //!estos datos son para pruebas de rendimiento con muchos usuarios en el sistema
-        // $status = [
-        //     1 => 'NUEVO',
-        //     2 => 'CONFIRMADO',
-        //     3 => 'RECHAZADO'
-        // ];
-        // for ($i = 0; $i < 500; $i++) {
-        //     $faker          = Factory::create();
-        //     User::create([
-        //         'name'           => $faker->firstName(),
-        //         'identification' => random_int(900, 900000),
-        //         'email'          => $faker->email(),
-        //         'telefono'       => random_int(1, 9000000),
-        //         'seleccion_nit'  => '',
-        //         'estado'         => $status[random_int(1, 3)],
-        //         'password'       => bcrypt('123456')
-        //     ])->assignRole('Administrador');
-        // }
-
+        //!estos datos son para pruebas de rendimiento con muchos usuarios en el sistema
+        $status = [
+            1 => 'NUEVO',
+            2 => 'CONFIRMADO',
+            3 => 'RECHAZADO'
+        ];
+        $document = [
+            1 => 'CC',
+            2 => 'NIT',
+        ];
+        for ($i = 0; $i < 500; $i++) {
+            $faker          = Factory::create();
+            User::create([
+                'name'          => $faker->firstName(),
+                'number_id'     => random_int(900, 900000),
+                'document_type' => $document[random_int(1, 2)],
+                'email'         => $faker->email(),
+                'phone'         => random_int(1, 9000000),
+                'status'        => $status[random_int(1, 3)],
+                'password'      => bcrypt('123456')
+            ])->assignRole('Administrador');
+        }
 
         $userSu = User::where('email', '=', 'ybolanos@tractocar.com')->first();
         if ($userSu) {
             $userSu->assignRole('Administrador');
         } else {
             User::create([
-                'name'           => 'Yeferson Bolaños Cardales',
-                'identification' => '2342432',
-                'email'          => 'ybolanos@tractocar.com',
-                'telefono'       => '3162543022',
-                'seleccion_nit'  => '',
-                'estado'         => 'CONFIRMADO',
-                'password'       => bcrypt('123456')
+                'name'          => 'Yeferson Bolaños Cardales',
+                'number_id'     => '2342432',
+                'document_type' => 'CC',
+                'email'         => 'ybolanos@tractocar.com',
+                'phone'         => '3162543022',
+                'status'        => 'CONFIRMADO',
+                'password'      => bcrypt('123456')
             ])->assignRole('Administrador');
             User::create([
-                'name'           => 'Testing',
-                'identification' => '2342432',
-                'email'          => 'test@test.com',
-                'telefono'       => '',
-                'seleccion_nit'  => '',
-                'estado'         => 'NUEVO',
-                'password'       => bcrypt('123456')
+                'name'          => 'Elkin Moreno',
+                'number_id'     => '39684019',
+                'document_type' => 'CC',
+                'email'         => 'emoreno@tractocar.com',
+                'phone'         => '3162543022',
+                'status'        => 'CONFIRMADO',
+                'password'      => bcrypt('123456')
             ])->assignRole('Cliente');
         }
     }

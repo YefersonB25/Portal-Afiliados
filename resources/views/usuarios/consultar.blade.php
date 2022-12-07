@@ -7,9 +7,7 @@
         <div class="page-main">
             <div class="app-content main-content mt-0">
                 <div class="side-app">
-                    <!-- CONTAINER -->
                     <div class="main-container container-fluid">
-                        <!-- Row -->
                         <div class="row row-sm">
                             <div class="col-lg-12">
                                 <div class="card">
@@ -85,7 +83,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Row -->
                     </div>
                 </div>
             </div>

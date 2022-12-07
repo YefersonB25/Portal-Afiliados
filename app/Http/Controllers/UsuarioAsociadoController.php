@@ -41,7 +41,7 @@ class UsuarioAsociadoController extends Controller
         return view('usuarios.index',compact('usuarios')); */
         //Con paginación
 
-        $usuarios = User::orderBy('estado')->get();
+        $usuarios = User::orderBy('status')->get();
         return view('usuarios.index',compact('usuarios'));
 
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
@@ -168,7 +168,7 @@ class UsuarioAsociadoController extends Controller
 
     public function cambiarEstadoDatosConfirm($idUsuario)
     {
-         User::where('id',$idUsuario)->update(['estado' => 2]);
+         User::where('id',$idUsuario)->update(['status' => 2]);
          $dataUser = User::Where('id',$idUsuario)->first();
          SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
 
@@ -180,7 +180,7 @@ class UsuarioAsociadoController extends Controller
     }
     public function cambiarEstadoDatosRechaz($idUsuario)
     {
-         User::where('id',$idUsuario)->update(['estado' => 3]);
+         User::where('id',$idUsuario)->update(['status' => 3]);
          $dataUser = User::Where('id',$idUsuario)->first();
          SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
          return redirect('usuarios');

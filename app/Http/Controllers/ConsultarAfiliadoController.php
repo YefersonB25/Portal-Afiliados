@@ -366,7 +366,6 @@ class ConsultarAfiliadoController extends Controller
                 $result          = $response->object();
                 $result_contacts = $response->object()->contacts->items[0];
 
-
                 $arrayResultOtm = [
                     'locationXid'  => $result->locationXid,
                     'fullName'     => $result->locationName,
@@ -415,7 +414,6 @@ class ConsultarAfiliadoController extends Controller
                         'emailAddress'  => null,
                         'phone'         => null
                     ];
-                // dd($arrayResultErp);
             }
             return view('usuarios.consultar', [
                 'arrayResultLocal' => $arrayResultLocal,

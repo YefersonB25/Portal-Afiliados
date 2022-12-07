@@ -24,12 +24,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id_parentesco',
         'photo',
         'name',
         'document_type',
+        'number_id',
         'phone',
-        'estado',
+        'status',
         'email',
         'password',
     ];
@@ -54,17 +54,30 @@ class User extends Authenticatable
     ];
 
 
-    public function getIdeintifier(){
+    public function getIdeintifier()
+    {
         return $this->getKey();
     }
 
-    public function getCustomCleaims(){
+    public function getCustomCleaims()
+    {
         return [];
     }
 
 
     public function estadoname()
     {
-        return $this->belongsTo(estado::class, 'estado', 'id');
+        return $this->belongsTo(estado::class, 'status', 'id');
+    }
+
+    public function badges($status)
+    {
+        $map = [
+            'NUEVO'      => 'warning',
+            'CONFIRMADO' => 'primary',
+            'RECHAZADO'  => 'danger',
+            'ASOCIADO'   => 'info',
+        ];
+        return $map[$status] ?? '';
     }
 }

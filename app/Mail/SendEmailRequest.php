@@ -34,7 +34,7 @@ class SendEmailRequest extends Mailable
     {
         return $this->subject('Bienvenido al Portal Afiliado TC!')->view('emails.request')->with([
             'name' => $this->name,
-            'estado' => $this->estado
+            'status' => $this->estado
         ]);
     }
 }

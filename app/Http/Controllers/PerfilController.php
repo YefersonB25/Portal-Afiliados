@@ -27,20 +27,29 @@ class PerfilController extends Controller
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function index()
     {
-
-        $userlogeado = Auth::user()->id;
-        $userInfo = User::where('id', $userlogeado)->first();
-        $userAsociados = User::where([['id_parentesco',$userlogeado],['deleted_at', NULL]])->get();
-        $countUserAsociado = User::where([['id_parentesco',$userlogeado],['deleted_at', NULL]],)->count();
-
-        return view('profile.profile', ['userInfo' => $userInfo, 'userAsociados' => $userAsociados, 'countUserAsociado' => $countUserAsociado]);
+        $user          = User::find(Auth::user()->id);
+        $user_relation = DB::table('users')
+            ->leftJoin('relationship', 'users.id', '=', 'relationship.user_assigne_id')
+            ->where('relationship.user_id',  Auth::user()->id)
+            // ->where('relationship.deleted_at', '=', null)
+            ->select(
+                'users.id',
+                'users.email',
+                'users.document_type',
+                'users.number_id',
+                'users.name',
+                'users.phone',
+                'users.photo',
+                'users.photo_id',
+                'users.status',
+                'users.deleted_at',
+            )->get();
+        return view('profile.profile', [
+            'user_relation' => $user_relation,
+            'user'          => $user
+        ]);
     }
 
     /**
@@ -50,6 +59,7 @@ class PerfilController extends Controller
      */
     public function create()
     {
+
         //aqui trabajamos con name de las tablas de users
         $roles = Role::pluck('name', 'name')->all();
         return view('profile.profile', compact('roles'));
@@ -64,10 +74,10 @@ class PerfilController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'roles'    => 'required'
         ]);
 
         $input = $request->all();
@@ -153,22 +163,19 @@ class PerfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        // $this->validate($request, [
-        //     'name' => 'required',
-        //     'email' => 'required|email|unique:users,email,'.$id,
-        //     'password' => 'same:confirm-password',
-        //     'roles' => 'required'
-        // ]);
-        $infuUser = User::findOrFail($id);
+        $phone = $request->pfTelefono;
+        $user = User::find(Auth::user()->id)->update([
+            'phone' => $phone,
+        ]);
 
         // $infuUser->email           = $request->get('pfEmail');
-        $infuUser->telefono        = $request->get('pfTelefono');
+        // $infuUser->phone = $request->get('pfTelefono');
 
-        $infuUser->save();
+        // $infuUser->save();
 
-        $input = $request->all();
+        // $input = $request->all();
         // if(!empty($input['password'])){
         //     $input['password'] = Hash::make($input['password']);
         // }else{
