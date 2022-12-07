@@ -37,7 +37,6 @@ class ConsultarAfiliadoController extends Controller
     {
 
         return view('usuarios.consultar');
-
     }
 
     /**
@@ -48,9 +47,9 @@ class ConsultarAfiliadoController extends Controller
     //? Consulta facturas api
 
     #[QueryParam("identification", "integer", required: true)]
-    #[QueryParam("FlagStatus", "It is to check if the invoice is valid or canceled [true, false]" ,"string", required: true)]
-    #[QueryParam("PaidStatus", "It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]" ,"string", required: true)]
-    #[QueryParam("InvoiceType", "It is to consult the invoices by type of invoice." ,"string", required: false)]
+    #[QueryParam("FlagStatus", "It is to check if the invoice is valid or canceled [true, false]", "string", required: true)]
+    #[QueryParam("PaidStatus", "It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]", "string", required: true)]
+    #[QueryParam("InvoiceType", "It is to consult the invoices by type of invoice.", "string", required: false)]
     public function suppliers(Request $request)
     {
         $statusErpOtm = "Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.";
@@ -78,7 +77,7 @@ class ConsultarAfiliadoController extends Controller
                 return response()->json(['message' => 'No se encontro el proveedor'], 404);
             }
 
-            $SupplierNumber =  (double)$res['items'][0]['SupplierNumber'];
+            $SupplierNumber =  (float)$res['items'][0]['SupplierNumber'];
 
             $params      =  [
                 'limit'    => '200',
@@ -88,15 +87,15 @@ class ConsultarAfiliadoController extends Controller
             try {
 
                 if ($request->PaidStatus == '') {
-                    if($request->InvoiceType == ''){
+                    if ($request->InvoiceType == '') {
                         $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')";
-                    }else {
+                    } else {
                         $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (InvoiceType = '{$request->InvoiceType}')";
                     }
-                }else{
+                } else {
                     $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')";
                 }
-                if($request->InvoiceType != '' && $request->PaidStatus != '') {
+                if ($request->InvoiceType != '' && $request->PaidStatus != '') {
                     $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}')";
                 }
 
@@ -105,10 +104,10 @@ class ConsultarAfiliadoController extends Controller
 
                 //? Validamos que nos traiga las facturas
                 if ($invoice['count'] == 0) {
-                    if(!empty($request->InvoiceType)) {
-                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.'.$request->PaidStatus) . ' con el tipo de factura ' . trans('locale.'.$request->InvoiceType), 'status' => '404' ]);
-                    }else{
-                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.'.$request->PaidStatus), 'status' => '404']);
+                    if (!empty($request->InvoiceType)) {
+                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus) . ' con el tipo de factura ' . trans('locale.' . $request->InvoiceType), 'status' => '404']);
+                    } else {
+                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus), 'status' => '404']);
                     }
                 }
 
@@ -152,7 +151,6 @@ class ConsultarAfiliadoController extends Controller
             // $invoce =  $invoice->json();
             // return response()->json(['response' => $invoce['items']]);
             return response()->json(['response' => $res['items'], 'status' => '200']);
-
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Algo fallo con la comunicacion']);
         }
@@ -172,8 +170,6 @@ class ConsultarAfiliadoController extends Controller
 
     public function customers(Request $request)
     {
-
-
         $params      =  [
             'limit'    => '200',
             'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
@@ -189,10 +185,10 @@ class ConsultarAfiliadoController extends Controller
             //? Validamos que nos traiga las facturas
             if ($invoice['count'] == 0) {
 
-                if(!empty($request->InvoiceType)) {
-                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.'.$request->PaidStatus) . ' con el tipo de factura ' . trans('locale.'.$request->InvoiceType) ]);
-                }else{
-                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.'.$request->PaidStatus)]);
+                if (!empty($request->InvoiceType)) {
+                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus) . ' con el tipo de factura ' . trans('locale.' . $request->InvoiceType)]);
+                } else {
+                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus)]);
                 }
             }
 
@@ -208,7 +204,7 @@ class ConsultarAfiliadoController extends Controller
     }
 
     #[QueryParam("PaidStatus", "array('Paid', 'Undpaid', 'Partially paid')", required: true)]
-    #[QueryParam("SupplierNumber","integer", required: true)]
+    #[QueryParam("SupplierNumber", "integer", required: true)]
     public function TotalAmount(Request $request)
     {
         try {
@@ -257,7 +253,7 @@ class ConsultarAfiliadoController extends Controller
         // }
     }
 
-    #[QueryParam("id", "user ID" ,"int", required: true)]
+    #[QueryParam("id", "user ID", "int", required: true)]
     public function getSupplierNumber(Request $request)
     {
         try {
@@ -265,7 +261,7 @@ class ConsultarAfiliadoController extends Controller
             if ($request->id_parentesco > 0) {
                 $getUserPadre = User::select('identification')->where('id', $request->id_parentesco)->first();
                 $users = $getUserPadre->identification;
-            }else{
+            } else {
                 $getUserPadre = User::select('identification')->where('id', $request->id)->first();
                 $users = $getUserPadre->identification;
             }
@@ -286,7 +282,7 @@ class ConsultarAfiliadoController extends Controller
                 session()->flash('message', 'No se encontro el proveedor');
                 return back();
             }
-            $SupplierNumber =  (double)$res['items'][0]['SupplierNumber'];
+            $SupplierNumber =  (float)$res['items'][0]['SupplierNumber'];
 
             return response()->json(['success' => true, 'data' => $SupplierNumber]);
         } catch (\Throwable $th) {
@@ -302,23 +298,23 @@ class ConsultarAfiliadoController extends Controller
         $dataInvoiceFull = [];
         $data = [];
         $data = [
-            'Description'                       => $request->invoice['Description'],
-            'InvoiceDate'                       => $request->invoice['InvoiceDate'],
-            'InvoiceType'                       => $request->invoice['InvoiceType'],
-            'InvoiceAmount'                     => $request->invoice['InvoiceAmount'],
-            'AmountPaid'                        => $request->invoice['AmountPaid'],
-            'InvoiceId'                         => $request->invoice['InvoiceId'],
-            'Supplier'                          => $request->invoice['Supplier'],
-            'InvoiceNumber'                     => $request->invoice['InvoiceNumber'],
-            'CanceledFlag'                      => $request->invoice['CanceledFlag'],
-            'SupplierSite'                      => $request->invoice['SupplierSite'],
-            'Party'                             => $request->invoice['Party'],
-            'PartySite'                         => $request->invoice['PartySite'],
-            'PaidStatus'                        => $request->invoice['PaidStatus'],
-            'ValidationStatus'                  => $request->invoice['ValidationStatus'],
-            'AccountingDate'                    => $request->invoice['AccountingDate'],
-            'DocumentCategory'                  => $request->invoice['DocumentCategory'],
-            'DocumentSequence'                  => $request->invoice['DocumentSequence'],
+            'Description'      => $request->invoice['Description'],
+            'InvoiceDate'      => $request->invoice['InvoiceDate'],
+            'InvoiceType'      => $request->invoice['InvoiceType'],
+            'InvoiceAmount'    => $request->invoice['InvoiceAmount'],
+            'AmountPaid'       => $request->invoice['AmountPaid'],
+            'InvoiceId'        => $request->invoice['InvoiceId'],
+            'Supplier'         => $request->invoice['Supplier'],
+            'InvoiceNumber'    => $request->invoice['InvoiceNumber'],
+            'CanceledFlag'     => $request->invoice['CanceledFlag'],
+            'SupplierSite'     => $request->invoice['SupplierSite'],
+            'Party'            => $request->invoice['Party'],
+            'PartySite'        => $request->invoice['PartySite'],
+            'PaidStatus'       => $request->invoice['PaidStatus'],
+            'ValidationStatus' => $request->invoice['ValidationStatus'],
+            'AccountingDate'   => $request->invoice['AccountingDate'],
+            'DocumentCategory' => $request->invoice['DocumentCategory'],
+            'DocumentSequence' => $request->invoice['DocumentSequence'],
 
         ];
 
@@ -344,51 +340,44 @@ class ConsultarAfiliadoController extends Controller
     }
 
     #[QueryParam("Developing", "null")]
-    public function consultaOTM(Request $request)
+    public function consultaOTM($number_id, $document_type)
     {
-        dd($request->number_id);
         try {
-            $number_id = Crypt::decryptString($request->number_id);
-            $document_type = Crypt::decryptString($request->document_type);
-            if ($document_type == "NIT") {
-                $number_id = RequestNit::getNit($request->number_id);
-            }
-            if ($document_type == "Cedula de Ciudadania") {
-                $number_id = Crypt::decryptString($request->number_id);
-            }
-            $paramsOtm = [
-                'limit'   => '1',
-                'expand' => 'contacts',
-                'showPks' => 'true',
-                'fields'  => 'locationXid,locationName,isActive,contacts'
+            $number_id     = Crypt::decryptString($number_id);
+            $document_type = Crypt::decryptString($document_type);
+            $document      = ($document_type == "NIT") ? RequestNit::getNit($number_id) : $number_id;
+
+            $userData         = User::where('number_id', $number_id)->first();
+            $arrayResultLocal = [
+                'document_type' => $userData->number_id,
+                'name'          => $userData->name,
+                'email'         => $userData->email,
+                'phone'         => $userData->phone,
+                'estado'        => $userData->estado,
             ];
 
-            $responseOtm = OracleRestOtm::getLocationsCustomers($number_id, $paramsOtm);
-            $responseDataArrayOtm = $responseOtm->object();
-            if ($responseOtm->successful()) {
+            $params = [
+                'limit'   => '1',
+                'expand'  => 'contacts',
+                'showPks' => 'true',
+                'fields'  => 'locationXid,locationName,isActive,contacts'           
+            ];
 
-                $userData = User::where('number_id', $number_id)->first();
+            $response = OracleRestOtm::getLocationsCustomers($document, $params);
+            if ($response->successful()) {
+                $result          = $response->object();
+                $result_contacts = $response->object()->contacts->items[0];
 
-                $arrayResultLocal = [
-                    'number_id'    => $userData->number_id,
-                    'name'              => $userData->name,
-                    'email'             => $userData->email,
-                    'phone'          => $userData->phone,
-                    'estado'            => $userData->estado,
+
+                $arrayResultOtm = [
+                    'locationXid'  => $result->locationXid,
+                    'fullName'     => $result->locationName,
+                    'isActive'     => $result->isActive,
+                    'emailAddress' => isset($result_contacts->emailAddress) ? $result_contacts->emailAddress : null,
+                    'phone'        => isset($result_contacts->phone1) ? $result_contacts->phone1 : null,
                 ];
-
-                $resultLocationOtm = $responseDataArrayOtm;
-                $resultLocationContactsOtm = $resultLocationOtm->contacts->items[0];
-                $arrayResultOtm =
-                    [
-                        'locationXid'   => $resultLocationOtm->locationXid,
-                        'fullName'      => $resultLocationOtm->locationName,
-                        'isActive'      => $resultLocationOtm->isActive,
-                        'emailAddress'  => isset($resultLocationContactsOtm->emailAddress) ? $resultLocationContactsOtm->emailAddress : null,
-                        'phone'         => isset($resultLocationContactsOtm->phone1) ? $resultLocationContactsOtm->phone1 : null,
-                    ];
             } else {
-                Log::error(__METHOD__ . '. General error: ' . $responseOtm->body());
+                Log::error(__METHOD__ . '. General error: ' . $response->body());
                 $arrayResultOtm =
                     [
                         'locationXid'   => null,
@@ -397,8 +386,8 @@ class ConsultarAfiliadoController extends Controller
                         'emailAddress'  => null,
                         'phone'         => null,
                     ];
-
             }
+
             $paramsErp = [
                 'q'        => "(TaxpayerId = '{$number_id}')",
                 'limit'    => '200',
@@ -413,11 +402,11 @@ class ConsultarAfiliadoController extends Controller
                 $resultAddressErp = $resultErp->addresses[0];
                 $arrayResultErp =
                     [
-                        'TaxpayerId'    => $resultErp->TaxpayerId,
-                        'fullName'      => $resultErp->Supplier,
-                        'isActive'      => $resultAddressErp->Status,
-                        'emailAddress'  => $resultAddressErp->Email,
-                        'phone'         => $resultAddressErp->PhoneNumber
+                        'TaxpayerId'   => $resultErp->TaxpayerId,
+                        'fullName'     => $resultErp->Supplier,
+                        'isActive'     => $resultAddressErp->Status,
+                        'emailAddress' => $resultAddressErp->Email,
+                        'phone'        => $resultAddressErp->PhoneNumber
                     ];
             } else {
                 $arrayResultErp =
@@ -428,11 +417,12 @@ class ConsultarAfiliadoController extends Controller
                         'emailAddress'  => null,
                         'phone'         => null
                     ];
+                // dd($arrayResultErp);
             }
             return view('usuarios.consultar', [
                 'arrayResultLocal' => $arrayResultLocal,
-                'arrayResultErp'  => $arrayResultErp,
-                'arrayResultOtm'  => $arrayResultOtm
+                'arrayResultErp'   => $arrayResultErp,
+                'arrayResultOtm'   => $arrayResultOtm
             ]);
         } catch (\Throwable $th) {
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
@@ -442,11 +432,12 @@ class ConsultarAfiliadoController extends Controller
     }
 
     #[QueryParam("userId", "kinship id, to consult the provider to which it is associated", "integer", required: true)]
-    public function proveedorEncargado(Request $request){
-        if($request->userId != ''){
+    public function proveedorEncargado(Request $request)
+    {
+        if ($request->userId != '') {
             $usuario = User::find($request->userId);
-            return response()->json([ 'success' => true, 'data' => $usuario ]);
+            return response()->json(['success' => true, 'data' => $usuario]);
         }
-        return response()->json([ 'success' => false, 'data' => 'Algo fallo con la comunicacion']);
+        return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
     }
 }

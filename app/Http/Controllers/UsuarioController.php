@@ -27,7 +27,7 @@ class UsuarioController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:/usuario.index')->only('index');
+        $this->middleware('permission:/usuario.index')->only('index');
         //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
         //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
@@ -40,15 +40,8 @@ class UsuarioController extends Controller
      */
     public function index(Request $request)
     {
-        //Sin paginación
-        /* $usuarios = User::all();
-        return view('usuarios.index',compact('usuarios')); */
-        //Con paginación
-
-        $usuarios = User::orderBy('estado')->get();
-        $estados = Estado::all();
-        return view('usuarios.index',['usuarios' => $usuarios, 'estados' => $estados]);
-
+        $usuarios = User::orderBy('estado')->paginate(20);
+        return view('usuarios.index', ['usuarios' => $usuarios]);
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
 
@@ -60,24 +53,24 @@ class UsuarioController extends Controller
     public function create()
     {
         //aqui trabajamos con name de las tablas de users
-        $roles = Role::pluck('name','name')->all();
-        return view('usuarios.crear',compact('roles'));
+        $roles = Role::pluck('name', 'name')->all();
+        return view('usuarios.crear', compact('roles'));
     }
 
 
     public function createUserAsociado(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
+            'name'           => 'required',
+            'email'          => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
             'identification' => 'required',
-            'password' => 'required','min:8',
+            'password'       => 'required', 'min:8',
         ]);
 
         $userlogeado = Auth::user()->id;
         $roles = Role::get();
 
-        $countUserAsociado = User::where([['id_parentesco',$userlogeado],['deleted_at', NULL]],)->count();
+        $countUserAsociado = User::where([['id_parentesco', $userlogeado], ['deleted_at', NULL]],)->count();
         if ($countUserAsociado <= 3) {
             //? Capturamos la extencion de los archivos
             if (!empty($request->photo)) {
@@ -85,13 +78,13 @@ class UsuarioController extends Controller
             }
             //? Capturamos el id del user registrdo
             $id = User::insertGetId([
-                'id_parentesco'      => Auth::user()->id,
-                'name'                  => $request->name,
-                'email'                 => $request->email,
-                'identification'        => $request->identification,
-                'telefono'              => $request->telefono,
-                'estado'                => 4,
-                'password'              => Hash::make($request['password']),
+                'id_parentesco'  => Auth::user()->id,
+                'name'           => $request->name,
+                'email'          => $request->email,
+                'identification' => $request->identification,
+                'telefono'       => $request->telefono,
+                'estado'         => 4,
+                'password'       => Hash::make($request['password']),
             ]);
 
             //? le asignamos el rol
@@ -101,13 +94,13 @@ class UsuarioController extends Controller
             //? Guardamos los archivos cargados y capturamos la ruta
             if (!empty($request->photo)) {
                 $carpetaphoto = "usuariosAsociados/$id/perfil";
-                Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
+                Storage::putFileAs("public/$carpetaphoto", $request->photo, 'photo_perfil.' . $extensionPerfil);
 
                 //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
                 User::where('id', $id)
-                            ->update([
-                            'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                            ]);
+                    ->update([
+                        'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+                    ]);
             }
             session()->flash('message');
             return back();
@@ -125,10 +118,10 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'roles'    => 'required'
         ]);
 
         $input = $request->all();
@@ -153,9 +146,9 @@ class UsuarioController extends Controller
         ]);
         if ($request->estado  != 'Todos') {
             $usuarios = User::where('estado', $request->estado)->get();
-            $estados = Estado::all();
+            $estados  = Estado::all();
 
-            return view('usuarios.index',['usuarios' => $usuarios, 'estados' => $estados]);
+            return view('usuarios.index', ['usuarios' => $usuarios, 'estados' => $estados]);
         }
         return redirect('usuarios');
     }
@@ -168,11 +161,11 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+        $user     = User::find($id);
+        $roles    = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
 
-        return view('usuarios.editar',compact('user','roles','userRole'));
+        return view('usuarios.editar', compact('user', 'roles', 'userRole'));
     }
 
 
@@ -191,23 +184,23 @@ class UsuarioController extends Controller
                 # code...
                 break;
         }
-            $details = [
-                'name' => $usuario->name,
-                'email' => $usuario->email,
-                'estado' => $estado
-            ];
-            dispatch(new SendRequestEmailJob($details));
+        $details = [
+            'name'   => $usuario->name,
+            'email'  => $usuario->email,
+            'estado' => $estado
+        ];
+        dispatch(new SendRequestEmailJob($details));
 
-            // $details = [
-            //     'name' => $usuario->name,
-            //     'email' => $usuario->email,
-            //     // 'estado' => $estado
-            // ];
-            // dispatch(new SendWelcomeEmailJob($details));
+        // $details = [
+        //     'name' => $usuario->name,
+        //     'email' => $usuario->email,
+        //     // 'estado' => $estado
+        // ];
+        // dispatch(new SendWelcomeEmailJob($details));
 
-            // SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
+        // SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
 
-         return redirect('usuarios');
+        return redirect('usuarios');
     }
 
 
@@ -221,22 +214,22 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email,' . $id,
             'password' => 'same:confirm-password',
-            'roles' => 'required'
+            'roles'    => 'required'
         ]);
 
         $input = $request->all();
-        if(!empty($input['password'])){
+        if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));
+        } else {
+            $input = Arr::except($input, array('password'));
         }
 
         $user = User::find($id);
         $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $user->assignRole($request->input('roles'));
 
@@ -258,15 +251,15 @@ class UsuarioController extends Controller
 
     public function cambiarEstado($idUsuario)
     {
-        User::where('id',$idUsuario)->update(['estado' => 2]);
+        User::where('id', $idUsuario)->update(['estado' => 2]);
         return response()->json('The post successfully updated');
 
         // $post = Post::find($id);
         // $post->update($request->all());
 
     }
-    public function checkout($cedula) {
+    public function checkout($cedula)
+    {
         // dd($cedula);
     }
-
 }

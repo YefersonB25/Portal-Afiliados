@@ -8,9 +8,8 @@ class RequestNit
 {
     public static function getNit($document)
     {
-        $identif = Crypt::decryptString($document);
 
-        if (!is_numeric($identif)) {
+        if (!is_numeric($document)) {
             return false;
         }
         $arr = array(
@@ -19,11 +18,11 @@ class RequestNit
         );
         $x = 0;
         $y = 0;
-        $z = strlen($identif);
+        $z = strlen($document);
         $dv = '';
 
         for ($i = 0; $i < $z; $i++) {
-            $y = substr($identif, $i, 1);
+            $y = substr($document, $i, 1);
             $x += ($y * $arr[$z - $i]);
         }
 
@@ -31,10 +30,10 @@ class RequestNit
 
         if ($y > 1) {
             $dv = 11 - $y;
-            $identificacion = $identif . "-" . $dv;
+            $identificacion = $document . "-" . $dv;
         } else {
             $dv = $y;
-            $identificacion = $identif . "-" . $dv;
+            $identificacion = $document . "-" . $dv;
         }
         return $identificacion;
     }

@@ -38,7 +38,6 @@ Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('aut
     Route::delete('eliminar/{idUsuario?}', 'destroy', 'can:/usuario.index')->name('usuario.eliminar');
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
     Route::post('filtros', 'filtros')->name('user.filtros');
-
 });
 
 Route::get('forgot-password', [AuthController::class, 'email'])->name('forgot-password');
@@ -55,6 +54,8 @@ Route::prefix('profile')->controller(PerfilController::class)->middleware('auth'
 Route::prefix('consultaOTM')->controller(ConsultarAfiliadoController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index')->name('consultar');
     Route::get('afiliado/{number_id}/{document_type}', 'consultaOTM')->name('consultar.afiliado');
+    // Route::get('otm/request/status/{id}/{token}/{action}', [ActionRequestController::class, 'indexAction'])->name('request.status');
+
 });
 
 //? Consultar code

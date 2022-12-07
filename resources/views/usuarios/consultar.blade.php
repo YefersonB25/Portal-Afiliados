@@ -20,7 +20,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="border-bottom-0">/</th>
-                                                        <th class="border-bottom-0">SISTEMA</th>
+                                                        <th class="border-bottom-0">PORTAL</th>
                                                         <th class="border-bottom-0">OTM</th>
                                                         <th class="border-bottom-0">ERP</th>
                                                     </tr>
@@ -28,10 +28,9 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>CEDULA</td>
-                                                        <td>{{$arrayResultLocal['identificacion']}}</td>
+                                                        <td>{{$arrayResultLocal['document_type']}}</td>
                                                         <td>{{$arrayResultOtm['locationXid']}}</td>
                                                         <td>{{$arrayResultErp['TaxpayerId']}}</td>
-
                                                     </tr>
                                                     <tr>
                                                         <td>NOMBRE</td>
@@ -49,7 +48,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>TELEFONO</td>
-                                                        <td>{{$arrayResultLocal['telefono']}}</td>
+                                                        <td>{{$arrayResultLocal['phone']}}</td>
                                                         <td>{{$arrayResultOtm['phone']}}</td>
                                                         <td>{{$arrayResultErp['phone']}}</td>
 
