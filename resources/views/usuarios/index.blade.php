@@ -132,12 +132,8 @@
                                                         {{$usuario->estado}}
                                                     </td>
                                                     <td>
-                                                        @php
-                                                        $number_id     = Crypt::encryptString($usuario->number_id);
-                                                        $document_type = Crypt::encryptString($usuario->document_type);
-                                                        @endphp
                                                         @if ($usuario->estado != 'Asociado')
-                                                        <a href="{{ route('consultar.afiliado',[$number_id,$document_type]) }}"
+                                                        <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
                                                             class="btn btn-info openBtn" id="consultaOTM">
                                                             <i class="fa fa-weibo" aria-hidden="true"></i>
                                                         </a>

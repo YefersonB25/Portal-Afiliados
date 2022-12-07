@@ -340,16 +340,14 @@ class ConsultarAfiliadoController extends Controller
     }
 
     #[QueryParam("Developing", "null")]
-    public function consultaOTM($number_id, $document_type)
+    public function consultaOTM($id)
     {
         try {
-            $number_id     = Crypt::decryptString($number_id);
-            $document_type = Crypt::decryptString($document_type);
-            $document      = ($document_type == "NIT") ? RequestNit::getNit($number_id) : $number_id;
+            $userData = User::find($id);
+            $document = ($userData->document_type == "NIT") ? RequestNit::getNit($userData->number_id) : $userData->number_id;
 
-            $userData         = User::where('number_id', $number_id)->first();
             $arrayResultLocal = [
-                'document_type' => $userData->number_id,
+                'document_type' => $document,
                 'name'          => $userData->name,
                 'email'         => $userData->email,
                 'phone'         => $userData->phone,
@@ -360,7 +358,7 @@ class ConsultarAfiliadoController extends Controller
                 'limit'   => '1',
                 'expand'  => 'contacts',
                 'showPks' => 'true',
-                'fields'  => 'locationXid,locationName,isActive,contacts'           
+                'fields'  => 'locationXid,locationName,isActive,contacts'
             ];
 
             $response = OracleRestOtm::getLocationsCustomers($document, $params);
@@ -389,7 +387,7 @@ class ConsultarAfiliadoController extends Controller
             }
 
             $paramsErp = [
-                'q'        => "(TaxpayerId = '{$number_id}')",
+                'q'        => "(TaxpayerId = '{$document}')",
                 'limit'    => '200',
                 'fields'   => 'TaxpayerId,Supplier,SupplierNumber;addresses:Email,PhoneNumber,Status',
                 'onlyData' => 'true'
