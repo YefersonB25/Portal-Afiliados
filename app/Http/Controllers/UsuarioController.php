@@ -168,7 +168,7 @@ class UsuarioController extends Controller
             'email'  => $usuario->email,
             'status' => $estado
         ];
-        dispatch(new SendRequestEmailJob($details));
+        // dispatch(new SendRequestEmailJob($details));
 
         // $details = [
         //     'name' => $usuario->name,

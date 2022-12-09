@@ -77,7 +77,8 @@ class SeederSuperSu extends Seeder
         $status = [
             1 => 'NUEVO',
             2 => 'CONFIRMADO',
-            3 => 'RECHAZADO'
+            3 => 'RECHAZADO',
+            4 => 'ASOCIADO'
         ];
         $document = [
             1 => 'CC',

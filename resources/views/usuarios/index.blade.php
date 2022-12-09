@@ -119,7 +119,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                @if ($usuario->estado != 'ASOCIADO')
+                                                @if ($usuario->status != 'ASOCIADO')
                                                 <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
                                                     class="btn btn-info openBtn" id="consultaOTM">
                                                     <i class="fa fa-weibo" aria-hidden="true"></i>
@@ -128,7 +128,7 @@
                                                     href="{{ route('consultar.afiliado',[$number_id,$document_type]) }}">aprobar</a>
                                                 --}}
                                                 @endif
-                                                @if ($usuario->estado == 'NUEVO')
+                                                @if ($usuario->status == 'NUEVO')
                                                 <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'aprobado']) }}"
                                                     class="btn btn-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -147,7 +147,7 @@
                                                     </svg>
                                                 </a>
                                                 @endif
-                                                @if ($usuario->estado == 'ASOCIADO')
+                                                @if ($usuario->status == 'ASOCIADO')
                                                 <a href="" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModalProveedor" data-bs-whatever="@mdo"
                                                     class="btn btn-primary proveedor"><svg

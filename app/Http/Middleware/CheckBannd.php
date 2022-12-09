@@ -18,7 +18,7 @@ class CheckBannd
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && (auth()->user()->estado == 1)) {
+        if (auth()->check() && (auth()->user()->status == 'NUEVO')) {
 
             $request->session()->invalidate();
 
