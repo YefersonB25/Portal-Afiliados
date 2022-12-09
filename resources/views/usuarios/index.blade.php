@@ -5,7 +5,7 @@
 <body class="ltr app sidebar-mini light-mode">
     <div class="app-content main-content mt-0">
         <div class="side-app">
-            <div class="card">
+            {{-- <div class="card">
                 <div class="card-header border-bottom">
                     <div class="row g-2">
                         <h3 class="card-title">Fitros</h3>
@@ -17,9 +17,9 @@
                                     <select type="text" name="estado" id="estado" class="form-select" tabindex="3"
                                         value="{{ old('estado') }}" autofocus onInput="validarInput()">
                                         <option selected>Todos</option>
-                                        {{-- @foreach ($estados as $estado)
+                                        @foreach ($estados as $estado)
                                         <option value="{{$estado->id}}">{{$estado->descripcion}}</option>
-                                        @endforeach --}}
+                                        @endforeach
                                     </select>
                                     <div class="invalid-feedback">
                                         {{ $errors->first('estado') }}
@@ -30,7 +30,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="row row-sm">
                 <div class="col-lg-12">
@@ -42,8 +42,8 @@
 
                         <div class="card-body">
                             <div class="table-responsive export-table">
-                                <table id="file-datatable"
-                                    class="table table-bordered text-nowrap key-buttons border-bottom w-100 tt">
+                                <table id=""
+                                    class="table table-bordered text-nowrap key-buttons border-bottom w-100 ">
                                     <thead>
                                         <tr>
                                             <th class="border-bottom-0">Parentesco</th>
@@ -119,16 +119,13 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                @if ($usuario->estado != 'ASOCIADO')
+                                                @if ($usuario->status != 'ASOCIADO')
                                                 <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
                                                     class="btn btn-info openBtn" id="consultaOTM">
                                                     <i class="fa fa-weibo" aria-hidden="true"></i>
                                                 </a>
-                                                {{-- <a class="btn btn-primary"
-                                                    href="{{ route('consultar.afiliado',[$number_id,$document_type]) }}">aprobar</a>
-                                                --}}
                                                 @endif
-                                                @if ($usuario->estado == 'NUEVO')
+                                                @if ($usuario->status == 'NUEVO')
                                                 <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'aprobado']) }}"
                                                     class="btn btn-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -137,7 +134,6 @@
                                                             d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
                                                     </svg>
                                                 </a>
-
                                                 <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'rechazado']) }}"
                                                     class="btn btn-danger">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -147,8 +143,8 @@
                                                     </svg>
                                                 </a>
                                                 @endif
-                                                @if ($usuario->estado == 'ASOCIADO')
-                                                <a href="" data-bs-toggle="modal"
+                                                @if ($usuario->status == 'ASOCIADO')
+                                                <a href="#" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModalProveedor" data-bs-whatever="@mdo"
                                                     class="btn btn-primary proveedor"><svg
                                                         style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -165,8 +161,8 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                    {{ $usuarios->links() }}
                                 </table>
+                                {{ $usuarios->links() }}
                             </div>
                         </div>
                         <!-- Modal imagen -->

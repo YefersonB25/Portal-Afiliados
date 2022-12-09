@@ -35,7 +35,7 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $usuarios = User::orderBy('status')->paginate(20);
         return view('usuarios.index', ['usuarios' => $usuarios]);
