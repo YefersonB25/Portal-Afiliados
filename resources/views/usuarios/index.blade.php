@@ -5,41 +5,10 @@
 <body class="ltr app sidebar-mini light-mode">
     <div class="app-content main-content mt-0">
         <div class="side-app">
-            <div class="card">
-                <div class="card-header border-bottom">
-                    <div class="row g-2">
-                        <h3 class="card-title">Fitros</h3>
-                        <form class="form-horizontal" method="post" action="{{route('user.filtros')}}" novalidate>
-                            @csrf
-                            <div class="row mb-2">
-                                <div class="col-md">
-                                    <label for="estado" class="form-label">Filtrar por estado</label>
-                                    <select type="text" name="estado" id="estado" class="form-select" tabindex="3"
-                                        value="{{ old('estado') }}" autofocus onInput="validarInput()">
-                                        <option selected>Todos</option>
-                                        {{-- @foreach ($estados as $estado)
-                                        <option value="{{$estado->id}}">{{$estado->descripcion}}</option>
-                                        @endforeach --}}
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('estado') }}
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary" id="btnPrEditSave">Filtrar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
+            <!-- ROW OPEN -->
             <div class="row row-sm">
                 <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header border-bottom">
-                            <h3 class="card-title">Tabla de solicitudes</h3>
-                            {{-- <a class="btn btn-warning" href="{{ route('usuarios.create') }}">Nuevo</a> --}}
-                        </div>
-
+                    <div class="card custom-card">
                         <div class="card-body">
                             <div class="table-responsive export-table">
                                 <table id="file-datatable"
@@ -119,7 +88,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                @if ($usuario->status != 'ASOCIADO')
+                                                @if ($usuario->estado != 'ASOCIADO')
                                                 <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
                                                     class="btn btn-info openBtn" id="consultaOTM">
                                                     <i class="fa fa-weibo" aria-hidden="true"></i>
@@ -128,7 +97,7 @@
                                                     href="{{ route('consultar.afiliado',[$number_id,$document_type]) }}">aprobar</a>
                                                 --}}
                                                 @endif
-                                                @if ($usuario->status == 'NUEVO')
+                                                @if ($usuario->estado == 'NUEVO')
                                                 <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'aprobado']) }}"
                                                     class="btn btn-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -147,7 +116,7 @@
                                                     </svg>
                                                 </a>
                                                 @endif
-                                                @if ($usuario->status == 'ASOCIADO')
+                                                @if ($usuario->estado == 'ASOCIADO')
                                                 <a href="" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModalProveedor" data-bs-whatever="@mdo"
                                                     class="btn btn-primary proveedor"><svg
@@ -169,74 +138,69 @@
                                 </table>
                             </div>
                         </div>
-                        <!-- Modal imagen -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Foto Perfil</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <embed id="foto" src="" width="100%" height="100%">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ROW CLOSED -->
+            <!-- Modal imagen -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Foto Perfil</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-
-                        <!-- Modal pdf -->
-                        <div class="modal fade" id="exampleModalPdf" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Copia de documento
-                                        </h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <embed id="pdfdoc" src="" type="application/pdf" width="100%" height="500"
-                                            alt="pdf"
-                                            pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="modal-body">
+                            <embed id="foto" src="" width="100%" height="100%">
                         </div>
-
-                        <!-- modal-content proveedoer -->
-                        <div class="modal fade" id="exampleModalProveedor" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Proveedor Acargo</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body" id="dataProveedor">
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Modal pdf -->
+            <div class="modal fade" id="exampleModalPdf" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Copia de documento
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <embed id="pdfdoc" src="" type="application/pdf" width="100%" height="500" alt="pdf"
+                                pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- modal-content proveedoer -->
+            <div class="modal fade" id="exampleModalProveedor" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Proveedor Acargo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="dataProveedor">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </body>

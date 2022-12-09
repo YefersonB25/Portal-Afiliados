@@ -80,4 +80,21 @@ class User extends Authenticatable
         ];
         return $map[$status] ?? '';
     }
+
+    public function otherColors($id)
+    {
+        $map = [
+            1  => 'red',
+            2  => 'blue',
+            3  => 'teal',
+            4  => 'azure',
+            5  => 'cyan',
+            6  => 'indigo',
+            7  => 'lime',
+            8  => 'gray',
+            9  => 'pink',
+            10 => 'purlple',
+        ];
+        return $map[$id] ?? '';
+    }
 }
