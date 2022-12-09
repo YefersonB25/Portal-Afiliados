@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function index()
     {
         $request_status = DB::table('users')->where('deleted_at', null)->select('status', DB::Raw('count(status) AS count'))->groupBy('users.status')->get();
-
+        // dd($request_status);
         return view('home', [
             'request_status' => $request_status,
         ]);
