@@ -37,7 +37,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = User::orderBy('status')->paginate(20);
+        $usuarios = User::orderBy('updated_at', 'desc')->paginate(20);
         return view('usuarios.index', ['usuarios' => $usuarios]);
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
@@ -168,7 +168,7 @@ class UsuarioController extends Controller
             'email'  => $usuario->email,
             'status' => $estado
         ];
-        dispatch(new SendRequestEmailJob($details));
+        // dispatch(new SendRequestEmailJob($details));
 
         // $details = [
         //     'name' => $usuario->name,
@@ -187,6 +187,7 @@ class UsuarioController extends Controller
         $this->validate($request, [
             'name'     => 'required',
             'email'    => 'required|email|unique:users,email,' . $id,
+            'phone'    => 'required|numeric',
             'password' => 'same:confirm-password',
             'roles'    => 'required'
         ]);

@@ -61,6 +61,13 @@ Route::group(['middleware' => ['auth'], 'can:/profile'], function () {
     Route::resource('roles', RolController::class);
 });
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('portal/roles', RolController::class);
+    Route::resource('portal/usuarios', UsuarioController::class);
+});
+
+
+
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function () use ($router) {
     $router->get('logs', 'LogViewerController@index');
 });

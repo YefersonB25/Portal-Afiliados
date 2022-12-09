@@ -44,7 +44,8 @@ class PerfilController extends Controller
                 'users.photo',
                 'users.photo_id',
                 'users.status',
-                'users.deleted_at',
+                'users.deleted_at as delete',
+                'relationship.deleted_at',
             )->get();
         return view('profile.profile', [
             'user_relation' => $user_relation,
