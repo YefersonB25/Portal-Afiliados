@@ -6,8 +6,10 @@ use App\Http\Helpers\OracleRestErp;
 use Illuminate\Http\Request;
 
 use App\Models\Blog;
+use App\Models\Relationship;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FacturaController extends Controller
 {
@@ -26,26 +28,22 @@ class FacturaController extends Controller
     public function index()
     {
 
-        $userParent = Auth::user()->id_parentesco;
-        $user = Auth::user()->id;
+        $user = DB::table('relationship')
+        ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+        ->where('relationship.user_assigne_id',  Auth::user()->id)
+        ->where('relationship.deleted_at', '=', null)
+        ->select('users.number_id')
+        ->first();
 
-        if ($userParent > 0) {
-            $getUserPadre = User::select('identification')->where('id', $userParent)->first();
-            $users = $getUserPadre->identification;
-        } else {
-            $getUserPadre = User::select('identification')->where('id', $user)->first();
-
-            $users = $getUserPadre->identification;
-        }
-
-        $users = $getUserPadre->identification;
+        $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
 
         $params = [
-            'q'        => "(TaxpayerId = '{$users}')",
+            'q'        => "(TaxpayerId = '{$number_id}')",
             'limit'    => '200',
             'fields'   => 'SupplierNumber',
             'onlyData' => 'true'
         ];
+
         $response = OracleRestErp::procurementGetSuppliers($params);
 
         $res = $response->json();

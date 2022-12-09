@@ -59,8 +59,8 @@ class ConsultarAfiliadoController extends Controller
         }
 
         try {
-            // $users = Auth::user()->identification;
-            $users = $request->identification;
+            // $users = Auth::user()->number_id;
+            $users = $request->number_id;
 
             $params = [
                 'q'        => "(TaxpayerId = '{$users}')",
@@ -179,8 +179,8 @@ class ConsultarAfiliadoController extends Controller
         try {
             $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
 
-            // return response()->json(['success' => true, 'data' => $params]);
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
+            return response()->json(['success' => true, 'data' => $invoice->body()]);
 
             //? Validamos que nos traiga las facturas
             if ($invoice['count'] == 0) {
