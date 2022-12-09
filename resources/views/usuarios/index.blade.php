@@ -147,7 +147,7 @@
                                                     </svg>
                                                 </a>
                                                 @endif
-                                                @if ($usuario->estado == 'Asociado')
+                                                @if ($usuario->estado == 'ASOCIADO')
                                                 <a href="" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModalProveedor" data-bs-whatever="@mdo"
                                                     class="btn btn-primary proveedor"><svg

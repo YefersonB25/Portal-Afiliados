@@ -54,12 +54,12 @@ class AuthController extends Controller
             $seleccion_nit = $request->seleccion_nit;
         }
         $usuario = User::create([
-            'name'                  => $request->name,
-            'email'                 => $request->email,
-            'identification'        => $request->identificacion,
-            'seleccion_nit'         => $seleccion_nit,
-            'telefono'              => $request->telefono,
-            'password'              => Hash::make($request->password),
+            'name'           => $request->name,
+            'email'          => $request->email,
+            'identification' => $request->identificacion,
+            'seleccion_nit'  => $seleccion_nit,
+            'telefono'       => $request->telefono,
+            'password'       => Hash::make($request->password),
         ]);
 
         //? le asignamos el rol
