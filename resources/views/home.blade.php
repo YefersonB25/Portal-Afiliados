@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         @endcan
-                        @can('/blog')
+                        @can('/facturas')
                         <div id="global-loader2">
                             <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
                         </div>
@@ -195,7 +195,6 @@
             url: "{{ route('supplier.number') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
-                id_parentesco: "{{ Auth::user()->id_parentesco}}",
                 id: "{{ Auth::user()->id}}"},
             success: function(response) {
                 let data = response.data;
@@ -212,18 +211,19 @@
                         data: {
                             "_token": "{{ csrf_token() }}",
                             SupplierNumber:data,
-                            PaidStatus: ['Partially paid', 'Unpaid', 'Paid'],
+                            PaidStatus: ['Parcialmente pagado', 'Impagado', 'Pagadas'],
                             FlagStatus: 'false'
                         },
 
                         success: function(response) {
                             let datos = response.data;
                             if (response.success == true) {
+                                console.log(datos);
                                 let dollarUSLocale = Intl.NumberFormat('en-US');
-                                let mtPagadas = dollarUSLocale.format(datos[2]['Paid']);
-                                let mtPorPagar = dollarUSLocale.format(datos[1]['Unpaid']);
-                                let mtPagadasConNovedad = dollarUSLocale.format(datos[0]['Partially paid']);
-                                let totalFt = datos[0]['count Partially paid'] + datos[1]['count Unpaid'] + datos[2]['count Paid'];
+                                let mtPagadas = dollarUSLocale.format(datos[2]['Pagadas']);
+                                let mtPorPagar = dollarUSLocale.format(datos[1]['Impagado']);
+                                let mtPagadasConNovedad = dollarUSLocale.format(datos[0]['Parcialmente pagado']);
+                                let totalFt = datos[0]['Parcialmente pagado'] + datos[1]['count Impagado'] + datos[2]['count Pagadas'];
 
                                 plantillaMtPagadas =
                                 `

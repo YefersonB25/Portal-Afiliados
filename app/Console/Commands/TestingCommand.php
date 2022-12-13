@@ -26,7 +26,7 @@ class TestingCommand extends Command
      * @var string
      */
     protected $description = 'Status: PaidStatus.
-                                -Paid           = Pagada,
+                                -Paid           = Pagadas,
                                 -Unpaid         = Sin pagar (por pagar),
                                 -Partially paid = parsialmente pagada (con novedades)
                             CanceledFlag: Cancelacion.

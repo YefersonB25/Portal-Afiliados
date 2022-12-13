@@ -2,14 +2,6 @@
 @section('title')
      Login
 @endsection
-{{-- @if(session("mensaje"))
-    <div class="notification">
-        {{session('mensaje')}}
-    </div>
-@endif --}}
-{{-- @php
- dd ($_SERVER['SERVER_NAME']);
-@endphp --}}
 @section('content')
     <body class="ltr logo_img">
         <!-- CONTAINER OPEN -->
@@ -26,11 +18,6 @@
                     </span>
                     <form method="POST" class="login100-form validate-form" action="{{ route('login') }}">
                         @csrf
-                           {{-- @if (session('error'))
-                                <div  class="alert alert-danger p-0">
-                                    {{ session('error') }}
-                                </div>
-                            @endif --}}
                         <div class="wrap-input100 validate-input">
                             <input aria-describedby="emailHelpBlock" id="email" type="email"
                                     class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} input100" name="email"
@@ -71,9 +58,6 @@
                             @if (Route::has('register'))
                                 <p class="text-dark mb-0">Ya tienes una cuenta?<a href="{{ route('register') }}" class="text-primary ms-1">@lang('locale.Create an Account')</a></p>
                             @endif
-                            {{-- @if (Route::has('register'))
-                            <a class="float-right" href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Registerse</a>
-                            @endif --}}
                         </div>
                     </form>
                 </div>

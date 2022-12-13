@@ -15,7 +15,7 @@ class FacturaController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:/blog')->only('index');
+        $this->middleware('permission:/facturas')->only('index');
         //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
         //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);

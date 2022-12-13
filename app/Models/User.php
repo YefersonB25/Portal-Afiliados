@@ -64,12 +64,6 @@ class User extends Authenticatable
         return [];
     }
 
-
-    public function estadoname()
-    {
-        return $this->belongsTo(estado::class, 'status', 'id');
-    }
-
     public function badges($status)
     {
         $map = [

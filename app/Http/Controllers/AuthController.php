@@ -194,7 +194,7 @@ class AuthController extends Controller
                         ->first();
 
 
-            if ($response->estado == 2) {
+            if ($response->status == 'CONFIRMADO') {
                 return response()->json([
                     'response' => $response,
                     'acces_token' => auth()->user()->createToken('API Token')->plainTextToken,

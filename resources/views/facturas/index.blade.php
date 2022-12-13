@@ -36,18 +36,18 @@
                                                                         <label for="tipoFactura" class="form-label">tipo de factura</label>
                                                                         <select type="text" name="tipoFactura" id="tipoFactura" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
                                                                             <option selected value="">Todos</option>
-                                                                            <option value="Prepayment">Anticipo</option>
-                                                                            <option value="Standard">Estandar</option>
-                                                                            <option value="Credit memo">Nota Credito</option>
+                                                                            <option value="Pago por adelantado">Anticipo</option>
+                                                                            <option value="Estándar">Estandar</option>
+                                                                            <option value="Nota de crédito">Nota Credito</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md">
                                                                         <label for="ValidationStatus" class="form-label">Estado</label>
                                                                         <select type="text" name="ValidationStatus" id="ValidationStatus" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
                                                                             <option selected value="">Todos</option>
-                                                                            <option value="Canceled">Cancelada</option>
-                                                                            <option value="Validated">Validada</option>
-                                                                            <option value="Needs revalidation">Necesita revalidación</option>
+                                                                            <option value="Cancelada">Cancelada</option>
+                                                                            <option value="Validada">Validada</option>
+                                                                            <option value="Necesita revalidación">Necesita revalidación</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md">
@@ -453,19 +453,52 @@
                 {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
                 // {title: "ID Factura", data: "InvoiceId" },
                 {title: "Numero Factura", data: "InvoiceNumber" },
-                {title: "Fecha Factura",  data: "InvoiceDate" },
-                {title: "Descripción", data: "Description" },
-                {title: "Monto a Pagar",
+                // {title: "Fecha Factura",  data: "InvoiceDate" },
+                // {title: "Descripción", data: "Description" },
+                {title: "Saldo",
                     data: function ( d ) {
-                        return JSON.stringify( d.invoiceInstallments[0]["UnpaidAmount"] );}
+
+                        const formatterDolar = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })
+
+                        return formatterDolar.format( d.invoiceInstallments[0]["UnpaidAmount"] );
+                    }
                 },
                 // {title: "ValidationStatus", data: "ValidationStatus"},
-                {title: "Valor Factura", data: "InvoiceAmount" },
-                {title: "Monto Pagado", data: "AmountPaid" },
-                {title: "Cuenta bancaria",
+                {title: "Valor Factura",
                     data: function ( d ) {
-                        return d.invoiceInstallments[0]["BankAccount"]}
+
+                        const formatterDolar = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })
+
+                        return formatterDolar.format(d.InvoiceAmount);
+                    }
                 },
+                {title: "Monto Pagado",
+                    data: function ( d ) {
+                        const formatterDolar = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })
+
+                        return formatterDolar.format(d.AmountPaid);
+
+                    }
+                },
+                // {title: "Cuenta bancaria",
+                //     data: function ( d ) {
+                //         return d.invoiceInstallments[0]["BankAccount"]}
+                // },
                 {title: "Fecha Vencimiento",
                     data: function ( d ) {
 
@@ -485,16 +518,16 @@
                         var date2 = new Date (`${year}-${month}-${day}`);
                         var dateDefined = date1 - date2;
                         var dias =  dateDefined/(1000*60*60*24);
-                        if ( dias < 0 && d.PaidStatus != 'Paid') {
+                        if ( dias < 0 && d.PaidStatus != 'Pagadas') {
                             return 'dentro de la programacion de pago';
                         }
-                        if(d.PaidStatus == 'Paid'){
+                        if(d.PaidStatus == 'Pagadas'){
                             return 'Pagada';
                         }
                         return ('El pago se le generara dentro de ' + dias + ' Dias');
                     }
                 },
-                {title: "Tipo de Factura", data: "InvoiceType" },
+                // {title: "Tipo de Factura", data: "InvoiceType" },
                 // {title: "Pago realizado", data: "AccountingDate" }
 
 
@@ -508,7 +541,7 @@
                 { responsivePriority: 1, targets: 3 },
                 { responsivePriority: 1, targets: 4 },
                 { responsivePriority: 1, targets: 5 },
-                { responsivePriority: 1, targets: 6 },
+                // { responsivePriority: 1, targets: 6 },
             ],
 
         });
@@ -529,7 +562,7 @@
                 let datos =  response.data;
                 // var invoiceInstallments = datos[0].invoiceInstallments;
                 if (response.success == true) {
-                    console.log(datos);
+                    // console.log(datos);
                     tblColectionData.clear().draw();
                     tblColectionData.rows.add(datos).draw();
 
@@ -738,7 +771,7 @@
     $('#pagadas').on('click', function(e){
         e.preventDefault();
         Loader();
-        LoadData("Paid", "false", "#TablePagadas","Standard","","#oculto-pagadas","","");
+        LoadData("Pagadas", "false", "#TablePagadas","Estándar","","#oculto-pagadas","","");
         obtener_data("#TablePagadas tbody", tblColectionData);
 
     });
@@ -746,14 +779,14 @@
     $("#por-pagar").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("Unpaid", "false", "#TablePorPagar","","","#oculto-por-pagar","","");
+        LoadData("Impagado", "false", "#TablePorPagar","","","#oculto-por-pagar","","");
         obtener_data("#TablePorPagar tbody", tblColectionData);
     });
 
     $("#pagadas-con-novedad").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("Partially paid", "true", "#TablePagadasNovedad","","","#oculto-pagadas-con-novedad","","");
+        LoadData("parsialmente pagada", "true", "#TablePagadasNovedad","","","#oculto-pagadas-con-novedad","","");
         obtener_data("#TablePagadasNovedad tbody", tblColectionData);
 
     });
@@ -761,14 +794,14 @@
     $("#descuentos").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("Paid", "false", "#TableDescuento","Credit memo","","#oculto-descuentos","","");
+        LoadData("Pagadas", "false", "#TableDescuento","Nota de crédito","","#oculto-descuentos","","");
         obtener_data("#TableDescuento tbody", tblColectionData);
     });
 
     $("#descuentos-pendientes").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("Unpaid", "true", "#TableDescuentoPendiente","Credit memo","","#oculto-descuentos-pendientes","","");
+        LoadData("Impagado", "true", "#TableDescuentoPendiente","Nota de crédito","","#oculto-descuentos-pendientes","","");
         obtener_data("#TableDescuentoPendiente tbody", tblColectionData);
     });
 
@@ -784,7 +817,7 @@
     $("#facturas-all").click(function(e) {
         e.preventDefault();
         Loader();
-        LoadData("", "false", "#TablaFacturasAll","","");
+        LoadData("", "false", "#TablaFacturasAll","","","","","");
         obtener_data("#TablaFacturasAll tbody", tblColectionData);
 
         if( $("#FacturasGenerales").css("display") == 'none' )
@@ -903,19 +936,16 @@
                                 <div class="float-left">
                                     <h6><b>@lang('locale.Invoice Type') :</b>
                                         ${
-                                            invoice.InvoiceType = "Prepayment" ? 'Anticipo' :
-                                            invoice.InvoiceType = "Standard" ? 'Estandar' : 'Nota Credito'
+                                            invoice.InvoiceType
                                         }
                                     </h6>
                                     <h6 class="mb-0"><b>@lang('locale.Payment status') : </b>
-                                        ${  invoice.PaidStatus = "Paid" ? 'Pagadas' :
-                                            invoice.PaidStatus = "Unpaid" ? 'No pagadas': 'Parcialmente pagadas'
+                                        ${  invoice.PaidStatus
                                         }
                                     </h6>
                                     <h6><b>@lang('locale.Validation Status') :</b>
                                         ${
-                                            invoice.ValidationStatus = "Canceled" ? 'Cancelada' :
-                                            invoice.ValidationStatus = "Validated" ? 'Validada' : 'Necesita revalidación'
+                                            invoice.ValidationStatus
                                         }
                                     </h6>
                                 </div>

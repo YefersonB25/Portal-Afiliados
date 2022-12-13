@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Knuckles\Scribe\Attributes\QueryParam;
 use PhpParser\Node\Stmt\TryCatch;
@@ -52,18 +53,25 @@ class ConsultarAfiliadoController extends Controller
     #[QueryParam("InvoiceType", "It is to consult the invoices by type of invoice.", "string", required: false)]
     public function suppliers(Request $request)
     {
+        return response()->json(['success' => true, 'data' => 'hola']);
         $statusErpOtm = "Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.";
 
         if (!$request->only('PaidStatus')) {
             return response()->json(['message' => 'Parametro no reconocido'], 401);
         }
-
         try {
-            // $users = Auth::user()->number_id;
-            $users = $request->number_id;
+
+            $user = DB::table('relationship')
+            ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+            ->where('relationship.user_assigne_id',  Auth::user()->id)
+            ->where('relationship.deleted_at', '=', null)
+            ->select('users.number_id')
+            ->first();
+
+            $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
 
             $params = [
-                'q'        => "(TaxpayerId = '{$users}')",
+                'q'        => "(TaxpayerId = '{$number_id}')",
                 'limit'    => '200',
                 'fields'   => 'SupplierNumber',
                 'onlyData' => 'true'
@@ -178,9 +186,10 @@ class ConsultarAfiliadoController extends Controller
 
         try {
             $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+            // return response()->json(['success' => true, 'data' => $params['q']]);
 
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
-            return response()->json(['success' => true, 'data' => $invoice->body()]);
+            // return response()->json(['success' => true, 'data' => $invoice->body()]);
 
             //? Validamos que nos traiga las facturas
             if ($invoice['count'] == 0) {
@@ -257,17 +266,17 @@ class ConsultarAfiliadoController extends Controller
     public function getSupplierNumber(Request $request)
     {
         try {
+            $user = DB::table('relationship')
+            ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+            ->where('relationship.user_assigne_id',  Auth::user()->id)
+            ->where('relationship.deleted_at', '=', null)
+            ->select('users.number_id')
+            ->first();
 
-            if ($request->id_parentesco > 0) {
-                $getUserPadre = User::select('identification')->where('id', $request->id_parentesco)->first();
-                $users = $getUserPadre->identification;
-            } else {
-                $getUserPadre = User::select('identification')->where('id', $request->id)->first();
-                $users = $getUserPadre->identification;
-            }
+            $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
 
             $params = [
-                'q'        => "(TaxpayerId = '{$users}')",
+                'q'        => "(TaxpayerId = '{$number_id}')",
                 'limit'    => '200',
                 'fields'   => 'SupplierNumber',
                 'onlyData' => 'true'
@@ -431,8 +440,15 @@ class ConsultarAfiliadoController extends Controller
     public function proveedorEncargado(Request $request)
     {
         if ($request->userId != '') {
-            $usuario = User::find($request->userId);
-            return response()->json(['success' => true, 'data' => $usuario]);
+
+            $user = DB::table('relationship')
+            ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+            ->where('relationship.user_assigne_id',  $request->userId)
+            ->where('relationship.deleted_at', '=', null)
+            ->select('users.*')
+            ->first();
+
+            return response()->json(['success' => true, 'data' => $user]);
         }
         return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
     }
