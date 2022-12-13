@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('email', 190)->unique();
             $table->foreignId('parent_id', 20)->nullable();
             $table->enum('document_type', ['NIT', 'Cedula de Ciudadania'])->nullable();
-            $table->string('number_id', 20);
+            $table->string('number_id', 20)->unique();
             $table->string('name', 190);
             $table->string('phone', 11)->nullable();
             $table->string('photo', 500)->nullable();

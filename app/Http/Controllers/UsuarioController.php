@@ -58,19 +58,22 @@ class UsuarioController extends Controller
         $request->validate([
             'name'           => 'required',
             'email'          => 'required', 'string', 'email', 'max:255', 'unique:users', 'indisposable',
-            'identification' => 'required',
+            'identification' => 'required', 'numeric', 'unique:users',
+            'telefono '      => 'required', 'numeric',
             'password'       => 'required', 'min:8',
+
         ]);
         $user_relation = DB::table('relationship')->where('user_id', Auth::user()->id)->count();
         if ($user_relation <= 3) {
+
             //?Capturamos la extencion de los archivos
             if (!empty($request->photo)) {
                 $extensionPerfil = $request->photo->getClientOriginalExtension();
             }
+
             //?Capturamos el id del user registrdo
             DB::transaction(function () use ($request) {
                 $user = User::create([
-                    // 'id_parentesco' => Auth::user()->id,
                     'name'      => $request->name,
                     'email'     => $request->email,
                     'number_id' => $request->identification,
@@ -84,19 +87,6 @@ class UsuarioController extends Controller
                 ]);
                 //? le asignamos el rol
                 $user->roles()->sync(3);
-                //? Guardamos los archivos cargados y capturamos la ruta
-                if (!empty($request->photo)) {
-                    $carpetaphoto = "usuariosAsociados/$user->id/perfil";
-                    // Storage::putFileAs("public/$carpetaphoto", $request->photo, 'photo_perfil.' . $extensionPerfil);
-
-                    //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
-                    // User::where('id', $user->id)
-                    //     ->update([
-                    //         'photo'
-
-                    //         => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    //     ]);
-                }
             });
 
             session()->flash('message');
@@ -206,7 +196,7 @@ class UsuarioController extends Controller
 
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('usuarios.index');
+        return back();
     }
 
     public function destroy(Request $request)
