@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <body class="ltr app sidebar-mini light-mode">
     <div class="app-content main-content mt-0">
         <div class="side-app">
@@ -28,7 +27,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary" id="btnPrEditSave">Filtrar</button>
+                                <button type="submit" class="btn btn-primary">Filtrar</button>
                             </form>
                     </div>
                 </div>
@@ -62,7 +61,7 @@
                                         <td>
                                             <p class="tx-14 font-weight-semibold text-dark mb-1">{{$usuario->name}}
                                             </p>
-                                            <p class="tx-13 text-muted mb-0">{{$usuario->email}}</p>
+                                            <p class="tx-13 text-muted mb-0"><a href="mailto:{{$usuario->email}}">{{$usuario->email}} </a></p>
                                         </td>
                                         <td>
                                             <span class="text-muted tx-13">{{$usuario->phone}}</span>
@@ -70,15 +69,14 @@
                                         <td>
                                             <span class="text-muted tx-13">{{$usuario->number_id}}</span>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             @if (!empty($usuario->photo_id))
                                             <span>
                                                 <a href="" data-bs-toggle="modal" data-bs-target="#exampleModalPdf"
                                                     class="aPdf">
                                                     <i src="{{asset(" $usuario->photo_id")}}"></i>
-                                                    <svg style="width:34px;height:34px" viewBox="0 0 24 24">
-                                                        <path fill="currentColor"
-                                                            d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M9.5 11.5C9.5 12.3 8.8 13 8 13H7V15H5.5V9H8C8.8 9 9.5 9.7 9.5 10.5V11.5M14.5 13.5C14.5 14.3 13.8 15 13 15H10.5V9H13C13.8 9 14.5 9.7 14.5 10.5V13.5M18.5 10.5H17V11.5H18.5V13H17V15H15.5V9H18.5V10.5M12 10.5H13V13.5H12V10.5M7 10.5H8V11.5H7V10.5Z" />
+                                                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
                                                     </svg>
                                                 </a>
                                             </span>
@@ -103,14 +101,12 @@
                                             </a>
                                             @switch($usuario->status)
                                             @case('ASOCIADO')
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModalProveedor"
-                                                data-bs-whatever="@mdo" class="btn btn-icon btn-success-light me-2">
+                                            <a data-bs-whatever="@mdo" id="{{$usuario->id}}" class="proveedor btn btn-icon btn-success-light me-2"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-original-title="Consultar Padre">
                                                 <i class="fa fa-users"></i>
                                             </a>
-                                            <a href="#" class="btn btn-icon btn-danger-light me-2"
-                                                data-bs-toggle="tooltip" data-bs-original-title="Borrar">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+
                                             @break
                                             @case('NUEVO')
                                             <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'aprobado']) }}"
@@ -127,12 +123,16 @@
                                             @default
                                             @break
                                             @endswitch
-                                            {!! Form::open(['method' => 'DELETE','route' =>
-                                            ['usuario.eliminar', $usuario->id],'style'=>'display:inline'])
-                                            !!}
-
-                                            {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
-                                            {!! Form::close() !!}
+                                            <a href="{{ route('edit', [$usuario->id]) }}"
+                                                    class="btn btn-icon btn-warning-light me-2" data-bs-toggle="tooltip"
+                                                data-bs-original-title="Editar">
+                                                <i class="fa fa-pencil-square"></i>
+                                            </a>
+                                            <a href="" id="{{$usuario->id}}"
+                                                class="deletedUser btn btn-icon btn-danger-light me-2" data-bs-toggle="tooltip"
+                                                data-bs-original-title="Eliminar">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -296,11 +296,8 @@
 
         $(document).on("click", ".proveedor", function (e) {
             e.preventDefault()
-            if($(this).parents("tr").hasClass('child')){ //vemos si el actual row es child row
-                var idUsu = $(this).parents("tr").prev().find('td:eq(0)').text(); //si es asi, nos regresamos al row anterior, es decir, al padre y obtenemos el id
-            } else {
-                var idUsu = $(this).closest("tr").find('td:eq(0)').text(); //si no lo es, seguimos capturando el id del actual row
-            }
+            let id = this.id
+
             plantillaBody = '';
 
             $.ajax({
@@ -308,7 +305,7 @@
                 url: "{{ route('proveedor.encargado')}}",
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "userId": idUsu
+                    "userId": id
                 },
                 success: function(response) {
                     let data = response.data;
@@ -326,6 +323,8 @@
 
                         `
                         $('#dataProveedor').append(plantillaBody)
+
+                            $('#exampleModalProveedor').modal('show');
                     }
                     if(response.success == false){
                         Swal.fire({

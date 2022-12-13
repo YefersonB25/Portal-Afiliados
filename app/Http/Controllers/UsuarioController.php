@@ -164,7 +164,7 @@ class UsuarioController extends Controller
 
         SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
 
-        return redirect('usuarios');
+        return back();
 
         //? Actualizacion pendiente JOB
         // $details = [
