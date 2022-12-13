@@ -45,31 +45,31 @@ class SeederSuperSu extends Seeder
         // foreach ($permisos as $permiso) {
         //     Permission::create(['name' => $permiso]);
         // }
-        // Estado::create(['descripcion' => 'Nuevo']);
-        // Estado::create(['descripcion' => 'Confirmado']);
-        // Estado::create(['descripcion' => 'Rechazado']);
-        // Estado::create(['descripcion' => 'Asociado']);
 
 
-        $roleAdmin              = Role::create(['name' => 'Administrador']);
-        $rolCliente             = Role::create(['name' => 'Cliente']);
-        $rolClienteHijo         = Role::create(['name' => 'ClienteHijo']);
+        $Admin              = Role::create(['name' => 'Administrador']);
+        $Cliente             = Role::create(['name' => 'Cliente']);
+        $ClienteHijo         = Role::create(['name' => 'ClienteHijo']);
         // $roleAdmin->syncPermissions($permisos);
 
-        Permission::create(['name' => '/usuario.index', 'grupo' => 'proveedores-Usuarios', 'description' => 'Seguimiento Solicitudes'])
+        Permission::create(['name' => '/usuario.index', 'grupo' => 'proveedores-Usuarios', 'description' => 'Seguimiento solicitudes, modificar informacion de usuarios, consultar usuarios en OTM/ERP '])
             ->syncRoles([
-                $roleAdmin,
+                $Admin,
             ]);
-        Permission::create(['name' => '/blog', 'grupo' => 'Informacion-Facturas', 'description' => 'Seguimiento Facturas'])
+        Permission::create(['name' => '/roles', 'grupo' => 'Roles', 'description' => 'Crear, editar, eliminar roles, asignar permisos a roles'])
             ->syncRoles([
-                $rolClienteHijo,
-                $rolCliente,
+                $Admin,
             ]);
-        Permission::create(['name' => '/profile', 'grupo' => 'Informacion-Personal', 'description' => 'informacion'])
+        Permission::create(['name' => '/facturas', 'grupo' => 'Informacion-Facturas', 'description' => 'Consultar/ver seguimiento facturas'])
             ->syncRoles([
-                $rolClienteHijo,
-                $rolCliente,
-                $roleAdmin,
+                $ClienteHijo,
+                $Cliente,
+            ]);
+        Permission::create(['name' => '/profile', 'grupo' => 'Informacion-Personal', 'description' => 'Cunsultar/editar informacion, creacion de usuarios hijos'])
+            ->syncRoles([
+                $ClienteHijo,
+                $Cliente,
+                $Admin,
             ]);
 
 

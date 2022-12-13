@@ -29,13 +29,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 //? Usuarios-Clientes
-Route::prefix('usuarios')->controller(UsuarioController::class)->middleware('auth')->group(function () {
+Route::prefix('portar/users')->controller(UsuarioController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index', 'can:/usuario.index')->name('usuario.index');
     Route::get('config/{id}', 'checkout')->name('check');
+    route::get('edit/{id}', 'edit')->name('edit');
     Route::get('confirmar/{usuario}/{estado}', 'confirmarDatos')->name('usuario.estado');
-    Route::delete('eliminar/{idUsuario?}', 'destroy', 'can:/usuario.index')->name('usuario.eliminar');
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
     Route::post('filtros', 'filtros')->name('user.filtros');
+    Route::resource('portal/usuarios', UsuarioController::class);
+
 });
 
 Route::get('forgot-password', [AuthController::class, 'email'])->name('forgot-password');
@@ -55,16 +57,12 @@ Route::prefix('consultaOTM')->controller(ConsultarAfiliadoController::class)->mi
 });
 
 //? Consultar code
-Route::get('customers', [FacturaController::class, 'index', 'can:/blog'])->name('blogs.index')->middleware('auth');
+Route::get('customers', [FacturaController::class, 'index', 'can:/facturas'])->name('blogs.index')->middleware('auth');
 
-Route::group(['middleware' => ['auth'], 'can:/profile'], function () {
-    Route::resource('roles', RolController::class);
-});
-
-Route::group(['middleware' => ['auth']], function () {
+Route::middleware('auth', 'can:/roles')->group(function () {
     Route::resource('portal/roles', RolController::class);
-    Route::resource('portal/usuarios', UsuarioController::class);
 });
+
 
 
 

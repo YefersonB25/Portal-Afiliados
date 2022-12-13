@@ -13,7 +13,7 @@ class SendEmailRequest
         try {
             $user = User::where('id', $usuario_id)->select('email','name')->first();
 
-            Mail::send('templates.emailSendRequest', array('request' => $user, 'status' => $estado), function ($message) use ($user, $allEmail) {
+            Mail::send('templates.emailSendRequest1', array('request' => $user, 'status' => $estado), function ($message) use ($user, $allEmail) {
                 $message->from('info@tractocar.com', 'InfoTracto');
                 $message->to($allEmail == null ? $user->email : $allEmail)->subject('Validacion De Datos');
             });

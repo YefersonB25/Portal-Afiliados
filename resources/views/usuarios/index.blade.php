@@ -6,11 +6,38 @@
     <div class="app-content main-content mt-0">
         <div class="side-app">
             <!-- ROW OPEN -->
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <div class="row g-2">
+                        <h3 class="card-title">Fitros</h3>
+                            <form class="form-horizontal" method="post" action="{{route('user.filtros')}}" novalidate>
+                                @csrf
+                                <div class="row mb-2">
+                                    <div class="col-md">
+                                        <label for="estado" class="form-label">Filtrar por estado</label>
+                                        <select type="text" name="estado" id="estado" class="form-select" tabindex="3" value="{{ old('estado') }}" autofocus onInput="validarInput()">
+                                            <option selected>Todos</option>
+                                                <option value="NUEVO">NUEVO</option>
+                                                <option value="CONFIRMADO">CONFIRMADO</option>
+                                                <option value="RECHAZADO">RECHAZADO</option>
+                                                <option value="ASOCIADO">ASOCIADO</option>
+
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('estado') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="btnPrEditSave">Filtrar</button>
+                            </form>
+                    </div>
+                </div>
+            </div>
             <div class="row row-sm">
                 <div class="col-lg-12">
                     <div class="card custom-card">
                         <div class="card-body">
-                            <div class="table-responsive export-table">
+                            <div class="table-responsive">
                                 <table id="file-datatable"
                                     class="table table-bordered text-nowrap key-buttons border-bottom w-100 tt">
                                     <thead>
@@ -20,7 +47,7 @@
                                             <th class="border-bottom-0">Nombre</th>
                                             <th class="border-bottom-0">Telefono</th>
                                             <th class="border-bottom-0">Identificacion</th>
-                                            <th class="border-bottom-0">Copia documento</th>
+                                            <th class="border-bottom-0">Soporte documento</th>
                                             <th class="border-bottom-0">E-mail</th>
                                             <th class="border-bottom-0">Estado</th>
                                             <th class="border-bottom-0">Acciones</th>
@@ -29,19 +56,19 @@
                                     <tbody>
                                         @foreach ($usuarios as $usuario)
                                         <tr>
-                                            <td>
-                                                {{$usuario->parent_id}}
-                                                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                    @if ($usuario->parent_id != 0)
+                                            <td class="text-center">
+                                                {{$usuario->id}}
+                                                {{-- <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                                    @if ($usuario->id != 0)
                                                     <path fill="currentColor"
                                                         d="M9,5A4,4 0 0,1 13,9A4,4 0 0,1 9,13A4,4 0 0,1 5,9A4,4 0 0,1 9,5M9,15C11.67,15 17,16.34 17,19V21H1V19C1,16.34 6.33,15 9,15M16.76,5.36C18.78,7.56 18.78,10.61 16.76,12.63L15.08,10.94C15.92,9.76 15.92,8.23 15.08,7.05L16.76,5.36M20.07,2C24,6.05 23.97,12.11 20.07,16L18.44,14.37C21.21,11.19 21.21,6.65 18.44,3.63L20.07,2Z" />
                                                     @else
                                                     <path fill="currentColor"
                                                         d="M2,3.27L3.28,2L22,20.72L20.73,22L16.73,18C16.9,18.31 17,18.64 17,19V21H1V19C1,16.34 6.33,15 9,15C10.77,15 13.72,15.59 15.5,16.77L11.12,12.39C10.5,12.78 9.78,13 9,13A4,4 0 0,1 5,9C5,8.22 5.22,7.5 5.61,6.88L2,3.27M9,5A4,4 0 0,1 13,9V9.17L8.83,5H9M16.76,5.36C18.78,7.56 18.78,10.61 16.76,12.63L15.08,10.94C15.92,9.76 15.92,8.23 15.08,7.05L16.76,5.36M20.07,2C24,6.05 23.97,12.11 20.07,16L18.44,14.37C21.21,11.19 21.21,6.65 18.44,3.63L20.07,2Z" />
                                                     @endif
-                                                </svg>
+                                                </svg> --}}
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 @if (!empty($usuario->photo))
                                                 <span>
                                                     {{-- {{ Storage::get("$usuario->photo") }} --}}
@@ -61,7 +88,7 @@
                                             <td>{{ $usuario->name }}</td>
                                             <td>{{ $usuario->phone }}</td>
                                             <td>{{ $usuario->number_id }}</td>
-                                            <td>
+                                            <td class="text-center">
                                                 @if (!empty($usuario->photo_id))
                                                 <span>
                                                     <a href="" data-bs-toggle="modal" data-bs-target="#exampleModalPdf"
@@ -81,14 +108,14 @@
                                                 @endif
                                             </td>
                                             <td>{{ $usuario->email }}</td>
-                                            <td>
+                                            <td class="text-center">
                                                 <span
                                                     class="badge rounded-pill bg-{{$usuario->badges($usuario->status)}}">
                                                     {{$usuario->status}}
                                                 </span>
                                             </td>
                                             <td>
-                                                @if ($usuario->estado != 'ASOCIADO')
+                                                @if ($usuario->status != 'ASOCIADO')
                                                 <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
                                                     class="btn btn-info openBtn" id="consultaOTM">
                                                     <i class="fa fa-weibo" aria-hidden="true"></i>
@@ -97,7 +124,7 @@
                                                     href="{{ route('consultar.afiliado',[$number_id,$document_type]) }}">aprobar</a>
                                                 --}}
                                                 @endif
-                                                @if ($usuario->estado == 'NUEVO')
+                                                @if ($usuario->status == 'NUEVO')
                                                 <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'aprobado']) }}"
                                                     class="btn btn-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -116,7 +143,7 @@
                                                     </svg>
                                                 </a>
                                                 @endif
-                                                @if ($usuario->estado == 'ASOCIADO')
+                                                @if ($usuario->status == 'ASOCIADO')
                                                 <a href="" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModalProveedor" data-bs-whatever="@mdo"
                                                     class="btn btn-primary proveedor"><svg
@@ -125,17 +152,23 @@
                                                             d="M11 10V12H9V14H7V12H5.8C5.4 13.2 4.3 14 3 14C1.3 14 0 12.7 0 11S1.3 8 3 8C4.3 8 5.4 8.8 5.8 10H11M3 10C2.4 10 2 10.4 2 11S2.4 12 3 12 4 11.6 4 11 3.6 10 3 10M16 14C18.7 14 24 15.3 24 18V20H8V18C8 15.3 13.3 14 16 14M16 12C13.8 12 12 10.2 12 8S13.8 4 16 4 20 5.8 20 8 18.2 12 16 12Z" />
                                                     </svg></a>
                                                 @endif
-                                                {!! Form::open(['method' => 'DELETE','route' =>
-                                                ['usuario.eliminar', $usuario->id],'style'=>'display:inline'])
-                                                !!}
-                                                {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
-                                                {!! Form::close() !!}
+                                                <a href="{{ route('edit', [$usuario->id]) }}"
+                                                    class="btn btn-success">
+                                                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" />
+                                                    </svg>
+                                                </a>
+                                                <a href="" id="{{$usuario->id}}" class="deletedUser btn btn-danger">
+                                                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                                                    </svg>
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
-                                    {{ $usuarios->links() }}
                                 </table>
+                                {{ $usuarios->links() }}
                             </div>
                         </div>
                     </div>
@@ -188,7 +221,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Proveedor Acargo</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Usuario Padre</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="dataProveedor">
@@ -238,6 +271,60 @@
             })
         }
 
+        $(document).on("click", ".deletedUser", function (e){
+            e.preventDefault()
+            let id = this.id
+            const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+            title:'¿Estás seguro que deseas eliminar este usuario?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, Eliminarlo',
+            cancelButtonText: 'No, Cancelar!',
+            reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: "{{ route('usuario.eliminar')}}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "userId": id
+                    },
+                    success: function(response) {
+                        console.log(response.data);
+                        if(response.success == true){
+                            swalWithBootstrapButtons.fire(
+                            '¡Eliminado!',
+                            'El usuario ha sido eliminado',
+                            'success'
+                            )
+                        }
+                        window.location.reload();
+                    }
+                });
+
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Cancelado',
+                'El usuario está seguro :)',
+                'error'
+                )
+            }
+            })
+        });
+
         $(document).on("click", ".proveedor", function (e) {
             e.preventDefault()
             if($(this).parents("tr").hasClass('child')){ //vemos si el actual row es child row
@@ -245,7 +332,6 @@
             } else {
                 var idUsu = $(this).closest("tr").find('td:eq(0)').text(); //si no lo es, seguimos capturando el id del actual row
             }
-
             plantillaBody = '';
 
             $.ajax({
@@ -257,16 +343,15 @@
                 },
                 success: function(response) {
                     let data = response.data;
-                    console.log(data);
                     if(response.success == true){
                         $('#dataProveedor').html('')
                         plantillaBody = `
                         <form>
                             <div class="float-left">
                                 <h6 class="mb-0 p-2"> <b>Nombre Completo:</b> ${data.name}</h6>
-                                <h6 class="mb-0 p-2"> <b>Numero Identificacion:</b> ${data.identification}</h6>
+                                <h6 class="mb-0 p-2"> <b>Numero Identificacion:</b> ${data.number_id}</h6>
                                 <h6 class="mb-0 p-2"> <b>Correo:</b> ${data.email}</h6>
-                                <h6 class="mb-0 p-2"> <b>Telefono:</b> ${data.telefono}</h6>
+                                <h6 class="mb-0 p-2"> <b>Telefono:</b> ${data.phone}</h6>
                             </div>
                         </form>
 

@@ -82,13 +82,13 @@
                                 </div>
 
                                 <div class="wrap-input100 validate-input">
-                                    <select class="form-select" name="document-type" aria-label=".form-select-sm example" required>
+                                    <select class="form-select" name="document_type" aria-label=".form-select-sm example" required>
                                         <option selected value="">Seleccione tipo Documento</option>
                                         <option value="NIT">NIT</option>
-                                        <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
+                                        <option value="CC">Cedula de Ciudadania</option>
                                       </select>
                                       <div class="invalid-feedback">
-                                        {{ $errors->first('document-type') }}
+                                        {{ $errors->first('document_type') }}
                                     </div>
                                 </div>
 

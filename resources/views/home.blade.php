@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         @endcan
-                        @can('/blog')
+                        @can('/facturas')
                         <div id="global-loader2">
                             <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
                         </div>

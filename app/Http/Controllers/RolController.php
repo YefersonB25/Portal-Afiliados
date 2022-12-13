@@ -118,9 +118,10 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        DB::table("roles")->where('id', $id)->delete();
-        return redirect()->route('roles.index');
+        $result = DB::table("roles")->where('id', $request->rolId)->delete();
+        return response()->json(['success' => $result]);
+
     }
 }

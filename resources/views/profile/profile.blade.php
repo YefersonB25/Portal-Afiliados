@@ -120,9 +120,9 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- Lista de Usuarios Asociados --}}
                             <div class="tab-pane" id="friends">
                                 <div class="row row-sm">
-
                                     @foreach ($user_relation as $asociado)
                                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                                         <div class="card">
@@ -177,22 +177,6 @@
                                             <div class="form-group ">
                                                 <div class="row row-sm">
                                                     <div class="col-md-3">
-                                                        <label for="userName" class="form-label">Photo</label>
-                                                    </div>
-                                                    <div class="col-md-9">
-                                                        <input id="photo" accept="image/jpeg,image/jpg,image/png"
-                                                            type="file" class="form-control" name="photo" tabindex="1"
-                                                            placeholder="Enter Photo" value="{{ old('name') }}"
-                                                            autofocus>
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('name') }}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row row-sm">
-                                                    <div class="col-md-3">
                                                         <label for="userName" class="form-label">Full Name</label>
                                                     </div>
                                                     <div class="col-md-9">
@@ -234,6 +218,25 @@
                                                             value="{{ old('telefono') }}" autofocus required>
                                                         <div class="invalid-feedback">
                                                             {{ $errors->first('telefono') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group ">
+                                                <div class="row row-sm">
+                                                    <div class="col-md-3">
+                                                        <label for="userName" class="form-label">Tipo documento</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="wrap-input100 validate-input">
+                                                            <select class="form-select" name="document-type" aria-label=".form-select-sm example" required>
+                                                                <option selected value="">Seleccione tipo Documento</option>
+                                                                <option value="NIT">NIT</option>
+                                                                <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
+                                                              </select>
+                                                              <div class="invalid-feedback">
+                                                                {{ $errors->first('document-type') }}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -294,74 +297,7 @@
 </body>
 @endsection
 @section('scripts')
-{{-- Registramos el usiario Asociado --}}
-{{-- <script>
-    $('#rgisterform').on('submit', function(e) {
-    e.preventDefault(); // Para evitar que haga el submit por default
-    var datosFormulario = $(this).serialize();
 
-    $.ajax({
-        type: "POST",
-        url: "{{ route('userAsociado.create') }}",
-        data: datosFormulario,
-        success: function(response) {
-            console.log(response.data);
-            if(data == "success"){
-                $.notify({
-                    icon: 'pe-7s-close-circle',
-                    message: "Sucessfully saved the Image Sorting"
-                },{
-                    type: 'success',
-                    timer: 500
-                });
-            }
-            $('#formulario')[0].reset();
-            $("#cargando").html(data);
-        },
-        error:function(error){
-            console.error(error);
-        }
-    });
-  });
-</script> --}}
-{{-- <script>
-    function validarInput() {
-    document.getElementById("btnPrEditSave").disabled = !document.getElementById("pfEmail", "pfTelefono").value.length;
-    }
-    $(document).on('change','input[type="file"]',function(){
-        // this.files[0].size recupera el tamaño del archivo
-        // alert(this.files[0].size);
-
-        var fileName = this.files[0].name;
-        var fileSize = this.files[0].size;
-
-        if(fileSize > 300000){
-            alert('El archivo no debe superar los 3MB');
-            this.value = '';
-            this.files[0].name = '';
-        }else{
-            // recuperamos la extensión del archivo
-            var ext = fileName.split('.').pop();
-
-            // Convertimos en minúscula porque
-            // la extensión del archivo puede estar en mayúscula
-            ext = ext.toLowerCase();
-
-            // console.log(ext);
-            switch (ext) {
-                case 'jpg':
-                case 'jpeg':
-                case 'png':
-                case 'pdf': break;
-                default:
-                    alert('El archivo no tiene la extensión adecuada');
-                    this.value = ''; // reset del valor
-                    this.files[0].name = '';
-            }
-        }
-    });
-
-</script> --}}
 @if (Session::has('message'))
 <script>
     Swal.fire({

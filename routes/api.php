@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultarAfiliadoController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioAsociadoController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::post('status', [UsuarioController::class, 'cambiarEstado'])->name('status');
 
-Route::controller(ConsultarAfiliadoController::class)->group(function () {
+Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(ConsultarAfiliadoController::class)->group(function () {
     Route::post('facturas/total', 'TotalAmount')->name('total');
     Route::post('invoiceLines', 'getInvoiceLines')->name('invoice.lines');
     Route::post('facturas/pagadas', 'customers')->name('falturas.pagadas');
@@ -43,6 +45,14 @@ Route::controller(ConsultarAfiliadoController::class)->group(function () {
 
 });
 
+Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(UsuarioController::class)->group( function () {
+    Route::delete('user/deleted', 'destroy')->name('usuario.eliminar');
+
+});
+
+Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(RolController::class)->group( function () {
+    Route::delete('rol/deleted', 'destroy')->name('roles.eliminar');
+});
 
 Route::post('/auth/register', [AuthController::class, 'register']);
 

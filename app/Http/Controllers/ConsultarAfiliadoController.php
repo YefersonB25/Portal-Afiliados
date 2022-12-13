@@ -440,8 +440,15 @@ class ConsultarAfiliadoController extends Controller
     public function proveedorEncargado(Request $request)
     {
         if ($request->userId != '') {
-            $usuario = User::find($request->userId);
-            return response()->json(['success' => true, 'data' => $usuario]);
+
+            $user = DB::table('relationship')
+            ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+            ->where('relationship.user_assigne_id',  $request->userId)
+            ->where('relationship.deleted_at', '=', null)
+            ->select('users.*')
+            ->first();
+
+            return response()->json(['success' => true, 'data' => $user]);
         }
         return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
     }

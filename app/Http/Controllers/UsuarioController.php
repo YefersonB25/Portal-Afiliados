@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\SendEmailRequest;
 use App\Jobs\SendRequestEmailJob;
 use App\Models\Relationship;
 use App\Models\User;
@@ -25,9 +26,6 @@ class UsuarioController extends Controller
     function __construct()
     {
         $this->middleware('permission:/usuario.index')->only('index');
-        //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
-        //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
-        //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
     }
 
     /**
@@ -37,9 +35,9 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = User::orderBy('updated_at', 'desc')->paginate(20);
+        $usuarios = User::where('deleted_at', NULL)->orderBy('updated_at', 'desc')->paginate(20);
         return view('usuarios.index', ['usuarios' => $usuarios]);
-        //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
+        //? al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
 
     /**
@@ -163,11 +161,17 @@ class UsuarioController extends Controller
                 # code...
                 break;
         }
-        $details = [
-            'name'   => $usuario->name,
-            'email'  => $usuario->email,
-            'status' => $estado
-        ];
+
+        SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
+
+        return redirect('usuarios');
+
+        //? Actualizacion pendiente JOB
+        // $details = [
+        //     'name'   => $usuario->name,
+        //     'email'  => $usuario->email,
+        //     'status' => $estado
+        // ];
         // dispatch(new SendRequestEmailJob($details));
 
         // $details = [
@@ -177,9 +181,6 @@ class UsuarioController extends Controller
         // ];
         // dispatch(new SendWelcomeEmailJob($details));
 
-        // SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
-
-        return redirect('usuarios');
     }
 
     public function update(Request $request, $id)
@@ -208,10 +209,10 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        User::find($id)->delete();
-        return redirect('usuarios');
+        $result = User::find($request->userId)->delete();
+        return response()->json(['success' => $result]);
     }
 
     public function cambiarEstado($idUsuario)
@@ -219,13 +220,9 @@ class UsuarioController extends Controller
         User::where('id', $idUsuario)->update(['status' => 'CONFIRMADO']);
         return response()->json('The post successfully updated');
 
-        // $post = Post::find($id);
-        // $post->update($request->all());
-
     }
 
     public function checkout($cedula)
     {
-        // dd($cedula);
     }
 }

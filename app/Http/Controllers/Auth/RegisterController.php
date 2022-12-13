@@ -59,7 +59,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
             'number_id' => ['required','numeric'],
             'phone' => ['required','numeric'],
-            'document-type' => ['required'],
+            'document_type' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -73,7 +73,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-
+        // dd($data);
         $roles = Role::get();
 
         $pathPerfil = null;
@@ -89,7 +89,7 @@ class RegisterController extends Controller
                 'name'                  => $data['name'],
                 'email'                 => $data['email'],
                 'number_id'        => $data['number_id'],
-                'document-type'          => $data['document-type'],
+                'document_type'          => $data['document_type'],
                 'phone'              => $data['phone'],
                 'password'              => Hash::make($data['password']),
             ]);

@@ -379,16 +379,14 @@
 									<div class="text" style="padding: 0 2.5em; text-align: center;">
 										<h2>{{$request->name}}</h2>
 
-                                            @if ($estado == 'aprobado')
+                                            @if ($status == 'aprobado')
                                                 <h3>Sus datos han sido validado satisfactoria mente, ya puede acceder al sistema.</h3>
                                                 @else
                                                 <h3>Sus datos fueron rechazados por falta de informacion o informacion erronea.</h3>
                                             @endif
 										<p>
-											@if($estado == 'aprobado')
-                                            @php
-                                                $host = $_SERVER['SERVER_NAME'];
-                                            @endphp
+											@if($status == 'aprobado')
+
 											<a href={{"http://127.0.0.1:8000/login"}} class="
 												btn btn-primary">Ingresar</a>
 											@else
