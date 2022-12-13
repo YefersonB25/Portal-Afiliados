@@ -1,0 +1,144 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
+
+class SettingSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_erp_user')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'       => 'oracle_erp_user',
+                    'val'        => 'gramos@tractocar.com',
+                    'isEncrypt'  => '0',
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_erp_password')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'       => 'oracle_erp_password',
+                    'val'        => Crypt::encryptString('Q4XpaReAwTwRs4eRqr8K'),
+                    'isEncrypt'  => '1',
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_erp_server')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'       => 'oracle_erp_server',
+                    'val'        => 'https://ekhk-test.fa.us2.oraclecloud.com',
+                    'isEncrypt'  => '0',
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_otm_user')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'       => 'oracle_otm_user',
+                    'val'        => 'TCL.ELKINMREST',
+                    'isEncrypt'  => '0',
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_otm_password')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'       => 'oracle_otm_password',
+                    'val'        => Crypt::encryptString('zG9g8JLzR65EQfUT'),
+                    'isEncrypt'  => '1',
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_otm_server')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'       => 'oracle_otm_server',
+                    'val'        => 'https://otmgtm-test-ekhk.otm.us2.oraclecloud.com',
+                    'isEncrypt'  => '0',
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_otm_user_soap')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'          => 'oracle_otm_user_soap',
+                    'val'           => 'TCL.USERSOAP',
+                    'isEncrypt'     => '0',
+                    'created_at'    => \Carbon\Carbon::now(),
+                    'updated_at'    => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_otm_password_soap')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'      => 'oracle_otm_password_soap',
+                    'val'       => Crypt::encryptString('TRACTO2020'),
+                    'isEncrypt' => '1',
+                    'created_at'            => \Carbon\Carbon::now(),
+                    'updated_at'            => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_erp_date_end_default')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'      => 'oracle_erp_date_end_default',
+                    'val'       => '0000-00-00 00:00:00',
+                    'isEncrypt' => '0',
+                    'created_at'            => \Carbon\Carbon::now(),
+                    'updated_at'            => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+    }
+}
