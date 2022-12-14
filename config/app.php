@@ -13,8 +13,10 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Portal Afiliados'),
 
+    // 'env' => (in_array($_SERVER['HTTP_HOST'],$development))?env('APP_ENV', 'development'):env('APP_ENV', 'production'),
+    // 'debug' => (in_array($_SERVER['HTTP_HOST'],$development))?env('APP_DEBUG', true):env('APP_DEBUG', false),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -164,7 +166,7 @@ return [
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         /*
          * Package Service Providers...
-         * 
+         *
          */
         Studio\Totem\Providers\TotemServiceProvider::class,
         /*

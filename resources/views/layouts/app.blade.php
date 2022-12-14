@@ -27,6 +27,7 @@
     {{-- <link href={{asset('assets/plugins/datatable/css/buttons.bootstrap5.min.css')}}  rel="stylesheet">
     <link href={{asset('assets/plugins/datatable/responsive.bootstrap5.css')}} rel="stylesheet" /> --}}
     {{-- <link rel="stylesheet" href="{{asset('assets/plugins/datatable/css/jquery.dataTables.min.css')}}"> --}}
+    @require('../vendor/autoload.php');
 
     <!--- FONT-ICONS CSS -->
     <link href={{asset('assets/css/icons.css')}} rel="stylesheet" />
@@ -55,7 +56,6 @@
             @include('layouts.footer')
         </footer>
     </div>
-
     @include('profile.change_password')
     @include('profile.edit_profile')
 

@@ -4,10 +4,12 @@ use Illuminate\Support\Facades\Route;
 //agregamos los siguientes controladores
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Configs;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ConsultarAfiliadoController;
 use App\Http\Controllers\PerfilController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +65,8 @@ Route::middleware('auth', 'can:/roles')->group(function () {
     Route::resource('portal/roles', RolController::class);
 });
 
+Route::get('portal/setting', [Configs::class, 'index', 'can:/usuario.index'])->name('setting');
+Route::post('portal/setting', [Configs::class, 'update', 'can:/usuario.index'])->name('setting.update');
 
 
 
