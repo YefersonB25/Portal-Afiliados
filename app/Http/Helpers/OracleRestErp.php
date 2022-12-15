@@ -12,9 +12,9 @@ class OracleRestErp
     {
         try {
             return [
-                'server'       => config('oracle.erpServer'),
-                'username'     => config('oracle.erpUsername'),
-                'password'     => config('oracle.erpPassword')
+                'server'       => CommonUtils::getSetting('oracle_erp_server'),
+                'username'     => CommonUtils::getSetting('oracle_erp_user'),
+                'password'     => CommonUtils::getSetting('oracle_erp_password')
             ];
         } catch (Exception $e) {
             Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
@@ -27,7 +27,6 @@ class OracleRestErp
         $path = '/fscmRestApi/resources/11.13.18.05/suppliers';
         $erp  = self::getDataAccess();
         $url  = $erp['server'] . $path;
-
         $response = Http::withBasicAuth($erp['username'], $erp['password'])->timeout(60)
             ->retry(3, 1000)->withHeaders([
                 'REST-Framework-Version' => '2'

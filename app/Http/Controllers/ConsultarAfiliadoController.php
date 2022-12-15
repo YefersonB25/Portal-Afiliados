@@ -53,7 +53,7 @@ class ConsultarAfiliadoController extends Controller
     #[QueryParam("InvoiceType", "It is to consult the invoices by type of invoice.", "string", required: false)]
     public function suppliers(Request $request)
     {
-        return response()->json(['success' => true, 'data' => 'hola']);
+        // return response()->json(['success' => true, 'data' => 'hola']);
         $statusErpOtm = "Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.";
 
         if (!$request->only('PaidStatus')) {
@@ -282,7 +282,6 @@ class ConsultarAfiliadoController extends Controller
                 'onlyData' => 'true'
             ];
             $response = OracleRestErp::procurementGetSuppliers($params);
-
             $res = $response->json();
 
             //? Validanos que nos traiga el proveedor

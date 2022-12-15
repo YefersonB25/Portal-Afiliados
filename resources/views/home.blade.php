@@ -218,7 +218,6 @@
                         success: function(response) {
                             let datos = response.data;
                             if (response.success == true) {
-                                console.log(datos);
                                 let dollarUSLocale = Intl.NumberFormat('en-US');
                                 let mtPagadas = dollarUSLocale.format(datos[2]['Pagadas']);
                                 let mtPorPagar = dollarUSLocale.format(datos[1]['Impagado']);

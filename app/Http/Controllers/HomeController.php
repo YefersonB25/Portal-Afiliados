@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\CommonUtils;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller

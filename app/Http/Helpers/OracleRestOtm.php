@@ -2,6 +2,7 @@
 
 namespace App\Http\Helpers;
 
+use App\Http\Helpers\CommonUtils;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -10,11 +11,13 @@ class OracleRestOtm
 {
     protected static function getDataAccess()
     {
+
+
         try {
             return [
-                'server'       => config('oracle.otmServer'),
-                'username'     => config('oracle.otmUsername'),
-                'password'     => config('oracle.otmPassword'),
+                'server'       => CommonUtils::getSetting('oracle_otm_server'),
+                'username'     => CommonUtils::getSetting('oracle_otm_user'),
+                'password'     => CommonUtils::getSetting('oracle_otm_password')
             ];
         } catch (Exception $e) {
             return ['message' => 'Check oracle.php file configuration'];
@@ -25,6 +28,7 @@ class OracleRestOtm
     {
         $path = "logisticsRestApi/resources-int/v2/locations/TCL.$locationsGid";
         $erp  = self::getDataAccess();
+        dd($erp);
         $url  = $erp['server'] . $path;
 
         $response = Http::withBasicAuth($erp['username'], $erp['password'])->get($url, $params);

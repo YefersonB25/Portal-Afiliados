@@ -65,8 +65,11 @@ Route::middleware('auth', 'can:/roles')->group(function () {
     Route::resource('portal/roles', RolController::class);
 });
 
-Route::get('portal/setting', [Configs::class, 'index', 'can:/usuario.index'])->name('setting');
-Route::post('portal/setting', [Configs::class, 'update', 'can:/usuario.index'])->name('setting.update');
+Route::prefix('portal/setting')->controller(Configs::class)->middleware('auth')->group(function () {
+    Route::get('/', 'index', 'can:/usuario.index')->name('setting');
+    Route::post('/date', 'getDecryptedData', 'can:/usuario.index')->name('setting.date');
+    Route::post('/', 'update', 'can:/usuario.index')->name('setting.update');
+});
 
 
 

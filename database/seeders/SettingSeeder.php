@@ -15,6 +15,9 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('portal_settings')->truncate();
+
+
         $isValid = DB::table('portal_settings')->where('name', 'oracle_erp_user')->doesntExist();
         if ($isValid) {
 
@@ -77,7 +80,7 @@ class SettingSeeder extends Seeder
             DB::table('portal_settings')->insert([
                 [
                     'name'       => 'oracle_otm_password',
-                    'val'        => Crypt::encryptString('zG9g8JLzR65EQfUT'),
+                    'val'        => Crypt::encryptString('eo!zNswC7wsWLWPwfcXA'),
                     'isEncrypt'  => '1',
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
