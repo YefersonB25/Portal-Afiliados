@@ -8,14 +8,54 @@
             <div class="app-content main-content mt-0">
                 <div class="side-app">
                     <!-- CONTAINER -->
-                    <p>
-                        <a class="btn btn-primary" id="facturas-all">
-                        Totas las Facturas
-                        </a>
-                        <button class="btn btn-primary" id="facturas-lotes">
-                            Facturas Divididas
-                        </button>
-                    </p>
+                    <div class="card overflow-hidden">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <a id="facturas-all" class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip"
+                                        style="width: 16rem; height: 18rem;" data-bs-original-title="Todas las facturas">
+                                        <div class="card-body">
+                                            <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura.png')}}">
+                                        </div>
+                                    <h5 class="card-title">Todas las facturas</h5>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;" data-bs-original-title="Listas para pago">
+                                        <div class="card-body">
+                                            <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura-proceso-pago-modulo-1.png')}}">
+                                        </div>
+                                        <h5 class="card-title">Facturas Modulo 1</h5>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;" data-bs-original-title="En ruta">
+                                        <div class="card-body">
+                                            <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura-en-viaje-modulo-2.png')}}">
+                                        </div>
+                                        <h5 class="card-title">Facturas Modulo 2</h5>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;" data-bs-original-title="Bloqueadad">
+                                        <div class="card-body">
+                                            <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/facturas-bloqueadas-modulo-3.png')}}">
+                                        </div>
+                                        <h5 class="card-title">Facturas Modulo 3</h5>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a id="facturas-lotes" class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip"
+                                    style="width: 16rem; height: 18rem;">
+                                        <div class="card-body">
+                                            <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura-filtradas.png')}}">
+                                        </div>
+                                        <h5 class="card-title">Facturas filtradas</h5>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="collapse" id="FacturasGenerales" style="display: none">
                         <body class="ltr app sidebar-mini light-mode">
                             <div class="row row-sm">
@@ -365,7 +405,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </body>
 

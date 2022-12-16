@@ -52,8 +52,7 @@
                                                         data-bs-toggle="tab">Perfil</a></li>
                                                 <li><a href="#editProfile" data-bs-toggle="tab">Editar Perfil</a></li>
                                                 <li><a href="#friends" data-bs-toggle="tab">Usuarios Asociados</a></li>
-                                                <li><a href="#accountSettings" data-bs-toggle="tab">Registrar
-                                                        Usuario</a>
+                                                <li><a href="#accountSettings" data-bs-toggle="tab">Registrar Usuario</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -130,6 +129,7 @@
                                                 <h3 class="card-title"> {{$asociado->name}}</h3>
                                                 <div class="card-options">
                                                     <div class="dropdown text-end">
+                                                        @if ($asociado->deleted_at == null)
                                                         <a href="#" data-bs-toggle="dropdown" aria-haspopup="true"
                                                             aria-expanded="true">
                                                             <i class="fe fe-more-vertical text-muted"></i>
@@ -138,8 +138,8 @@
                                                             <a class="dropdown-item" href="{{url("profile/userAsociado/{$asociado->id}")}}">
                                                                 <i class="fe fe-trash-2 me-2"></i> Delete
                                                             </a>
-
                                                         </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

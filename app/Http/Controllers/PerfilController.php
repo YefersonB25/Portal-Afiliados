@@ -165,12 +165,9 @@ class PerfilController extends Controller
 
     public function eliminarUserAsociado($id)
     {
-        // $result = user::leftjoin('relationship','users.id', '=', 'relationship.user_assigne_id')
-        // ->where('users.id', '=', $id)
-        // ->delete();
-
-        $post = Relationship::find($id)->delete();
-
+        $post = user::find($id)->delete();
+            $data = DB::table('relationship')->select('id')->where('user_assigne_id',$id)->first();
+        $post = relationship::find($data->id)->delete();
         if ($post != null) {
             return redirect()->route('profile')->with(['message'=> 'Successfully deleted!!']);
         }

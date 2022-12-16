@@ -37,108 +37,123 @@
                 <div class="col-lg-12">
                     <div class="card custom-card">
                         <div class="card-body">
-                            <table id="user-datatable" class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th class="wd-2">Foto</th>
-                                        <th>Nombre</th>
-                                        <th>Telefono</th>
-                                        <th># Doc</th>
-                                        <th>PDF Doc</th>
-                                        <th>Estado</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($usuarios as $usuario)
-                                    <tr>
-                                        <td class="text-center">
-                                            <div
-                                                class="avatar avatar-md bg-{{$usuario->otherColors(rand(2,9))}} text-white rounded-circle">
-                                                {{substr($usuario->email,0,2)}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="tx-14 font-weight-semibold text-dark mb-1">{{$usuario->name}}
-                                            </p>
-                                            <p class="tx-13 text-muted mb-0"><a href="mailto:{{$usuario->email}}">{{$usuario->email}} </a></p>
-                                        </td>
-                                        <td>
-                                            <span class="text-muted tx-13">{{$usuario->phone}}</span>
-                                        </td>
-                                        <td>
-                                            <span class="text-muted tx-13">{{$usuario->number_id}}</span>
-                                        </td>
-                                        <td class="text-center">
-                                            @if (!empty($usuario->photo_id))
-                                            <span>
-                                                <a href="" data-bs-toggle="modal" data-bs-target="#exampleModalPdf"
-                                                    class="aPdf">
-                                                    <i src="{{asset(" $usuario->photo_id")}}"></i>
-                                                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                        <path fill="currentColor" d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
-                                                    </svg>
+                            <div class="table-responsive">
+                                <table id="file-datatable" class="table table-bordered text-nowrap key-buttons border-bottom w-100 tt">
+                                    <thead>
+                                        <tr>
+                                            <th class="wd-2">Foto</th>
+                                            <th>Nombre</th>
+                                            <th>Telefono</th>
+                                            <th># Doc</th>
+                                            <th>PDF Doc</th>
+                                            <th>Rol</th>
+                                            <th>Estado</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($usuarios as $usuario)
+                                        <tr>
+                                            <td class="text-center">
+                                                <div
+                                                    class="avatar avatar-md bg-{{$usuario->otherColors(rand(2,9))}} text-white rounded-circle">
+                                                    {{substr($usuario->email,0,2)}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="tx-14 font-weight-semibold text-dark mb-1">{{$usuario->name}}
+                                                </p>
+                                                <p class="tx-13 text-muted mb-0"><a href="mailto:{{$usuario->email}}">{{$usuario->email}} </a></p>
+                                            </td>
+                                            <td>
+                                                <span class="text-muted tx-13">{{$usuario->phone}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="text-muted tx-13">{{$usuario->number_id}}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                @if (!empty($usuario->photo_id))
+                                                <span>
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#exampleModalPdf"
+                                                        class="aPdf">
+                                                        <i src="{{asset(" $usuario->photo_id")}}"></i>
+                                                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                                            <path fill="currentColor" d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
+                                                        </svg>
+                                                    </a>
+                                                </span>
+                                                @else
+                                                <svg style="width:30px;height:30px" viewBox="0 0 24 24">
+                                                    <path fill="currentColor"
+                                                        d="M2,3H22C23.05,3 24,3.95 24,5V19C24,20.05 23.05,21 22,21H2C0.95,21 0,20.05 0,19V5C0,3.95 0.95,3 2,3M14,6V7H22V6H14M14,8V9H21.5L22,9V8H14M14,10V11H21V10H14M8,13.91C6,13.91 2,15 2,17V18H14V17C14,15 10,13.91 8,13.91M8,6A3,3 0 0,0 5,9A3,3 0 0,0 8,12A3,3 0 0,0 11,9A3,3 0 0,0 8,6Z" />
+                                                </svg>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{ !empty($usuario->rol->rol_nombre['name']) ? $usuario->rol->rol_nombre['name'] : '' }}
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge font-weight-semibold bg-{{$usuario->badges($usuario->status)}}-transparent text-{{$usuario->badges($usuario->status)}} tx-11">
+                                                    {{$usuario->status}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
+                                                    class="btn btn-icon btn-info-light me-2" data-bs-toggle="tooltip"
+                                                    data-bs-original-title="Consultar">
+                                                    <i class="fa fa-user"></i>
                                                 </a>
-                                            </span>
-                                            @else
-                                            <svg style="width:30px;height:30px" viewBox="0 0 24 24">
-                                                <path fill="currentColor"
-                                                    d="M2,3H22C23.05,3 24,3.95 24,5V19C24,20.05 23.05,21 22,21H2C0.95,21 0,20.05 0,19V5C0,3.95 0.95,3 2,3M14,6V7H22V6H14M14,8V9H21.5L22,9V8H14M14,10V11H21V10H14M8,13.91C6,13.91 2,15 2,17V18H14V17C14,15 10,13.91 8,13.91M8,6A3,3 0 0,0 5,9A3,3 0 0,0 8,12A3,3 0 0,0 11,9A3,3 0 0,0 8,6Z" />
-                                            </svg>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge font-weight-semibold bg-{{$usuario->badges($usuario->status)}}-transparent text-{{$usuario->badges($usuario->status)}} tx-11">
-                                                {{$usuario->status}}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
-                                                class="btn btn-icon btn-info-light me-2" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Consultar">
-                                                <i class="fa fa-user"></i>
-                                            </a>
-                                            @switch($usuario->status)
-                                            @case('ASOCIADO')
-                                            <a data-bs-whatever="@mdo" id="{{$usuario->id}}" class="proveedor btn btn-icon btn-success-light me-2"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-original-title="Consultar Padre">
-                                                <i class="fa fa-users"></i>
-                                            </a>
+                                                @switch($usuario->status)
+                                                @case('ASOCIADO')
+                                                <a data-bs-whatever="@mdo" id="{{$usuario->id}}" class="proveedor btn btn-icon btn-success-light me-2"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-original-title="Consultar Padre">
+                                                    <i class="fa fa-users"></i>
+                                                </a>
 
-                                            @break
-                                            @case('NUEVO')
-                                            <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'aprobado']) }}"
-                                                class="btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Aceptar">
-                                                <i class="fa fa-check"></i>
-                                            </a>
-                                            <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'rechazado']) }}"
-                                                class="btn btn-icon btn-warning-light me-2" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Rechazar">
-                                                <i class="fa fa-user-times"></i>
-                                            </a>
-                                            @break
-                                            @default
-                                            @break
-                                            @endswitch
-                                            <a href="{{ route('edit', [$usuario->id]) }}"
+                                                @break
+                                                @case('NUEVO')
+                                                <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'aprobado']) }}"
+                                                    class="btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip"
+                                                    data-bs-original-title="Aceptar">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+                                                <a href="{{ route('usuario.estado', ['usuario' => $usuario, 'estado' => 'rechazado']) }}"
                                                     class="btn btn-icon btn-warning-light me-2" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Editar">
-                                                <i class="fa fa-pencil-square"></i>
-                                            </a>
-                                            <a href="" id="{{$usuario->id}}"
-                                                class="deletedUser btn btn-icon btn-danger-light me-2" data-bs-toggle="tooltip"
-                                                data-bs-original-title="Eliminar">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            {{ $usuarios->links() }}
+                                                    data-bs-original-title="Rechazar">
+                                                    <i class="fa fa-user-times"></i>
+                                                </a>
+                                                @break
+                                                @case('CONFIRMADO')
+                                                @if ($usuario->rol->rol_nombre['name'] == 'Cliente')
+                                                    <a href="{{ route('blogs.index',['id' => $usuario->id]) }}"
+                                                        class="btn btn-icon btn-info-light me-2" data-bs-toggle="tooltip"
+                                                        data-bs-original-title="Consultar facturas">
+                                                        <i class="fa fa-file-text"></i>
+                                                    </a>
+                                                @endif
+                                                @break
+                                                @default
+                                                @break
+                                                @endswitch
+                                                <a href="{{ route('edit', [$usuario->id]) }}"
+                                                        class="btn btn-icon btn-warning-light me-2" data-bs-toggle="tooltip"
+                                                    data-bs-original-title="Editar">
+                                                    <i class="fa fa-pencil-square"></i>
+                                                </a>
+                                                <a href="" id="{{$usuario->id}}"
+                                                    class="deletedUser btn btn-icon btn-danger-light me-2" data-bs-toggle="tooltip"
+                                                    data-bs-original-title="Eliminar">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                {{ $usuarios->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

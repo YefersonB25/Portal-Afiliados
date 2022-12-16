@@ -1,3 +1,4 @@
+@can('/usuario.index')
 <div class="sticky">
     <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
     <div class="app-sidebar">
@@ -26,3 +27,4 @@
         </div>
     </div>
 </div>
+@endcan

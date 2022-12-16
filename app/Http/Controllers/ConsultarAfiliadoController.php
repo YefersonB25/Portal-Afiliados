@@ -179,7 +179,7 @@ class ConsultarAfiliadoController extends Controller
     public function customers(Request $request)
     {
         $params      =  [
-            'limit'    => '200',
+            'limit'    => '20',
             'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
             'onlyData' => 'true'
         ];
@@ -274,16 +274,14 @@ class ConsultarAfiliadoController extends Controller
             ->first();
 
             $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
-
             $params = [
                 'q'        => "(TaxpayerId = '{$number_id}')",
-                'limit'    => '200',
+                'limit'    => '1',
                 'fields'   => 'SupplierNumber',
                 'onlyData' => 'true'
             ];
             $response = OracleRestErp::procurementGetSuppliers($params);
             $res = $response->json();
-
             //? Validanos que nos traiga el proveedor
             if ($res['count'] == 0) {
                 // return response()->json(['message' => 'No se encontro el proveedor'], 404);
@@ -355,11 +353,11 @@ class ConsultarAfiliadoController extends Controller
             $document = ($userData->document_type == "NIT") ? RequestNit::getNit($userData->number_id) : $userData->number_id;
 
             $arrayResultLocal = [
-                'document_type' => $document,
+                'number_id'     => $document,
                 'name'          => $userData->name,
                 'email'         => $userData->email,
                 'phone'         => $userData->phone,
-                'estado'        => $userData->estado,
+                'estado'        => $userData->status,
             ];
 
             $params = [
@@ -373,7 +371,6 @@ class ConsultarAfiliadoController extends Controller
             if ($response->successful()) {
                 $result          = $response->object();
                 $result_contacts = $response->object()->contacts->items[0];
-
                 $arrayResultOtm = [
                     'locationXid'  => $result->locationXid,
                     'fullName'     => $result->locationName,

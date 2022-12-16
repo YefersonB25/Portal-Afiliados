@@ -59,7 +59,9 @@ Route::prefix('consultaOTM')->controller(ConsultarAfiliadoController::class)->mi
 });
 
 //? Consultar code
-Route::get('customers', [FacturaController::class, 'index', 'can:/facturas'])->name('blogs.index')->middleware('auth');
+Route::prefix('customers')->controller(FacturaController::class)->middleware('auth')->group(function () {
+    Route::get('{id}', 'index')->name('blogs.index');
+});
 
 Route::middleware('auth', 'can:/roles')->group(function () {
     Route::resource('portal/roles', RolController::class);

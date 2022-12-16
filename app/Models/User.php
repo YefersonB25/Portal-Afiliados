@@ -91,4 +91,9 @@ class User extends Authenticatable
         ];
         return $map[$id] ?? '';
     }
+
+    public function rol()
+    {
+        return $this->belongsTo(ModelsHasRoles::class, 'id', 'model_id');
+    }
 }

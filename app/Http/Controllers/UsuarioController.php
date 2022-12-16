@@ -33,8 +33,9 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        
         $usuarios = User::where('deleted_at', NULL)->orderBy('updated_at', 'desc')->paginate(20);
         return view('usuarios.index', ['usuarios' => $usuarios]);
         //? al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}

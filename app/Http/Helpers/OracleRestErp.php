@@ -28,8 +28,8 @@ class OracleRestErp
         $erp  = self::getDataAccess();
         $url  = $erp['server'] . $path;
         $response = Http::withBasicAuth($erp['username'], $erp['password'])->timeout(60)
-            ->retry(3, 1000)->withHeaders([
-                'REST-Framework-Version' => '2'
+        ->retry(3, 1000)->withHeaders([
+            'REST-Framework-Version' => '2'
             ])->get($url, $params);
 
         return $response;

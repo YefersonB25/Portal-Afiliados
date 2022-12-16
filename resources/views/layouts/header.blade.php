@@ -8,8 +8,10 @@
 <div class="app-header header sticky">
     <div class="container-fluid main-container">
         <div class="d-flex">
+            @can('/usuario.index')
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a>
             <!-- sidebar-toggle-->
+            @endcan
 
             <a class="logo-horizontal " href="{{route('home')}}">
                 <img src={{asset('assets/images/brand/negative-blue-xxlarge-horizontal.png')}} class="header-brand-img desktop-logo" alt="logo">

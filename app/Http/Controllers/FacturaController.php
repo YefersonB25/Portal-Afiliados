@@ -8,34 +8,26 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Relationship;
 use App\Models\User;
+use Faker\Core\Number;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FacturaController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('permission:/facturas')->only('index');
-        //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
-        //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
-        //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware('permission:/facturas')->only('index');
+
+    // }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $user = DB::table('relationship')
-        ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
-        ->where('relationship.user_assigne_id',  Auth::user()->id)
-        ->where('relationship.deleted_at', '=', null)
-        ->select('users.number_id')
-        ->first();
-
-        $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
+        $user =  DB::table('users')->select('number_id')->where('id', $request->id)->first();
+        $number_id = $user->number_id;
 
         $params = [
             'q'        => "(TaxpayerId = '{$number_id}')",
@@ -47,7 +39,7 @@ class FacturaController extends Controller
         $response = OracleRestErp::procurementGetSuppliers($params);
 
         $res = $response->json();
-
+        
         //? Validanos que nos traiga el proveedor
         if ($res['count'] == 0) {
             // return response()->json(['message' => 'No se encontro el proveedor'], 404);
@@ -83,7 +75,7 @@ class FacturaController extends Controller
             'contenido' => 'required',
         ]);
 
-        Blog::create($request->all());
+        // Blog::create($request->all());
 
         return redirect()->route('facturas.index');
     }
@@ -105,10 +97,10 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Blog $blog)
-    {
-        return view('facturas.editar', compact('blog'));
-    }
+    // public function edit(Blog $blog)
+    // {
+    //     return view('facturas.editar', compact('blog'));
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -117,17 +109,17 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Blog $blog)
-    {
-        request()->validate([
-            'titulo' => 'required',
-            'contenido' => 'required',
-        ]);
+    // public function update(Request $request, Blog $blog)
+    // {
+    //     request()->validate([
+    //         'titulo' => 'required',
+    //         'contenido' => 'required',
+    //     ]);
 
-        $blog->update($request->all());
+    //     $blog->update($request->all());
 
-        return redirect()->route('facturas.index');
-    }
+    //     return redirect()->route('facturas.index');
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -135,10 +127,10 @@ class FacturaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Blog $blog)
-    {
-        $blog->delete();
+    // public function destroy(Blog $blog)
+    // {
+    //     $blog->delete();
 
-        return redirect()->route('facturas.index');
-    }
+    //     return redirect()->route('facturas.index');
+    // }
 }

@@ -5,7 +5,9 @@
 <body class="ltr app sidebar-mini">
     <div class="page">
         <div class="page-main">
+            @can('/usuario.index')
             <div class="app-content main-content mt-0">
+            @endcan
                 <div class="side-app">
                     <div class="main-container container-fluid">
                         <div class="page-header">
@@ -76,30 +78,9 @@
                         <div id="global-loader2">
                             <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
                         </div>
+
                         <div class="row">
-                            <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h3 id="mtPagadas" class="mb-2 fw-semibold">
-                                                </h3>
-                                                <p class="text-muted fs-13 mb-0">Monto de Facturas pagadas</p>
-                                            </div>
-                                            <div class="col col-auto top-icn dash">
-                                                <div class="counter-icon bg-primary dash ms-auto box-shadow-primary">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-white"
-                                                        enable-background="new 0 0 24 24" viewBox="0 0 24 24">
-                                                        <path
-                                                            d="M12,8c-2.2091675,0-4,1.7908325-4,4s1.7908325,4,4,4c2.208252-0.0021973,3.9978027-1.791748,4-4C16,9.7908325,14.2091675,8,12,8z M12,15c-1.6568604,0-3-1.3431396-3-3s1.3431396-3,3-3c1.6561279,0.0018311,2.9981689,1.3438721,3,3C15,13.6568604,13.6568604,15,12,15z M21.960022,11.8046875C19.9189453,6.9902344,16.1025391,4,12,4s-7.9189453,2.9902344-9.960022,7.8046875c-0.0537109,0.1246948-0.0537109,0.2659302,0,0.390625C4.0810547,17.0097656,7.8974609,20,12,20s7.9190063-2.9902344,9.960022-7.8046875C22.0137329,12.0706177,22.0137329,11.9293823,21.960022,11.8046875z M12,19c-3.6396484,0-7.0556641-2.6767578-8.9550781-7C4.9443359,7.6767578,8.3603516,5,12,5s7.0556641,2.6767578,8.9550781,7C19.0556641,16.3232422,15.6396484,19,12,19z" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
+                            <div class="col-lg-6 col-sm-12 col-md-6 col-xl-6">
                                 <div class="card overflow-hidden">
                                     <div class="card-body">
                                         <div class="row">
@@ -121,35 +102,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h3 id="mtPagadasConNovedad" class="mb-2 fw-semibold"></h3>
-                                                <p class="text-muted fs-13 mb-0">Monto de Facturas Pagadas con Novedad
-                                                </p>
-                                            </div>
-                                            <div class="col col-auto top-icn dash">
-                                                <div class="counter-icon bg-info dash ms-auto box-shadow-info">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-white"
-                                                        enable-background="new 0 0 24 24" viewBox="0 0 24 24">
-                                                        <path
-                                                            d="M7.5,12C7.223877,12,7,12.223877,7,12.5v5.0005493C7.0001831,17.7765503,7.223999,18.0001831,7.5,18h0.0006104C7.7765503,17.9998169,8.0001831,17.776001,8,17.5v-5C8,12.223877,7.776123,12,7.5,12z M19,2H5C3.3438721,2.0018311,2.0018311,3.3438721,2,5v14c0.0018311,1.6561279,1.3438721,2.9981689,3,3h14c1.6561279-0.0018311,2.9981689-1.3438721,3-3V5C21.9981689,3.3438721,20.6561279,2.0018311,19,2z M21,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2H5c-1.1040039-0.0014038-1.9985962-0.8959961-2-2V5c0.0014038-1.1040039,0.8959961-1.9985962,2-2h14c1.1040039,0.0014038,1.9985962,0.8959961,2,2V19z M12,6c-0.276123,0-0.5,0.223877-0.5,0.5v11.0005493C11.5001831,17.7765503,11.723999,18.0001831,12,18h0.0006104c0.2759399-0.0001831,0.4995728-0.223999,0.4993896-0.5v-11C12.5,6.223877,12.276123,6,12,6z M16.5,10c-0.276123,0-0.5,0.223877-0.5,0.5v7.0005493C16.0001831,17.7765503,16.223999,18.0001831,16.5,18h0.0006104C16.7765503,17.9998169,17.0001831,17.776001,17,17.5v-7C17,10.223877,16.776123,10,16.5,10z" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
+                            <div id="" class="col-lg-6 col-sm-12 col-md-6 col-xl-6">
                                 <div class="card overflow-hidden">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col">
                                                 <h3 id="totalFt" class="mb-2 fw-semibold"></h3>
-                                                <p class="text-muted fs-13 mb-0">Numero Total de Facturas</p>
+                                                <p class="text-muted fs-13 mb-0">Facturas por Pagar</p>
                                             </div>
                                             <div class="col col-auto top-icn dash">
                                                 <div class="counter-icon bg-warning dash ms-auto box-shadow-warning">
@@ -165,100 +124,1081 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card overflow-hidden">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <a id="facturas-all" class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip"
+                                            style="width: 16rem; height: 18rem;" data-bs-original-title="Todas las facturas">
+                                            <div class="card-body">
+                                                <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura.png')}}">
+                                            </div>
+                                        <h5 class="card-title">Todas las facturas</h5>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;" data-bs-original-title="Listas para pago">
+                                            <div class="card-body">
+                                                <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura-proceso-pago-modulo-1.png')}}">
+                                            </div>
+                                            <h5 class="card-title">Facturas Modulo 1</h5>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;" data-bs-original-title="En ruta">
+                                            <div class="card-body">
+                                                <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura-en-viaje-modulo-2.png')}}">
+                                            </div>
+                                            <h5 class="card-title">Facturas Modulo 2</h5>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;" data-bs-original-title="Bloqueadad">
+                                            <div class="card-body">
+                                                <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/facturas-bloqueadas-modulo-3.png')}}">
+                                            </div>
+                                            <h5 class="card-title">Facturas Modulo 3</h5>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a id="facturas-lotes" class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip"
+                                        style="width: 16rem; height: 18rem;">
+                                            <div class="card-body">
+                                                <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura-filtradas.png')}}">
+                                            </div>
+                                            <h5 class="card-title">Facturas filtradas</h5>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse" id="FacturasGenerales" style="display: none">
+                            <body class="ltr app sidebar-mini light-mode">
+                                <div class="row row-sm">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <!-- CONTAINER -->
+                                                <div class="main-container container-fluid">
+                                                    <div class="card" id="facturas-all">
+                                                        <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                            </h3>
+                                                        <div class="card-header border-bottom">
+                                                            <div class="row g-2">
+                                                                <h3 class="card-title">Fitros</h3>
+                                                                <div class="form-horizontal">
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-md">
+                                                                            <label for="tipoFactura" class="form-label">tipo de factura</label>
+                                                                            <select type="text" name="tipoFactura" id="tipoFactura" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                                <option selected value="">Todos</option>
+                                                                                <option value="Pago por adelantado">Anticipo</option>
+                                                                                <option value="Estándar">Estandar</option>
+                                                                                <option value="Nota de crédito">Nota Credito</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md">
+                                                                            <label for="ValidationStatus" class="form-label">Estado</label>
+                                                                            <select type="text" name="ValidationStatus" id="ValidationStatus" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
+                                                                                <option selected value="">Todos</option>
+                                                                                <option value="Cancelada">Cancelada</option>
+                                                                                <option value="Validada">Validada</option>
+                                                                                <option value="Necesita revalidación">Necesita revalidación</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md">
+                                                                            <label for="startDate" class="form-label">Fecha Inicio</label>
+                                                                            <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
+                                                                        </div>
+                                                                        <div class="col-md">
+                                                                            <label for="endDate" class="form-label">Fecha Fin</label>
+                                                                            <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary" id="btnPrFiltr">Filtrar</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row row-sm">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <div class="table-responsive">
+                                                                                <table id="TablaFacturasAll"
+                                                                                    class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </body>
+                        </div>
+                        <div class="collapse" id="FacturasDivididas" style="display: none">
+                            <body class="ltr app sidebar-mini light-mode">
+                                <div class="row row-sm">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <!-- CONTAINER -->
+                                                <div class="main-container container-fluid">
+                                                    <!-- Botones de Consulta -->
+                                                    <div class="text-center">
+                                                        <button class="btn btn-primary mb-3" target="" id="pagadas">
+                                                            Facturas pagadas
+                                                        </button>
+                                                        <button class="btn btn-success mb-3" target="" id="por-pagar">
+                                                            Facturas por pagar
+                                                        </button>
+                                                        <button class="btn btn-secondary mb-3" target="" id="pagadas-con-novedad">
+                                                            Facturas parcialmente pagadas
+                                                        </button>
+                                                        <button class="btn btn-warning mb-3" target="" id="descuentos">
+                                                            Facturas nota credito aplicadas
+                                                        </button>
+                                                        <button class="btn btn-danger mb-3" target="" id="descuentos-pendientes">
+                                                            Facturas nota credito por aplicar
+                                                        </button>
+                                                        {{-- <button class="btn btn-dark mb-3" target="" id="canceladas">
+                                                            Facturas canceladas
+                                                        </button> --}}
+                                                    </div>
+                                                    <!-- Fin -->
+
+                                                    <div class="card" id="oculto-pagadas" style="display: none">
+                                                        <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                            PAGADAS</h3>
+                                                        <div class="card-body">
+                                                            <div class="row row-sm">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <div class="table-responsive">
+                                                                                <table id="TablePagadas"
+                                                                                    class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card" id="oculto-por-pagar" style="display: none">
+                                                        <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                            POR PAGAR </h3>
+                                                        <div class="card-body">
+                                                            <div class="row row-sm">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <div class="table-responsive">
+                                                                                <table id="TablePorPagar"
+                                                                                    class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
+                                                        <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS</h3>
+                                                        <div class="card-body">
+                                                            <div class="row row-sm">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <div class="table-responsive">
+                                                                                <table id="TablePagadasNovedad"
+                                                                                    class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <div class="card" id="oculto-canceladas" style="display: none">
+                                                        <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                        CANCELADAS</h3>
+                                                        <div class="card-body">
+                                                            <div class="row row-sm">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <div class="table-responsive">
+                                                                                <table id="TableCanceladas"
+                                                                                    class="table table-bordered text-nowrap key-buttons border-bottom w-100">
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
+                                                    <div class="card" id="oculto-descuentos" style="display: none">
+                                                        <h3 class="text-center" style="text-decoration: underline">FACTURAS PAGADAS
+                                                        CON DESCUENTO</h3>
+                                                        <div class="card-body">
+                                                            <div class="row row-sm">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <div class="table-responsive">
+                                                                                <table id="TableDescuento"
+                                                                                    class="table table-bordered text-nowrap key-buttons border-bottom w-100">
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card" id="oculto-descuentos-pendientes" style="display: none">
+                                                        <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                        CON DESCUENTOS PENDIENTES</h3>
+                                                        <div class="card-body">
+                                                            <div class="row row-sm">
+                                                                <div class="col-lg-12">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <div class="table-responsive">
+                                                                                <table id="TableDescuentoPendiente"
+                                                                                    class="table table-bordered text-nowrap key-buttons border-bottom w-100">
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </body>
+                        </div>
+                        <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-12 mx-auto">
+                                            <div class="modal-content">
+                                                <div class="card">
+                                                    <div class="card-body invoice-head">
+                                                        <div class="row" id="date">
+
+                                                        </div>
+                                                        <!--end row-->
+                                                    </div>
+                                                    <!--end card-body-->
+                                                    <div class="card-body" id="body">
+                                                        <div class="row" id="row1">
+                                                        </div>
+                                                        <!--end row-->
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="table-responsive project-invoice">
+                                                                    <table class="table table-bordered mb-0">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                                <th>@lang('locale.Description')</th>
+                                                                                <th>@lang('locale.Amount')</th>
+                                                                            </tr>
+                                                                            <!--end tr-->
+                                                                        </thead>
+                                                                        <tbody id="row2">
+
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!--end table-->
+                                                                </div>
+                                                                <!--end /div-->
+                                                            </div>
+                                                            <!--end col-->
+                                                        </div>
+                                                        <!--end row-->
+
+
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-lg-12">
+                                                                <h5 class="mt-4"><i
+                                                                        class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
+                                                                    :</h5>
+                                                            </div>
+                                                            <!--end col-->
+                                                        </div>
+                                                        <!--end row-->
+                                                        <div class="row d-flex justify-content-center">
+                                                            <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
+                                                                <div class="text-center"><small class="font-12">Tractocar
+                                                                    Logistics SAS.</small>
+                                                                </div>
+                                                            </div>
+                                                            <!--end col-->
+                                                        </div>
+                                                        <!--end row-->
+                                                    </div>
+                                                    <!--end card-body-->
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" id="closet-modal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                            <!--end card-->
+                                        </div>
+                                        <!--end col-->
+                                    </div>
+                                    <!--end row-->
+                                </div>
+                            </div>
+                        </div>
                         @endcan
                     </div>
                 </div>
+            @can('/usuario.index')
             </div>
+            @endcan
         </div>
     </div>
 </body>
 @endsection
 @section('scripts')
-@if (Session::has('message'))
-<script>
-    Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: '{{Session::get('message')}}',
-    })
-</script>
-@endif
+<script src="http://momentjs.com/downloads/moment.min.js"></script>
 
-<script>
-    let Loader = function(){
-        let $yourUl = $("#global-loader2");
-        $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
-    }
-    window.onload = function() {
-        $.ajax({
-            type: "POST",
-            url: "{{ route('supplier.number') }}",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                id: "{{ Auth::user()->id}}"},
-            success: function(response) {
-                let data = response.data;
-                if(response.success == true)
-                {
-                    let = plantillaMtPagadas = ''
-                    let = plantillaMtPorPagar = ''
-                    let = plantillaMtPagadasConNovedad = ''
-                    let = plantillaTotalFt = ''
+    @if (Session::has('message'))
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{Session::get('message')}}',
+            })
+        </script>
+    @endif
 
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('total') }}",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            SupplierNumber:data,
-                            PaidStatus: ['Parcialmente pagado', 'Impagado', 'Pagadas'],
-                            FlagStatus: 'false'
+    <script>
+        let Loader1 = function(){
+            let $yourUl = $("#global-loader2");
+            $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
+        }
+        window.onload = function() {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('supplier.number') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: "{{ Auth::user()->id}}"},
+                success: function(response) {
+                    let data = response.data;
+                    if(response.success == true)
+                    {
+                        let = plantillaMtPagadas = ''
+                        let = plantillaMtPorPagar = ''
+                        let = plantillaMtPagadasConNovedad = ''
+                        let = plantillaTotalFt = ''
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ route('total') }}",
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                SupplierNumber:data,
+                                PaidStatus: ['Impagado'],
+                                FlagStatus: 'false'
+                            },
+
+                            success: function(response) {
+                                let datos = response.data;
+                                if (response.success == true) {
+                                    let dollarUSLocale = Intl.NumberFormat('en-US');
+                                    // let mtPagadas = dollarUSLocale.format(datos[2]['Pagadas']);
+                                    let mtPorPagar = dollarUSLocale.format(datos[0]['Impagado']);
+                                    // let mtPagadasConNovedad = dollarUSLocale.format(datos[0]['Parcialmente pagado']);
+                                    let totalFt = datos[0]['count Impagado'];
+
+                                    // plantillaMtPagadas =
+                                    // `
+                                    // <h3 class="mb-2 fw-semibold">$${mtPagadas}</h3>
+                                    // `
+                                    // $('#mtPagadas').append(plantillaMtPagadas)
+
+                                    plantillaMtPorPagar =
+                                    `
+                                    <h3 class="mb-2 fw-semibold">$${mtPorPagar}</h3>
+                                    `
+                                    $('#mtPorPagar').append(plantillaMtPorPagar)
+
+                                    // plantillaMtPagadasConNovedad =
+                                    // `
+                                    // <h3 class="mb-2 fw-semibold">$${mtPagadasConNovedad}</h3>
+                                    // `
+                                    // $('#mtPagadasConNovedad').append(plantillaMtPagadasConNovedad)
+
+                                    plantillaTotalFt =
+                                    `
+                                    <h3 class="mb-2 fw-semibold">${totalFt}</h3>
+                                    `
+                                    $('#totalFt').append(plantillaTotalFt)
+                                    Loader1();
+                                    // console.log(datos[2]['Paid']);
+                                }
+                            },
+                            error: function(error){
+                                console.error(error);
+                            }
+                        })
+                    }
+                }
+            })
+        }
+
+    </script>
+
+    @can('/facturas')
+        <script>
+            // Datatable
+            let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType,ValidationStatus, Card, startDate, endDate ) {
+                // let start = performance.now();
+                tblColectionData =  $(TableName).DataTable({
+
+                    retrieve: true,
+
+                    dom: 'Bfrtip',
+                    "buttons": [
+                        {
+                            extend: 'collection',
+                            text: 'Exportar',
+                            buttons: [
+                                {
+                                    extend: 'excel',
+                                    className: 'btn',
+                                    text: "Excel",
+                                    exportOptions: {
+                                    columns: ":not(.no-exportar)"
+                                    }
+                                },
+                                {
+                                    extend: 'csv',
+                                    className: 'btn',
+                                    text: "CSV",
+                                    exportOptions: {
+                                        columns: ":not(.no-exportar)"
+                                    }
+                                },
+                                {
+                                    extend: 'pdf',
+                                    className: 'btn',
+                                    text: "PDF",
+                                    exportOptions: {
+                                    columns: ":not(.no-exportar)"
+                                    }
+                                },
+                                {
+                                    extend: 'print',
+                                    className: 'btn',
+                                    text: "Imprimir",
+                                    exportOptions: {
+                                    columns: ":not(.no-exportar)"
+                                    }
+                                },
+                            ],
+                        }
+                    ],
+
+                    language: {
+                        "sProcessing": "Procesando...",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+
+                        "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
                         },
 
-                        success: function(response) {
-                            let datos = response.data;
-                            if (response.success == true) {
-                                let dollarUSLocale = Intl.NumberFormat('en-US');
-                                let mtPagadas = dollarUSLocale.format(datos[2]['Pagadas']);
-                                let mtPorPagar = dollarUSLocale.format(datos[1]['Impagado']);
-                                let mtPagadasConNovedad = dollarUSLocale.format(datos[0]['Parcialmente pagado']);
-                                let totalFt = datos[0]['Parcialmente pagado'] + datos[1]['count Impagado'] + datos[2]['count Pagadas'];
+                        "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
 
-                                plantillaMtPagadas =
-                                `
-                                <h3 class="mb-2 fw-semibold">$${mtPagadas}</h3>
-                                `
-                                $('#mtPagadas').append(plantillaMtPagadas)
+                    },
 
-                                plantillaMtPorPagar =
-                                `
-                                <h3 class="mb-2 fw-semibold">$${mtPorPagar}</h3>
-                                `
-                                $('#mtPorPagar').append(plantillaMtPorPagar)
+                    columns: [
+                        {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
+                        // {title: "ID Factura", data: "InvoiceId" },
+                        {title: "Numero Factura", data: "InvoiceNumber" },
+                        // {title: "Fecha Factura",  data: "InvoiceDate" },
+                        // {title: "Descripción", data: "Description" },
+                        {title: "Saldo",
+                            data: function ( d ) {
 
-                                plantillaMtPagadasConNovedad =
-                                `
-                                <h3 class="mb-2 fw-semibold">$${mtPagadasConNovedad}</h3>
-                                `
-                                $('#mtPagadasConNovedad').append(plantillaMtPagadasConNovedad)
+                                const formatterDolar = new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })
 
-                                plantillaTotalFt =
-                                `
-                                <h3 class="mb-2 fw-semibold">$${totalFt}</h3>
-                                `
-                                $('#totalFt').append(plantillaTotalFt)
-                                Loader();
-                                // console.log(datos[2]['Paid']);
+                                return formatterDolar.format( d.invoiceInstallments[0]["UnpaidAmount"] );
                             }
                         },
-                        error: function(error){
-                            console.error(error);
-                        }
-                    })
+                        // {title: "ValidationStatus", data: "ValidationStatus"},
+                        {title: "Valor Factura",
+                            data: function ( d ) {
+
+                                const formatterDolar = new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })
+
+                                return formatterDolar.format(d.InvoiceAmount);
+                            }
+                        },
+                        {title: "Monto Pagado",
+                            data: function ( d ) {
+                                const formatterDolar = new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })
+
+                                return formatterDolar.format(d.AmountPaid);
+
+                            }
+                        },
+                        // {title: "Cuenta bancaria",
+                        //     data: function ( d ) {
+                        //         return d.invoiceInstallments[0]["BankAccount"]}
+                        // },
+                        {title: "Fecha Vencimiento",
+                            data: function ( d ) {
+
+                                // create a new `Date` object
+                                var today = new Date();
+
+                                // `getDate()` returns the day of the month (from 1 to 31)
+                                var day = today.getDate();
+
+                                // `getMonth()` returns the month (from 0 to 11)
+                                var month = today.getMonth() + 1;
+
+                                // `getFullYear()` returns the full year
+                                var year = today.getFullYear();
+
+                                var date1 = new Date(d.invoiceInstallments[0]["DueDate"]);
+                                var date2 = new Date (`${year}-${month}-${day}`);
+                                var dateDefined = date1 - date2;
+                                var dias =  dateDefined/(1000*60*60*24);
+                                if ( dias < 0 && d.PaidStatus != 'Pagadas') {
+                                    return 'dentro de la programacion de pago';
+                                }
+                                if(d.PaidStatus == 'Pagadas'){
+                                    return 'Pagada';
+                                }
+                                return ('El pago se le generara dentro de ' + dias + ' Dias');
+                            }
+                        },
+                        // {title: "Tipo de Factura", data: "InvoiceType" },
+                        // {title: "Pago realizado", data: "AccountingDate" }
+
+
+
+                    ],
+
+                    columnDefs: [
+                        { responsivePriority: 1, targets: 0 },
+                        { responsivePriority: 1, targets: 1 },
+                        { responsivePriority: 1, targets: 2 },
+                        { responsivePriority: 1, targets: 3 },
+                        { responsivePriority: 1, targets: 4 },
+                        { responsivePriority: 1, targets: 5 },
+                        // { responsivePriority: 1, targets: 6 },
+                    ],
+
+                });
+                let validacionButton = function (Card) {
+                    if (Card == "#oculto-pagadas" ) {
+                        if( $("#oculto-pagadas").css("display") == 'none' )
+                        $("#oculto-pagadas").show("slow");
+                        else
+                        $("#oculto-pagadas").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
+
+                    }
+                    else if(Card == "#oculto-por-pagar")  {
+
+                        if( $("#oculto-por-pagar").css("display") == 'none' )
+                        $("#oculto-por-pagar").show("slow");
+                        else
+                        $("#oculto-por-pagar").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
+                    }
+                    else if (Card == "#oculto-pagadas-con-novedad") {
+
+                        if( $("#oculto-pagadas-con-novedad").css("display") == 'none' )
+                        $("#oculto-pagadas-con-novedad").show("slow");
+                        else
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
+                    }
+                    else if(Card == "#oculto-canceladas"){
+
+                        if( $("#oculto-canceladas").css("display") == 'none' )
+                        $("#oculto-canceladas").show("slow");
+                        else
+                        $("#oculto-canceladas").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
+                    }
+                    else if(Card == "#oculto-descuentos"){
+
+                        if( $("#oculto-descuentos").css("display") == 'none' )
+                        $("#oculto-descuentos").show("slow");
+                        else
+                        $("#oculto-descuentos").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-descuentos-pendientes").css("display") != 'none')
+                        $("#oculto-descuentos-pendientes").hide("slow");
+                    }
+                    else if(Card == "#oculto-descuentos-pendientes"){
+                        if( $("#oculto-descuentos-pendientes").css("display") == 'none' )
+                        $("#oculto-descuentos-pendientes").show("slow");
+                        else
+                        $("#oculto-descuentos-pendientes").hide("slow");
+
+                        // validamos que no se muestren todas al tiempo
+                        if($("#oculto-pagadas").css("display") != 'none')
+                        $("#oculto-pagadas").hide("slow");
+
+                        if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                        $("#oculto-pagadas-con-novedad").hide("slow");
+
+                        if($("#oculto-por-pagar").css("display") != 'none')
+                        $("#oculto-por-pagar").hide("slow");
+
+                        if($("#oculto-canceladas").css("display") != 'none')
+                        $("#oculto-canceladas").hide("slow");
+
+                        if($("#oculto-descuentos").css("display") != 'none')
+                        $("#oculto-descuentos").hide("slow");
+                    }
                 }
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('falturas.pagadas') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        SupplierNumber: {{$SupplierNumber}},
+                        FlagStatus: FlagStatus,
+                        PaidStatus: PaidStatus,
+                        InvoiceType: InvoiceType,
+                        ValidationStatus: ValidationStatus,
+                        startDate: startDate,
+                        endDate: endDate
+
+                    },
+                    success: function(response) {
+                        let datos =  response.data;
+                        // var invoiceInstallments = datos[0].invoiceInstallments;
+                        if (response.success == true) {
+                            // console.log(datos);
+                            tblColectionData.clear().draw();
+                            tblColectionData.rows.add(datos).draw();
+
+                            validacionButton(Card);
+
+                            swal.close();
+                        }else {
+                            swal.close();
+                            Loader();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: datos,
+                            })
+                        }
+                    },
+                    error: function(error){
+                        swal.close();
+                        Loader();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Algo fallo con la respuesta!',
+                        })
+                        console.error(error);
+                    }
+                })
+
             }
-        })
-    }
-</script>
+            // load inicial, se visualiza al seleccionar un opcion de las facturas
+            let Loader = function(){
+                Swal.fire({
+                title: 'Cargando Facturas!',
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                },
+                })
+            }
+            // load secundario, se visualiza al momento pasas de una opcion de facturas a otro siempre y cuando se estan visualizando la tabla de facturas
+            let LoaderView = function(){
+                Swal.fire({
+                title: 'Cargando visualización de la factura!',
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                },
+                })
+            }
+
+            // Filtros
+            $('#btnPrFiltr').on('click', function(e){
+                var InvoiceType = document.getElementById("tipoFactura").value;
+                var ValidationStatus = document.getElementById("ValidationStatus").value;
+                var startDate = document.getElementById("startDate").value;
+                var endDate = document.getElementById("endDate").value;
+                tblColectionData.clear().draw();
+                Loader();
+                LoadData("", "false", "#TablaFacturasAll",InvoiceType,ValidationStatus,"",startDate,endDate);
+                obtener_data("#TablaFacturasAll tbody", tblColectionData);
+            });
+            // Fin
+
+            // Botones de consultar las facturas Divididas
+            $('#pagadas').on('click', function(e){
+                e.preventDefault();
+                Loader();
+                LoadData("Pagadas", "false", "#TablePagadas","Estándar","","#oculto-pagadas","","");
+                obtener_data("#TablePagadas tbody", tblColectionData);
+
+            });
+
+            $("#por-pagar").click(function(e) {
+                e.preventDefault();
+                Loader();
+                LoadData("Impagado", "false", "#TablePorPagar","","","#oculto-por-pagar","","");
+                obtener_data("#TablePorPagar tbody", tblColectionData);
+            });
+
+            $("#pagadas-con-novedad").click(function(e) {
+                e.preventDefault();
+                Loader();
+                LoadData("parsialmente pagada", "true", "#TablePagadasNovedad","","","#oculto-pagadas-con-novedad","","");
+                obtener_data("#TablePagadasNovedad tbody", tblColectionData);
+
+            });
+
+            $("#descuentos").click(function(e) {
+                e.preventDefault();
+                Loader();
+                LoadData("Pagadas", "false", "#TableDescuento","Nota de crédito","","#oculto-descuentos","","");
+                obtener_data("#TableDescuento tbody", tblColectionData);
+            });
+
+            $("#descuentos-pendientes").click(function(e) {
+                e.preventDefault();
+                Loader();
+                LoadData("Impagado", "true", "#TableDescuentoPendiente","Nota de crédito","","#oculto-descuentos-pendientes","","");
+                obtener_data("#TableDescuentoPendiente tbody", tblColectionData);
+            });
+
+            // $("#canceladas").click(function(e) {
+            //     e.preventDefault();
+            //     Loader();
+            //     LoadData("", "true", "#TableCanceladas","","","#oculto-canceladas","","");
+            //     obtener_data("#TableCanceladas tbody", tblColectionData);
+            // });
+            // Fin
+
+            // Botones Principales
+            $("#facturas-all").click(function(e) {
+                e.preventDefault();
+                console.log('ff');
+                Loader();
+                LoadData("", "false", "#TablaFacturasAll","","","","","");
+                obtener_data("#TablaFacturasAll tbody", tblColectionData);
+
+                if( $("#FacturasGenerales").css("display") == 'none' )
+                $("#FacturasGenerales").show("slow");
+                else
+                $("#FacturasGenerales").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#FacturasDivididas").css("display") != 'none')
+                $("#FacturasDivididas").hide("slow");
+
+            });
+
+            $("#facturas-lotes").click(function(e) {
+                e.preventDefault();
+                if( $("#FacturasDivididas").css("display") == 'none' )
+                $("#FacturasDivididas").show("slow");
+                else
+                $("#FacturasDivididas").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#FacturasGenerales").css("display") != 'none')
+                $("#FacturasGenerales").hide("slow");
+
+            });
+            // Fin
+
+
+            $("#closet-modal").click(function(e) {
+                // document.getElementById("global-loader3").style.display = "none";
+                $("#global-loader3").modal('hide');//ocultamos el modal
+
+            });
+
+            // visualizar facturas individuales
+            let obtener_data = function(tbody, table){
+                $(tbody).on("click", "button.ver", function(){
+                    // Activar el spiner de cargar al momento de visualizar la factura
+                    // document.getElementById("global-loader3").style.display = "";
+                    LoaderView();
+                    //Fin
+
+                    // Cargamos los datos de la factura al modal
+                    let invoice = table.row($(this).parents("tr") ).data();
+                    plantillaDate = '';
+                    plantiilabody = '';
+                    plantillarow1 = '';
+                    plantillarow2 = '';
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('invoice.lines') }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            invoice: invoice
+                        },
+                        success : function(response) {
+                            let invoice = response.data.invoiceData
+                            let lines = response.data.invoiceLines
+
+                            if (response.success == true) {
+                                // console.log(invoice.PaidStatus);
+                                $('#date').html('')
+                                plantillaDate = `
+                                    <div class="col-md-4 align-self-center">
+                                        <img src="{{asset('assets/images/logos-tractocar/negative-blue-small.png')}}" alt="logo-small" class="logo-sm mr-2" height="56">
+                                        {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
+                                        <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
+                                    </div><!--end col-->
+                                    <div class="col-md-4 ms-auto">
+                                        <ul class="list-inline mb-0 contact-detail float-right" >
+                                            <li class="list-inline-item">
+                                                <div class="pl-3">
+                                                    <h6 class="mb-0"><b>@lang('locale.Invoice Date') : ${invoice.InvoiceDate}</b> </h6>
+                                                    <h6><b>@lang('locale.Invoice Number'):</b> # ${invoice.InvoiceId}</h6>
+                                                </div>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <div class="pl-3">
+                                                    <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> $${invoice.InvoiceAmount}</h5>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div><!--end col-->
+
+                                `
+                                $('#date').append(plantillaDate)
+
+                                if (invoice.CanceledFlag == 1) {
+                                    $('#body').html('')
+                                    plantiilabody = `
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                <strong>@lang('locale.Canceled')!</strong> @lang('locale.The invoice has been canceled').
+                                            </div>
+                                    `
+                                    $('#body').append(plantiilabody)
+                                }
+
+                                $('#row1').html('')
+                                plantillarow1 = `
+                                    <div class="col-md-4">
+                                        <div class="float-left">
+                                            <address class="font-13">
+                                                <strong class="font-14"> @lang('locale.Supplier') :</strong><br>
+                                                ${ invoice.Supplier }<br>
+                                                ${ invoice.SupplierSite }<br>
+                                            </address>
+                                            <address class="font-13">
+                                                <strong class="font-14">@lang('locale.Third-party sites'):</strong><br>
+                                                ${ invoice.Party }<br>
+                                                ${ invoice.PartySite }<br>
+                                            </address>
+                                        </div>
+                                    </div><!--end col-->
+
+                                    <div class="col-md-4">
+                                        <div class="float-left">
+                                            <h6><b>@lang('locale.Invoice Type') :</b>
+                                                ${
+                                                    invoice.InvoiceType
+                                                }
+                                            </h6>
+                                            <h6 class="mb-0"><b>@lang('locale.Payment status') : </b>
+                                                ${  invoice.PaidStatus
+                                                }
+                                            </h6>
+                                            <h6><b>@lang('locale.Validation Status') :</b>
+                                                ${
+                                                    invoice.ValidationStatus
+                                                }
+                                            </h6>
+                                        </div>
+                                    </div><!--end col-->
+
+                                    <div class="col-md-4">
+                                        <div class="text-left bg-light p-3 mb-3">
+                                            <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
+                                            <h6 class="font-13">@lang('locale.Accounting Date') : ${ invoice.AccountingDate }</h6>
+                                            <h6 class="font-13">@lang('locale.Document Category') :
+                                                ${
+                                                    invoice.DocumentCategory = "Prepayment Invoices" ? 'Facturas de anticipo' : 'Facturas Estandar'
+                                                }
+                                                </h6>
+                                            <h6 class="font-13">@lang('locale.Document Sequence') : ${ invoice.DocumentSequence }</h6>
+                                        </div>
+                                    </div><!--end col-->
+                                `
+                                $('#row1').append(plantillarow1)
+
+                                $('#row2').html('')
+                                lines.forEach(line => {
+                                    plantillarow2 = `
+                                        <tr>
+                                            <td >
+                                                <h5 class="mt-0 mb-1">${ line.LineType }</h5>
+                                                <p class="mb-0 text-muted">${ line.Description }.</p>
+                                            </td>
+                                            <td>$ ${ line.LineAmount }</td>
+                                        </tr><!--end tr-->
+                                    `
+                                    $('#row2').append(plantillarow2)
+                                });
+
+                            }
+                            swal.close();
+                            $('#exampleModalToggle').modal('show');
+                        },
+                        error: function(error){
+                        console.error(error);
+                    }
+                    //Fin
+                    });
+
+                });
+            }
+
+        </script>
+    @endcan
+
 
 @endsection

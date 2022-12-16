@@ -26,7 +26,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>CEDULA</td>
-                                                        <td>{{$arrayResultLocal['document_type']}}</td>
+                                                        <td>{{$arrayResultLocal['number_id']}}</td>
                                                         <td>{{$arrayResultOtm['locationXid']}}</td>
                                                         <td>{{$arrayResultErp['TaxpayerId']}}</td>
                                                     </tr>
@@ -39,9 +39,9 @@
                                                     </tr>
                                                     <tr>
                                                         <td>EMAIL</td>
-                                                        <td>{{$arrayResultLocal['email']}}</td>
-                                                        <td>{{$arrayResultOtm['emailAddress']}}</td>
-                                                        <td>{{$arrayResultErp['emailAddress']}}</td>
+                                                        <td><a href="mailto:{{$arrayResultLocal['email']}}">{{$arrayResultLocal['email']}} </a></td>
+                                                        <td><a href="mailto:{{$arrayResultOtm['emailAddress']}}">{{$arrayResultOtm['emailAddress']}} </a></td>
+                                                        <td><a href="mailto:{{$arrayResultErp['emailAddress']}}">{{$arrayResultErp['emailAddress']}} </a></td>
 
                                                     </tr>
                                                     <tr>
@@ -54,8 +54,8 @@
                                                     <tr>
                                                         <td>ESTADO</td>
                                                         <td>
-                                                            <span class="badge rounded-pill bg-{{($arrayResultLocal['estado']) != 3 ? 'success' :
-                                                            'danger' }} my-1">{{($arrayResultLocal['estado']) == 2 ?
+                                                            <span class="badge rounded-pill bg-{{($arrayResultLocal['estado']) != 'RECHAZADO' ? 'success' :
+                                                            'danger' }} my-1">{{($arrayResultLocal['estado']) == 'CONFIRMADO' ?
                                                                 'ACTIVO' :
                                                                 'DESACTIVADO'}}
                                                             </span>
@@ -92,56 +92,3 @@
 
 @endsection
 
-@section('scripts')
-
-<script>
-    // $("#disparador-consultar").click(function() {
-
-            //     let inputValue = document.querySelector("#numeroIdentificacion").value;
-            //     let plantillaTablaUniversitarios = ''
-            //     if(nIdentificacion != '')
-            //     {
-            //         $.ajax({
-            //             url: "consultaOTM/afiliado?nIdentificacion",
-            //             // data: {inputValue},
-            //             method: 'post',
-            //             success: (response) => {
-            //                 let responseData = response.responseData
-            //                 plantillaTablaAfiliados =
-            //                 `
-            //                 <tr>
-            //                     <td>${ responseData.firstName } ${ responseData.lastName}</td>
-            //                     <td>${ responseData.contactXid }</td>
-            //                     <td>${ responseData.emailAddress }</td>
-            //                     <td>${ responseData.phone1 }</td>
-            //                 </tr>
-            //                 `
-
-            //                 /** insertamos el html dentro de la etiqueta */
-            //                 $('#tablaAfiliados').append(plantillaTablaAfiliados)
-
-            //             },
-            //             error: function (data) {
-            //                 Swal.fire({
-            //                 icon: 'error',
-            //                 title: 'Oops...',
-            //                 text: 'No se encontro ningun registro en OTM con el numero de identificacion ingresado!',
-            //             })
-            //           }
-            //         })
-            //     }
-            //     else
-            //     {
-            //             Swal.fire({
-            //             icon: 'error',
-            //             title: 'Oops...',
-            //             text: 'Ingrese el numero de Identificacion antes de consultar!',
-            //         })
-            //     }
-            //     // document.querySelector("#valueInput").innerHTML = `First input value: ${inputValue1}`;
-            //     // console.log(inputValue);
-            // });
-
-</script>
-
-@endsection
