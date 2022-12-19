@@ -103,7 +103,7 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
-                                                    class="btn btn-icon btn-info-light me-2" data-bs-toggle="tooltip"
+                                                    class="btn btn-icon btn-info-light me-2" id="consultAfiliado" data-bs-toggle="tooltip"
                                                     data-bs-original-title="Validar Informacion">
                                                     <i class="fa fa-user"></i>
                                                 </a>
@@ -131,7 +131,7 @@
                                                 @case('CONFIRMADO')
                                                     @if ($usuario->rol->rol_nombre['name'] == 'Cliente')
                                                         <a href="{{ route('blogs.index',['id' => $usuario->id]) }}"
-                                                            class="btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip"
+                                                            class="btn btn-icon btn-primary-light me-2" id="consultFacturas" data-bs-toggle="tooltip"
                                                             data-bs-original-title="Consultar Facturas">
                                                             <i class="fa fa-file-text"></i>
                                                         </a>
@@ -238,6 +238,20 @@
 </script>
 @endif
 <script>
+
+    // load
+        let Loader = function(){
+            Swal.fire({
+            title: 'Espere un momento, estamos consultando la información!',
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+            },
+            })
+        }
+    // Fin
+
     //? cargamos la imagen en el modal
         let alinks = document.getElementsByClassName('aImg')
 
@@ -373,6 +387,15 @@
 
                 // })
         });
+
+        $(document).on('click', "#consultAfiliado", function (e) {
+            Loader();
+        });
+
+        $(document).on("click", "#consultFacturas", function (e) {
+            Loader();
+        });
+
 
 </script>
 
