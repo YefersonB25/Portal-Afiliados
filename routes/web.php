@@ -31,13 +31,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 //? Usuarios-Clientes
-Route::prefix('portar/users')->controller(UsuarioController::class)->middleware('auth')->group(function () {
+Route::prefix('portal/users')->controller(UsuarioController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index', 'can:/usuario.index')->name('usuario.index');
     Route::get('config/{id}', 'checkout')->name('check');
     route::get('edit/{id}', 'edit')->name('edit');
     Route::get('confirmar/{usuario}/{estado}', 'confirmarDatos')->name('usuario.estado');
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
-    Route::post('filtros', 'filtros')->name('user.filtros');
+    Route::post('/', 'filtros')->name('user.filtros');
     Route::resource('portal/usuarios', UsuarioController::class);
 
 });

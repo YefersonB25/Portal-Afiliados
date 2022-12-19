@@ -33,9 +33,9 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        
+        // $usuarios = self::filtros();
         $usuarios = User::where('deleted_at', NULL)->orderBy('updated_at', 'desc')->paginate(20);
         return view('usuarios.index', ['usuarios' => $usuarios]);
         //? al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
@@ -117,15 +117,20 @@ class UsuarioController extends Controller
 
     public function filtros(Request $request)
     {
-        $this->validate($request, [
-            'status' => 'required',
-        ]);
-        if ($request->estado  != 'Todos') {
-            $usuarios = User::where('status', $request->estado)->get();
 
-            return view('usuarios.index', ['usuarios' => $usuarios]);
+        $usuarios = User::orderBy('updated_at', 'desc');
+        //? Filtro por estado
+        if (!empty($request->estado)) {
+            $usuarios->where('status', $request->estado);
         }
-        return redirect('usuarios');
+        //? Filtro por numero de identificacion
+        if (!empty($request->number_id)){
+            $usuarios->where('number_id', $request->number_id);
+        }
+        return response()->json(['success' => true, 'data' => $usuarios->paginate(20)]);
+            return $usuarios->paginate(20);
+            // return response()->json(['success' => true, 'data' => $user]);
+
     }
 
     public function edit($id)

@@ -9,25 +9,28 @@
                 <div class="card-header border-bottom">
                     <div class="row g-2">
                         <h3 class="card-title">Fitros</h3>
-                            <form class="form-horizontal" method="post" action="{{route('user.filtros')}}" novalidate>
+                            <form class="form-horizontal" id="filter" action="{{ route('user.filtros') }}" method="post" novalidate>
                                 @csrf
                                 <div class="row mb-2">
                                     <div class="col-md">
                                         <label for="estado" class="form-label">Filtrar por estado</label>
-                                        <select type="text" name="estado" id="estado" class="form-select" tabindex="3" value="{{ old('estado') }}" autofocus onInput="validarInput()">
+                                        <select type="text" name="estado" id="estado" class="form-control" tabindex="3" value="{{ old('estado') }}" autofocus >
                                             <option selected>Todos</option>
-                                                <option value="NUEVO">NUEVO</option>
-                                                <option value="CONFIRMADO">CONFIRMADO</option>
-                                                <option value="RECHAZADO">RECHAZADO</option>
-                                                <option value="ASOCIADO">ASOCIADO</option>
-
+                                            <option value="NUEVO">NUEVO</option>
+                                            <option value="CONFIRMADO">CONFIRMADO</option>
+                                            <option value="RECHAZADO">RECHAZADO</option>
+                                            <option value="ASOCIADO">ASOCIADO</option>
                                         </select>
                                         <div class="invalid-feedback">
                                             {{ $errors->first('estado') }}
                                         </div>
                                     </div>
+                                    <div class="col-md">
+                                        <label for="number_id" class="form-label">Numero de Identificacion</label>
+                                        <input type="text" name="number_id" id="number_id" class="form-control" tabindex="3" value="{{ old('number_id') }}" autofocus>
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Filtrar</button>
+                                <button type="submit" id="btnFilter" class="btn btn-primary">Filtrar</button>
                             </form>
                     </div>
                 </div>
@@ -101,7 +104,7 @@
                                             <td>
                                                 <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
                                                     class="btn btn-icon btn-info-light me-2" data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Consultar">
+                                                    data-bs-original-title="Validar Informacion">
                                                     <i class="fa fa-user"></i>
                                                 </a>
                                                 @switch($usuario->status)
@@ -126,13 +129,13 @@
                                                 </a>
                                                 @break
                                                 @case('CONFIRMADO')
-                                                @if ($usuario->rol->rol_nombre['name'] == 'Cliente')
-                                                    <a href="{{ route('blogs.index',['id' => $usuario->id]) }}"
-                                                        class="btn btn-icon btn-info-light me-2" data-bs-toggle="tooltip"
-                                                        data-bs-original-title="Consultar facturas">
-                                                        <i class="fa fa-file-text"></i>
-                                                    </a>
-                                                @endif
+                                                    @if ($usuario->rol->rol_nombre['name'] == 'Cliente')
+                                                        <a href="{{ route('blogs.index',['id' => $usuario->id]) }}"
+                                                            class="btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip"
+                                                            data-bs-original-title="Consultar Facturas">
+                                                            <i class="fa fa-file-text"></i>
+                                                        </a>
+                                                    @endif
                                                 @break
                                                 @default
                                                 @break
@@ -174,6 +177,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -351,6 +355,23 @@
                 }
 
             });
+        });
+
+        $(document).on("submit","#filter",function(e){
+            e.preventDefault();//detemos el formluario
+                $.ajax({
+                    type: $('#filter').attr('method'),
+                    headers: {
+                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                    url: $('#filter').attr('action'),
+                    data: $('#filter').serialize(),
+                    success: function (res) {
+                        console.log(res.data);
+                    }
+                });
+
+                // })
         });
 
 </script>

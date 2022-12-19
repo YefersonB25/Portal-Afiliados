@@ -181,7 +181,8 @@ class ConsultarAfiliadoController extends Controller
         $params      =  [
             'limit'    => '20',
             'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
-            'onlyData' => 'true'
+            'onlyData' => 'true',
+            'orderBy' => 'AccountingDate:desc'
         ];
 
         try {

@@ -66,6 +66,17 @@
                                 </div>
 
                                 <div class="wrap-input100 validate-input">
+                                    <select class="form-select" name="document_type" aria-label=".form-select-sm example" required>
+                                        <option selected value="">Seleccione tipo Documento</option>
+                                        <option value="NIT">NIT</option>
+                                        <option value="CC">Cedula de Ciudadania</option>
+                                      </select>
+                                      <div class="invalid-feedback">
+                                        {{ $errors->first('document_type') }}
+                                    </div>
+                                </div>
+
+                                <div class="wrap-input100 validate-input">
                                     <input id="number_id"
                                         type="number"
                                         class="input100{{ $errors->has('number_id') ? ' is-invalid' : '' }}"
@@ -79,17 +90,6 @@
                                     <span class="symbol-input100">
                                         <i class="fa fa-address-card" aria-hidden="true"></i>
                                     </span>
-                                </div>
-
-                                <div class="wrap-input100 validate-input">
-                                    <select class="form-select" name="document_type" aria-label=".form-select-sm example" required>
-                                        <option selected value="">Seleccione tipo Documento</option>
-                                        <option value="NIT">NIT</option>
-                                        <option value="CC">Cedula de Ciudadania</option>
-                                      </select>
-                                      <div class="invalid-feedback">
-                                        {{ $errors->first('document_type') }}
-                                    </div>
                                 </div>
 
                                 <div class="wrap-input100 validate-input">
