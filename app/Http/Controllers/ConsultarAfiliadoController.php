@@ -62,11 +62,11 @@ class ConsultarAfiliadoController extends Controller
         try {
 
             $user = DB::table('relationship')
-            ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
-            ->where('relationship.user_assigne_id',  Auth::user()->id)
-            ->where('relationship.deleted_at', '=', null)
-            ->select('users.number_id')
-            ->first();
+                ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+                ->where('relationship.user_assigne_id',  Auth::user()->id)
+                ->where('relationship.deleted_at', '=', null)
+                ->select('users.number_id')
+                ->first();
 
             $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
 
@@ -268,11 +268,11 @@ class ConsultarAfiliadoController extends Controller
     {
         try {
             $user = DB::table('relationship')
-            ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
-            ->where('relationship.user_assigne_id',  Auth::user()->id)
-            ->where('relationship.deleted_at', '=', null)
-            ->select('users.number_id')
-            ->first();
+                ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+                ->where('relationship.user_assigne_id',  Auth::user()->id)
+                ->where('relationship.deleted_at', '=', null)
+                ->select('users.number_id')
+                ->first();
 
             $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
             $params = [
@@ -402,7 +402,7 @@ class ConsultarAfiliadoController extends Controller
             $responseDataArrayErp = $responseErp->object();
             if ($responseDataArrayErp->count > 0) {
                 $resultErp = $responseDataArrayErp->items[0];
-                $resultAddressErp = $resultErp->addresses[0];
+                $resultAddressErp = $resultErp->addresses->items[0];
                 $arrayResultErp =
                     [
                         'TaxpayerId'   => $resultErp->TaxpayerId,
@@ -439,11 +439,11 @@ class ConsultarAfiliadoController extends Controller
         if ($request->userId != '') {
 
             $user = DB::table('relationship')
-            ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
-            ->where('relationship.user_assigne_id',  $request->userId)
-            ->where('relationship.deleted_at', '=', null)
-            ->select('users.*')
-            ->first();
+                ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+                ->where('relationship.user_assigne_id',  $request->userId)
+                ->where('relationship.deleted_at', '=', null)
+                ->select('users.*')
+                ->first();
 
             return response()->json(['success' => true, 'data' => $user]);
         }

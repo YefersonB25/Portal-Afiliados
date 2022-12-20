@@ -10,121 +10,162 @@
                     <!-- CONTAINER -->
 
                     {{-- Botones facturas --}}
-                        <div class="card overflow-hidden">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <a id="por-pagar" class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;" data-bs-original-title="Facturas por pagar">
-                                            <div class="card-body">
-                                                <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura-proceso-pago-modulo-1.png')}}">
-                                            </div>
-                                            <h5 class="card-title">Facturas por pagar</h5>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;" data-bs-original-title="Facturas en transporte">
-                                            <div class="card-body">
-                                                <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura-en-viaje-modulo-2.png')}}">
-                                            </div>
-                                            <h5 class="card-title">Facturas en transporte</h5>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a id="pagadas-con-novedad" class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;" data-bs-original-title="Facturas con novedad">
-                                            <div class="card-body">
-                                                <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/facturas-bloqueadas-modulo-3.png')}}">
-                                            </div>
-                                            <h5 class="card-title">Facturas con novedad</h5>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a id="facturas-all" class="card text-center btn btn-icon btn-primary-light me-2" data-bs-toggle="tooltip"
-                                            style="width: 16rem; height: 18rem;" data-bs-original-title="Todas las facturas">
-                                            <div class="card-body">
-                                                <img class="card-img-top" src="{{asset('assets/images/invoiceIcon/factura.png')}}">
-                                            </div>
+                    <div class="card overflow-hidden">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <a id="por-pagar" class="card text-center btn btn-icon btn-primary-light me-2"
+                                        data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                        data-bs-original-title="Facturas por pagar">
+                                        <div class="card-body">
+                                            <img class="card-img-top"
+                                                src="{{asset('assets/images/invoiceIcon/factura-proceso-pago-modulo-1.png')}}">
+                                        </div>
+                                        <h5 class="card-title">Facturas por pagar</h5>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a class="card text-center btn btn-icon btn-primary-light me-2"
+                                        data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                        data-bs-original-title="Facturas en transporte">
+                                        <div class="card-body">
+                                            <img class="card-img-top"
+                                                src="{{asset('assets/images/invoiceIcon/factura-en-viaje-modulo-2.png')}}">
+                                        </div>
+                                        <h5 class="card-title">Facturas en transporte</h5>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a id="pagadas-con-novedad"
+                                        class="card text-center btn btn-icon btn-primary-light me-2"
+                                        data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                        data-bs-original-title="Facturas con novedad">
+                                        <div class="card-body">
+                                            <img class="card-img-top"
+                                                src="{{asset('assets/images/invoiceIcon/facturas-bloqueadas-modulo-3.png')}}">
+                                        </div>
+                                        <h5 class="card-title">Facturas con novedad</h5>
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a id="facturas-all" class="card text-center btn btn-icon btn-primary-light me-2"
+                                        data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                        data-bs-original-title="Todas las facturas">
+                                        <div class="card-body">
+                                            <img class="card-img-top"
+                                                src="{{asset('assets/images/invoiceIcon/factura.png')}}">
+                                        </div>
                                         <h5 class="card-title">Todas las facturas</h5>
-                                        </a>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     {{-- Fin --}}
 
                     {{-- Card de tablas de facturas --}}
-                        <div class="collapse" id="FacturasGenerales" style="display: none">
-                            <body class="ltr app sidebar-mini light-mode">
-                                <div class="row row-sm">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <!-- CONTAINER -->
-                                                <div class="main-container container-fluid">
-                                                    <div class="card" id="facturas-all">
-                                                        <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                                            </h3>
-                                                        <div class="card-header border-bottom">
-                                                            <div class="row g-2">
-                                                                <h3 class="card-title">Fitros</h3>
-                                                                <div class="form-horizontal">
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-md">
-                                                                            <label for="tipoFactura" class="form-label">tipo de factura</label>
-                                                                            <select type="text" name="tipoFactura" id="tipoFactura" class="form-select" tabindex="3" value="{{ old('tipoFactura') }}" autofocus>
-                                                                                <option selected value="">Todos</option>
-                                                                                <option value="Pago por adelantado">Anticipo</option>
-                                                                                <option value="Estándar">Estandar</option>
-                                                                                <option value="Nota de crédito">Nota Credito</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-md">
-                                                                            <label for="ValidationStatus" class="form-label">Estado</label>
-                                                                            <select type="text" name="ValidationStatus" id="ValidationStatus" class="form-select" tabindex="3" value="{{ old('ValidationStatus') }}" autofocus>
-                                                                                <option selected value="">Todos</option>
-                                                                                <option value="Cancelada">Cancelada</option>
-                                                                                <option value="Validada">Validada</option>
-                                                                                <option value="Necesita revalidación">Necesita revalidación</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-md">
-                                                                            <label for="PaidStatus" class="form-label">Estado Pago</label>
-                                                                            <select type="text" name="PaidStatus" id="PaidStatus" class="form-select" tabindex="3" value="{{ old('PaidStatus') }}" autofocus>
-                                                                                <option selected value="">Todos</option>
-                                                                                <option value="Pagadas">Pagadas</option>
-                                                                                <option value="Impagado">Impagado</option>
-                                                                                <option value="parsialmente pagada">parsialmente pagada</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-md">
-                                                                            <label for="CanceledFlag" class="form-label">Bandera cancelada</label>
-                                                                            <select type="text" name="CanceledFlag" id="CanceledFlag" class="form-select" tabindex="3" value="{{ old('CanceledFlag') }}" autofocus>
-                                                                                <option selected value="false">No</option>
-                                                                                <option value="true">Si</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-md">
-                                                                            <label for="startDate" class="form-label">Fecha Inicio</label>
-                                                                            <input type="date" name="startDate" id="startDate" class="form-select" tabindex="3" value="{{ old('startDate') }}" autofocus>
-                                                                        </div>
-                                                                        <div class="col-md">
-                                                                            <label for="endDate" class="form-label">Fecha Fin</label>
-                                                                            <input type="date" name="endDate" id="endDate" class="form-select" tabindex="3" value="{{ old('endDate') }}" autofocus>
-                                                                        </div>
+                    <div class="collapse" id="FacturasGenerales" style="display: none">
+
+                        <body class="ltr app sidebar-mini light-mode">
+                            <div class="row row-sm">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <!-- CONTAINER -->
+                                            <div class="main-container container-fluid">
+                                                <div class="card" id="facturas-all">
+                                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                    </h3>
+                                                    <div class="card-header border-bottom">
+                                                        <div class="row g-2">
+                                                            <h3 class="card-title">Fitros</h3>
+                                                            <div class="form-horizontal">
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md">
+                                                                        <label for="tipoFactura" class="form-label">tipo
+                                                                            de factura</label>
+                                                                        <select type="text" name="tipoFactura"
+                                                                            id="tipoFactura" class="form-select"
+                                                                            tabindex="3"
+                                                                            value="{{ old('tipoFactura') }}" autofocus>
+                                                                            <option selected value="">Todos</option>
+                                                                            <option value="Pago por adelantado">Anticipo
+                                                                            </option>
+                                                                            <option value="Estándar">Estandar</option>
+                                                                            <option value="Nota de crédito">Nota Credito
+                                                                            </option>
+                                                                        </select>
                                                                     </div>
-                                                                    <button type="submit" class="btn btn-primary" id="btnPrFiltr">Filtrar</button>
+                                                                    <div class="col-md">
+                                                                        <label for="ValidationStatus"
+                                                                            class="form-label">Estado</label>
+                                                                        <select type="text" name="ValidationStatus"
+                                                                            id="ValidationStatus" class="form-select"
+                                                                            tabindex="3"
+                                                                            value="{{ old('ValidationStatus') }}"
+                                                                            autofocus>
+                                                                            <option selected value="">Todos</option>
+                                                                            <option value="Cancelada">Cancelada</option>
+                                                                            <option value="Validada">Validada</option>
+                                                                            <option value="Necesita revalidación">
+                                                                                Necesita revalidación</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md">
+                                                                        <label for="PaidStatus"
+                                                                            class="form-label">Estado Pago</label>
+                                                                        <select type="text" name="PaidStatus"
+                                                                            id="PaidStatus" class="form-select"
+                                                                            tabindex="3" value="{{ old('PaidStatus') }}"
+                                                                            autofocus>
+                                                                            <option selected value="">Todos</option>
+                                                                            <option value="Pagadas">Pagadas</option>
+                                                                            <option value="Impagado">Impagado</option>
+                                                                            <option value="parsialmente pagada">
+                                                                                parsialmente pagada</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md">
+                                                                        <label for="CanceledFlag"
+                                                                            class="form-label">Bandera cancelada</label>
+                                                                        <select type="text" name="CanceledFlag"
+                                                                            id="CanceledFlag" class="form-select"
+                                                                            tabindex="3"
+                                                                            value="{{ old('CanceledFlag') }}" autofocus>
+                                                                            <option selected value="false">No</option>
+                                                                            <option value="true">Si</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md">
+                                                                        <label for="startDate" class="form-label">Fecha
+                                                                            Inicio</label>
+                                                                        <input type="date" name="startDate"
+                                                                            id="startDate" class="form-select"
+                                                                            tabindex="3" value="{{ old('startDate') }}"
+                                                                            autofocus>
+                                                                    </div>
+                                                                    <div class="col-md">
+                                                                        <label for="endDate" class="form-label">Fecha
+                                                                            Fin</label>
+                                                                        <input type="date" name="endDate" id="endDate"
+                                                                            class="form-select" tabindex="3"
+                                                                            value="{{ old('endDate') }}" autofocus>
+                                                                    </div>
                                                                 </div>
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    id="btnPrFiltr">Filtrar</button>
                                                             </div>
                                                         </div>
-                                                        <div class="card-body">
-                                                            <div class="row row-sm">
-                                                                <div class="col-lg-12">
-                                                                    <div class="card">
-                                                                        <div class="card-body">
-                                                                            <div class="table-responsive">
-                                                                                <table id="TablaFacturasAll"
-                                                                                    class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                                                </table>
-                                                                            </div>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row row-sm">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table id="TablaFacturasAll"
+                                                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                            </table>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -136,127 +177,130 @@
                                         </div>
                                     </div>
                                 </div>
-                            </body>
-                        </div>
+                            </div>
+                        </body>
+                    </div>
 
-                        <div class="card" id="oculto-por-pagar" style="display: none">
-                            <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                POR PAGAR </h3>
-                            <div class="card-body">
-                                <div class="row row-sm">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table id="TablePorPagar"
-                                                        class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                    </table>
-                                                </div>
+                    <div class="card" id="oculto-por-pagar" style="display: none">
+                        <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                            POR PAGAR </h3>
+                        <div class="card-body">
+                            <div class="row row-sm">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="TablePorPagar"
+                                                    class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
-                            <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS</h3>
-                            <div class="card-body">
-                                <div class="row row-sm">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table id="TablePagadasNovedad"
-                                                        class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                    </table>
-                                                </div>
+                    <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
+                        <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS</h3>
+                        <div class="card-body">
+                            <div class="row row-sm">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="TablePagadasNovedad"
+                                                    class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                     {{-- Fin --}}
 
                     {{-- Modal de visualizacionde facturas --}}
-                        <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-xl">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-lg-12 mx-auto">
-                                            <div class="modal-content">
-                                                <div class="card">
-                                                    <div class="card-body invoice-head">
-                                                        <div class="row" id="date">
+                    <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12 mx-auto">
+                                        <div class="modal-content">
+                                            <div class="card">
+                                                <div class="card-body invoice-head">
+                                                    <div class="row" id="date">
 
-                                                        </div>
-                                                        <!--end row-->
                                                     </div>
-                                                    <!--end card-body-->
-                                                    <div class="card-body" id="body">
-                                                        <div class="row" id="row1">
-                                                        </div>
-                                                        <!--end row-->
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="table-responsive project-invoice">
-                                                                    <table class="table table-bordered mb-0">
-                                                                        <thead class="thead-light">
-                                                                            <tr>
-                                                                                <th>@lang('locale.Description')</th>
-                                                                                <th>@lang('locale.Amount')</th>
-                                                                            </tr>
-                                                                            <!--end tr-->
-                                                                        </thead>
-                                                                        <tbody id="row2">
+                                                    <!--end row-->
+                                                </div>
+                                                <!--end card-body-->
+                                                <div class="card-body" id="body">
+                                                    <div class="row" id="row1">
+                                                    </div>
+                                                    <!--end row-->
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="table-responsive project-invoice">
+                                                                <table class="table table-bordered mb-0">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th>@lang('locale.Description')</th>
+                                                                            <th>@lang('locale.Amount')</th>
+                                                                        </tr>
+                                                                        <!--end tr-->
+                                                                    </thead>
+                                                                    <tbody id="row2">
 
 
-                                                                        </tbody>
-                                                                    </table>
-                                                                    <!--end table-->
-                                                                </div>
-                                                                <!--end /div-->
+                                                                    </tbody>
+                                                                </table>
+                                                                <!--end table-->
                                                             </div>
-                                                            <!--end col-->
+                                                            <!--end /div-->
                                                         </div>
-                                                        <!--end row-->
+                                                        <!--end col-->
+                                                    </div>
+                                                    <!--end row-->
 
 
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-lg-12">
-                                                                <h5 class="mt-4"><i
-                                                                        class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
-                                                                    :</h5>
-                                                            </div>
-                                                            <!--end col-->
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-lg-12">
+                                                            <h5 class="mt-4"><i
+                                                                    class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
+                                                                :</h5>
                                                         </div>
-                                                        <!--end row-->
-                                                        <div class="row d-flex justify-content-center">
-                                                            <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
-                                                                <div class="text-center"><small class="font-12">Tractocar
+                                                        <!--end col-->
+                                                    </div>
+                                                    <!--end row-->
+                                                    <div class="row d-flex justify-content-center">
+                                                        <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
+                                                            <div class="text-center"><small class="font-12">Tractocar
                                                                     Logistics SAS.</small>
-                                                                </div>
                                                             </div>
-                                                            <!--end col-->
                                                         </div>
-                                                        <!--end row-->
+                                                        <!--end col-->
                                                     </div>
-                                                    <!--end card-body-->
+                                                    <!--end row-->
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" id="closet-modal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                </div>
+                                                <!--end card-body-->
                                             </div>
-                                            <!--end card-->
+                                            <div class="modal-footer">
+                                                <button type="button" id="closet-modal" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
-                                        <!--end col-->
+                                        <!--end card-->
                                     </div>
-                                    <!--end row-->
+                                    <!--end col-->
                                 </div>
+                                <!--end row-->
                             </div>
                         </div>
+                    </div>
                     {{-- Fin --}}
                 </div>
             </div>

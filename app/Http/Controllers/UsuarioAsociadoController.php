@@ -23,7 +23,7 @@ class UsuarioAsociadoController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:/blog')->only('index');
+        $this->middleware('permission:/blog')->only('index');
         //  $this->middleware('permission:crear-blog', ['only' => ['create','store']]);
         //  $this->middleware('permission:editar-blog', ['only' => ['edit','update']]);
         //  $this->middleware('permission:borrar-blog', ['only' => ['destroy']]);
@@ -42,7 +42,7 @@ class UsuarioAsociadoController extends Controller
         //Con paginación
 
         $usuarios = User::orderBy('status')->get();
-        return view('usuarios.index',compact('usuarios'));
+        return view('usuarios.index', compact('usuarios'));
 
         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
@@ -159,31 +159,31 @@ class UsuarioAsociadoController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
 
-        return view('usuarios.editar',compact('user','roles','userRole'));
+        return view('usuarios.editar', compact('user', 'roles', 'userRole'));
     }
 
 
     public function cambiarEstadoDatosConfirm($idUsuario)
     {
-         User::where('id',$idUsuario)->update(['status' => 2]);
-         $dataUser = User::Where('id',$idUsuario)->first();
-         SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
+        User::where('id', $idUsuario)->update(['status' => 2]);
+        $dataUser = User::Where('id', $idUsuario)->first();
+        SendEmailRequest::sendEmail($dataUser->id, 'Confirmado', $dataUser->email);
 
         //  Mail::send('templates.emailValidacionShipments', array('request' => 'Sus datos han validado satisfactoria mente, ya puede ingresar al sistema.'), function ($message) use ($user) {
         //     $message->from('info@tractocar.com', 'InfoTracto');
         //     $message->to($dataUser->email)->subject('Credenciales Erroneas en ValidacionShipments');
         // });
-         return redirect('usuarios');
+        return redirect('usuarios');
     }
     public function cambiarEstadoDatosRechaz($idUsuario)
     {
-         User::where('id',$idUsuario)->update(['status' => 3]);
-         $dataUser = User::Where('id',$idUsuario)->first();
-         SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
-         return redirect('usuarios');
+        User::where('id', $idUsuario)->update(['status' => 3]);
+        $dataUser = User::Where('id', $idUsuario)->first();
+        SendEmailRequest::sendEmail($dataUser->id, 'Rechazado', $dataUser->email);
+        return redirect('usuarios');
     }
 
     /**
@@ -197,21 +197,21 @@ class UsuarioAsociadoController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
 
         $input = $request->all();
-        if(!empty($input['password'])){
+        if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));
+        } else {
+            $input = Arr::except($input, array('password'));
         }
 
         $user = User::find($id);
         $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $user->assignRole($request->input('roles'));
 
@@ -229,5 +229,4 @@ class UsuarioAsociadoController extends Controller
         User::find($id)->delete();
         return redirect()->route('profile');
     }
-
 }

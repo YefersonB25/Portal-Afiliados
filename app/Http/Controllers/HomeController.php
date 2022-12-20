@@ -28,11 +28,11 @@ class HomeController extends Controller
         $request_status = DB::table('users')->where('deleted_at', null)->select('status', DB::Raw('count(status) AS count'))->groupBy('users.status')->get();
 
         $user = DB::table('relationship')
-        ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
-        ->where('relationship.user_assigne_id',  Auth::user()->id)
-        ->where('relationship.deleted_at', '=', null)
-        ->select('users.number_id')
-        ->first();
+            ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+            ->where('relationship.user_assigne_id',  Auth::user()->id)
+            ->where('relationship.deleted_at', '=', null)
+            ->select('users.number_id')
+            ->first();
 
         $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
         $params = [
@@ -43,7 +43,6 @@ class HomeController extends Controller
         ];
 
         $response = OracleRestErp::procurementGetSuppliers($params);
-
         $res = $response->json();
         //? Validanos que nos traiga el proveedor
         if ($res['count'] == 0) {
@@ -54,7 +53,7 @@ class HomeController extends Controller
             ]);
             return back();
         }
-        $SupplierNumber =  (integer)$res['items'][0]['SupplierNumber'];
+        $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
 
         return view('home', [
             'request_status' => $request_status,
