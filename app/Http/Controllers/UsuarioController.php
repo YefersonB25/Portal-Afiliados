@@ -58,12 +58,14 @@ class UsuarioController extends Controller
     {
         $request->validate([
             'name'           => 'required',
-            'email'          => 'required', 'string', 'email', 'max:255', 'unique:users', 'indisposable',
+            'email'          => 'required', 'string', 'email', 'max:255', 'unique:users',
             'identification' => 'required', 'numeric', 'unique:users',
             'telefono '      => 'required', 'numeric',
             'password'       => 'required', 'min:8',
+            'document-type'  => 'required',
 
         ]);
+        dd($request);
         $user_relation = DB::table('relationship')->where('user_id', Auth::user()->id)->count();
         if ($user_relation <= 3) {
 
