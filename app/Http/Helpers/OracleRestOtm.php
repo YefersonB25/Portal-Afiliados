@@ -11,26 +11,52 @@ class OracleRestOtm
 {
     protected static function getDataAccess()
     {
-
-
         try {
             return [
-                'server'       => CommonUtils::getSetting('oracle_otm_server'),
-                'username'     => CommonUtils::getSetting('oracle_otm_user'),
-                'password'     => CommonUtils::getSetting('oracle_otm_password')
+                'server'   => CommonUtils::getSetting('oracle_otm_server'),
+                'username' => CommonUtils::getSetting('oracle_otm_user'),
+                'password' => CommonUtils::getSetting('oracle_otm_password')
             ];
         } catch (Exception $e) {
             return ['message' => 'Check oracle.php file configuration'];
         }
     }
 
-    public static function getLocationsCustomers($locationsGid, $params = null)
+    public static function getLocationsCustomers($locationGid, $payload = null) //!Verificar el path y las variables de acceso
     {
-        // $path = "logisticsRestApi/resources-int/v2/locations/TCL.$locationsGid";
-        $path = ":443/logisticsRestApi/resources-int/v2/locations/TCL.$locationsGid";
-        $erp  = self::getDataAccess();
-        $url  = $erp['server'] . $path;
-        $response = Http::withBasicAuth($erp['username'], $erp['password'])->get($url, $params);
+        $path = '/logisticsRestApi/resources-int/v2/locations/TCL.' . $locationGid;
+        // $erp  = self::getDataAccess(); //!Descomentar cuando se configuren las variables de session
+        $erp['username'] = 'TCL.ELKINMREST'; //!Eliminar Cuando se configure las variables de session
+        $erp['password'] = 'zG9g8JLzR65EQfUT'; //!Eliminar Cuando se configure las variables de session
+        // $url  = $erp['server'] . $path; //!Descomentar
+        $url  = 'https://otmgtm-test-ekhk.otm.us2.oraclecloud.com:443/logisticsRestApi/resources-int/v2/locations/TCL.' . $locationGid; //!Concatenar la url con el path
+
+        $response = Http::withBasicAuth($erp['username'], $erp['password'])->withHeaders([
+            'Content-Type' => 'application/vnd.oracle.resource+json;type=singular'
+        ])->get($url, $payload);
+        return $response;
+    }
+
+    public static function getShipments($payload = null)
+    {
+        $path = '/logisticsRestApi/resources-int/v2/shipments';
+        $erp['username'] = 'TCL.ELKINMREST'; //!Eliminar Cuando se configure las variables de session
+        $erp['password'] = 'zG9g8JLzR65EQfUT'; //!Eliminar Cuando se configure las variables de session
+        $url  = 'https://otmgtm-test-ekhk.otm.us2.oraclecloud.com:443/logisticsRestApi/resources-int/v2/shipments'; //!Concatenar la url con el path  
+        $response = Http::withBasicAuth($erp['username'], $erp['password'])->withHeaders([
+            'Content-Type' => 'application/vnd.oracle.resource+json;type=singular'
+        ])->get($url, $payload);
+        return $response;
+    }
+    public static function getShipmentStatus($shipmentGid)
+    {
+        $path = '/logisticsRestApi/resources-int/v2/shipments';
+        $erp['username'] = 'TCL.ELKINMREST'; //!Eliminar Cuando se configure las variables de session
+        $erp['password'] = 'zG9g8JLzR65EQfUT'; //!Eliminar Cuando se configure las variables de session
+        $url  = 'https://otmgtm-test-ekhk.otm.us2.oraclecloud.com:443/logisticsRestApi/resources-int/v2/shipments/' . $shipmentGid . '/statuses/TCL.MANIFIESTO_CUMPLIDO'; //!Concatenar la url con el path  
+        $response = Http::withBasicAuth($erp['username'], $erp['password'])->withHeaders([
+            'Content-Type' => 'application/vnd.oracle.resource+json;type=singular'
+        ])->get($url);
         return $response;
     }
 
