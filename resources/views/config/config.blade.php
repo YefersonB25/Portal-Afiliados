@@ -85,7 +85,6 @@
                 },
                 success : function(response) {
                     let data = response.data
-                    console.log(data);
                     $('#form-edit').html('')
                     plantillaForm = `
                         <div class="mb-3">
@@ -103,7 +102,6 @@
                     let labelName = document.getElementById('recipient-name').innerHTML;
                     let inputVal = document.getElementById('recipient-val').value;
 
-                    console.log(labelName,inputVal);
                     $.ajax({
                         type: 'POST',
                         url: "{{ route('setting.update') }}",
