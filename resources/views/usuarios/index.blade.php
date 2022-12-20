@@ -239,6 +239,11 @@
 @endif
 <script>
 
+    window.onload = function () {
+        swal.close();
+
+    }
+
     // load
         let Loader = function(){
             Swal.fire({

@@ -85,7 +85,6 @@
                 },
                 success : function(response) {
                     let data = response.data
-
                     $('#form-edit').html('')
                     plantillaForm = `
                         <div class="mb-3">
@@ -100,13 +99,15 @@
             });
 
                 $(document).on('click', '#Guardar', function(e) {
+                    let labelName = document.getElementById('recipient-name').innerHTML;
                     let inputVal = document.getElementById('recipient-val').value;
+
                     $.ajax({
                         type: 'POST',
                         url: "{{ route('setting.update') }}",
                         data:{
                             "_token": "{{ csrf_token() }}",
-                            name: resultado[0],
+                            name: labelName,
                             val: inputVal,
                             isEncrypt: resultado[1]
                         },
@@ -118,7 +119,7 @@
                                 Swal.fire({
                                     position: 'top-end',
                                     icon: 'success',
-                                    title: 'Your work has been saved',
+                                    title: 'Dato actualizado correctamente',
                                     showConfirmButton: false,
                                     timer: 1500
                                 })

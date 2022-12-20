@@ -51,8 +51,10 @@
                                                 <li><a href="#profileMain" class="active show"
                                                         data-bs-toggle="tab">Perfil</a></li>
                                                 <li><a href="#editProfile" data-bs-toggle="tab">Editar Perfil</a></li>
+                                                @can('/facturas')
                                                 <li><a href="#friends" data-bs-toggle="tab">Usuarios Asociados</a></li>
                                                 <li><a href="#accountSettings" data-bs-toggle="tab">Registrar Usuario</a>
+                                                @endcan
                                                 </li>
                                             </ul>
                                         </div>
@@ -233,8 +235,8 @@
                                                                 <option selected value="">Seleccione tipo Documento</option>
                                                                 <option value="NIT">NIT</option>
                                                                 <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
-                                                              </select>
-                                                              <div class="invalid-feedback">
+                                                            </select>
+                                                            <div class="invalid-feedback">
                                                                 {{ $errors->first('document-type') }}
                                                             </div>
                                                         </div>
@@ -288,6 +290,53 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="card">
+                                        <div class="card-header border-bottom">
+                                            <h3 class="card-title">Default Validation</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <form>
+                                                <div class="form-row">
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                                                        <label for="validationDefault01">First name</label>
+                                                        <input type="text" class="form-control" id="validationDefault01" value="Daniel" required>
+                                                    </div>
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                                                        <label for="validationDefault02">Last name</label>
+                                                        <input type="text" class="form-control" id="validationDefault02" value="Obrien" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                                                        <label for="validationDefault03">City</label>
+                                                        <input type="text" class="form-control" id="validationDefault03" required>
+                                                    </div>
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                                                        <label for="validationDefault04">State</label>
+                                                        <select class="form-select select2 form-control" id="validationDefault04" required>
+                                                            <option selected disabled value="">Choose...</option>
+                                                            <option>...</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-3">
+                                                        <label for="validationDefault05">Zip Code</label>
+                                                        <input type="number" class="form-control" id="validationDefault05" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="ckbox">
+                                                        <input type="checkbox" id="invalidCheck2" required>
+                                                        <span class="text-13">I agree terms and conditions</span>
+                                                    </label>
+                                                </div>
+                                                <button class="btn btn-primary" type="submit">Submit form</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

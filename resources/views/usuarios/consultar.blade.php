@@ -12,6 +12,10 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
+                                        {{-- <a class="btn btn-icon btn-primary-light me-2" id="retroceder" data-bs-toggle="tooltip"
+                                            data-bs-original-title="Retroceder">
+                                            <i class="fa fa-reply" aria-hidden="true"></i>
+                                        </a> --}}
                                         <div class="table-responsive">
                                             <table id="file-datatable"
                                                 class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
@@ -89,6 +93,16 @@
         </div>
     </div>
 </body>
+
+@endsection
+
+@section('scripts')
+
+    {{-- <script>
+        $(document).on('click', '#retroceder', function (e) {
+
+        });
+    </script> --}}
 
 @endsection
 
