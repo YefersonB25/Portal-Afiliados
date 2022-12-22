@@ -126,12 +126,12 @@ class UsuarioController extends Controller
             $usuarios->where('status', $request->estado);
         }
         //? Filtro por numero de identificacion
-        if (!empty($request->number_id)){
+        if (!empty($request->number_id)) {
             $usuarios->where('number_id', $request->number_id);
         }
         return response()->json(['success' => true, 'data' => $usuarios->paginate(20)]);
-            return $usuarios->paginate(20);
-            // return response()->json(['success' => true, 'data' => $user]);
+        return $usuarios->paginate(20);
+        // return response()->json(['success' => true, 'data' => $user]);
 
     }
 
@@ -217,7 +217,6 @@ class UsuarioController extends Controller
     {
         User::where('id', $idUsuario)->update(['status' => 'CONFIRMADO']);
         return response()->json('The post successfully updated');
-
     }
 
     public function checkout($cedula)

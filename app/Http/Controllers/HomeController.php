@@ -40,11 +40,11 @@ class HomeController extends Controller
         if ($rol->role_id != 1) {
 
             $user = DB::table('relationship')
-            ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
-            ->where('relationship.user_assigne_id',  Auth::user()->id)
-            ->where('relationship.deleted_at', '=', null)
-            ->select('users.number_id')
-            ->first();
+                ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+                ->where('relationship.user_assigne_id',  Auth::user()->id)
+                ->where('relationship.deleted_at', '=', null)
+                ->select('users.number_id')
+                ->first();
 
             $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
             $params = [
@@ -58,12 +58,11 @@ class HomeController extends Controller
 
             $res = $response->json();
 
-            $SupplierNumber =  (integer)$res['items'][0]['SupplierNumber'];
+            $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
 
             return view('home', [
                 'SupplierNumber' => $SupplierNumber
             ]);
-
         }
     }
     public function docs()
