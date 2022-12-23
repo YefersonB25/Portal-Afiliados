@@ -38,9 +38,9 @@ Route::prefix('portal/users')->controller(UsuarioController::class)->middleware(
     Route::get('confirmar/{usuario}/{estado}', 'confirmarDatos')->name('usuario.estado');
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
     Route::post('/', 'filtros')->name('user.filtros');
-    Route::resource('portal/usuarios', UsuarioController::class);
 
 });
+Route::resource('portal/usuarios', UsuarioController::class);
 
 Route::get('forgot-password', [AuthController::class, 'email'])->name('forgot-password');
 
