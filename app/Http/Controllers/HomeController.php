@@ -61,7 +61,8 @@ class HomeController extends Controller
             $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
 
             return view('home', [
-                'SupplierNumber' => $SupplierNumber
+                'SupplierNumber' => $SupplierNumber,
+                'number_id' => $number_id
             ]);
         }
     }

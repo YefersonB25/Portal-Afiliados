@@ -449,4 +449,65 @@ class ConsultarAfiliadoController extends Controller
         }
         return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
     }
+
+       /**
+     * The console command description.
+     *
+     * @var shipmentXid     = shipmentXid,
+     * @var attribute9      = supplier_Gid,
+     * @var attribute10     = placa_Gid,
+     * @var attribute11     = placa_trailer_Gid,
+     * @var totalActualCost = Costo total actual,
+     * @var numStops        = numero de paradas,
+     */
+
+     protected function parametros()
+     {
+         $params = [
+             'onlyData' => 'true',
+             'limit'    => '20',
+             'orderBy' => 'insertDate:desc'
+         ];
+         return $params;
+     }
+
+     protected function getShipmentOtm(Request $request)
+     {
+        // return response()->json(['success' => true, 'data' =>$request->number_id]);
+
+         try {
+             $params = self::parametros();
+             $params['q'] = 'attribute9 eq "' . 'TCL.'. $request->number_id . '" and statuses.statusValueGid eq "TCL.MANIFIESTO_CUMPL_NUEVO"';
+             $params['fields'] = 'shipmentXid,shipmentName,totalActualCost,totalWeightedCost,numStops,attribute9,attribute10,attribute11,insertDate';
+            //  return response()->json(['success' => true, 'data' => $params]);
+
+             $request = OracleRestOtm::getShipments($params);
+            //  return $request->object()->items;
+            return response()->json(['success' => true, 'data' => $request->object()->items]);
+
+         } catch (Exception $e) {
+             Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+             return  $e->getMessage();
+         }
+     }
+
+     /**
+      * The console command description.
+      *
+      * @var statusTypeGid  = Cabezera del estado,
+      * @var statusValueGid = Estado,
+      */
+
+     protected function getShipmentStatusOtm($shipmentGid)
+     {
+         try {
+                $params = self::parametros();
+                $params['q'] = 'statusValueGid eq "TCL.MANIFIESTO_CUMPL_NO"';
+                $request = OracleRestOtm::getShipmentStatus($shipmentGid, $params);
+             return $request->object();
+         } catch (Exception $e) {
+             Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+             return  $e->getMessage();
+         }
+     }
 }

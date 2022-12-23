@@ -26,8 +26,8 @@ class OracleRestErp
     {
         $path = '/fscmRestApi/resources/11.13.18.05/suppliers';
         $erp  = self::getDataAccess();
-        $erp['username'] = 'gramos@tractocar.com'; //!Eliminar Cuando se configure las variables de session
-        $erp['password'] = 'eo!zNswC7wsWLWPwfcXA'; //!Eliminar Cuando se configure las variables de session
+        $erp['username']; //!Eliminar Cuando se configure las variables de session
+        $erp['password']; //!Eliminar Cuando se configure las variables de session
         $url  = $erp['server'] . $path;
         $response = Http::withBasicAuth($erp['username'], $erp['password'])
             ->withHeaders([
