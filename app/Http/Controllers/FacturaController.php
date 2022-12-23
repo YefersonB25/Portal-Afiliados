@@ -50,8 +50,7 @@ class FacturaController extends Controller
             }
             $SupplierNumber =  (integer)$res['items'][0]['SupplierNumber'];
 
-
-            return view('facturas.index', ['SupplierNumber' => $SupplierNumber]);
+                return view('facturas.index', ['SupplierNumber' => $SupplierNumber, 'number_id' => $number_id]);
         } catch (\Throwable $th) {
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
              return  $th->getMessage();

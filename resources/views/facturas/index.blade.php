@@ -220,6 +220,25 @@
                         </div>
                     </div>
 
+                    <div class="card" id="facturas-en-transporte" style="display: none">
+                        <h3 class="text-center" style="text-decoration: underline">FACTURAS EN TRANSPORTE</h3>
+                        <div class="card-body">
+                            <div class="row row-sm">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="TableEnTransporte"
+                                                    class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- Fin --}}
 
                     {{-- Modal de visualizacionde facturas --}}
@@ -313,304 +332,518 @@
 <script src="http://momentjs.com/downloads/moment.min.js"></script>
 <script>
     // Funccion de consulta validaciones y carga de datos Datatable
-        let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType,ValidationStatus, Card, startDate, endDate ) {
-            // let start = performance.now();
-            tblColectionData =  $(TableName).DataTable({
+    let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType,ValidationStatus, Card, startDate, endDate ) {
+        // let start = performance.now();
+        tblColectionData =  $(TableName).DataTable({
 
-                retrieve: true,
+            retrieve: true,
 
-                dom: 'Bfrtip',
-                "buttons": [
-                    {
-                        extend: 'collection',
-                        text: 'Exportar',
-                        buttons: [
-                            {
-                                extend: 'excel',
-                                className: 'btn',
-                                text: "Excel",
-                                exportOptions: {
+            dom: 'Bfrtip',
+            "buttons": [
+                {
+                    extend: 'collection',
+                    text: 'Exportar',
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            className: 'btn',
+                            text: "Excel",
+                            exportOptions: {
+                            columns: ":not(.no-exportar)"
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            className: 'btn',
+                            text: "CSV",
+                            exportOptions: {
                                 columns: ":not(.no-exportar)"
-                                }
-                            },
-                            {
-                                extend: 'csv',
-                                className: 'btn',
-                                text: "CSV",
-                                exportOptions: {
-                                    columns: ":not(.no-exportar)"
-                                }
-                            },
-                            {
-                                extend: 'pdf',
-                                className: 'btn',
-                                text: "PDF",
-                                exportOptions: {
-                                columns: ":not(.no-exportar)"
-                                }
-                            },
-                            {
-                                extend: 'print',
-                                className: 'btn',
-                                text: "Imprimir",
-                                exportOptions: {
-                                columns: ":not(.no-exportar)"
-                                }
-                            },
-                        ],
-                    }
-                ],
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            className: 'btn',
+                            text: "PDF",
+                            exportOptions: {
+                            columns: ":not(.no-exportar)"
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            className: 'btn',
+                            text: "Imprimir",
+                            exportOptions: {
+                            columns: ":not(.no-exportar)"
+                            }
+                        },
+                    ],
+                }
+            ],
 
-                language: {
-                    "sProcessing": "Procesando...",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
+            language: {
+                "sProcessing": "Procesando...",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
 
-                    "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
-                    },
-
-                    "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-
+                "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
                 },
 
-                columns: [
-                    {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
-                    // {title: "ID Factura", data: "InvoiceId" },
-                    {title: "Numero Factura", data: "InvoiceNumber" },
-                    // {title: "Fecha Factura",  data: "InvoiceDate" },
-                    // {title: "Descripción", data: "Description" },
-                    {title: "Saldo",
-                        data: function ( d ) {
-
-                            const formatterDolar = new Intl.NumberFormat('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            })
-
-                            return formatterDolar.format( d.invoiceInstallments[0]["UnpaidAmount"] );
-                        }
-                    },
-                        // {title: "ValidationStatus", data: "ValidationStatus"},
-                    {title: "Valor Factura",
-                        data: function ( d ) {
-
-                            const formatterDolar = new Intl.NumberFormat('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            })
-
-                            return formatterDolar.format(d.InvoiceAmount);
-                        }
-                    },
-                    {title: "Monto Pagado",
-                        data: function ( d ) {
-                            const formatterDolar = new Intl.NumberFormat('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            })
-
-                            return formatterDolar.format(d.AmountPaid);
-
-                        }
-                    },
-                    // {title: "Cuenta bancaria",
-                    //     data: function ( d ) {
-                    //         return d.invoiceInstallments[0]["BankAccount"]}
-                    // },
-                    {title: "Fecha Vencimiento",
-                        data: function ( d ) {
-
-                            // create a new `Date` object
-                            var today = new Date();
-
-                            // `getDate()` returns the day of the month (from 1 to 31)
-                            var day = today.getDate();
-
-                            // `getMonth()` returns the month (from 0 to 11)
-                            var month = today.getMonth() + 1;
-
-                            // `getFullYear()` returns the full year
-                            var year = today.getFullYear();
-
-                            var date1 = new Date(d.invoiceInstallments[0]["DueDate"]);
-                            var date2 = new Date (`${year}-${month}-${day}`);
-                            var dateDefined = date1 - date2;
-                            var dias =  dateDefined/(1000*60*60*24);
-                            if ( dias < 0 && d.PaidStatus != 'Pagadas') {
-                                return 'dentro de la programacion de pago';
-                            }
-                            if(d.PaidStatus == 'Pagadas'){
-                                return 'Pagada';
-                            }
-                            return ('El pago se le generara dentro de ' + dias + ' Dias');
-                        }
-                    },
-                    // {title: "Tipo de Factura", data: "InvoiceType" },
-                    // {title: "Pago realizado", data: "AccountingDate" }
-
-
-
-                ],
-
-                columnDefs: [
-                    { responsivePriority: 1, targets: 0 },
-                    { responsivePriority: 1, targets: 1 },
-                    { responsivePriority: 1, targets: 2 },
-                    { responsivePriority: 1, targets: 3 },
-                    { responsivePriority: 1, targets: 4 },
-                    { responsivePriority: 1, targets: 5 },
-                    // { responsivePriority: 1, targets: 6 },
-                ],
-
-            });
-            let validacionButton = function (Card) {
-                if(Card == "#oculto-por-pagar")  {
-
-                    if( $("#oculto-por-pagar").css("display") == 'none' )
-                    $("#oculto-por-pagar").show("slow");
-                    else
-                    $("#oculto-por-pagar").hide("slow");
-
-                    // validamos que no se muestren todas al tiempo
-                    if($("#oculto-pagadas").css("display") != 'none')
-                    $("#oculto-pagadas").hide("slow");
-
-                    if($("#oculto-pagadas-con-novedad").css("display") != 'none')
-                    $("#oculto-pagadas-con-novedad").hide("slow");
-
-                    if($("#oculto-canceladas").css("display") != 'none')
-                    $("#oculto-canceladas").hide("slow");
-
-                    if($("#oculto-descuentos").css("display") != 'none')
-                    $("#oculto-descuentos").hide("slow");
-
-                    if($("#oculto-descuentos-pendientes").css("display") != 'none')
-                    $("#oculto-descuentos-pendientes").hide("slow");
-
-                    if($("#FacturasGenerales").css("display") != 'none')
-                    $("#FacturasGenerales").hide("slow");
+                "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-                else if (Card == "#oculto-pagadas-con-novedad") {
 
-                    if( $("#oculto-pagadas-con-novedad").css("display") == 'none' )
-                    $("#oculto-pagadas-con-novedad").show("slow");
-                    else
-                    $("#oculto-pagadas-con-novedad").hide("slow");
+            },
 
-                    // validamos que no se muestren todas al tiempo
-                    if($("#oculto-pagadas").css("display") != 'none')
-                    $("#oculto-pagadas").hide("slow");
+            columns: [
+                {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
+                // {title: "ID Factura", data: "InvoiceId" },
+                {title: "Numero Factura", data: "InvoiceNumber" },
+                // {title: "Fecha Factura",  data: "InvoiceDate" },
+                // {title: "Descripción", data: "Description" },
+                {title: "Saldo",
+                    data: function ( d ) {
 
-                    if($("#oculto-canceladas").css("display") != 'none')
-                    $("#oculto-canceladas").hide("slow");
-
-                    if($("#oculto-por-pagar").css("display") != 'none')
-                    $("#oculto-por-pagar").hide("slow");
-
-                    if($("#oculto-descuentos").css("display") != 'none')
-                    $("#oculto-descuentos").hide("slow");
-
-                    if($("#oculto-descuentos-pendientes").css("display") != 'none')
-                    $("#oculto-descuentos-pendientes").hide("slow");
-
-                    if($("#FacturasGenerales").css("display") != 'none')
-                    $("#FacturasGenerales").hide("slow");
-                }
-                else if (Card == "#FacturasGenerales" ) {
-                    if( $("#FacturasGenerales").css("display") == 'none' )
-                    $("#FacturasGenerales").show("slow");
-                    else
-                    $("#FacturasGenerales").hide("slow");
-
-                    // validamos que no se muestren todas al tiempo
-                    if($("#oculto-pagadas").css("display") != 'none')
-                    $("#oculto-pagadas").hide("slow");
-
-                    if($("#oculto-pagadas-con-novedad").css("display") != 'none')
-                    $("#oculto-pagadas-con-novedad").hide("slow");
-
-                    if($("#oculto-por-pagar").css("display") != 'none')
-                    $("#oculto-por-pagar").hide("slow");
-
-                    if($("#oculto-canceladas").css("display") != 'none')
-                    $("#oculto-canceladas").hide("slow");
-
-                    if($("#oculto-descuentos").css("display") != 'none')
-                    $("#oculto-descuentos").hide("slow");
-
-                    if($("#oculto-descuentos-pendientes").css("display") != 'none')
-                    $("#oculto-descuentos-pendientes").hide("slow");
-                }
-            }
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('falturas.pagadas') }}",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    SupplierNumber: {{$SupplierNumber}},
-                    FlagStatus: FlagStatus,
-                    PaidStatus: PaidStatus,
-                    InvoiceType: InvoiceType,
-                    ValidationStatus: ValidationStatus,
-                    startDate: startDate,
-                    endDate: endDate
-
-                },
-                success: function(response) {
-                    let datos =  response.data;
-                    // var invoiceInstallments = datos[0].invoiceInstallments;
-                    if (response.success == true) {
-                        // console.log(datos);
-                        tblColectionData.clear().draw();
-                        tblColectionData.rows.add(datos).draw();
-
-                        validacionButton(Card);
-
-                        swal.close();
-                    }else {
-                        swal.close();
-                        Loader();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: datos,
+                        const formatterDolar = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
                         })
+
+                        return formatterDolar.format( d.invoiceInstallments[0]["UnpaidAmount"] );
                     }
                 },
-                error: function(error){
+                // {title: "ValidationStatus", data: "ValidationStatus"},
+                {title: "Valor Factura",
+                    data: function ( d ) {
+
+                        const formatterDolar = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })
+
+                        return formatterDolar.format(d.InvoiceAmount);
+                    }
+                },
+                {title: "Monto Pagado",
+                    data: function ( d ) {
+                        const formatterDolar = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })
+
+                        return formatterDolar.format(d.AmountPaid);
+
+                    }
+                },
+                // {title: "Cuenta bancaria",
+                //     data: function ( d ) {
+                //         return d.invoiceInstallments[0]["BankAccount"]}
+                // },
+                {title: "Fecha Vencimiento",
+                    data: function ( d ) {
+
+                        // create a new `Date` object
+                        var today = new Date();
+
+                        // `getDate()` returns the day of the month (from 1 to 31)
+                        var day = today.getDate();
+
+                        // `getMonth()` returns the month (from 0 to 11)
+                        var month = today.getMonth() + 1;
+
+                        // `getFullYear()` returns the full year
+                        var year = today.getFullYear();
+
+                        var date1 = new Date(d.invoiceInstallments[0]["DueDate"]);
+                        var date2 = new Date (`${year}-${month}-${day}`);
+                        var dateDefined = date1 - date2;
+                        var dias =  dateDefined/(1000*60*60*24);
+                        if ( dias < 0 && d.PaidStatus != 'Pagadas') {
+                            return 'dentro de la programacion de pago';
+                        }
+                        if(d.PaidStatus == 'Pagadas'){
+                            return 'Pagada';
+                        }
+                        return ('El pago se le generara dentro de ' + dias + ' Dias');
+                    }
+                },
+                // {title: "Tipo de Factura", data: "InvoiceType" },
+                // {title: "Pago realizado", data: "AccountingDate" }
+
+
+
+            ],
+
+            columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 1, targets: 1 },
+                { responsivePriority: 1, targets: 2 },
+                { responsivePriority: 1, targets: 3 },
+                { responsivePriority: 1, targets: 4 },
+                { responsivePriority: 1, targets: 5 },
+                // { responsivePriority: 1, targets: 6 },
+            ],
+
+        });
+        let validacionButton = function (Card) {
+            if(Card == "#oculto-por-pagar")  {
+
+                if( $("#oculto-por-pagar").css("display") == 'none' )
+                $("#oculto-por-pagar").show("slow");
+                else
+                $("#oculto-por-pagar").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                $("#oculto-pagadas-con-novedad").hide("slow");
+
+                if($("#facturas-en-transporte").css("display") != 'none')
+                $("#facturas-en-transporte").hide("slow");
+
+                if($("#FacturasGenerales").css("display") != 'none')
+                $("#FacturasGenerales").hide("slow");
+            }
+            else if (Card == "#oculto-pagadas-con-novedad") {
+
+                if( $("#oculto-pagadas-con-novedad").css("display") == 'none' )
+                $("#oculto-pagadas-con-novedad").show("slow");
+                else
+                $("#oculto-pagadas-con-novedad").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#oculto-por-pagar").css("display") != 'none')
+                $("#oculto-por-pagar").hide("slow");
+
+                if($("#facturas-en-transporte").css("display") != 'none')
+                $("#facturas-en-transporte").hide("slow");
+
+                if($("#FacturasGenerales").css("display") != 'none')
+                $("#FacturasGenerales").hide("slow");
+            }
+            else if (Card == "#FacturasGenerales" ) {
+                if( $("#FacturasGenerales").css("display") == 'none' )
+                $("#FacturasGenerales").show("slow");
+                else
+                $("#FacturasGenerales").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                $("#oculto-pagadas-con-novedad").hide("slow");
+
+                if($("#oculto-por-pagar").css("display") != 'none')
+                $("#oculto-por-pagar").hide("slow");
+
+                if($("#facturas-en-transporte").css("display") != 'none')
+                $("#facturas-en-transporte").hide("slow");
+
+            }
+            else if (Card == "#facturas-en-transporte" ) {
+                if( $("#facturas-en-transporte").css("display") == 'none' )
+                $("#facturas-en-transporte").show("slow");
+                else
+                $("#facturas-en-transporte").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                $("#oculto-pagadas-con-novedad").hide("slow");
+
+                if($("#FacturasGenerales").css("display") != 'none')
+                $("#FacturasGenerales").hide("slow");
+
+                if($("#oculto-por-pagar").css("display") != 'none')
+                $("#oculto-por-pagar").hide("slow");
+
+            }
+        }
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('falturas.pagadas') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                SupplierNumber: {{$SupplierNumber}},
+                FlagStatus: FlagStatus,
+                PaidStatus: PaidStatus,
+                InvoiceType: InvoiceType,
+                ValidationStatus: ValidationStatus,
+                startDate: startDate,
+                endDate: endDate
+
+            },
+            success: function(response) {
+                let datos =  response.data;
+                // var invoiceInstallments = datos[0].invoiceInstallments;
+                if (response.success == true) {
+                    // console.log(datos);
+                    tblColectionData.clear().draw();
+                    tblColectionData.rows.add(datos).draw();
+
+                    validacionButton(Card);
+
+                    swal.close();
+                }else {
                     swal.close();
                     Loader();
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Algo fallo con la respuesta!',
+                        text: datos,
                     })
-                    console.error(error);
                 }
-            })
+            },
+            error: function(error){
+                swal.close();
+                Loader();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Algo fallo con la respuesta!',
+                })
+                console.error(error);
+            }
+        })
 
+    }
+
+    let LoadDataShipment = function(TableName, Card ) {
+        // let start = performance.now();
+        tblColectionData =  $(TableName).DataTable({
+
+            retrieve: true,
+
+            dom: 'Bfrtip',
+            "buttons": [
+                {
+                    extend: 'collection',
+                    text: 'Exportar',
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            className: 'btn',
+                            text: "Excel",
+                            exportOptions: {
+                            columns: ":not(.no-exportar)"
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            className: 'btn',
+                            text: "CSV",
+                            exportOptions: {
+                                columns: ":not(.no-exportar)"
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            className: 'btn',
+                            text: "PDF",
+                            exportOptions: {
+                            columns: ":not(.no-exportar)"
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            className: 'btn',
+                            text: "Imprimir",
+                            exportOptions: {
+                            columns: ":not(.no-exportar)"
+                            }
+                        },
+                    ],
+                }
+            ],
+
+            language: {
+                "sProcessing": "Procesando...",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+
+                "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+                },
+
+                "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+
+            },
+
+            columns: [
+                // {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
+                // {title: "ID Factura", data: "InvoiceId" },
+                {title: "ID", data: "shipmentXid" },
+                {title: "Supplier",  data: "attribute9" },
+                {title: "Placa", data: "attribute10" },
+                {title: "Placa Trailer", data: "attribute11" },
+                {title: "Costo Total",
+                    data: function ( d ) {
+
+                        const formatterDolar = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'COP',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })
+
+                        return formatterDolar.format( d.totalActualCost['value'] );
+                    }
+                },
+                {title: "Numero de paradas", data: "numStops" },
+
+            ],
+
+            columnDefs: [
+                { responsivePriority: 1, targets: 0 },
+                { responsivePriority: 1, targets: 1 },
+                { responsivePriority: 1, targets: 2 },
+                { responsivePriority: 1, targets: 3 },
+                { responsivePriority: 1, targets: 4 },
+                { responsivePriority: 1, targets: 5 },
+                // { responsivePriority: 1, targets: 6 },
+            ],
+
+        });
+        let validacionButton = function (Card) {
+            if(Card == "#oculto-por-pagar")  {
+
+                if( $("#oculto-por-pagar").css("display") == 'none' )
+                $("#oculto-por-pagar").show("slow");
+                else
+                $("#oculto-por-pagar").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                $("#oculto-pagadas-con-novedad").hide("slow");
+
+                if($("#facturas-en-transporte").css("display") != 'none')
+                $("#facturas-en-transporte").hide("slow");
+
+                if($("#FacturasGenerales").css("display") != 'none')
+                $("#FacturasGenerales").hide("slow");
+            }
+            else if (Card == "#oculto-pagadas-con-novedad") {
+
+                if( $("#oculto-pagadas-con-novedad").css("display") == 'none' )
+                $("#oculto-pagadas-con-novedad").show("slow");
+                else
+                $("#oculto-pagadas-con-novedad").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#oculto-por-pagar").css("display") != 'none')
+                $("#oculto-por-pagar").hide("slow");
+
+                if($("#facturas-en-transporte").css("display") != 'none')
+                $("#facturas-en-transporte").hide("slow");
+
+                if($("#FacturasGenerales").css("display") != 'none')
+                $("#FacturasGenerales").hide("slow");
+            }
+            else if (Card == "#FacturasGenerales" ) {
+                if( $("#FacturasGenerales").css("display") == 'none' )
+                $("#FacturasGenerales").show("slow");
+                else
+                $("#FacturasGenerales").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                $("#oculto-pagadas-con-novedad").hide("slow");
+
+                if($("#oculto-por-pagar").css("display") != 'none')
+                $("#oculto-por-pagar").hide("slow");
+
+                if($("#facturas-en-transporte").css("display") != 'none')
+                $("#facturas-en-transporte").hide("slow");
+
+            }
+            else if (Card == "#facturas-en-transporte" ) {
+                if( $("#facturas-en-transporte").css("display") == 'none' )
+                $("#facturas-en-transporte").show("slow");
+                else
+                $("#facturas-en-transporte").hide("slow");
+
+                // validamos que no se muestren todas al tiempo
+                if($("#oculto-pagadas-con-novedad").css("display") != 'none')
+                $("#oculto-pagadas-con-novedad").hide("slow");
+
+                if($("#FacturasGenerales").css("display") != 'none')
+                $("#FacturasGenerales").hide("slow");
+
+                if($("#oculto-por-pagar").css("display") != 'none')
+                $("#oculto-por-pagar").hide("slow");
+
+            }
         }
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('falturas.transporte') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                number_id: {{$number_id}},
+
+            },
+            success: function(response) {
+                let datos =  response.data;
+                // var invoiceInstallments = datos[0].invoiceInstallments;
+                if (response.success == true) {
+                    console.log(datos);
+                    tblColectionData.clear().draw();
+                    tblColectionData.rows.add(datos).draw();
+
+                    validacionButton(Card);
+
+                    swal.close();
+                }else {
+                    swal.close();
+                    Loader();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: datos,
+                    })
+                }
+            },
+            error: function(error){
+                swal.close();
+                Loader();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Algo fallo con la respuesta!',
+                })
+                console.error(error);
+            }
+        })
+
+    }
     // Fin
 
     // load inicial, se visualiza al seleccionar un opcion de las facturas
@@ -678,6 +911,14 @@
             obtener_data("#TablaFacturasAll tbody", tblColectionData);
 
         });
+
+        $('#en-transporte').on('click', function(e) {
+            e.preventDefault();
+
+            Loader();
+            LoadDataShipment("#TableEnTransporte","#facturas-en-transporte");
+            obtener_data("#TableEnTransporte tbody", tblColectionData);
+        })
     // Fin
 
     // Cerrar modal
