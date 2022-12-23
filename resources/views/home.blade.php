@@ -981,7 +981,7 @@
                             let datos =  response.data;
                             // var invoiceInstallments = datos[0].invoiceInstallments;
                             if (response.success == true) {
-                                // console.log(datos);
+                                console.log(datos);
                                 tblColectionData.clear().draw();
                                 tblColectionData.rows.add(datos).draw();
 

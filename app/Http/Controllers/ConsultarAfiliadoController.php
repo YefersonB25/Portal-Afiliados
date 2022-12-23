@@ -473,16 +473,13 @@ class ConsultarAfiliadoController extends Controller
 
      protected function getShipmentOtm(Request $request)
      {
-        // return response()->json(['success' => true, 'data' =>$request->number_id]);
 
          try {
              $params = self::parametros();
              $params['q'] = 'attribute9 eq "' . 'TCL.'. $request->number_id . '" and statuses.statusValueGid eq "TCL.MANIFIESTO_CUMPL_NUEVO"';
              $params['fields'] = 'shipmentXid,shipmentName,totalActualCost,totalWeightedCost,numStops,attribute9,attribute10,attribute11,insertDate';
-            //  return response()->json(['success' => true, 'data' => $params]);
-
              $request = OracleRestOtm::getShipments($params);
-            //  return $request->object()->items;
+
             return response()->json(['success' => true, 'data' => $request->object()->items]);
 
          } catch (Exception $e) {

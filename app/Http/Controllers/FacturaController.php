@@ -11,6 +11,7 @@ use App\Models\User;
 use Faker\Core\Number;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class FacturaController extends Controller
 {
@@ -26,30 +27,36 @@ class FacturaController extends Controller
      */
     public function index(Request $request)
     {
-        $user =  DB::table('users')->select('number_id')->where('id', $request->id)->first();
-        $number_id = $user->number_id;
+        try {
+            $user =  DB::table('users')->select('number_id')->where('id', $request->id)->first();
+            $number_id = $user->number_id;
 
-        $params = [
-            'q'        => "(TaxpayerId = '{$number_id}')",
-            'limit'    => '200',
-            'fields'   => 'SupplierNumber',
-            'onlyData' => 'true'
-        ];
+            $params = [
+                'q'        => "(TaxpayerId = '{$number_id}')",
+                'limit'    => '200',
+                'fields'   => 'SupplierNumber',
+                'onlyData' => 'true'
+            ];
 
-        $response = OracleRestErp::procurementGetSuppliers($params);
+            $response = OracleRestErp::procurementGetSuppliers($params);
 
-        $res = $response->json();
-        
-        //? Validanos que nos traiga el proveedor
-        if ($res['count'] == 0) {
-            // return response()->json(['message' => 'No se encontro el proveedor'], 404);
-            session()->flash('message', 'No se encontro el proveedor');
-            return back();
+            $res = $response->json();
+
+            //? Validanos que nos traiga el proveedor
+            if ($res['count'] == 0) {
+                // return response()->json(['message' => 'No se encontro el proveedor'], 404);
+                session()->flash('message', 'No se encontro el proveedor');
+                return back();
+            }
+            $SupplierNumber =  (integer)$res['items'][0]['SupplierNumber'];
+
+
+            return view('facturas.index', ['SupplierNumber' => $SupplierNumber]);
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+             return  $th->getMessage();
         }
-        $SupplierNumber =  (integer)$res['items'][0]['SupplierNumber'];
 
-
-        return view('facturas.index', ['SupplierNumber' => $SupplierNumber]);
     }
 
     /**
