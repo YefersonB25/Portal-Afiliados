@@ -56,16 +56,6 @@ class UsuarioController extends Controller
 
     public function createUserAsociado(Request $request)
     {
-        $request->validate([
-            'name'           => 'required',
-            'email'          => 'required', 'string', 'email', 'max:255', 'unique:users',
-            'identification' => 'required', 'numeric', 'unique:users',
-            'telefono '      => 'required', 'numeric',
-            'password'       => 'required', 'min:8',
-            'document-type'  => 'required',
-
-        ]);
-        dd($request);
         $user_relation = DB::table('relationship')->where('user_id', Auth::user()->id)->count();
         if ($user_relation <= 3) {
 
@@ -84,26 +74,27 @@ class UsuarioController extends Controller
                     'status'    => 'ASOCIADO',
                     'password'  => Hash::make($request['password']),
                 ]);
-                $create_relation = Relationship::create([
+                Relationship::create([
                     'user_id'         => Auth::user()->id,
-                    'user_assigne_id' => $user->id
+                    'user_assigne_id' => $user->id,
+                    'deleted_status'  => 'ACTIVE'
                 ]);
                 //? le asignamos el rol
                 $user->roles()->sync(3);
             });
-
-            session()->flash('message');
-            return back();
+            return response()->json(['success' => true]);
         }
-        session()->flash('messageError');
-        return back();
+        return response()->json(['success' => false]);
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'name'     => 'required',
-            'email'    => 'required|email|unique:users,email',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
+            'number_id' => ['required','numeric', 'unique:users',],
+            'phone' => ['required','numeric'],
+            'document_type' => ['required'],
             'password' => 'required|same:confirm-password',
             'roles'    => 'required'
         ]);

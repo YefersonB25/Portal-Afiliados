@@ -186,7 +186,8 @@ class ConsultarAfiliadoController extends Controller
         ];
 
         try {
-            $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+
+            $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
             // return response()->json(['success' => true, 'data' => $params['q']]);
 
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
@@ -212,6 +213,7 @@ class ConsultarAfiliadoController extends Controller
             return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
         }
     }
+
 
     #[QueryParam("PaidStatus", "array('Paid', 'Undpaid', 'Partially paid')", required: true)]
     #[QueryParam("SupplierNumber", "integer", required: true)]
@@ -277,7 +279,7 @@ class ConsultarAfiliadoController extends Controller
             $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
             $params = [
                 'q'        => "(TaxpayerId = '{$number_id}')",
-                'limit'    => '1',
+                'limit'    => '200',
                 'fields'   => 'SupplierNumber',
                 'onlyData' => 'true'
             ];
@@ -292,6 +294,35 @@ class ConsultarAfiliadoController extends Controller
             $SupplierNumber =  (float)$res['items'][0]['SupplierNumber'];
 
             return response()->json(['success' => true, 'data' => $SupplierNumber]);
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+            return response()->json(['message' => 'Algo fallo con la comunicacion']);
+        }
+    }
+
+    public function SelectSupplierNumber(Request $request)
+    {
+        // return response()->json(['success' => true, 'data' => $request->input('q')]);
+
+        try {
+
+            $params = [
+                'q'        => "SupplierNumber LIKE '%{$request->input('q')}%'",
+                'limit'    => '25',
+                'fields'   => 'SupplierNumber',
+                'onlyData' => 'true'
+            ];
+            $response = OracleRestErp::procurementGetSuppliers($params);
+            $res = $response->json();
+            //? Validanos que nos traiga el proveedor
+            if ($res['count'] == 0) {
+                // return response()->json(['message' => 'No se encontro el proveedor'], 404);
+                session()->flash('message', 'No se encontro el proveedor');
+                return back();
+            }
+            // $SupplierNumber =  (float)$res['items'][0]['SupplierNumber'];
+
+            return response()->json($res['items']);
         } catch (\Throwable $th) {
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
             return response()->json(['message' => 'Algo fallo con la comunicacion']);
@@ -476,7 +507,7 @@ class ConsultarAfiliadoController extends Controller
 
          try {
              $params = self::parametros();
-             $params['q'] = 'attribute9 eq "' . 'TCL.'. $request->number_id . '" and statuses.statusValueGid eq "TCL.MANIFIESTO_CUMPL_NUEVO"';
+             $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.'. $request->number_id . '" and statuses.statusValueGid eq "TCL.MANIFIESTO_CUMPL_NUEVO"';
              $params['fields'] = 'shipmentXid,shipmentName,totalActualCost,totalWeightedCost,numStops,attribute9,attribute10,attribute11,insertDate';
              $request = OracleRestOtm::getShipments($params);
 

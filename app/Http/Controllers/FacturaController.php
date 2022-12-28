@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Log;
 
 class FacturaController extends Controller
 {
-    // function __construct()
-    // {
-    //     $this->middleware('permission:/facturas')->only('index');
+    function __construct()
+    {
+        $this->middleware('permission:/facturas')->only('index');
 
-    // }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,29 +28,29 @@ class FacturaController extends Controller
     public function index(Request $request)
     {
         try {
-            $user =  DB::table('users')->select('number_id')->where('id', $request->id)->first();
-            $number_id = $user->number_id;
+            // $user =  DB::table('users')->select('number_id')->where('id', $request->id)->first();
+            // $number_id = $user->number_id;
 
-            $params = [
-                'q'        => "(TaxpayerId = '{$number_id}')",
-                'limit'    => '200',
-                'fields'   => 'SupplierNumber',
-                'onlyData' => 'true'
-            ];
+            // $params = [
+            //     'q'        => "(TaxpayerId = '{$number_id}')",
+            //     'limit'    => '200',
+            //     'fields'   => 'SupplierNumber',
+            //     'onlyData' => 'true'
+            // ];
 
-            $response = OracleRestErp::procurementGetSuppliers($params);
+            // $response = OracleRestErp::procurementGetSuppliers($params);
 
-            $res = $response->json();
+            // $res = $response->json();
 
-            //? Validanos que nos traiga el proveedor
-            if ($res['count'] == 0) {
-                // return response()->json(['message' => 'No se encontro el proveedor'], 404);
-                session()->flash('message', 'No se encontro el proveedor');
-                return back();
-            }
-            $SupplierNumber =  (integer)$res['items'][0]['SupplierNumber'];
-
-                return view('facturas.index', ['SupplierNumber' => $SupplierNumber, 'number_id' => $number_id]);
+            // //? Validanos que nos traiga el proveedor
+            // if ($res['count'] == 0) {
+            //     // return response()->json(['message' => 'No se encontro el proveedor'], 404);
+            //     session()->flash('message', 'No se encontro el proveedor');
+            //     return back();
+            // }
+            // $SupplierNumber =  (integer)$res['items'][0]['SupplierNumber'];
+            // , ['SupplierNumber' => $SupplierNumber, 'number_id' => $number_id]
+                return view('facturas.index');
         } catch (\Throwable $th) {
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
              return  $th->getMessage();

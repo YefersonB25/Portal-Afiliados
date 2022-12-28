@@ -47,9 +47,10 @@ class SeederSuperSu extends Seeder
         // }
 
 
-        $Admin              = Role::create(['name' => 'Administrador']);
+        $Admin               = Role::create(['name' => 'Administrador']);
         $Cliente             = Role::create(['name' => 'Cliente']);
         $ClienteHijo         = Role::create(['name' => 'ClienteHijo']);
+        $Consultor           = Role::create(['name' => 'Consultor']);
         // $roleAdmin->syncPermissions($permisos);
 
         Permission::create(['name' => '/usuario.index', 'grupo' => 'proveedores-Usuarios', 'description' => 'Seguimiento solicitudes, modificar informacion de usuarios, consultar usuarios en OTM/ERP '])
@@ -70,6 +71,10 @@ class SeederSuperSu extends Seeder
                 $ClienteHijo,
                 $Cliente,
                 $Admin,
+            ]);
+        Permission::create(['name' => '/facturasGeneral', 'grupo' => 'Informacion-Facturas', 'description' => 'Consultar/ver seguimiento facturas'])
+            ->syncRoles([
+                $Consultor,
             ]);
 
 
@@ -112,13 +117,22 @@ class SeederSuperSu extends Seeder
             ])->assignRole('Administrador');
             User::create([
                 'name'          => 'Elkin Moreno',
-                'number_id'     => '39684019',
+                'number_id'     => '79108317',
                 'document_type' => 'CC',
                 'email'         => 'emoreno@tractocar.com',
                 'phone'         => '3162543022',
                 'status'        => 'CONFIRMADO',
                 'password'      => bcrypt('123456')
             ])->assignRole('Cliente');
+            User::create([
+                'name'          => 'Consultor',
+                'number_id'     => '24624662',
+                'document_type' => 'CC',
+                'email'         => 'consultor@gmail.com',
+                'phone'         => '3162543022',
+                'status'        => 'CONFIRMADO',
+                'password'      => bcrypt('123456')
+            ])->assignRole('Consultor');
         }
     }
 }

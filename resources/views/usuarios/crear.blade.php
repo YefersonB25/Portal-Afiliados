@@ -40,6 +40,25 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
+                                                <label for="phone">Phone</label>
+                                                {!! Form::text('phone', null, array('class' => 'form-control')) !!}
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="document_type">Seleccione tipo Documento</label>
+                                                {!! Form::select('document_type', [''=>'', 'CC'=>'Cedula de Ciudadania', 'NIT'=>'NIT'], [], array('class' => 'form-control'))
+                                                !!}
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="number_id">Numero Identificacion</label>
+                                                {!! Form::text('number_id', null, array('class' => 'form-control')) !!}
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
                                                 <label for="password">Password</label>
                                                 {!! Form::password('password', array('class' => 'form-control')) !!}
                                             </div>

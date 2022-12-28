@@ -37,7 +37,7 @@ class HomeController extends Controller
             ]);
         }
 
-        if ($rol->role_id != 1) {
+        if ($rol->role_id == 2 || $rol->role_id == 3) {
 
             $user = DB::table('relationship')
                 ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
@@ -64,6 +64,10 @@ class HomeController extends Controller
                 'SupplierNumber' => $SupplierNumber,
                 'number_id' => $number_id
             ]);
+        }
+
+        if ($rol->role_id == 4) {
+            return view('home');
         }
     }
     public function docs()

@@ -31,8 +31,7 @@ class PerfilController extends Controller
         $user          = User::find(Auth::user()->id);
         $user_relation = DB::table('users')
             ->leftJoin('relationship', 'users.id', '=', 'relationship.user_assigne_id')
-            ->where('relationship.user_id',  Auth::user()->id)
-            // ->where('relationship.deleted_at', '=', null)
+            ->where([['relationship.user_id',  Auth::user()->id], ['relationship.deleted_status', '<>', 'INACTIVE']])
             ->select(
                 'users.id',
                 'users.email',
@@ -46,6 +45,7 @@ class PerfilController extends Controller
                 'users.deleted_at as delete',
                 'relationship.deleted_at',
             )->get();
+
         return view('profile.profile', [
             'user_relation' => $user_relation,
             'user'          => $user
@@ -165,12 +165,34 @@ class PerfilController extends Controller
 
     public function eliminarUserAsociado($id)
     {
+        $dateDaled = DB::table('relationship')->select('deleted_at')->where('user_assigne_id', '=', $id)->get();
+        if ($dateDaled->count() > 1) {
+            return redirect()->route('profile')->with(['message'=> 'Wrong ID!!']);
+        }
         $post = user::find($id)->delete();
             $data = DB::table('relationship')->select('id')->where('user_assigne_id',$id)->first();
         $post = relationship::find($data->id)->delete();
         if ($post != null) {
-            return redirect()->route('profile')->with(['message'=> 'Successfully deleted!!']);
+            return redirect()->route('profile');
         }
-        return redirect()->route('profile')->with(['message'=> 'Wrong ID!!']);
+        return redirect()->route('profile');
+    }
+
+    public function reasignarUserAsociado($id)
+    {
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['deleted_at' => NULL]);
+
+        DB::table('relationship')
+            ->where('user_assigne_id', $id)
+            ->update(['deleted_status' => "INACTIVE"]);
+
+        DB::table('relationship')->insert([
+            'user_id'         => Auth::user()->id,
+            'user_assigne_id' => $id,
+            'deleted_status'   => "RESIGNED"
+        ]);
+        return redirect()->route('profile');
     }
 }

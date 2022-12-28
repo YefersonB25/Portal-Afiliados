@@ -49,6 +49,7 @@ Route::get('forgot-password', [AuthController::class, 'email'])->name('forgot-pa
 Route::prefix('profile')->controller(PerfilController::class)->middleware('auth')->group(function () {
     Route::get('/', 'index')->name('profile');
     Route::get('userAsociado/{id}', 'eliminarUserAsociado')->name('userAsociado.delete');
+    Route::get('userAsociadoRestore/{id}', 'reasignarUserAsociado')->name('userAsociado.restore');
     Route::put('{id}', 'update')->name('profile.update');
 });
 

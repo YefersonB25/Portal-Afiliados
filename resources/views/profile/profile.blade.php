@@ -142,6 +142,17 @@
                                                             </a>
                                                         </div>
                                                         @endif
+                                                        @if ($asociado->deleted_at != null)
+                                                        <a href="#" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="true">
+                                                            <i class="fe fe-more-vertical text-muted"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right shadow">
+                                                            <a class="dropdown-item" href="{{url("profile/userAsociadoRestore/{$asociado->id}")}}">
+                                                                <i class="fa fa-retweet" aria-hidden="true"></i> Reasignar
+                                                            </a>
+                                                        </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -172,6 +183,7 @@
                             <div class="tab-pane" id="accountSettings">
                                 <div class="card">
                                     <div class="card-body">
+                                        {{-- <div class="alert alert-success" id="alert" style="display: none;">&nbsp;</div> --}}
                                         <form method="POST" id="rgisterform" action="{{route('userAsociado.create')}}"
                                             enctype="multipart/form-data" class="form-horizontal" data-select2-id="11">
                                             <div class="mb-4 main-content-label">Account</div>
@@ -183,7 +195,7 @@
                                                     </div>
                                                     <div class="col-md-9">
                                                         <input id="firstName" type="text"
-                                                            class="input100{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                                            class="form-control input100{{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                             name="name" tabindex="1" placeholder="Nombre Completo"
                                                             value="{{ old('name') }}" autofocus required>
                                                         <div class="invalid-feedback">
@@ -199,7 +211,7 @@
                                                     </div>
                                                     <div class="col-md-9">
                                                         <input id="email" type="email"
-                                                            class="input100{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                                            class="form-control input100{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                                             placeholder="Enter Email address" name="email" tabindex="1"
                                                             value="{{ old('email') }}" required autofocus>
                                                         <div class="invalid-feedback">
@@ -215,7 +227,7 @@
                                                     </div>
                                                     <div class="col-md-9">
                                                         <input id="telefono" type="number"
-                                                            class="input100{{ $errors->has('telefono') ? ' is-invalid' : '' }}"
+                                                            class="form-control input100{{ $errors->has('telefono') ? ' is-invalid' : '' }}"
                                                             name="telefono" tabindex="1" placeholder="Telefono"
                                                             value="{{ old('telefono') }}" autofocus required>
                                                         <div class="invalid-feedback">
@@ -231,7 +243,7 @@
                                                     </div>
                                                     <div class="col-md-9">
                                                         <div class="wrap-input100 validate-input">
-                                                            <select class="form-select" name="document-type" aria-label=".form-select-sm example" required>
+                                                            <select class="form-control" name="document-type" aria-label=".form-select-sm example" required>
                                                                 <option selected value="">Seleccione tipo Documento</option>
                                                                 <option value="NIT">NIT</option>
                                                                 <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
@@ -250,7 +262,7 @@
                                                     </div>
                                                     <div class="col-md-9">
                                                         <input id="identification" type="number"
-                                                            class="input100{{ $errors->has('identification') ? ' is-invalid' : '' }}"
+                                                            class="form-control input100{{ $errors->has('identification') ? ' is-invalid' : '' }}"
                                                             name="identification" tabindex="1"
                                                             placeholder="Numero Identificacion"
                                                             value="{{ old('identification') }}" autofocus required>
@@ -267,7 +279,7 @@
                                                     </div>
                                                     <div class="col-md-9">
                                                         <input id="password" type="password"
-                                                            class="input100{{ $errors->has('password') ? ' is-invalid': '' }}"
+                                                            class="form-control input100{{ $errors->has('password') ? ' is-invalid': '' }}"
                                                             placeholder="Contraseña" name="password" tabindex="2"
                                                             required>
                                                         <div class="invalid-feedback">
@@ -290,53 +302,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row">
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="card">
-                                        <div class="card-header border-bottom">
-                                            <h3 class="card-title">Default Validation</h3>
-                                        </div>
-                                        <div class="card-body">
-                                            <form>
-                                                <div class="form-row">
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                                                        <label for="validationDefault01">First name</label>
-                                                        <input type="text" class="form-control" id="validationDefault01" value="Daniel" required>
-                                                    </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                                                        <label for="validationDefault02">Last name</label>
-                                                        <input type="text" class="form-control" id="validationDefault02" value="Obrien" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                                                        <label for="validationDefault03">City</label>
-                                                        <input type="text" class="form-control" id="validationDefault03" required>
-                                                    </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                                                        <label for="validationDefault04">State</label>
-                                                        <select class="form-select select2 form-control" id="validationDefault04" required>
-                                                            <option selected disabled value="">Choose...</option>
-                                                            <option>...</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-3">
-                                                        <label for="validationDefault05">Zip Code</label>
-                                                        <input type="number" class="form-control" id="validationDefault05" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="ckbox">
-                                                        <input type="checkbox" id="invalidCheck2" required>
-                                                        <span class="text-13">I agree terms and conditions</span>
-                                                    </label>
-                                                </div>
-                                                <button class="btn btn-primary" type="submit">Submit form</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -346,25 +311,47 @@
 </body>
 @endsection
 @section('scripts')
-
-@if (Session::has('message'))
-<script>
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Usuario registrado correctamente',
-        showConfirmButton: false,
-        timer: 2500
-        })
-</script>
-@endif
-@if (Session::has('messageError'))
-<script>
-    Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Solo puede registrar como máximo 4 Usuario, para más información comuníquese con el Administrador!',
-        })
-</script>
-@endif
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script>
+        $(document).on("submit","#rgisterform",function(e){
+            e.preventDefault();//detemos el formluario
+            $("#rgisterform").validate();
+            $.ajax({
+                type: $('#rgisterform').attr('method'),
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                url: $('#rgisterform').attr('action'),
+                data: $('#rgisterform').serialize(),
+                success: function (response) {
+                    if (response.success == true) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Usuario registrado correctamente',
+                            showConfirmButton: false,
+                            timer: 2500
+                        })
+                        $("#rgisterform")[0].reset();
+                    }else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Solo puede registrar como máximo 4 Usuario, para más información comuníquese con el Administrador!',
+                        })
+                        $("#rgisterform")[0].reset();
+                    }
+                }
+            });
+        });
+    </script>
+    @if(session("message"))
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'El usuario no puede ser eliminado, ya que anteriormente fue eliminado y reasignado, por tal motivo no se puede proceder con la eliminación!',
+            })
+        </script>
+    @endif
 @endsection

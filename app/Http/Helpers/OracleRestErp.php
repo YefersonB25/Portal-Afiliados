@@ -31,7 +31,7 @@ class OracleRestErp
         $url  = $erp['server'] . $path;
         $response = Http::withBasicAuth($erp['username'], $erp['password'])
             ->withHeaders([
-                'REST-Framework-Version' => '3'
+                'REST-Framework-Version' => '2'
             ])->get($url, $params);
         return $response;
     }

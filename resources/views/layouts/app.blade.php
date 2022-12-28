@@ -21,6 +21,12 @@
     <!-- STYLE CSS -->
     <link href={{asset('assets/css/style.css')}} rel="stylesheet" />
     <link href={{asset('assets/css/skin-modes.css')}} rel="stylesheet" />
+    {{-- <link href={{asset('assets/plugins/select2/select2.min.css')}} rel="stylesheet"/> --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href={{asset(('assets/thema/plugins/bower_components/custom-select/custom-select.css'))}}>
+    <link rel="stylesheet" href={{asset(('assets/thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.css'))}}>
+    <link rel="stylesheet" href={{asset(('assets/thema/plugins/bower_components/multiselect/css/multi-select.css'))}}>
 
     <!-- DATA TABLE CSS-->
     {{-- <link href={{asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}} rel="stylesheet" /> --}}
@@ -31,7 +37,7 @@
     <!--- FONT-ICONS CSS -->
     <link href={{asset('assets/css/icons.css')}} rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-
+    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
 </head>
 
 <body>
@@ -78,7 +84,11 @@
     <script src="{{ asset('assets/js/apexcharts.js') }}"></script>
 
 <!-- INTERNAL SELECT2 JS -->
-    <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script> --}}
+    <script src="{{ asset('assets/thema/plugins/bower_components/custom-select/custom-select.min.js') }}"></script>
+    <script src="{{ asset('assets/thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}"></script>
+
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
 <!-- DATA TABLE JS-->
 <script src="{{asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
@@ -116,8 +126,6 @@
 
 <!-- COLOR THEME JS -->
     <script src={{ asset('assets/js/themeColors.js') }}></script>
-{{-- <script src="{{ asset('thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}"
-    type="text/javascript"></script> --}}
 @yield('scripts')
 
 </html>

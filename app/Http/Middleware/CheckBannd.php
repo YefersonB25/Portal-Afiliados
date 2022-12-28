@@ -26,11 +26,6 @@ class CheckBannd
 
             return redirect()->route('login')->with('error', 'Los datos de la cuenta aun no han sido validados.');
         }
-        // if (auth()->check() && (auth()->user()->estado != 1)) {
-        //     User::where('id', auth()->user()->id,)->update([
-        //         'last_login' => date('y-m-d h:i')
-        //     ]);
-        // }
 
         return $next($request);
     }
