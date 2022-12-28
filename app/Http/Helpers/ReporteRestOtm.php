@@ -26,35 +26,37 @@ class ReporteRestOtm
     {
         $otm  = self::getDataAccess();
 
-         // Define variables
-         $username        = $otm['username'];
-         $password        = $otm['password'];
-         $path            = $url;
-         $paramNameValues = [];
+        // Define variables
+        //  $username        = $otm['username'];
+        //  $password        = $otm['password'];
+        //  $path            = $url;
+        $username    = "TCL.RPTMONITOR";
+        $password    = "@FTQ-hJ9Kvz6";
+        $path            = $url;
+        $paramNameValues = [];
 
-         // Asigna parametros exclusivos del reporte
-         foreach ($params as $name => $value) {
-             data_fill($paramNameValues, "item.multiValuesAllowed", true);
-             data_fill($paramNameValues, "item.refreshParamOnChange", "");
-             data_fill($paramNameValues, "item.selectAll", "");
-             data_fill($paramNameValues, "item.templateParam", "");
-             data_fill($paramNameValues, "item.useNullForAll", "");
-             data_fill($paramNameValues, "item.name", $name);
-             data_fill($paramNameValues, "item.values.item", $value);
-         }
+        // Asigna parametros exclusivos del reporte
+        foreach ($params as $name => $value) {
+            data_fill($paramNameValues, "item.multiValuesAllowed", true);
+            data_fill($paramNameValues, "item.refreshParamOnChange", "");
+            data_fill($paramNameValues, "item.selectAll", "");
+            data_fill($paramNameValues, "item.templateParam", "");
+            data_fill($paramNameValues, "item.useNullForAll", "");
+            data_fill($paramNameValues, "item.name", $name);
+            data_fill($paramNameValues, "item.values.item", $value);
+        }
 
-         // Asigna parametros globales
-         $reportParams    = [];
-         data_fill($reportParams, "reportRequest.parameterNameValues.listOfParamNameValues", $paramNameValues);
-         data_fill($reportParams, "reportRequest.flattenXML", "");
-         data_fill($reportParams, "reportRequest.byPassCache", "");
-         data_fill($reportParams, "reportRequest.reportAbsolutePath", $path);
-         data_fill($reportParams, "reportRequest.sizeOfDataChunkDownload", -1);
-         data_fill($reportParams, "userID", $username);
-         data_fill($reportParams, "password", $password);
+        // Asigna parametros globales
+        $reportParams    = [];
+        data_fill($reportParams, "reportRequest.parameterNameValues.listOfParamNameValues", $paramNameValues);
+        data_fill($reportParams, "reportRequest.flattenXML", "");
+        data_fill($reportParams, "reportRequest.byPassCache", "");
+        data_fill($reportParams, "reportRequest.reportAbsolutePath", $path);
+        data_fill($reportParams, "reportRequest.sizeOfDataChunkDownload", -1);
+        data_fill($reportParams, "userID", $username);
+        data_fill($reportParams, "password", $password);
 
-         return $reportParams;
-
+        return $reportParams;
     }
 
     public static function manifiestoSoapOtmReport($loadNumber = null)
@@ -111,6 +113,4 @@ class ReporteRestOtm
         }
         return $acumulador;
     }
-    
-
 }

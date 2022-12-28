@@ -46,7 +46,7 @@ class OracleRestOtm
         ])->get($url, $payload);
         return $response;
     }
-    public static function getShipmentStatus($shipmentGid, $params)
+    public static function getShipmentStatus($shipmentGid, $params = null)
     {
         $path = '/logisticsRestApi/resources-int/v2/shipments' . $shipmentGid;
         $erp  = self::getDataAccess(); //!Descomentar cuando se configuren las variables de session
@@ -74,6 +74,4 @@ class OracleRestOtm
         }
         return $total;
     }
-
-
 }

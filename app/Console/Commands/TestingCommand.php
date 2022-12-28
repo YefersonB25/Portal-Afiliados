@@ -117,9 +117,10 @@ class TestingCommand extends Command
                 $response = self::getShipmentStatusOtm($shipmentGid);
                 break;
             case 'reporte-otm':
-                $number = 'TCL.0800940';
-                $this->alert("Get shipments status, shipmentGid = {$number}");
-                $response = self::manifiestoSoapOtmReport($number);
+                // $number = 'SATISFACTORIO';
+                $shipmentXid = '0825830';
+                $this->alert("ShipmentReport = {$shipmentXid}");
+                $response = self::manifiestoSoapOtmReport($shipmentXid);
                 break;
         }
         dd($response);
@@ -257,7 +258,7 @@ class TestingCommand extends Command
      * The console command description.
      *
      * @var shipmentXid     = shipmentXid,
-     * @var attribute9      = supplier_Gid,
+     * @var attribute9      = driver_Gid,
      * @var attribute10     = placa_Gid,
      * @var attribute11     = placa_trailer_Gid,
      * @var totalActualCost = Costo total actual,
@@ -297,66 +298,33 @@ class TestingCommand extends Command
         }
     }
 
-    public static function manifiestoSoapOtmReport($loadNumber = null)
-    {
-        $server      = CommonUtils::getSetting('oracle_otm_soat_report_server_test');
-        $username    = CommonUtils::getSetting('user_ws_test');
-        $password    = CommonUtils::getSetting('test_ws_password');
+    /**
+     * The console command description.
+     *
+     * @var P_SHIPMENT_XID = shipmentXid,
+     */
 
+    public static function manifiestoSoapOtmReport($shipmentXid = null)
+    {
+        // $server      = CommonUtils::getSetting('oracle_otm_soat_report_server_test');
+        // $username    = CommonUtils::getSetting('user_ws_test');
+        // $password    = CommonUtils::getSetting('test_ws_password');
+        $server      = "https://otmgtm-test-ekhk.otm.us2.oraclecloud.com/xmlpserver/services/v2/ReportService?WSDL";
         $client = new SoapClient(
             $server,
             array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1, 'encoding' => 'UTF-8')
         );
-
         $params = [
-            'P_SHIPMENT_STATUS'   => $loadNumber,
+            'P_SHIPMENT_XID'   => $shipmentXid,
         ];
-        $paths = '/Custom/OTM-Monitor/Reportes/LoadedShipmentsReport.xdo';
-
+        $paths = '/Custom/OTM-Monitor/Reportes/ShipmentReport.xdo';
         $par = ReporteRestOtm::getReporteParams($params, $paths);
+
         $response = $client->__soapCall('runReport', array($par));
         $xmlString = $response->runReportReturn->reportBytes;
         $xml = simplexml_load_string($xmlString);
         $reportData = json_decode(json_encode($xml), true);
-        dd($reportData);
         $data = Arr::get($reportData, 'DATA', []);
-
-        // $response['success'] = true;
-        // $response['content'] = $data;
-
-        $acumulador = [];
-        $acumulador2 = [];
-        foreach ($xml->P_TRANSPORTE as $children) {
-            $json1 = json_encode($children);
-            array_push($acumulador2, json_decode($json1, true));
-        }
-        $eliminarCar = str_replace(array('[', ']'), '', $acumulador2[0][0]);
-        $array = explode(',', $eliminarCar);
-
-        foreach ($xml->DATA as $children) {
-            $json = json_encode($children);
-            array_push($acumulador, json_decode($json, true));
-        }
-        foreach ($array as $item) {
-
-            array_push(
-                $acumulador,
-                [
-                    'LOAD_NUMBER'       => $item,
-                    'SHIPMENT'          => 'N/D',
-                    'ENROUTE_STATUS'    => 'N/D',
-                    'DRIVER_ID'         => 'N/D',
-                    'DRIVER_FULLNAME'   => 'N/D',
-                    'LICENSE_PLATE'     => 'N/D',
-                    'VEHICLE_TYPE'      => 'N/D',
-                    'GPS_PROVIDER_NIT'  => 'N/D',
-                    'GPS_ID_COMPANY'    => 'N/D',
-                    'GPS_USER'          => 'N/D',
-                    'GPS_PASSWORD'      => 'N/D',
-                    'MONITOR_INTEGRATED' => 'N/D',
-                ]
-            );
-        }
-        return $acumulador;
+        return $data;
     }
 }
