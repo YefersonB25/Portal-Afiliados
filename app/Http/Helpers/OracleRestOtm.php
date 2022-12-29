@@ -27,7 +27,6 @@ class OracleRestOtm
         $path = '/logisticsRestApi/resources-int/v2/locations/TCL.' . $locationGid;
         $erp  = self::getDataAccess(); //!Descomentar cuando se configuren las variables de session
         $url  = $erp['server'] . $path; //!Descomentar
-        // $url  = 'https://otmgtm-test-ekhk.otm.us2.oraclecloud.com:443/logisticsRestApi/resources-int/v2/locations/TCL.' . $locationGid; //!Concatenar la url con el path
 
         $response = Http::withBasicAuth($erp['username'], $erp['password'])->withHeaders([
             'Content-Type' => 'application/vnd.oracle.resource+json;type=singular'
@@ -40,7 +39,6 @@ class OracleRestOtm
         $path = ':443/logisticsRestApi/resources-int/v2/shipments';
         $erp  = self::getDataAccess(); //!Descomentar cuando se configuren las variables de session
         $url  = $erp['server'] . $path; //!Descomentar
-        // $url  = 'https://otmgtm-test-ekhk.otm.us2.oraclecloud.com:443/logisticsRestApi/resources-int/v2/shipments'; //!Concatenar la url con el path
         $response = Http::withBasicAuth($erp['username'], $erp['password'])->withHeaders([
             'Content-Type' => 'application/vnd.oracle.resource+json;type=singular'
         ])->get($url, $payload);
@@ -51,7 +49,6 @@ class OracleRestOtm
         $path = '/logisticsRestApi/resources-int/v2/shipments' . $shipmentGid;
         $erp  = self::getDataAccess(); //!Descomentar cuando se configuren las variables de session
         $url  = $erp['server'] . $path; //!Descomentar
-        // $url  = 'https://otmgtm-test-ekhk.otm.us2.oraclecloud.com:443/logisticsRestApi/resources-int/v2/shipments/' . $shipmentGid . '/statuses/TCL.MANIFIESTO_CUMPLIDO'; //!Concatenar la url con el path
         $response = Http::withBasicAuth($erp['username'], $erp['password'])->withHeaders([
             'Content-Type' => 'application/vnd.oracle.resource+json;type=singular'
         ])->get($url, $params);

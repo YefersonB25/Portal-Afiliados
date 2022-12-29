@@ -718,9 +718,7 @@
                     let data = response.data;
                     if(response.success == true)
                     {
-                        let = plantillaMtPagadas = ''
                         let = plantillaMtPorPagar = ''
-                        let = plantillaMtPagadasConNovedad = ''
                         let = plantillaTotalFt = ''
 
                         $.ajax({
@@ -737,16 +735,8 @@
                                 let datos = response.data;
                                 if (response.success == true) {
                                     let dollarUSLocale = Intl.NumberFormat('en-US');
-                                    // let mtPagadas = dollarUSLocale.format(datos[2]['Pagadas']);
                                     let mtPorPagar = dollarUSLocale.format(datos[0]['Impagado']);
-                                    // let mtPagadasConNovedad = dollarUSLocale.format(datos[0]['Parcialmente pagado']);
                                     let totalFt = datos[0]['count Impagado'];
-
-                                    // plantillaMtPagadas =
-                                    // `
-                                    // <h3 class="mb-2 fw-semibold">$${mtPagadas}</h3>
-                                    // `
-                                    // $('#mtPagadas').append(plantillaMtPagadas)
 
                                     plantillaMtPorPagar =
                                     `
@@ -754,19 +744,12 @@
                                     `
                                     $('#mtPorPagar').append(plantillaMtPorPagar)
 
-                                    // plantillaMtPagadasConNovedad =
-                                    // `
-                                    // <h3 class="mb-2 fw-semibold">$${mtPagadasConNovedad}</h3>
-                                    // `
-                                    // $('#mtPagadasConNovedad').append(plantillaMtPagadasConNovedad)
-
                                     plantillaTotalFt =
                                     `
                                     <h3 class="mb-2 fw-semibold">${totalFt}</h3>
                                     `
                                     $('#totalFt').append(plantillaTotalFt)
                                     Loader1();
-                                    // console.log(datos[2]['Paid']);
                                 }
                             },
                             error: function(error){
@@ -1157,7 +1140,6 @@
                                 data: function ( d ) {
 
                                     let pieces = d.attribute9.split(".");
-                                    console.log(pieces);
                                     return pieces[1];
 
                                 }
@@ -1166,7 +1148,6 @@
                                 data: function ( d ) {
 
                                     let pieces = d.attribute10.split(".");
-                                    console.log(pieces);
                                     return pieces[1];
 
                                 }
@@ -1175,7 +1156,6 @@
                                 data: function ( d ) {
 
                                     let pieces = d.attribute11.split(".");
-                                    console.log(pieces);
                                     return pieces[1];
 
                                 }
@@ -1554,7 +1534,6 @@
 
                         // Cargamos los datos de la factura al modal
                         let invoice = table.row($(this).parents("tr") ).data();
-                        // console.log(invoice.shipmentXid);
                         plantillaDate = '';
                         plantillarow1 = '';
                         $.ajax({
@@ -1565,12 +1544,9 @@
                                 invoice: invoice.shipmentXid
                             },
                             success : function(response) {
-                                // console.log(response.data);
                                 let invoice = response.data
-                                // let lines = response.data.invoiceLines
 
                                 if (response.success == true) {
-                                    // console.log(invoice.MANIFEST_CREATE_DATE);
                                     $('#date_1').html('')
                                     plantillaDate = `
                                         <div class="col-md-4 align-self-center">

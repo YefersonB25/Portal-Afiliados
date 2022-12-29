@@ -30,11 +30,8 @@ class ReporteRestOtm
         // Define variables
          $username        = $otm['username'];
          $password        = $otm['password'];
-        //  $path            = $url;
-        // $username    = "TCL.RPTMONITOR";
-        // $password    = "@FTQ-hJ9Kvz6";
-        $path            = $url;
-        $paramNameValues = [];
+         $path            = $url;
+         $paramNameValues = [];
 
         // Asigna parametros exclusivos del reporte
         foreach ($params as $name => $value) {
@@ -64,7 +61,6 @@ class ReporteRestOtm
     {
         $otm  = self::getDataAccess();
         $server        = $otm['server'];
-        // $server      = "https://otmgtm-test-ekhk.otm.us2.oraclecloud.com/xmlpserver/services/v2/ReportService?WSDL";
         $client = new SoapClient(
             $server,
             array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1, 'encoding' => 'UTF-8')
