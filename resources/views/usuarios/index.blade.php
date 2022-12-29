@@ -128,15 +128,6 @@
                                                     <i class="fa fa-user-times"></i>
                                                 </a>
                                                 @break
-                                                @case('CONFIRMADO')
-                                                    @if ($usuario->rol->rol_nombre['name'] == 'Cliente')
-                                                        <a href="{{ route('blogs.index',['id' => $usuario->id]) }}"
-                                                            class="btn btn-icon btn-primary-light me-2" id="consultFacturas" data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Consultar Facturas">
-                                                            <i class="fa fa-file-text"></i>
-                                                        </a>
-                                                    @endif
-                                                @break
                                                 @default
                                                 @break
                                                 @endswitch
