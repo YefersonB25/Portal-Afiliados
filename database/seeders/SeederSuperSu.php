@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Estado;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -86,7 +85,7 @@ class SeederSuperSu extends Seeder
             4 => 'ASOCIADO'
         ];
         $document = [
-            1 => 'CC',
+            1 => 'Cedula de Ciudadania',
             2 => 'NIT',
         ];
         for ($i = 0; $i < 500; $i++) {

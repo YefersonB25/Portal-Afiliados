@@ -107,11 +107,11 @@ class SettingSeeder extends Seeder
 
             DB::table('portal_settings')->insert([
                 [
-                    'name'          => 'oracle_otm_user_soap',
-                    'val'           => 'TCL.USERSOAP',
-                    'isEncrypt'     => '0',
-                    'created_at'    => \Carbon\Carbon::now(),
-                    'updated_at'    => \Carbon\Carbon::now()
+                    'name'       => 'oracle_otm_user_soap',
+                    'val'        => 'TCL.USERSOAP',
+                    'isEncrypt'  => '0',
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
                 ]
             ]);
         }
@@ -121,11 +121,11 @@ class SettingSeeder extends Seeder
 
             DB::table('portal_settings')->insert([
                 [
-                    'name'      => 'oracle_otm_password_soap',
-                    'val'       => Crypt::encryptString('TRACTO2020'),
-                    'isEncrypt' => '1',
-                    'created_at'            => \Carbon\Carbon::now(),
-                    'updated_at'            => \Carbon\Carbon::now()
+                    'name'       => 'oracle_otm_password_soap',
+                    'val'        => Crypt::encryptString('TRACTO2020'),
+                    'isEncrypt'  => '1',
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
                 ]
             ]);
         }
@@ -135,11 +135,11 @@ class SettingSeeder extends Seeder
 
             DB::table('portal_settings')->insert([
                 [
-                    'name'      => 'oracle_erp_date_end_default',
-                    'val'       => '0000-00-00 00:00:00',
-                    'isEncrypt' => '0',
-                    'created_at'            => \Carbon\Carbon::now(),
-                    'updated_at'            => \Carbon\Carbon::now()
+                    'name'       => 'oracle_erp_date_end_default',
+                    'val'        => '0000-00-00 00:00:00',
+                    'isEncrypt'  => '0',
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
                 ]
             ]);
         }
