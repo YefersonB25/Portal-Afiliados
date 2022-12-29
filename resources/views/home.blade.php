@@ -1698,7 +1698,7 @@
                             results: $.map(data, function(item) {
                                 return {
                                     text: item.Supplier,
-                                    id: item.Supplier
+                                    id: item.SupplierNumber
                                 }
                             })
                         };
