@@ -17,7 +17,7 @@ class CreateRelationshipTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('user_assigne_id');
-            $table->enum('deleted_status', ['RESIGNED', 'INACTIVE', 'ACTIVE'])->nullable();
+            $table->enum('deleted_status', ['RESIGNED','INACTIVE','ACTIVE'])->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
