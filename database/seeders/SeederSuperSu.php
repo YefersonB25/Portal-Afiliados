@@ -85,7 +85,7 @@ class SeederSuperSu extends Seeder
             4 => 'ASOCIADO'
         ];
         $document = [
-            1 => 'Cedula de Ciudadania',
+            1 => 'CC',
             2 => 'NIT',
         ];
         for ($i = 0; $i < 500; $i++) {
