@@ -485,7 +485,7 @@
                                                 @csrf
                                                 <div class="row mb-2">
                                                     <div class="col-md">
-                                                        <label for="SupplierNumber" class="form-label">Numero Proveedor</label>
+                                                        <label for="SupplierNumber" class="form-label">Numbre Proveedor(ingresar datos en Mayúscula)</label>
                                                         <div class="form-group">
                                                             <input type="hidden" class="form-control" id="customer-code"
                                                             name="SupplierNumber" />
@@ -1698,7 +1698,7 @@
                             results: $.map(data, function(item) {
                                 return {
                                     text: item.Supplier,
-                                    id: item.Supplier
+                                    id: item.SupplierNumber
                                 }
                             })
                         };
