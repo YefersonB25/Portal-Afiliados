@@ -311,9 +311,9 @@ class ConsultarAfiliadoController extends Controller
         try {
 
             $params = [
-                'q'        => "SupplierNumber LIKE '%{$request->input('q')}%'",
+                'q'        => "Supplier LIKE '%{$request->input('q')}%'",
                 'limit'    => '25',
-                'fields'   => 'SupplierNumber',
+                'fields'   => 'Supplier',
                 'onlyData' => 'true'
             ];
             $response = OracleRestErp::procurementGetSuppliers($params);
