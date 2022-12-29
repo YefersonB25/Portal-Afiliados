@@ -38,7 +38,6 @@ Route::prefix('portal/users')->controller(UsuarioController::class)->middleware(
     Route::get('confirmar/{usuario}/{estado}', 'confirmarDatos')->name('usuario.estado');
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
     Route::post('/', 'filtros')->name('user.filtros');
-
 });
 Route::resource('portal/usuarios', UsuarioController::class);
 
@@ -77,5 +76,5 @@ Route::prefix('portal/setting')->controller(Configs::class)->middleware('auth')-
 
 
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function () use ($router) {
-    $router->get('logs', 'LogViewerController@index');
+    $router->get('portal/setting/logs', 'LogViewerController@index')->name('setting.logs');
 });
