@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\OracleRestErp;
 use App\Http\Helpers\OracleRestOtm;
+use App\Http\Helpers\ReporteRestOtm;
 use App\Http\Helpers\RequestNit;
 use App\Models\User;
 use Carbon\Carbon;
@@ -186,8 +187,11 @@ class ConsultarAfiliadoController extends Controller
         ];
 
         try {
-
-            $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+            if (empty($request->InvoiceDate)) {
+                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+            }else{
+                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+            }
             // return response()->json(['success' => true, 'data' => $params['q']]);
 
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
@@ -538,4 +542,10 @@ class ConsultarAfiliadoController extends Controller
              return  $e->getMessage();
          }
      }
+
+     public function getShipmentDetalle(Request $request)
+     {
+         $response = ReporteRestOtm::manifiestoSoapOtmReport($request->invoice);
+         return response()->json(['success' => true, 'data' => $response]);
+    }
 }

@@ -118,7 +118,7 @@ class TestingCommand extends Command
                 break;
             case 'reporte-otm':
                 // $number = 'SATISFACTORIO';
-                $shipmentXid = '0825830';
+                $shipmentXid = '0800940';
                 $this->alert("ShipmentReport = {$shipmentXid}");
                 $response = self::manifiestoSoapOtmReport($shipmentXid);
                 break;

@@ -403,17 +403,17 @@
                                                     <div class="modal-content">
                                                         <div class="card">
                                                             <div class="card-body invoice-head">
-                                                                <div class="row" id="date">
+                                                                <div class="row" id="date_1">
 
                                                                 </div>
                                                                 <!--end row-->
                                                             </div>
                                                             <!--end card-body-->
                                                             <div class="card-body" id="body">
-                                                                <div class="row" id="row1">
+                                                                <div class="row" id="row1_1">
                                                                 </div>
                                                                 <!--end row-->
-                                                                <div class="row">
+                                                                {{-- <div class="row">
                                                                     <div class="col-lg-12">
                                                                         <div class="table-responsive project-invoice">
                                                                             <table class="table table-bordered mb-0">
@@ -434,18 +434,18 @@
                                                                         <!--end /div-->
                                                                     </div>
                                                                     <!--end col-->
-                                                                </div>
+                                                                </div> --}}
                                                                 <!--end row-->
 
 
-                                                                <div class="row justify-content-center">
+                                                                {{-- <div class="row justify-content-center">
                                                                     <div class="col-lg-12">
                                                                         <h5 class="mt-4"><i
                                                                                 class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
                                                                             :</h5>
                                                                     </div>
                                                                     <!--end col-->
-                                                                </div>
+                                                                </div> --}}
                                                                 <!--end row-->
                                                                 <div class="row d-flex justify-content-center">
                                                                     <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
@@ -1044,7 +1044,7 @@
                             let datos =  response.data;
                             // var invoiceInstallments = datos[0].invoiceInstallments;
                             if (response.success == true) {
-                                // console.log(datos);
+
                                 tblColectionData.clear().draw();
                                 tblColectionData.rows.add(datos).draw();
 
@@ -1153,9 +1153,33 @@
                         columns: [
                             {title: "Accion", data: null, defaultContent: "<button type='button' class='verT btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
                             {title: "ID", data: "shipmentXid" },
-                            {title: "Numero identificacion proveedor",  data: "attribute9" },
-                            {title: "Placa", data: "attribute10" },
-                            {title: "Placa Trailer", data: "attribute11" },
+                            {title: "Numero identificacion proveedor",
+                                data: function ( d ) {
+
+                                    let pieces = d.attribute9.split(".");
+                                    console.log(pieces);
+                                    return pieces[1];
+
+                                }
+                            },
+                            {title: "Placa",
+                                data: function ( d ) {
+
+                                    let pieces = d.attribute10.split(".");
+                                    console.log(pieces);
+                                    return pieces[1];
+
+                                }
+                            },
+                            {title: "Placa Trailer",
+                                data: function ( d ) {
+
+                                    let pieces = d.attribute11.split(".");
+                                    console.log(pieces);
+                                    return pieces[1];
+
+                                }
+                            },
                             {title: "Costo Total",
                                 data: function ( d ) {
 
@@ -1530,90 +1554,85 @@
 
                         // Cargamos los datos de la factura al modal
                         let invoice = table.row($(this).parents("tr") ).data();
+                        // console.log(invoice.shipmentXid);
                         plantillaDate = '';
-                        plantiilabody = '';
                         plantillarow1 = '';
-                        plantillarow2 = '';
                         $.ajax({
                             type: "POST",
-                            url: "{{ route('invoice.lines') }}",
+                            url: "{{ route('falturas.transporte.detalle') }}",
                             data: {
                                 "_token": "{{ csrf_token() }}",
-                                invoice: invoice
+                                invoice: invoice.shipmentXid
                             },
                             success : function(response) {
-                                let invoice = response.data.invoiceData
-                                let lines = response.data.invoiceLines
+                                // console.log(response.data);
+                                let invoice = response.data
+                                // let lines = response.data.invoiceLines
 
                                 if (response.success == true) {
-                                    // console.log(invoice.PaidStatus);
-                                    $('#date').html('')
+                                    // console.log(invoice.MANIFEST_CREATE_DATE);
+                                    $('#date_1').html('')
                                     plantillaDate = `
                                         <div class="col-md-4 align-self-center">
                                             <img src="{{asset('assets/images/logos-tractocar/negative-blue-small.png')}}" alt="logo-small" class="logo-sm mr-2" height="56">
                                             {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
-                                            <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
+                                        </div><!--end col-->
                                         </div><!--end col-->
                                         <div class="col-md-4 ms-auto">
                                             <ul class="list-inline mb-0 contact-detail float-right" >
                                                 <li class="list-inline-item">
                                                     <div class="pl-3">
-                                                        <h6 class="mb-0"><b>@lang('locale.Invoice Date') : ${invoice.InvoiceDate}</b> </h6>
-                                                        <h6><b>@lang('locale.Invoice Number'):</b> # ${invoice.InvoiceId}</h6>
-                                                    </div>
-                                                </li>
-                                                <li class="list-inline-item">
-                                                    <div class="pl-3">
-                                                        <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> $${invoice.InvoiceAmount}</h5>
+                                                        <h6 class="mb-0"><b>Fecha de creación del Manifiesto : ${invoice.MANIFEST_CREATE_DATE}</b> </h6>
+                                                        <h6><b>Numero del Manifiesto:</b> # ${invoice.MANIFEST_ID}</h6>
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div><!--end col-->
-
                                     `
-                                    $('#date').append(plantillaDate)
+                                    $('#date_1').append(plantillaDate)
 
-                                    if (invoice.CanceledFlag == 1) {
-                                        $('#body').html('')
-                                        plantiilabody = `
-                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                    <strong>@lang('locale.Canceled')!</strong> @lang('locale.The invoice has been canceled').
-                                                </div>
-                                        `
-                                        $('#body').append(plantiilabody)
-                                    }
-
-                                    $('#row1').html('')
+                                    $('#row1_1').html('')
                                     plantillarow1 = `
                                         <div class="col-md-4">
                                             <div class="float-left">
                                                 <address class="font-13">
-                                                    <strong class="font-14"> @lang('locale.Supplier') :</strong><br>
-                                                    ${ invoice.Supplier }<br>
-                                                    ${ invoice.SupplierSite }<br>
+                                                    <strong class="font-14">Informacion del la Transportadora:</strong><br>
+                                                   Nombre : ${ invoice.TRANSPORTER_NAME }<br>
+                                                   ID : ${ invoice.TRANSPORTER_ID }<br>
+                                                   Correo : ${ invoice.TRANSPORTER_EMAIL }<br>
+                                                   Telefono : ${ invoice.TRANSPORTER_PHONE_NUMBER }<br>
+
                                                 </address>
                                                 <address class="font-13">
-                                                    <strong class="font-14">@lang('locale.Third-party sites'):</strong><br>
-                                                    ${ invoice.Party }<br>
-                                                    ${ invoice.PartySite }<br>
+                                                    <strong class="font-14">Informacion de Conductor:</strong><br>
+                                                    Nombre : ${ invoice.OWNER_NAME }<br>
+                                                    ID : ${ invoice.OWNER_ID }<br>
+                                                    Correo : ${ invoice.OWNER_EMAIL }<br>
+                                                    Telefono : ${ invoice.DRIVER_PHONE_NUMBER }<br>
+                                                    Direccion : ${ invoice.DRIVER_ADDRESS }<br>
+
+                                                </address>
+                                                <address class="font-13">
+                                                    <strong class="font-14">Informacion del Vehículo:</strong><br>
+                                                    Cuerpo : ${ invoice.VEHICLE_BODY }<br>
+                                                    Color : ${ invoice.VEHICLE_COLOR }<br>
+                                                    Matrícula : ${ invoice.VEHICLE_LICENSE_PLATE }<br>
+                                                    Marca : ${ invoice.VEHICLE_MAKE }<br>
+                                                    Modelo : ${ invoice.VEHICLE_MODEL }<br>
+                                                    Numero Trailer : ${ invoice.VEHICLE_TRAILER_NUMBER }<br>
                                                 </address>
                                             </div>
                                         </div><!--end col-->
 
                                         <div class="col-md-4">
                                             <div class="float-left">
-                                                <h6><b>@lang('locale.Invoice Type') :</b>
+                                                <h6><b>Tipo de Operacion :</b>
                                                     ${
-                                                        invoice.InvoiceType
+                                                        invoice.MANIFEST_OPERATION_TYPE
                                                     }
                                                 </h6>
-                                                <h6 class="mb-0"><b>@lang('locale.Payment status') : </b>
-                                                    ${  invoice.PaidStatus
-                                                    }
-                                                </h6>
-                                                <h6><b>@lang('locale.Validation Status') :</b>
-                                                    ${
-                                                        invoice.ValidationStatus
+                                                <h6 class="mb-0"><b>Estado del Envío : </b>
+                                                    ${  invoice.SHIPMENT_STATUS
                                                     }
                                                 </h6>
                                             </div>
@@ -1622,31 +1641,23 @@
                                         <div class="col-md-4">
                                             <div class="text-left bg-light p-3 mb-3">
                                                 <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
-                                                <h6 class="font-13">@lang('locale.Accounting Date') : ${ invoice.AccountingDate }</h6>
-                                                <h6 class="font-13">@lang('locale.Document Category') :
+                                                <h6 class="font-13">Ciudad Origen : ${ invoice.ORIGIN_CITY }</h6>
+                                                <h6 class="font-13">Provincia : ${ invoice.ORIGIN_PROVINCE }</h6>
+                                                <h6 class="font-13">Direccion Origen :
                                                     ${
-                                                        invoice.DocumentCategory = "Prepayment Invoices" ? 'Facturas de anticipo' : 'Facturas Estandar'
+                                                        invoice.ORIGIN_ADDRESS
                                                     }
                                                     </h6>
-                                                <h6 class="font-13">@lang('locale.Document Sequence') : ${ invoice.DocumentSequence }</h6>
+                                                <h6 class="font-13">Ruta : ${ invoice.ROUTE_NAME }</h6>
+                                                <h6 class="font-13">Via : ${ invoice.ROUTE_VIA }</h6>
+                                                <h6 class="font-13">Ciudad Destino : ${ invoice.DESTINATION_CITY }</h6>
+                                                <h6 class="font-13">Provincia : ${ invoice.DESTINATION_PROVINCE }</h6>
+                                                <h6 class="font-13">Direccion Destino : ${ invoice.DESTINATION_ADDRESS }</h6>
+
                                             </div>
                                         </div><!--end col-->
                                     `
-                                    $('#row1').append(plantillarow1)
-
-                                    $('#row2').html('')
-                                    lines.forEach(line => {
-                                        plantillarow2 = `
-                                            <tr>
-                                                <td >
-                                                    <h5 class="mt-0 mb-1">${ line.LineType }</h5>
-                                                    <p class="mb-0 text-muted">${ line.Description }.</p>
-                                                </td>
-                                                <td>$ ${ line.LineAmount }</td>
-                                            </tr><!--end tr-->
-                                        `
-                                        $('#row2').append(plantillarow2)
-                                    });
+                                    $('#row1_1').append(plantillarow1)
 
                                 }
                                 swal.close();

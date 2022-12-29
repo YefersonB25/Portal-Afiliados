@@ -5,6 +5,7 @@ namespace App\Http\Helpers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Support\Arr;
 use SoapClient;
 
 class ReporteRestOtm
@@ -27,11 +28,11 @@ class ReporteRestOtm
         $otm  = self::getDataAccess();
 
         // Define variables
-        //  $username        = $otm['username'];
-        //  $password        = $otm['password'];
+         $username        = $otm['username'];
+         $password        = $otm['password'];
         //  $path            = $url;
-        $username    = "TCL.RPTMONITOR";
-        $password    = "@FTQ-hJ9Kvz6";
+        // $username    = "TCL.RPTMONITOR";
+        // $password    = "@FTQ-hJ9Kvz6";
         $path            = $url;
         $paramNameValues = [];
 
@@ -59,58 +60,26 @@ class ReporteRestOtm
         return $reportParams;
     }
 
-    public static function manifiestoSoapOtmReport($loadNumber = null)
+    public static function manifiestoSoapOtmReport($shipmentXid = null)
     {
         $otm  = self::getDataAccess();
-
+        $server        = $otm['server'];
+        // $server      = "https://otmgtm-test-ekhk.otm.us2.oraclecloud.com/xmlpserver/services/v2/ReportService?WSDL";
         $client = new SoapClient(
-            $otm['serverSoap'],
-            array('cache_wsdl' => WSDL_CACHE_NONE)
+            $server,
+            array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1, 'encoding' => 'UTF-8')
         );
-
         $params = [
-            'P_SHIPMENT_STATUS'   => $loadNumber,
+            'P_SHIPMENT_XID'   => $shipmentXid,
         ];
-        $url = '/Custom/OTM-Monitor/Reportes/LoadedShipmentsReport.xdo';
-        $par = self::getReporteParams($params, $url);
+        $paths = '/Custom/OTM-Monitor/Reportes/ShipmentReport.xdo';
+        $par = ReporteRestOtm::getReporteParams($params, $paths);
+
         $response = $client->__soapCall('runReport', array($par));
         $xmlString = $response->runReportReturn->reportBytes;
         $xml = simplexml_load_string($xmlString);
-
-
-        $acumulador = [];
-        $acumulador2 = [];
-        foreach ($xml->P_TRANSPORTE as $children) {
-            $json1 = json_encode($children);
-            array_push($acumulador2, json_decode($json1, true));
-        }
-        $eliminarCar = str_replace(array('[', ']'), '', $acumulador2[0][0]);
-        $array = explode(',', $eliminarCar);
-
-        foreach ($xml->DATA as $children) {
-            $json = json_encode($children);
-            array_push($acumulador, json_decode($json, true));
-        }
-        foreach ($array as $item) {
-
-            array_push(
-                $acumulador,
-                [
-                    'LOAD_NUMBER'       => $item,
-                    'SHIPMENT'          => 'N/D',
-                    'ENROUTE_STATUS'    => 'N/D',
-                    'DRIVER_ID'         => 'N/D',
-                    'DRIVER_FULLNAME'   => 'N/D',
-                    'LICENSE_PLATE'     => 'N/D',
-                    'VEHICLE_TYPE'      => 'N/D',
-                    'GPS_PROVIDER_NIT'  => 'N/D',
-                    'GPS_ID_COMPANY'    => 'N/D',
-                    'GPS_USER'          => 'N/D',
-                    'GPS_PASSWORD'      => 'N/D',
-                    'MONITOR_INTEGRATED' => 'N/D',
-                ]
-            );
-        }
-        return $acumulador;
+        $reportData = json_decode(json_encode($xml), true);
+        $data = Arr::get($reportData, 'DATA', []);
+        return $data;
     }
 }

@@ -43,6 +43,7 @@ Route::controller(ConsultarAfiliadoController::class)->group(function () {
     Route::post('invoiceLines', 'getInvoiceLines')->name('invoice.lines');
     Route::post('facturas/pagadas', 'customers')->name('falturas.pagadas');
     Route::post('facturas/transporte', 'getShipmentOtm')->name('falturas.transporte');
+    Route::post('facturas/transporte/detalle', 'getShipmentDetalle')->name('falturas.transporte.detalle');
     Route::post('suppliernumber', 'getSupplierNumber')->name('supplier.number');
     Route::get('SelectSuppliernumber', 'SelectSupplierNumber')->name('selectSupplier.number');
     Route::post('consultaOTM/afiliado', 'consultaOTM')->name('afiliado.consulta');
