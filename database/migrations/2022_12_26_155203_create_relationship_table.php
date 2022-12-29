@@ -15,8 +15,8 @@ class CreateRelationshipTable extends Migration
     {
         Schema::create('relationship', function (Blueprint $table) {
             $table->id();
-            $table->user_id();
-            $table->user_assigne_id();
+            $table->integer('user_id');
+            $table->integer('user_assigne_id');
             $table->enum('deleted_status', ['RESIGNED','INACTIVE','ACTIVE'])->nullable();
             $table->softDeletes();
             $table->timestamps();

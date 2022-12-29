@@ -143,5 +143,47 @@ class SettingSeeder extends Seeder
                 ]
             ]);
         }
+
+        $isValid = DB::table('portal_settings')->where('name', 'user_ws_test')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'          => 'user_ws_test',
+                    'val'           => 'TCL.RPTMONITOR',
+                    'isEncrypt'     => '0',
+                    'created_at'    => \Carbon\Carbon::now(),
+                    'updated_at'    => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'test_ws_password')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'      => 'test_ws_password',
+                    'val'       => Crypt::encryptString('@FTQ-hJ9Kvz6'),
+                    'isEncrypt' => '1',
+                    'created_at'            => \Carbon\Carbon::now(),
+                    'updated_at'            => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
+
+        $isValid = DB::table('portal_settings')->where('name', 'oracle_otm_soat_report_server_test')->doesntExist();
+        if ($isValid) {
+
+            DB::table('portal_settings')->insert([
+                [
+                    'name'      => 'oracle_otm_soat_report_server_test',
+                    'val'       => 'https://otmgtm-ekhk.otm.us2.oraclecloud.com/xmlpserver/services/v2/ReportService?WSDL',
+                    'isEncrypt' => '0',
+                    'created_at'            => \Carbon\Carbon::now(),
+                    'updated_at'            => \Carbon\Carbon::now()
+                ]
+            ]);
+        }
     }
 }
