@@ -270,7 +270,7 @@ class ConsultarAfiliadoController extends Controller
         try {
 
             $params = [
-                'q'        => "Supplier LIKE '%{$request->input('q')}%'",
+                'q'        => "Supplier LIKE '%{$request->input('q')}%' OR TaxpayerId LIKE '%{$request->input('q')}%'", //*Filtrar por el nombre y numero de cedula
                 'limit'    => '25',
                 'fields'   => 'Supplier,SupplierNumber',
                 'onlyData' => 'true'
