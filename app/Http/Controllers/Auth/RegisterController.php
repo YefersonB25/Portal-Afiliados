@@ -92,6 +92,7 @@ class RegisterController extends Controller
                 'document_type'          => $data['document_type'],
                 'phone'              => $data['phone'],
                 'password'              => Hash::make($data['password']),
+                'status'                =>'NUEVO',
             ]);
 
         //? le asignamos el rol
