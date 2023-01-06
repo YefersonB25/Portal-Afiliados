@@ -58,6 +58,18 @@ Route::prefix('consultaOTM')->controller(ConsultarAfiliadoController::class)->mi
     Route::get('afiliado/{id}', 'consultaOTM')->name('consultar.afiliado');
 });
 
+Route::controller(ConsultarAfiliadoController::class)->group(function () {
+    Route::post('facturas/total', 'TotalAmount')->name('total');
+    Route::post('invoiceLines', 'getInvoiceLines')->name('invoice.lines');
+    Route::post('facturas/pagadas', 'customers')->name('falturas.pagadas');
+    Route::post('facturas/transporte', 'getShipmentOtm')->name('falturas.transporte');
+    Route::post('facturas/transporte/detalle', 'getShipmentDetalle')->name('falturas.transporte.detalle');
+    Route::post('suppliernumber', 'getSupplierNumber')->name('supplier.number');
+    Route::get('SelectSuppliernumber', 'SelectSupplierNumber')->name('selectSupplier.number');
+    Route::post('consultaOTM/afiliado', 'consultaOTM')->name('afiliado.consulta');
+    Route::post('proveedor', 'proveedorEncargado')->name('proveedor.encargado');
+});
+
 //? Consultar code
 Route::prefix('customers')->controller(FacturaController::class)->middleware('auth')->group(function () {
     Route::get('{id}', 'index')->name('blogs.index');

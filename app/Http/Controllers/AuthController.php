@@ -72,6 +72,7 @@ class AuthController extends Controller
                 'number_id'        => $request['number_id'],
                 'document_type'          => $request['document_type'],
                 'phone'              => $request['phone'],
+                'status'                => 'NUEVO',
                 'password'              => Hash::make($request['password']),
             ]);
 

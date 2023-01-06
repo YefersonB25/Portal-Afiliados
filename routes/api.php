@@ -35,19 +35,10 @@ use Illuminate\Support\Facades\Route;
 
 // Route::post('status', [UsuarioController::class, 'cambiarEstado'])->name('status');
 
-// !Comente las "auth:sanctum" ya que las api las estas usando en la vista y genera problemas de autenticacion, revisar!
 
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(ConsultarAfiliadoController::class)->group(function () {
-Route::controller(ConsultarAfiliadoController::class)->group(function () {
-    Route::post('facturas/total', 'TotalAmount')->name('total');
-    Route::post('invoiceLines', 'getInvoiceLines')->name('invoice.lines');
-    Route::post('facturas/pagadas', 'customers')->name('falturas.pagadas');
-    Route::post('facturas/transporte', 'getShipmentOtm')->name('falturas.transporte');
-    Route::post('facturas/transporte/detalle', 'getShipmentDetalle')->name('falturas.transporte.detalle');
-    Route::post('suppliernumber', 'getSupplierNumber')->name('supplier.number');
-    Route::get('SelectSuppliernumber', 'SelectSupplierNumber')->name('selectSupplier.number');
-    Route::post('consultaOTM/afiliado', 'consultaOTM')->name('afiliado.consulta');
-    Route::post('proveedor', 'proveedorEncargado')->name('proveedor.encargado');
+Route::prefix('facturas')->controller(AuthController::class)->middleware(['auth:sanctum', 'ability:check-status,place-orders'])->group(function () {
+    Route::get('/afiliado', 'invoiceSuppliers');
 });
 
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(UsuarioController::class)->group( function () {
