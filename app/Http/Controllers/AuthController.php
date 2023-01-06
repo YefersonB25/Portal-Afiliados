@@ -6,30 +6,50 @@ use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\OracleRestErp;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\QueryParam;
-
 class AuthController extends Controller
 {
     use ApiResponser;
 
-    #[QueryParam("Photo", "file", required: false)]
-    #[QueryParam("name", "string", required: true)]
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
+    // protected function validator(Request $request)
+    // {
+    //     return Validator::make($request, [
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
+    //         'number_id' => ['required','numeric', 'unique:users',],
+    //         'phone' => ['required','numeric'],
+    //         'document_type' => ['required'],
+    //         'password' => ['required', 'string', 'min:8', 'confirmed'],
+    //     ]);
+    // }
     #[QueryParam("email", "string", required: true)]
-    #[QueryParam("identification", "integer", required: true)]
-    #[QueryParam("telefono", "integer", required: true)]
+    #[QueryParam("document_type", "string", required: false)]
+    #[QueryParam("number_id", "integer", required: true)]
+    #[QueryParam("name", "string", required: true)]
+    #[QueryParam("phone", "integer", required: true)]
+    #[QueryParam("Photo", "file", required: false)]
+    #[QueryParam("photo_id", "file", required: false)]
     #[QueryParam("password", "string", required: true)]
-    #[QueryParam("identificationPhoto", "file", required: false)]
     public function register(Request $request)
     {
-        // $validator = $request->validate([
+        // return $validator = $request->validate([
         //     'name' => ['required', 'string', 'max:255'],
         //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
         //     'identification' => ['required','numeric'],
@@ -38,82 +58,90 @@ class AuthController extends Controller
         // ]);
 
         $roles = Role::get();
+
         //? Capturamos la extencion de los archivos
-        if (!empty($request->photo)) {
-            $extensionPerfil = $request->photo->getClientOriginalExtension();
+        if (!empty($request['photo'])) {
+            $extensionPerfil = $request['photo']->getClientOriginalExtension();
         }
-        if (!empty($request->identificationPhoto)) {
-            $extensionIdentif = $request->identificationPhoto->getClientOriginalExtension();
+        if (!empty($request['photo_id'])) {
+            $extensionIdentif = $request['photo_id']->getClientOriginalExtension();
         }
-
-        if (empty($request->seleccion_nit)) {
-            $seleccion_nit = "false";
-        }
-
-        if(!empty($request->seleccion_nit)) {
-            $seleccion_nit = $request->seleccion_nit;
-        }
-        $usuario = User::create([
-            'name'           => $request->name,
-            'email'          => $request->email,
-            'identification' => $request->identificacion,
-            'seleccion_nit'  => $seleccion_nit,
-            'telefono'       => $request->telefono,
-            'password'       => Hash::make($request->password),
-        ]);
+            $id = User::insertGetId([
+                'name'                  => $request['name'],
+                'email'                 => $request['email'],
+                'number_id'        => $request['number_id'],
+                'document_type'          => $request['document_type'],
+                'phone'              => $request['phone'],
+                'password'              => Hash::make($request['password']),
+            ]);
 
         //? le asignamos el rol
+        $usuario = User::findOrFail($id);
         $usuario->roles()->sync($roles[1]->id);
 
         //? Guardamos los archivos cargados y capturamos la ruta
-        if (!empty($request->photo)) {
-            $carpetaphoto = "proveedores/$usuario->id/perfil";
-            Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
+        if (!empty($data['photo'])) {
+            $carpetaphoto = "proveedores/$id/perfil";
+            Storage::putFileAs("public/$carpetaphoto", $data['photo'] , 'photo_perfil.'. $extensionPerfil);
         }
-        if (!empty($request->identificationPhoto)) {
-            $carpetaidentif = "proveedores/$usuario->id/identificacion";
-            Storage::putFileAs("public/$carpetaidentif", $request->identificationPhoto , 'photo_documento.'. $extensionIdentif);
+        if (!empty($data['photo_id'])) {
+            $carpetaidentif = "proveedores/$id/identificacion";
+            Storage::putFileAs("public/$carpetaidentif", $data['photo_id'] , 'photo_documento.'. $extensionIdentif);
         }
 
         //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
-        if (!empty($request->photo) && !empty($request->identificationPhoto)) {
-            User::where('id', $usuario->id)
+        if (!empty($data['photo']) && !empty($data['photo_id'])) {
+            User::where('id', $id)
                     ->update([
                     'photo'                 => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                    'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                     ]);
         }
-        if (!empty($request->photo)) {
+        if (!empty($data['photo'])) {
 
-            User::where('id', $usuario->id)
+            User::where('id', $id)
                        ->update([
                        'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
-        if (!empty($request->identificationPhoto)) {
+        if (!empty($data['photo_id'])) {
 
-            User::where('id', $usuario->id)
+            User::where('id', $id)
                        ->update([
-                       'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                       'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
         }
 
         return response()->json([
             'status' => '200',
-            'message' => "Usuario creado correctamente",
+            'message' => "Usuario Registrado correctamente",
             'data' => [
                 'token' => $usuario->createToken('API Token')->plainTextToken
             ]
         ]);
 
     }
-    #[QueryParam("Photo", "file", required: false)]
-    #[QueryParam("name", "string", required: false)]
+
+    #[QueryParam("id", "int", required: true)]
+    public function edit(Request $request)
+    {
+        $user     = User::find($request->id);
+        $roles    = Role::pluck('name', 'name')->all();
+        $userRole = $user->roles->pluck('name', 'name')->all();
+        return response()->json([
+            'status' => '200',
+            'response' => compact('user', 'roles', 'userRole'),
+        ]);
+    }
+
     #[QueryParam("email", "string", required: false)]
-    #[QueryParam("identification", "integer", required: false)]
-    #[QueryParam("telefono", "integer", required: false)]
+    #[QueryParam("document_type", "string", required: false)]
+    #[QueryParam("number_id", "integer", required: false)]
+    #[QueryParam("name", "string", required: false)]
+    #[QueryParam("phone", "integer", required: false)]
+    #[QueryParam("Photo", "file", required: false)]
+    #[QueryParam("photo_id", "file", required: false)]
     #[QueryParam("password", "string", required: false)]
-    #[QueryParam("identificationPhoto", "file", required: false)]
     public function update(Request $request)
     {
 
@@ -122,22 +150,24 @@ class AuthController extends Controller
         // return response()->json($input);
 
         //? Capturamos la extencion de los archivos
-        return response()->json(['data' => $request->name]);
 
         if (!empty($request->photo)) {
             $extensionPerfil = $request->photo->getClientOriginalExtension();
         }
-        if (!empty($request->identificationPhoto)) {
-            $extensionIdentif = $request->identificationPhoto->getClientOriginalExtension();
+        if (!empty($request->photo_id)) {
+            $extensionIdentif = $request->photo_id->getClientOriginalExtension();
         }
             $user = User::findOrFail($request->id);
 
-            $user->name                  = $request->name;
             $user->email                 = $request->email;
-            $user->identification        = $request->identificacion;
-            $user->telefono              = $request->telefono;
+            $user->document_type         = $request->document_type;
+            $user->number_id        = $request->number_id;
+            $user->name                  = $request->name;
+            $user->phone              = $request->phone;
+            $user->photo                 =$request->photo;
+            $user->photo_id             = $request->photo_id;
             $user->password              = Hash::make($request->password);
-
+            $user->assignRole($request->rol);
             $user->save();
         //? Capturamos el id del user registrdo
 
@@ -146,17 +176,17 @@ class AuthController extends Controller
             $carpetaphoto = "proveedores/$request->id/perfil";
             Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
         }
-        if (!empty($request->identificationPhoto)) {
+        if (!empty($request->photo_id)) {
             $carpetaidentif = "proveedores/$request->id/identificacion";
-            Storage::putFileAs("public/$carpetaidentif", $request->identificationPhoto , 'photo_documento.'. $extensionIdentif);
+            Storage::putFileAs("public/$carpetaidentif", $request->photo_id , 'photo_documento.'. $extensionIdentif);
         }
 
         //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
-        if (!empty($request->photo) && !empty($request->identificationPhoto)) {
+        if (!empty($request->photo) && !empty($request->photo_id)) {
             User::where('id', $request->id)
                     ->update([
                     'photo'                 => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                    'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                     ]);
         }
         if (!empty($request->photo)) {
@@ -166,11 +196,11 @@ class AuthController extends Controller
                        'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
                        ]);
         }
-        if (!empty($request->identificationPhoto)) {
+        if (!empty($request->photo_id)) {
 
             User::where('id', $request->id)
                        ->update([
-                       'identificationPhoto'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
+                       'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
         }
 
@@ -210,10 +240,91 @@ class AuthController extends Controller
     public function logout()
     {
         // Revoke all tokens...
-        auth()->user()->tokens()->delete();
-
+        auth()->user()->tokens();
         return response()->json(['message' => 'successfully logged out']);
 
+    }
+
+    #[QueryParam("identification", "integer", required: true)]
+    #[QueryParam("FlagStatus", "It is to check if the invoice is valid or canceled [true, false]", "string", required: true)]
+    #[QueryParam("PaidStatus", "It is to check the paid status of the invoice. [Unpaid]", "string", required: true)]
+    #[QueryParam("InvoiceType", "It is to consult the invoices by type of invoice.", "string", required: false)]
+    public function suppliers(Request $request)
+    {
+        // return response()->json(['success' => true, 'data' => 'hola']);
+        $statusErpOtm = "Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.";
+
+        if (!$request->only('PaidStatus')) {
+            return response()->json(['message' => 'Parametro no reconocido'], 401);
+        }
+        try {
+
+            $user = DB::table('relationship')
+                ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+                ->where('relationship.user_assigne_id',  Auth::user()->id)
+                ->where('relationship.deleted_at', '=', null)
+                ->select('users.number_id')
+                ->first();
+
+            $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
+
+            $params = [
+                'q'        => "(TaxpayerId = '{$number_id}')",
+                'limit'    => '200',
+                'fields'   => 'SupplierNumber',
+                'onlyData' => 'true'
+            ];
+            $response = OracleRestErp::procurementGetSuppliers($params);
+
+            $res = $response->json();
+
+            //? Validanos que nos traiga el proveedor
+            if ($res['count'] == 0) {
+                return response()->json(['message' => 'No se encontro el proveedor'], 404);
+            }
+
+            $SupplierNumber =  (float)$res['items'][0]['SupplierNumber'];
+
+            $params      =  [
+                'limit'    => '20',
+                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
+                'onlyData' => 'true',
+                'orderBy' => 'AccountingDate:desc'
+            ];
+            try {
+
+                $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (PaidStatus = '{$request->PaidStatus}')";
+
+
+                $invoice = OracleRestErp::getInvoiceSuppliers($params);
+                // return response()->json(['success' => true, 'data' => $invoice['count']]);
+
+                //? Validamos que nos traiga las facturas
+                if ($invoice['count'] == 0) {
+                    if (!empty($request->InvoiceType)) {
+                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus) . ' con el tipo de factura ' . trans('locale.' . $request->InvoiceType), 'status' => '404']);
+                    } else {
+                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus), 'status' => '404']);
+                    }
+                }
+
+                $invoce =  $invoice->json();
+
+                return response()->json(['response' => $invoce['items'], 'status' => '200']);
+                // return response()->json(array('semestres' => $semestres), 200);
+            } catch (\Throwable $th) {
+                Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+                return response()->json(['response' => 'Algo fallo con la comunicacion']);
+            }
+            return response()->json(['response' => $res['items'], 'status' => '200']);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Algo fallo con la comunicacion']);
+        }
+
+
+        //aqui trabajamos con name de las tablas de users
+        // $roles = Role::pluck('name','name')->all();
+        // return view('usuarios.crear',compact('roles'));
     }
 
     //Muestro el formulario para introducir el email

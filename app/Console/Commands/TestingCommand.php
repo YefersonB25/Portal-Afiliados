@@ -122,6 +122,10 @@ class TestingCommand extends Command
                 $this->alert("ShipmentReport = {$shipmentXid}");
                 $response = self::manifiestoSoapOtmReport($shipmentXid);
                 break;
+            case 'fecha-pago':
+                $this->alert('Get Document Categories');
+                $response = self::getPayments();
+                break;
         }
         dd($response);
         return $response;
@@ -296,6 +300,24 @@ class TestingCommand extends Command
             Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
             return  $e->getMessage();
         }
+    }
+
+    protected function getPayments()
+    {
+        try {
+            $params = [
+                'fields' => 'PaymentDate',
+                'finder' => "PaidInvoicesFinder;InvoiceNumber=M0619681",
+                'onlyData' => 'true',
+            ];
+
+            $invoiceF = OracleRestErp::getPayablesPayments($params);
+            return $invoiceF->object();
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+            return  $th->getMessage();
+        }
+
     }
 
     /**

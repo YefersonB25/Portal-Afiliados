@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Helpers\CommonUtils;
 use App\Http\Helpers\OracleRestErp;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -57,6 +58,11 @@ class HomeController extends Controller
             $response = OracleRestErp::procurementGetSuppliers($params);
 
             $res = $response->json();
+
+            if ($res['items'] == []) {
+                $data = 'No se encontro el proveedor';
+                return JsonResponse::create($data, 200, array('Content-Type' => 'application/json; charset=utf-8'));
+            }
 
             $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
 

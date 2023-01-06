@@ -89,24 +89,15 @@ class ConsultarAfiliadoController extends Controller
             $SupplierNumber =  (float)$res['items'][0]['SupplierNumber'];
 
             $params      =  [
-                'limit'    => '200',
-                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,',
-                'onlyData' => 'true'
+                'limit'    => '20',
+                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
+                'onlyData' => 'true',
+                'orderBy' => 'AccountingDate:desc'
             ];
             try {
 
-                if ($request->PaidStatus == '') {
-                    if ($request->InvoiceType == '') {
-                        $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}')";
-                    } else {
-                        $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (InvoiceType = '{$request->InvoiceType}')";
-                    }
-                } else {
-                    $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}')";
-                }
-                if ($request->InvoiceType != '' && $request->PaidStatus != '') {
-                    $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}')";
-                }
+                $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+
 
                 $invoice = OracleRestErp::getInvoiceSuppliers($params);
                 // return response()->json(['success' => true, 'data' => $invoice['count']]);
@@ -128,37 +119,6 @@ class ConsultarAfiliadoController extends Controller
                 Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
                 return response()->json(['response' => 'Algo fallo con la comunicacion']);
             }
-
-
-
-
-
-
-
-
-            // //? Capturamos el numero de Supplier
-            // $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
-
-            // //? Capturamos el PaidStatus y FlagStatus que nos mandan para consultar las facturas
-            // $PaidStatus = $request->PaidStatus;
-            // $FlagStatus = !isset($request->FlagStatus) ? 'false' : $request->FlagStatus;
-
-            // $params = [
-            //     'q'        => "(SupplierNumber = $SupplierNumber) and (CanceledFlag = '{$FlagStatus}') and (PaidStatus = '{$PaidStatus}')",
-            //     'limit'    => '200',
-            //     'fields'   => 'Supplier,SupplierNumber,Description,InvoiceAmount,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType',
-            //     'onlyData' => 'true'
-            // ];
-            // $invoice = OracleRestErp::getInvoiceSuppliers($params);
-
-            // //? Validamos que nos traiga las facturas
-            // $nInvoice = $invoice['count'];
-
-            // if ($nInvoice == 0) {
-            //     return response()->json(['message' => 'No se encontraron facturan en ' . $PaidStatus . 'en estado ' . $FlagStatus]);
-            // }
-            // $invoce =  $invoice->json();
-            // return response()->json(['response' => $invoce['items']]);
             return response()->json(['response' => $res['items'], 'status' => '200']);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Algo fallo con la comunicacion']);
@@ -180,46 +140,45 @@ class ConsultarAfiliadoController extends Controller
     public function customers(Request $request)
     {
         $params      =  [
-            'limit'    => '20',
-            'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
+            'limit'    => $request->InvoiceLimit,
+            'fields'  => 'InvoiceNumber,InvoiceDate,PaidStatus,InvoiceAmount,AmountPaid;invoiceInstallments:UnpaidAmount,GrossAmount,DueDate',
             'onlyData' => 'true',
-            'orderBy' => 'AccountingDate:desc'
+            'orderBy' => 'InvoiceDate:desc'
         ];
 
-        try {
-            if (empty($request->InvoiceDate)) {
-                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
-            } else {
-                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
-            }
-            // return response()->json(['success' => true, 'data' => $params['q']]);
-
-            $invoice = OracleRestErp::getInvoiceSuppliers($params);
-            // return response()->json(['success' => true, 'data' => $invoice->body()]);
-
-            //? Validamos que nos traiga las facturas
-            if ($invoice['count'] == 0) {
-
-                if (!empty($request->InvoiceType)) {
-                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus) . ' con el tipo de factura ' . trans('locale.' . $request->InvoiceType)]);
-                } else {
-                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus)]);
-                }
-            }
-
-            $invoce =  $invoice->json();
-            // return response()->json(['success' => true, 'data' => $invoce]);
-
-            return response()->json(['success' => true, 'data' => $invoce['items']]);
-            // return response()->json(array('semestres' => $semestres), 200);
-        } catch (\Throwable $th) {
-            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
-            return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
+        if ($request->TipoF == 'M') {
+            $NumberInvoice = $request->TipoF.$request->InvoiceNumber;
+        }else {
+            $NumberInvoice = $request->InvoiceNumber;
         }
+        try {
+                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceNumber = '{$NumberInvoice}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+
+                $invoice = OracleRestErp::getInvoiceSuppliers($params);
+
+                //? Validamos que nos traiga las facturas
+                if ($invoice['count'] == 0) {
+
+                    if (!empty($request->InvoiceType)) {
+                        return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus) . ' con el tipo de factura ' . trans('locale.' . $request->InvoiceType)]);
+                    } else {
+                        return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' .$request->PaidStatus]);
+                    }
+                }
+
+                $invoce =  $invoice->json();
+                // return response()->json(['success' => true, 'data' => $invoce]);
+
+                return response()->json(['success' => true, 'data' => $invoce['items']]);
+                // return response()->json(array('semestres' => $semestres), 200);
+            } catch (\Throwable $th) {
+                Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+                return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
+            }
     }
 
 
-    #[QueryParam("PaidStatus", "array('Paid', 'Undpaid', 'Partially paid')", required: true)]
+    #[QueryParam("PaidStatus", "array('Undpaid')", required: true)]
     #[QueryParam("SupplierNumber", "integer", required: true)]
     public function TotalAmount(Request $request)
     {
@@ -336,43 +295,43 @@ class ConsultarAfiliadoController extends Controller
     #[QueryParam("Developing", "null")]
     public function getInvoiceLines(Request $request)
     {
-
         $dataInvoiceFull = [];
-        $data = [];
-        $data = [
-            'Description'      => $request->invoice['Description'],
-            'InvoiceDate'      => $request->invoice['InvoiceDate'],
-            'InvoiceType'      => $request->invoice['InvoiceType'],
-            'InvoiceAmount'    => $request->invoice['InvoiceAmount'],
-            'AmountPaid'       => $request->invoice['AmountPaid'],
-            'InvoiceId'        => $request->invoice['InvoiceId'],
-            'Supplier'         => $request->invoice['Supplier'],
-            'InvoiceNumber'    => $request->invoice['InvoiceNumber'],
-            'CanceledFlag'     => $request->invoice['CanceledFlag'],
-            'SupplierSite'     => $request->invoice['SupplierSite'],
-            'Party'            => $request->invoice['Party'],
-            'PartySite'        => $request->invoice['PartySite'],
-            'PaidStatus'       => $request->invoice['PaidStatus'],
-            'ValidationStatus' => $request->invoice['ValidationStatus'],
-            'AccountingDate'   => $request->invoice['AccountingDate'],
-            'DocumentCategory' => $request->invoice['DocumentCategory'],
-            'DocumentSequence' => $request->invoice['DocumentSequence'],
-
-        ];
-
         try {
+            $params      =  [
+                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
+                'onlyData' => 'true',
+            ];
+
+            $params['q'] = "(InvoiceNumber = '{$request->InvoiceNumber}')";
+            $invoice = OracleRestErp::getInvoiceSuppliers($params);
+            $invoce =  $invoice->object()->items;
+
+
+            $params = [
+                'fields' => 'PaymentDate',
+                'finder' => 'PaidInvoicesFinder;InvoiceNumber = '.$invoce[0]->InvoiceNumber,
+                'onlyData' => 'true',
+            ];
+            $invoiceF = OracleRestErp::getPayablesPayments($params);
+            $invoceF =  $invoiceF->object()->items;
+
+            if ($invoceF == []) {
+                $invoceF = array(['PaymentDate' => 'Indefinida']);
+            }
+
             $params = [
                 'limit'    => '200',
                 'fields'   => 'LineNumber,LineAmount,AccountingDate,Description,BudgetDate,LineType',
                 'onlyData' => 'true'
             ];
 
-            $reques = OracleRestErp::getInvoicesLines($request->invoice['InvoiceId'], $params);
+            $reques = OracleRestErp::getInvoicesLines($invoce[0]->InvoiceId, $params);
             $requesData = $reques->object()->items;
 
             $dataInvoiceFull = [
                 'invoiceLines'  => $requesData,
-                'invoiceData'   => $data,
+                'invoiceData'   => $invoce,
+                'invoiceFechaPago' => $invoceF,
             ];
             return response()->json(['success' => true, 'data' => $dataInvoiceFull]);
         } catch (Exception $e) {

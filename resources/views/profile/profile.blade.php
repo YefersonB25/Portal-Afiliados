@@ -53,8 +53,9 @@
                                                 <li><a href="#editProfile" data-bs-toggle="tab">Editar Perfil</a></li>
                                                 @can('/facturas')
                                                 <li><a href="#friends" data-bs-toggle="tab">Usuarios Asociados</a></li>
-                                                <li><a href="#accountSettings" data-bs-toggle="tab">Registrar Usuario</a>
-                                                @endcan
+                                                <li><a href="#accountSettings" data-bs-toggle="tab">Registrar
+                                                        Usuario</a>
+                                                    @endcan
                                                 </li>
                                             </ul>
                                         </div>
@@ -149,7 +150,8 @@
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right shadow">
                                                             <a class="dropdown-item" href="{{url("profile/userAsociadoRestore/{$asociado->id}")}}">
-                                                                <i class="fa fa-retweet" aria-hidden="true"></i> Reasignar
+                                                                <i class="fa fa-retweet" aria-hidden="true"></i>
+                                                                Reasignar
                                                             </a>
                                                         </div>
                                                         @endif
@@ -183,7 +185,8 @@
                             <div class="tab-pane" id="accountSettings">
                                 <div class="card">
                                     <div class="card-body">
-                                        {{-- <div class="alert alert-success" id="alert" style="display: none;">&nbsp;</div> --}}
+                                        {{-- <div class="alert alert-success" id="alert" style="display: none;">&nbsp;
+                                        </div> --}}
                                         <form method="POST" id="rgisterform" action="{{route('userAsociado.create')}}"
                                             enctype="multipart/form-data" class="form-horizontal" data-select2-id="11">
                                             <div class="mb-4 main-content-label">Account</div>
@@ -243,10 +246,13 @@
                                                     </div>
                                                     <div class="col-md-9">
                                                         <div class="wrap-input100 validate-input">
-                                                            <select class="form-control" name="document-type" aria-label=".form-select-sm example" required>
-                                                                <option selected value="">Seleccione tipo Documento</option>
+                                                            <select class="form-control" name="document-type"
+                                                                aria-label=".form-select-sm example" required>
+                                                                <option selected value="">Seleccione tipo Documento
+                                                                </option>
                                                                 <option value="NIT">NIT</option>
-                                                                <option value="Cedula de Ciudadania">Cedula de Ciudadania</option>
+                                                                <option value="Cedula de Ciudadania">Cedula de
+                                                                    Ciudadania</option>
                                                             </select>
                                                             <div class="invalid-feedback">
                                                                 {{ $errors->first('document-type') }}
@@ -311,9 +317,9 @@
 </body>
 @endsection
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-    <script>
-        $(document).on("submit","#rgisterform",function(e){
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script>
+    $(document).on("submit","#rgisterform",function(e){
             e.preventDefault();//detemos el formluario
             $("#rgisterform").validate();
             $.ajax({
@@ -344,14 +350,14 @@
                 }
             });
         });
-    </script>
-    @if(session("message"))
-        <script>
-            Swal.fire({
+</script>
+@if(session("message"))
+<script>
+    Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: 'El usuario no puede ser eliminado, ya que anteriormente fue eliminado y reasignado, por tal motivo no se puede proceder con la eliminación!',
             })
-        </script>
-    @endif
+</script>
+@endif
 @endsection

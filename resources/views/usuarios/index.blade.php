@@ -9,29 +9,32 @@
                 <div class="card-header border-bottom">
                     <div class="row g-2">
                         <h3 class="card-title">Fitros</h3>
-                            <form class="form-horizontal" id="filter" action="{{ route('user.filtros') }}" method="post" novalidate>
-                                @csrf
-                                <div class="row mb-2">
-                                    <div class="col-md">
-                                        <label for="estado" class="form-label">Filtrar por estado</label>
-                                        <select type="text" name="estado" id="estado" class="form-control" tabindex="3" value="{{ old('estado') }}" autofocus >
-                                            <option selected>Todos</option>
-                                            <option value="NUEVO">NUEVO</option>
-                                            <option value="CONFIRMADO">CONFIRMADO</option>
-                                            <option value="RECHAZADO">RECHAZADO</option>
-                                            <option value="ASOCIADO">ASOCIADO</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('estado') }}
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <label for="number_id" class="form-label">Numero de Identificacion</label>
-                                        <input type="text" name="number_id" id="number_id" class="form-control" tabindex="3" value="{{ old('number_id') }}" autofocus>
+                        <form class="form-horizontal" id="filter" action="{{ route('user.filtros') }}" method="post"
+                            novalidate>
+                            @csrf
+                            <div class="row mb-2">
+                                <div class="col-md">
+                                    <label for="estado" class="form-label">Filtrar por estado</label>
+                                    <select type="text" name="estado" id="estado" class="form-control" tabindex="3"
+                                        value="{{ old('estado') }}" autofocus>
+                                        <option selected>Todos</option>
+                                        <option value="NUEVO">NUEVO</option>
+                                        <option value="CONFIRMADO">CONFIRMADO</option>
+                                        <option value="RECHAZADO">RECHAZADO</option>
+                                        <option value="ASOCIADO">ASOCIADO</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('estado') }}
                                     </div>
                                 </div>
-                                <button type="submit" id="btnFilter" class="btn btn-primary">Filtrar</button>
-                            </form>
+                                <div class="col-md">
+                                    <label for="number_id" class="form-label">Numero de Identificacion</label>
+                                    <input type="text" name="number_id" id="number_id" class="form-control" tabindex="3"
+                                        value="{{ old('number_id') }}" autofocus>
+                                </div>
+                            </div>
+                            <button type="submit" id="btnFilter" class="btn btn-primary">Filtrar</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -41,7 +44,8 @@
                     <div class="card custom-card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="file-datatable" class="table table-bordered text-nowrap key-buttons border-bottom w-100 tt">
+                                <table id="file-datatable"
+                                    class="table table-bordered text-nowrap key-buttons border-bottom w-100 tt">
                                     <thead>
                                         <tr>
                                             <th class="wd-2">Foto</th>
@@ -66,7 +70,8 @@
                                             <td>
                                                 <p class="tx-14 font-weight-semibold text-dark mb-1">{{$usuario->name}}
                                                 </p>
-                                                <p class="tx-13 text-muted mb-0"><a href="mailto:{{$usuario->email}}">{{$usuario->email}} </a></p>
+                                                <p class="tx-13 text-muted mb-0"><a
+                                                        href="mailto:{{$usuario->email}}">{{$usuario->email}} </a></p>
                                             </td>
                                             <td>
                                                 <span class="text-muted tx-13">{{$usuario->phone}}</span>
@@ -81,7 +86,8 @@
                                                         class="aPdf">
                                                         <i src="{{asset(" $usuario->photo_id")}}"></i>
                                                         <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                            <path fill="currentColor" d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
+                                                            <path fill="currentColor"
+                                                                d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
                                                         </svg>
                                                     </a>
                                                 </span>
@@ -93,7 +99,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                {{ !empty($usuario->rol->rol_nombre['name']) ? $usuario->rol->rol_nombre['name'] : '' }}
+                                                {{ !empty($usuario->rol->rol_nombre['name']) ?
+                                                $usuario->rol->rol_nombre['name'] : '' }}
                                             </td>
                                             <td>
                                                 <span
@@ -103,15 +110,16 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('consultar.afiliado',[$usuario->id]) }}"
-                                                    class="btn btn-icon btn-info-light me-2" id="consultAfiliado" data-bs-toggle="tooltip"
+                                                    class="btn btn-icon btn-info-light me-2" id="consultAfiliado"
+                                                    data-bs-toggle="tooltip"
                                                     data-bs-original-title="Validar Informacion">
                                                     <i class="fa fa-user"></i>
                                                 </a>
                                                 @switch($usuario->status)
                                                 @case('ASOCIADO')
-                                                <a data-bs-whatever="@mdo" id="{{$usuario->id}}" class="proveedor btn btn-icon btn-success-light me-2"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Consultar Padre">
+                                                <a data-bs-whatever="@mdo" id="{{$usuario->id}}"
+                                                    class="proveedor btn btn-icon btn-success-light me-2"
+                                                    data-bs-toggle="tooltip" data-bs-original-title="Consultar Padre">
                                                     <i class="fa fa-users"></i>
                                                 </a>
 
@@ -132,13 +140,13 @@
                                                 @break
                                                 @endswitch
                                                 <a href="{{ route('edit', [$usuario->id]) }}"
-                                                        class="btn btn-icon btn-warning-light me-2" data-bs-toggle="tooltip"
+                                                    class="btn btn-icon btn-warning-light me-2" data-bs-toggle="tooltip"
                                                     data-bs-original-title="Editar">
                                                     <i class="fa fa-pencil-square"></i>
                                                 </a>
                                                 <a href="" id="{{$usuario->id}}"
-                                                    class="deletedUser btn btn-icon btn-danger-light me-2" data-bs-toggle="tooltip"
-                                                    data-bs-original-title="Eliminar">
+                                                    class="deletedUser btn btn-icon btn-danger-light me-2"
+                                                    data-bs-toggle="tooltip" data-bs-original-title="Eliminar">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
@@ -229,7 +237,6 @@
 </script>
 @endif
 <script>
-
     window.onload = function () {
         swal.close();
 

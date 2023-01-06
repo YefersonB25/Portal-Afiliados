@@ -21,23 +21,29 @@
     <!-- STYLE CSS -->
     <link href={{asset('assets/css/style.css')}} rel="stylesheet" />
     <link href={{asset('assets/css/skin-modes.css')}} rel="stylesheet" />
-    {{-- <link href={{asset('assets/plugins/select2/select2.min.css')}} rel="stylesheet"/> --}}
+    {{--
+    <link href={{asset('assets/plugins/select2/select2.min.css')}} rel="stylesheet" /> --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href={{asset(('assets/thema/plugins/bower_components/custom-select/custom-select.css'))}}>
-    <link rel="stylesheet" href={{asset(('assets/thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.css'))}}>
+    <link rel="stylesheet"
+        href={{asset(('assets/thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.css'))}}>
     <link rel="stylesheet" href={{asset(('assets/thema/plugins/bower_components/multiselect/css/multi-select.css'))}}>
 
     <!-- DATA TABLE CSS-->
-    {{-- <link href={{asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}} rel="stylesheet" /> --}}
-    {{-- <link href={{asset('assets/plugins/datatable/css/buttons.bootstrap5.min.css')}}  rel="stylesheet">
+    {{--
+    <link href={{asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}} rel="stylesheet" /> --}}
+    {{--
+    <link href={{asset('assets/plugins/datatable/css/buttons.bootstrap5.min.css')}} rel="stylesheet">
     <link href={{asset('assets/plugins/datatable/responsive.bootstrap5.css')}} rel="stylesheet" /> --}}
-    {{-- <link rel="stylesheet" href="{{asset('assets/plugins/datatable/css/jquery.dataTables.min.css')}}"> --}}
+    {{--
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatable/css/jquery.dataTables.min.css')}}"> --}}
 
     <!--- FONT-ICONS CSS -->
     <link href={{asset('assets/css/icons.css')}} rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+    {{--
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
 </head>
 
 <body>
@@ -46,7 +52,7 @@
         <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
     </div>
     <div id="app">
-            @include('layouts.header')
+        @include('layouts.header')
 
         <div class="">
             @include('layouts.sidebar')
@@ -66,29 +72,29 @@
 
 </body>
 <!-- SWEETALERT2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 <!-- BACK-TO-TOP -->
-    <a href="#top" id="back-to-top"><i class="fa fa-long-arrow-up"></i></a>
+<a href="#top" id="back-to-top"><i class="fa fa-long-arrow-up"></i></a>
 
 <!-- JQUERY JS -->
-    <script src={{ asset('assets/js/jquery.min.js') }}></script>
+<script src={{ asset('assets/js/jquery.min.js') }}></script>
 <!-- BOOTSTRAP JS -->
-    <script src={{ asset('assets/plugins/bootstrap/js/popper.min.js') }}></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src={{ asset('assets/plugins/bootstrap/js/popper.min.js') }}></script>
+<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 
 <!-- SIDE-MENU JS-->
-    <script src="{{ asset('assets/plugins/sidemenu/sidemenu.js') }}"></script>
+<script src="{{ asset('assets/plugins/sidemenu/sidemenu.js') }}"></script>
 
 <!-- APEXCHART JS -->
-    <script src="{{ asset('assets/js/apexcharts.js') }}"></script>
+<script src="{{ asset('assets/js/apexcharts.js') }}"></script>
 
 <!-- INTERNAL SELECT2 JS -->
-    {{-- <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script> --}}
-    <script src="{{ asset('assets/thema/plugins/bower_components/custom-select/custom-select.min.js') }}"></script>
-    <script src="{{ asset('assets/thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script> --}}
+<script src="{{ asset('assets/thema/plugins/bower_components/custom-select/custom-select.min.js') }}"></script>
+<script src="{{ asset('assets/thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}"></script>
 
-    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
+{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
 <!-- DATA TABLE JS-->
 <script src="{{asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
@@ -106,26 +112,26 @@
 <script src="{{asset('assets/js/table-data.js')}}"></script>
 
 <!-- CUSTOM JS -->
-    <script src={{ asset('assets/js/custom.js') }}></script>
+<script src={{ asset('assets/js/custom.js') }}></script>
 
 <!-- CHART-CIRCLE JS-->
-    <script src={{ asset('assets/js/circle-progress.min.js') }}></script>
+<script src={{ asset('assets/js/circle-progress.min.js') }}></script>
 
 <!-- INDEX JS -->
-    <script src={{ asset('assets/js/index1.js') }}></script>
+<script src={{ asset('assets/js/index1.js') }}></script>
 
 <!-- REPLY JS-->
-    <script src={{ asset('assets/js/reply.js') }}></script>
+<script src={{ asset('assets/js/reply.js') }}></script>
 
 <!-- PERFECT SCROLLBAR JS-->
 {{-- <script src={{ asset('assets/plugins/p-scroll/perfect-scrollbar.js') }}></script>
 <script src={{ asset('assets/plugins/p-scroll/pscroll.js') }}></script> --}}
 
 <!-- STICKY JS -->
-    <script src={{ asset('assets/js/sticky.js') }}></script>
+<script src={{ asset('assets/js/sticky.js') }}></script>
 
 <!-- COLOR THEME JS -->
-    <script src={{ asset('assets/js/themeColors.js') }}></script>
+<script src={{ asset('assets/js/themeColors.js') }}></script>
 @yield('scripts')
 
 </html>

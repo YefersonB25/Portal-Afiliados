@@ -47,7 +47,8 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="document_type">Seleccione tipo Documento</label>
-                                                {!! Form::select('document_type', [''=>'', 'CC'=>'Cedula de Ciudadania', 'NIT'=>'NIT'], [], array('class' => 'form-control'))
+                                                {!! Form::select('document_type', [''=>'', 'CC'=>'Cedula de Ciudadania',
+                                                'NIT'=>'NIT'], [], array('class' => 'form-control'))
                                                 !!}
                                             </div>
                                         </div>

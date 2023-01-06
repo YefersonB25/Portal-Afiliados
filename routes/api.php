@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::post('status', [UsuarioController::class, 'cambiarEstado'])->name('status');
 
-//!Comente las "auth:sanctum" ya que las api las estas usando en la vista y genera problemas de autenticacion, revisar!
+// !Comente las "auth:sanctum" ya que las api las estas usando en la vista y genera problemas de autenticacion, revisar!
 
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(ConsultarAfiliadoController::class)->group(function () {
 Route::controller(ConsultarAfiliadoController::class)->group(function () {
@@ -59,8 +59,13 @@ Route::controller(UsuarioController::class)->group(function () {
 Route::controller(RolController::class)->group(function () {
     Route::delete('rol/deleted', 'destroy')->name('roles.eliminar');
 });
+Route::post('/auth/usuario/edit', [AuthController::class, 'edit']);
 
 Route::post('/auth/register', [AuthController::class, 'register']);
+
+
+Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
@@ -70,5 +75,4 @@ Route::post('suppliers', [ConsultarAfiliadoController::class, 'suppliers']);
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->post('suppliers', [ConsultarAfiliadoController::class, 'suppliers']);
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->put('/user/updated', [AuthController::class, 'update']);
 Route::put('/user/updated', [AuthController::class, 'update']);
-Route::post('/auth/logout', [AuthController::class, 'logout']);
 // });
