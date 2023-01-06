@@ -2,11 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultarAfiliadoController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
-use App\Http\Controllers\UsuarioAsociadoController;
 use App\Http\Controllers\UsuarioController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
