@@ -7,31 +7,228 @@ servers:
   -
     url: '127.0.0.1:8000'
 paths:
-  /api/facturas/total:
-    post:
+  /api/invoice/afiliate-supplier:
+    get:
       summary: ''
+      operationId: getApiInvoiceAfiliateSupplier
       description: ''
       parameters:
         -
           in: query
-          name: PaidStatus
-          description: ''
-          example: totam
+          name: Token
+          description: string
+          example: voluptatem
           required: true
           schema:
-            type: 'array(''Paid'', ''Undpaid'', ''Partially paid'')'
-            description: ''
-            example: totam
+            type: Authorization
+            description: string
+            example: voluptatem
+        -
+          in: query
+          name: PaidStatus
+          description: string
+          example: sed
+          required: true
+          schema:
+            type: 'It is to check the paid status of the invoice. [Pagadas, Impagado, Pagada parcialmente]'
+            description: string
+            example: sed
+        -
+          in: query
+          name: FlagStatus
+          description: string
+          example: voluptatem
+          required: true
+          schema:
+            type: 'It is to check if the invoice is valid or canceled [true, false]'
+            description: string
+            example: voluptatem
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/invoice/transportation:
+    get:
+      summary: ''
+      operationId: getApiInvoiceTransportation
+      description: ''
+      parameters:
+        -
+          in: query
+          name: Token
+          description: string
+          example: ut
+          required: true
+          schema:
+            type: Authorization
+            description: string
+            example: ut
+        -
+          in: query
+          name: number_id
+          description: integer
+          example: voluptatem
+          required: true
+          schema:
+            type: 'user identification number'
+            description: integer
+            example: voluptatem
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/invoice/transportation/details:
+    get:
+      summary: ''
+      operationId: getApiInvoiceTransportationDetails
+      description: ''
+      parameters:
+        -
+          in: query
+          name: Token
+          description: string
+          example: sed
+          required: true
+          schema:
+            type: Authorization
+            description: string
+            example: sed
+        -
+          in: query
+          name: shipmentXid
+          description: int
+          example: nisi
+          required: true
+          schema:
+            type: 'Transport invoice identifier'
+            description: int
+            example: nisi
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/invoice/lines:
+    get:
+      summary: ''
+      operationId: getApiInvoiceLines
+      description: ''
+      parameters:
+        -
+          in: query
+          name: Token
+          description: string
+          example: nihil
+          required: true
+          schema:
+            type: Authorization
+            description: string
+            example: nihil
+        -
+          in: query
+          name: InvoiceNumber
+          description: int
+          example: est
+          required: true
+          schema:
+            type: string
+            description: int
+            example: est
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/amount/invoice/worth:
+    get:
+      summary: ''
+      operationId: getApiAmountInvoiceWorth
+      description: ''
+      parameters:
+        -
+          in: query
+          name: Token
+          description: string
+          example: quia
+          required: true
+          schema:
+            type: Authorization
+            description: string
+            example: quia
+        -
+          in: query
+          name: PaidStatus
+          description: string
+          example: qui
+          required: true
+          schema:
+            type: Impagado
+            description: string
+            example: qui
         -
           in: query
           name: SupplierNumber
           description: ''
-          example: 4
+          example: 19
           required: true
           schema:
             type: integer
             description: ''
-            example: 4
+            example: 19
         -
           in: header
           name: Api-Version
@@ -39,25 +236,43 @@ paths:
           example: v1
           schema:
             type: string
-      responses: {  }
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
       tags:
         - Endpoints
       security: []
-  /api/invoiceLines:
-    post:
+  /api/suppliers:
+    get:
       summary: ''
+      operationId: getApiSuppliers
       description: ''
       parameters:
         -
           in: query
-          name: Developing
-          description: ''
-          example: qui
+          name: Token
+          description: string
+          example: tempora
           required: true
           schema:
-            type: 'null'
-            description: ''
-            example: qui
+            type: Authorization
+            description: string
+            example: tempora
+        -
+          in: query
+          name: number_id
+          description: int
+          example: rerum
+          required: true
+          schema:
+            type: 'identification number'
+            description: int
+            example: rerum
         -
           in: header
           name: Api-Version
@@ -65,41 +280,43 @@ paths:
           example: v1
           schema:
             type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/facturas/pagadas:
-    post:
-      summary: 'Store a newly created resource in storage.'
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Api-Version
+      responses:
+        302:
           description: ''
-          example: v1
-          schema:
-            type: string
-      responses: {  }
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000'\" />\n\n        <title>Redirecting to 127.0.0.1:8000</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\">127.0.0.1:8000</a>.\n    </body>\n</html>"
       tags:
         - Endpoints
       security: []
-  /api/suppliernumber:
-    post:
+  /api/users/validation/otm/erp:
+    get:
       summary: ''
+      operationId: getApiUsersValidationOtmErp
       description: ''
       parameters:
+        -
+          in: query
+          name: Token
+          description: string
+          example: aspernatur
+          required: true
+          schema:
+            type: Authorization
+            description: string
+            example: aspernatur
         -
           in: query
           name: id
           description: int
-          example: quia
+          example: est
           required: true
           schema:
-            type: 'user ID'
+            type: user
             description: int
-            example: quia
+            example: est
         -
           in: header
           name: Api-Version
@@ -107,51 +324,33 @@ paths:
           example: v1
           schema:
             type: string
-      responses: {  }
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
       tags:
         - Endpoints
       security: []
-  /api/consultaOTM/afiliado:
-    post:
+  /api/users/dad:
+    get:
       summary: ''
-      description: ''
-      parameters:
-        -
-          in: query
-          name: Developing
-          description: ''
-          example: eos
-          required: true
-          schema:
-            type: 'null'
-            description: ''
-            example: eos
-        -
-          in: header
-          name: Api-Version
-          description: ''
-          example: v1
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/proveedor:
-    post:
-      summary: ''
+      operationId: getApiUsersDad
       description: ''
       parameters:
         -
           in: query
           name: userId
           description: integer
-          example: facere
+          example: velit
           required: true
           schema:
-            type: 'kinship id, to consult the provider to which it is associated'
+            type: 'Kinship id, to consult the provider to which it is associated'
             description: integer
-            example: facere
+            example: velit
         -
           in: header
           name: Api-Version
@@ -159,15 +358,137 @@ paths:
           example: v1
           schema:
             type: string
-      responses: {  }
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
       tags:
         - Endpoints
       security: []
-  /api/auth/register:
-    post:
+  /api/users/edit:
+    get:
       summary: ''
+      operationId: getApiUsersEdit
       description: ''
       parameters:
+        -
+          in: query
+          name: Token
+          description: string
+          example: nostrum
+          required: true
+          schema:
+            type: Authorization
+            description: string
+            example: nostrum
+        -
+          in: query
+          name: id
+          description: int
+          example: iusto
+          required: true
+          schema:
+            type: user
+            description: int
+            example: iusto
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/users/updated:
+    put:
+      summary: ''
+      operationId: putApiUsersUpdated
+      description: ''
+      parameters:
+        -
+          in: query
+          name: Token
+          description: string
+          example: consectetur
+          required: true
+          schema:
+            type: Authorization
+            description: string
+            example: consectetur
+        -
+          in: query
+          name: id
+          description: ''
+          example: earum
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: earum
+        -
+          in: query
+          name: email
+          description: ''
+          example: colleen77@example.org
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: colleen77@example.org
+        -
+          in: query
+          name: document_type
+          description: ''
+          example: est
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: est
+        -
+          in: query
+          name: number_id
+          description: ''
+          example: 8
+          required: false
+          schema:
+            type: integer
+            description: ''
+            example: 8
+        -
+          in: query
+          name: name
+          description: ''
+          example: qui
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: qui
+        -
+          in: query
+          name: phone
+          description: ''
+          example: 8
+          required: false
+          schema:
+            type: integer
+            description: ''
+            example: 8
         -
           in: query
           name: Photo
@@ -180,57 +501,17 @@ paths:
             description: ''
         -
           in: query
-          name: name
+          name: rol
           description: ''
-          example: eveniet
-          required: true
+          example: vitae
+          required: false
           schema:
             type: string
             description: ''
-            example: eveniet
+            example: vitae
         -
           in: query
-          name: email
-          description: ''
-          example: nobis
-          required: true
-          schema:
-            type: string
-            description: ''
-            example: nobis
-        -
-          in: query
-          name: identification
-          description: ''
-          example: 19
-          required: true
-          schema:
-            type: integer
-            description: ''
-            example: 19
-        -
-          in: query
-          name: telefono
-          description: ''
-          example: 18
-          required: true
-          schema:
-            type: integer
-            description: ''
-            example: 18
-        -
-          in: query
-          name: password
-          description: ''
-          example: inventore
-          required: true
-          schema:
-            type: string
-            description: ''
-            example: inventore
-        -
-          in: query
-          name: identificationPhoto
+          name: photo_id
           description: ''
           example: null
           required: false
@@ -238,6 +519,392 @@ paths:
             type: string
             format: binary
             description: ''
+        -
+          in: query
+          name: password
+          description: ''
+          example: E8tI3c
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: E8tI3c
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: provident
+                email:
+                  type: string
+                  description: ''
+                  example: null
+                phone:
+                  type: number
+                  description: ''
+                  example: 2542132.08634
+                password:
+                  type: string
+                  description: ':attribute y <code>confirm-password</code> deben coincidir.'
+                  example: null
+                roles:
+                  type: string
+                  description: ''
+                  example: temporibus
+              required:
+                - name
+                - phone
+                - roles
+      security: []
+  /api/users/deleted:
+    delete:
+      summary: ''
+      operationId: deleteApiUsersDeleted
+      description: ''
+      parameters:
+        -
+          in: query
+          name: Token
+          description: string
+          example: accusantium
+          required: true
+          schema:
+            type: Authorization
+            description: string
+            example: accusantium
+        -
+          in: query
+          name: userId
+          description: int
+          example: aliquid
+          required: true
+          schema:
+            type: user
+            description: int
+            example: aliquid
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/users/profile:
+    get:
+      summary: ''
+      operationId: getApiUsersProfile
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/permission:
+    get:
+      summary: ''
+      operationId: getApiPermission
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/role:
+    get:
+      summary: ''
+      operationId: getApiRole
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/role/create:
+    get:
+      summary: ''
+      operationId: getApiRoleCreate
+      description: ''
+      parameters:
+        -
+          in: query
+          name: name
+          description: string
+          example: eligendi
+          required: true
+          schema:
+            type: string
+            description: string
+            example: eligendi
+        -
+          in: query
+          name: permission
+          description: string
+          example: quis
+          required: true
+          schema:
+            type: string
+            description: string
+            example: quis
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/role/edit:
+    get:
+      summary: ''
+      operationId: getApiRoleEdit
+      description: ''
+      parameters:
+        -
+          in: query
+          name: id
+          description: string
+          example: repellendus
+          required: true
+          schema:
+            type: 'role identifier'
+            description: string
+            example: repellendus
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/role/updated:
+    get:
+      summary: ''
+      operationId: getApiRoleUpdated
+      description: ''
+      parameters:
+        -
+          in: query
+          name: name
+          description: string
+          example: itaque
+          required: false
+          schema:
+            type: string
+            description: string
+            example: itaque
+        -
+          in: query
+          name: permission
+          description: string
+          example: dolor
+          required: false
+          schema:
+            type: string
+            description: string
+            example: dolor
+        -
+          in: query
+          name: id
+          description: string
+          example: ipsam
+          required: false
+          schema:
+            type: 'role identifier'
+            description: string
+            example: ipsam
+        -
+          in: header
+          name: Api-Version
+          description: ''
+          example: v1
+          schema:
+            type: string
+      responses:
+        302:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" />\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000/127.0.0.1:8000/login'\" />\n\n        <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>\n    </head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000/127.0.0.1:8000/login\">127.0.0.1:8000/127.0.0.1:8000/login</a>.\n    </body>\n</html>"
+      tags:
+        - Endpoints
+      security: []
+  /api/auth/register:
+    post:
+      summary: ''
+      operationId: postApiAuthRegister
+      description: ''
+      parameters:
+        -
+          in: query
+          name: email
+          description: ''
+          example: corene21@example.org
+          required: true
+          schema:
+            type: string
+            description: ''
+            example: corene21@example.org
+        -
+          in: query
+          name: document_type
+          description: ''
+          example: debitis
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: debitis
+        -
+          in: query
+          name: number_id
+          description: ''
+          example: 3
+          required: true
+          schema:
+            type: integer
+            description: ''
+            example: 3
+        -
+          in: query
+          name: name
+          description: ''
+          example: sed
+          required: true
+          schema:
+            type: string
+            description: ''
+            example: sed
+        -
+          in: query
+          name: phone
+          description: ''
+          example: 20
+          required: true
+          schema:
+            type: integer
+            description: ''
+            example: 20
+        -
+          in: query
+          name: Photo
+          description: ''
+          example: null
+          required: false
+          schema:
+            type: string
+            format: binary
+            description: ''
+        -
+          in: query
+          name: photo_id
+          description: ''
+          example: null
+          required: false
+          schema:
+            type: string
+            format: binary
+            description: ''
+        -
+          in: query
+          name: password
+          description: ''
+          example: '^DW{>gB}Z^e+'
+          required: true
+          schema:
+            type: string
+            description: ''
+            example: '^DW{>gB}Z^e+'
         -
           in: header
           name: Api-Version
@@ -252,170 +919,29 @@ paths:
   /api/auth/login:
     post:
       summary: ''
+      operationId: postApiAuthLogin
       description: ''
       parameters:
         -
           in: query
           name: email
           description: ''
-          example: et
+          example: mattie.ritchie@example.org
           required: true
           schema:
             type: string
             description: ''
-            example: et
+            example: mattie.ritchie@example.org
         -
           in: query
           name: password
           description: ''
-          example: sequi
+          example: ':$%8h+<.Ba4=WMB'
           required: true
           schema:
             type: password
             description: ''
-            example: sequi
-        -
-          in: header
-          name: Api-Version
-          description: ''
-          example: v1
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/suppliers:
-    post:
-      summary: 'Show the form for creating a new resource.'
-      description: ''
-      parameters:
-        -
-          in: query
-          name: identification
-          description: ''
-          example: 17
-          required: true
-          schema:
-            type: integer
-            description: ''
-            example: 17
-        -
-          in: query
-          name: FlagStatus
-          description: string
-          example: culpa
-          required: true
-          schema:
-            type: 'It is to check if the invoice is valid or canceled [true, false]'
-            description: string
-            example: culpa
-        -
-          in: query
-          name: PaidStatus
-          description: string
-          example: facere
-          required: true
-          schema:
-            type: 'It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]'
-            description: string
-            example: facere
-        -
-          in: query
-          name: InvoiceType
-          description: string
-          example: eum
-          required: false
-          schema:
-            type: 'It is to consult the invoices by type of invoice.'
-            description: string
-            example: eum
-        -
-          in: header
-          name: Api-Version
-          description: ''
-          example: v1
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
-  /api/user/updated:
-    put:
-      summary: ''
-      description: ''
-      parameters:
-        -
-          in: query
-          name: Photo
-          description: ''
-          example: null
-          required: false
-          schema:
-            type: string
-            format: binary
-            description: ''
-        -
-          in: query
-          name: name
-          description: ''
-          example: consequatur
-          required: false
-          schema:
-            type: string
-            description: ''
-            example: consequatur
-        -
-          in: query
-          name: email
-          description: ''
-          example: commodi
-          required: false
-          schema:
-            type: string
-            description: ''
-            example: commodi
-        -
-          in: query
-          name: identification
-          description: ''
-          example: 9
-          required: false
-          schema:
-            type: integer
-            description: ''
-            example: 9
-        -
-          in: query
-          name: telefono
-          description: ''
-          example: 8
-          required: false
-          schema:
-            type: integer
-            description: ''
-            example: 8
-        -
-          in: query
-          name: password
-          description: ''
-          example: rerum
-          required: false
-          schema:
-            type: string
-            description: ''
-            example: rerum
-        -
-          in: query
-          name: identificationPhoto
-          description: ''
-          example: null
-          required: false
-          schema:
-            type: string
-            format: binary
-            description: ''
+            example: ':$%8h+<.Ba4=WMB'
         -
           in: header
           name: Api-Version
@@ -430,8 +956,19 @@ paths:
   /api/auth/logout:
     post:
       summary: ''
+      operationId: postApiAuthLogout
       description: ''
       parameters:
+        -
+          in: query
+          name: Token
+          description: string
+          example: esse
+          required: true
+          schema:
+            type: Authorization
+            description: string
+            example: esse
         -
           in: header
           name: Api-Version

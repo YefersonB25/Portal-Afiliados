@@ -178,8 +178,7 @@ class ConsultarAfiliadoController extends Controller
     }
 
 
-    #[QueryParam("PaidStatus", "array('Undpaid')", required: true)]
-    #[QueryParam("SupplierNumber", "integer", required: true)]
+
     public function TotalAmount(Request $request)
     {
         try {

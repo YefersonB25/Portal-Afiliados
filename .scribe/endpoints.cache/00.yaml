@@ -5,8 +5,8 @@ description: ''
 endpoints:
   -
     httpMethods:
-      - POST
-    uri: api/facturas/total
+      - GET
+    uri: api/invoice/afiliate-supplier
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -21,27 +21,333 @@ endpoints:
     urlParameters: []
     cleanUrlParameters: []
     queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: voluptatem
+        type: Authorization
+        custom: []
       PaidStatus:
         name: PaidStatus
-        description: ''
+        description: string
         required: true
-        example: explicabo
-        type: 'array(''Paid'', ''Undpaid'', ''Partially paid'')'
+        example: sed
+        type: 'It is to check the paid status of the invoice. [Pagadas, Impagado, Pagada parcialmente]'
+        custom: []
+      FlagStatus:
+        name: FlagStatus
+        description: string
+        required: true
+        example: voluptatem
+        type: 'It is to check if the invoice is valid or canceled [true, false]'
+        custom: []
+    cleanQueryParameters:
+      Token: voluptatem
+      PaidStatus: sed
+      FlagStatus: voluptatem
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/invoice/transportation
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: ut
+        type: Authorization
+        custom: []
+      number_id:
+        name: number_id
+        description: integer
+        required: true
+        example: voluptatem
+        type: 'user identification number'
+        custom: []
+    cleanQueryParameters:
+      Token: ut
+      number_id: voluptatem
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/invoice/transportation/details
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: sed
+        type: Authorization
+        custom: []
+      shipmentXid:
+        name: shipmentXid
+        description: int
+        required: true
+        example: nisi
+        type: 'Transport invoice identifier'
+        custom: []
+    cleanQueryParameters:
+      Token: sed
+      shipmentXid: nisi
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/invoice/lines
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: nihil
+        type: Authorization
+        custom: []
+      InvoiceNumber:
+        name: InvoiceNumber
+        description: int
+        required: true
+        example: est
+        type: string
+        custom: []
+    cleanQueryParameters:
+      Token: nihil
+      InvoiceNumber: est
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/amount/invoice/worth
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: quia
+        type: Authorization
+        custom: []
+      PaidStatus:
+        name: PaidStatus
+        description: string
+        required: true
+        example: qui
+        type: Impagado
         custom: []
       SupplierNumber:
         name: SupplierNumber
         description: ''
         required: true
-        example: 4
+        example: 19
         type: integer
         custom: []
     cleanQueryParameters:
-      PaidStatus: explicabo
-      SupplierNumber: 4
+      Token: quia
+      PaidStatus: qui
+      SupplierNumber: 19
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -50,8 +356,8 @@ endpoints:
     custom: []
   -
     httpMethods:
-      - POST
-    uri: api/invoiceLines
+      - GET
+    uri: api/suppliers
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -66,19 +372,51 @@ endpoints:
     urlParameters: []
     cleanUrlParameters: []
     queryParameters:
-      Developing:
-        name: Developing
-        description: ''
+      Token:
+        name: Token
+        description: string
         required: true
-        example: consequuntur
-        type: 'null'
+        example: tempora
+        type: Authorization
+        custom: []
+      number_id:
+        name: number_id
+        description: int
+        required: true
+        example: rerum
+        type: 'identification number'
         custom: []
     cleanQueryParameters:
-      Developing: consequuntur
+      Token: tempora
+      number_id: rerum
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000'" />
+
+                  <title>Redirecting to 127.0.0.1:8000</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000">127.0.0.1:8000</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000'
+          content-type: 'text/html; charset=UTF-8'
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -87,37 +425,8 @@ endpoints:
     custom: []
   -
     httpMethods:
-      - POST
-    uri: api/facturas/pagadas
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Store a newly created resource in storage.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Api-Version: v1
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/suppliernumber
+      - GET
+    uri: api/users/validation/otm/erp
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -132,19 +441,49 @@ endpoints:
     urlParameters: []
     cleanUrlParameters: []
     queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: aspernatur
+        type: Authorization
+        custom: []
       id:
         name: id
         description: int
         required: true
-        example: commodi
-        type: 'user ID'
+        example: est
+        type: user
         custom: []
     cleanQueryParameters:
-      id: commodi
+      Token: aspernatur
+      id: est
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -153,45 +492,8 @@ endpoints:
     custom: []
   -
     httpMethods:
-      - POST
-    uri: api/consultaOTM/afiliado
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Api-Version: v1
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      Developing:
-        name: Developing
-        description: ''
-        required: true
-        example: reiciendis
-        type: 'null'
-        custom: []
-    cleanQueryParameters:
-      Developing: reiciendis
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/proveedor
+      - GET
+    uri: api/users/dad
     metadata:
       groupName: Endpoints
       groupDescription: ''
@@ -210,15 +512,659 @@ endpoints:
         name: userId
         description: integer
         required: true
-        example: nobis
-        type: 'kinship id, to consult the provider to which it is associated'
+        example: velit
+        type: 'Kinship id, to consult the provider to which it is associated'
         custom: []
     cleanQueryParameters:
-      userId: nobis
+      userId: velit
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/users/edit
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: nostrum
+        type: Authorization
+        custom: []
+      id:
+        name: id
+        description: int
+        required: true
+        example: iusto
+        type: user
+        custom: []
+    cleanQueryParameters:
+      Token: nostrum
+      id: iusto
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/users/updated
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+      Content-Type: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: consectetur
+        type: Authorization
+        custom: []
+      id:
+        name: id
+        description: ''
+        required: false
+        example: earum
+        type: string
+        custom: []
+      email:
+        name: email
+        description: ''
+        required: false
+        example: colleen77@example.org
+        type: string
+        custom: []
+      document_type:
+        name: document_type
+        description: ''
+        required: false
+        example: est
+        type: string
+        custom: []
+      number_id:
+        name: number_id
+        description: ''
+        required: false
+        example: 8
+        type: integer
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: false
+        example: qui
+        type: string
+        custom: []
+      phone:
+        name: phone
+        description: ''
+        required: false
+        example: 8
+        type: integer
+        custom: []
+      Photo:
+        name: Photo
+        description: ''
+        required: false
+        example: null
+        type: file
+        custom: []
+      rol:
+        name: rol
+        description: ''
+        required: false
+        example: vitae
+        type: string
+        custom: []
+      photo_id:
+        name: photo_id
+        description: ''
+        required: false
+        example: null
+        type: file
+        custom: []
+      password:
+        name: password
+        description: ''
+        required: false
+        example: E8tI3c
+        type: string
+        custom: []
+    cleanQueryParameters:
+      Token: consectetur
+      id: earum
+      email: colleen77@example.org
+      document_type: est
+      number_id: 8
+      name: qui
+      phone: 8
+      Photo: null
+      rol: vitae
+      photo_id: null
+      password: E8tI3c
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: provident
+        type: string
+        custom: []
+      email:
+        name: email
+        description: ''
+        required: false
+        example: null
+        type: string
+        custom: []
+      phone:
+        name: phone
+        description: ''
+        required: true
+        example: 2542132.08634
+        type: number
+        custom: []
+      password:
+        name: password
+        description: ':attribute y <code>confirm-password</code> deben coincidir.'
+        required: false
+        example: null
+        type: string
+        custom: []
+      roles:
+        name: roles
+        description: ''
+        required: true
+        example: temporibus
+        type: string
+        custom: []
+    cleanBodyParameters:
+      name: provident
+      phone: 2542132.08634
+      roles: temporibus
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: api/users/deleted
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: accusantium
+        type: Authorization
+        custom: []
+      userId:
+        name: userId
+        description: int
+        required: true
+        example: aliquid
+        type: user
+        custom: []
+    cleanQueryParameters:
+      Token: accusantium
+      userId: aliquid
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
     responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/users/profile
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/permission
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/role
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/role/create
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      name:
+        name: name
+        description: string
+        required: true
+        example: eligendi
+        type: string
+        custom: []
+      permission:
+        name: permission
+        description: string
+        required: true
+        example: quis
+        type: string
+        custom: []
+    cleanQueryParameters:
+      name: eligendi
+      permission: quis
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/role/edit
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      id:
+        name: id
+        description: string
+        required: true
+        example: repellendus
+        type: 'role identifier'
+        custom: []
+    cleanQueryParameters:
+      id: repellendus
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/role/updated
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Api-Version: v1
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      name:
+        name: name
+        description: string
+        required: false
+        example: itaque
+        type: string
+        custom: []
+      permission:
+        name: permission
+        description: string
+        required: false
+        example: dolor
+        type: string
+        custom: []
+      id:
+        name: id
+        description: string
+        required: false
+        example: ipsam
+        type: 'role identifier'
+        custom: []
+    cleanQueryParameters:
+      name: itaque
+      permission: dolor
+      id: ipsam
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 302
+        content: |-
+          <!DOCTYPE html>
+          <html>
+              <head>
+                  <meta charset="UTF-8" />
+                  <meta http-equiv="refresh" content="0;url='127.0.0.1:8000/127.0.0.1:8000/login'" />
+
+                  <title>Redirecting to 127.0.0.1:8000/127.0.0.1:8000/login</title>
+              </head>
+              <body>
+                  Redirecting to <a href="127.0.0.1:8000/127.0.0.1:8000/login">127.0.0.1:8000/127.0.0.1:8000/login</a>.
+              </body>
+          </html>
+        headers:
+          cache-control: 'no-cache, private'
+          location: '127.0.0.1:8000/127.0.0.1:8000/login'
+          content-type: 'text/html; charset=UTF-8'
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
     responseFields: []
     auth: []
     controller: null
@@ -243,6 +1189,41 @@ endpoints:
     urlParameters: []
     cleanUrlParameters: []
     queryParameters:
+      email:
+        name: email
+        description: ''
+        required: true
+        example: corene21@example.org
+        type: string
+        custom: []
+      document_type:
+        name: document_type
+        description: ''
+        required: false
+        example: debitis
+        type: string
+        custom: []
+      number_id:
+        name: number_id
+        description: ''
+        required: true
+        example: 3
+        type: integer
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: true
+        example: sed
+        type: string
+        custom: []
+      phone:
+        name: phone
+        description: ''
+        required: true
+        example: 20
+        type: integer
+        custom: []
       Photo:
         name: Photo
         description: ''
@@ -250,56 +1231,29 @@ endpoints:
         example: null
         type: file
         custom: []
-      name:
-        name: name
-        description: ''
-        required: true
-        example: voluptatem
-        type: string
-        custom: []
-      email:
-        name: email
-        description: ''
-        required: true
-        example: nihil
-        type: string
-        custom: []
-      identification:
-        name: identification
-        description: ''
-        required: true
-        example: 5
-        type: integer
-        custom: []
-      telefono:
-        name: telefono
-        description: ''
-        required: true
-        example: 6
-        type: integer
-        custom: []
-      password:
-        name: password
-        description: ''
-        required: true
-        example: qui
-        type: string
-        custom: []
-      identificationPhoto:
-        name: identificationPhoto
+      photo_id:
+        name: photo_id
         description: ''
         required: false
         example: null
         type: file
         custom: []
+      password:
+        name: password
+        description: ''
+        required: true
+        example: '^DW{>gB}Z^e+'
+        type: string
+        custom: []
     cleanQueryParameters:
+      email: corene21@example.org
+      document_type: debitis
+      number_id: 3
+      name: sed
+      phone: 20
       Photo: null
-      name: voluptatem
-      email: nihil
-      identification: 5
-      telefono: 6
-      password: qui
-      identificationPhoto: null
+      photo_id: null
+      password: '^DW{>gB}Z^e+'
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -332,165 +1286,19 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: qui
+        example: mattie.ritchie@example.org
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: ut
+        example: ':$%8h+<.Ba4=WMB'
         type: password
         custom: []
     cleanQueryParameters:
-      email: qui
-      password: ut
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/suppliers
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Show the form for creating a new resource.'
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Api-Version: v1
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      identification:
-        name: identification
-        description: ''
-        required: true
-        example: 15
-        type: integer
-        custom: []
-      FlagStatus:
-        name: FlagStatus
-        description: string
-        required: true
-        example: eius
-        type: 'It is to check if the invoice is valid or canceled [true, false]'
-        custom: []
-      PaidStatus:
-        name: PaidStatus
-        description: string
-        required: true
-        example: ut
-        type: 'It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]'
-        custom: []
-      InvoiceType:
-        name: InvoiceType
-        description: string
-        required: false
-        example: nisi
-        type: 'It is to consult the invoices by type of invoice.'
-        custom: []
-    cleanQueryParameters:
-      identification: 15
-      FlagStatus: eius
-      PaidStatus: ut
-      InvoiceType: nisi
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - PUT
-    uri: api/user/updated
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Api-Version: v1
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      Photo:
-        name: Photo
-        description: ''
-        required: false
-        example: null
-        type: file
-        custom: []
-      name:
-        name: name
-        description: ''
-        required: false
-        example: ut
-        type: string
-        custom: []
-      email:
-        name: email
-        description: ''
-        required: false
-        example: explicabo
-        type: string
-        custom: []
-      identification:
-        name: identification
-        description: ''
-        required: false
-        example: 20
-        type: integer
-        custom: []
-      telefono:
-        name: telefono
-        description: ''
-        required: false
-        example: 16
-        type: integer
-        custom: []
-      password:
-        name: password
-        description: ''
-        required: false
-        example: placeat
-        type: string
-        custom: []
-      identificationPhoto:
-        name: identificationPhoto
-        description: ''
-        required: false
-        example: null
-        type: file
-        custom: []
-    cleanQueryParameters:
-      Photo: null
-      name: ut
-      email: explicabo
-      identification: 20
-      telefono: 16
-      password: placeat
-      identificationPhoto: null
+      email: mattie.ritchie@example.org
+      password: ':$%8h+<.Ba4=WMB'
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -518,8 +1326,16 @@ endpoints:
       Api-Version: v1
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      Token:
+        name: Token
+        description: string
+        required: true
+        example: esse
+        type: Authorization
+        custom: []
+    cleanQueryParameters:
+      Token: esse
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []

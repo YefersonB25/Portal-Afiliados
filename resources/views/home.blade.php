@@ -846,7 +846,6 @@
                                 "_token": "{{ csrf_token() }}",
                                 SupplierNumber:data,
                                 PaidStatus: ['Impagado'],
-                                FlagStatus: 'false'
                             },
 
                             success: function(response) {

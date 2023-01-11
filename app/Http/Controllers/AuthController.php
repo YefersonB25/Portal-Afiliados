@@ -7,7 +7,12 @@ use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\OracleRestErp;
+use App\Http\Helpers\OracleRestOtm;
+use App\Http\Helpers\ReporteRestOtm;
+use App\Http\Helpers\RequestNit;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -19,14 +24,16 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Knuckles\Scribe\Attributes\BodyParam;
 use Knuckles\Scribe\Attributes\QueryParam;
+use Spatie\Permission\Models\Permission;
+
 class AuthController extends Controller
 {
     use ApiResponser;
 
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('guest');
+    // }
 
     // protected function validator(Request $request)
     // {
@@ -49,13 +56,31 @@ class AuthController extends Controller
     #[QueryParam("password", "string", required: true)]
     public function register(Request $request)
     {
-        // return $validator = $request->validate([
+        $request->Validator([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
+            'number_id' => ['required','numeric', 'unique:users',],
+            'phone' => ['required','numeric'],
+            'document_type' => ['required'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        // $rules = ([
         //     'name' => ['required', 'string', 'max:255'],
         //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
-        //     'identification' => ['required','numeric'],
-        //     'telefono' => ['required','numeric'],
+        //     'number_id' => ['required','numeric', 'unique:users',],
+        //     'phone' => ['required','numeric'],
+        //     'document_type' => ['required'],
         //     'password' => ['required', 'string', 'min:8', 'confirmed'],
         // ]);
+
+        // $validator = Validator::make($request->all(), $rules);
+        // if ($validator->fails()) {
+        //     response()->json([
+        //         'status' => false,
+        //         'error' => $validator->errors()->all()
+        //     ]);
+        // }
 
         $roles = Role::get();
 
@@ -123,7 +148,8 @@ class AuthController extends Controller
 
     }
 
-    #[QueryParam("id", "int", required: true)]
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("id", "user","int", required: true)]
     public function edit(Request $request)
     {
         $user     = User::find($request->id);
@@ -135,80 +161,182 @@ class AuthController extends Controller
         ]);
     }
 
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("id", "string", required: false)]
     #[QueryParam("email", "string", required: false)]
     #[QueryParam("document_type", "string", required: false)]
     #[QueryParam("number_id", "integer", required: false)]
     #[QueryParam("name", "string", required: false)]
     #[QueryParam("phone", "integer", required: false)]
     #[QueryParam("Photo", "file", required: false)]
+    #[QueryParam("rol", "string", required: false)]
     #[QueryParam("photo_id", "file", required: false)]
     #[QueryParam("password", "string", required: false)]
-    public function update(Request $request)
+
+    // public function update(Request $request)
+    // {
+
+    //     // $idUser = Auth::user()->id;
+
+    //     // return response()->json($input);
+
+    //     //? Capturamos la extencion de los archivos
+
+    //     if (!empty($request->photo)) {
+    //         $extensionPerfil = $request->photo->getClientOriginalExtension();
+    //     }
+    //     if (!empty($request->photo_id)) {
+    //         $extensionIdentif = $request->photo_id->getClientOriginalExtension();
+    //     }
+    //         $user = User::findOrFail($request->id);
+
+    //         $user->email                 = $request->email;
+    //         $user->document_type         = $request->document_type;
+    //         $user->number_id        = $request->number_id;
+    //         $user->name                  = $request->name;
+    //         $user->phone              = $request->phone;
+    //         $user->photo                 =$request->photo;
+    //         $user->photo_id             = $request->photo_id;
+    //         $user->password              = Hash::make($request->password);
+    //         $user->assignRole($request->rol);
+    //         $user->save();
+    //     //? Capturamos el id del user registrdo
+
+    //     //? Guardamos los archivos cargados y capturamos la ruta
+    //     if (!empty($request->photo)) {
+    //         $carpetaphoto = "proveedores/$request->id/perfil";
+    //         Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
+    //     }
+    //     if (!empty($request->photo_id)) {
+    //         $carpetaidentif = "proveedores/$request->id/identificacion";
+    //         Storage::putFileAs("public/$carpetaidentif", $request->photo_id , 'photo_documento.'. $extensionIdentif);
+    //     }
+
+    //     //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
+    //     if (!empty($request->photo) && !empty($request->photo_id)) {
+    //         User::where('id', $request->id)
+    //                 ->update([
+    //                 'photo'                 => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+    //                 'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
+    //                 ]);
+    //     }
+    //     if (!empty($request->photo)) {
+
+    //         User::where('id', $request->id)
+    //                    ->update([
+    //                    'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
+    //                    ]);
+    //     }
+    //     if (!empty($request->photo_id)) {
+
+    //         User::where('id', $request->id)
+    //                    ->update([
+    //                    'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
+    //                    ]);
+    //     }
+
+    //     return response()->json([
+    //         'status' => '200',
+    //         'message' => "Usuario Actualizado correctamente",
+    //     ]);
+    // }
+
+    public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email,' . $id,
+            'phone'    => 'required|numeric',
+            'password' => 'same:confirm-password',
+            'roles'    => 'required'
+        ]);
 
-        // $idUser = Auth::user()->id;
-
-        // return response()->json($input);
-
-        //? Capturamos la extencion de los archivos
-
-        if (!empty($request->photo)) {
-            $extensionPerfil = $request->photo->getClientOriginalExtension();
-        }
-        if (!empty($request->photo_id)) {
-            $extensionIdentif = $request->photo_id->getClientOriginalExtension();
-        }
-            $user = User::findOrFail($request->id);
-
-            $user->email                 = $request->email;
-            $user->document_type         = $request->document_type;
-            $user->number_id        = $request->number_id;
-            $user->name                  = $request->name;
-            $user->phone              = $request->phone;
-            $user->photo                 =$request->photo;
-            $user->photo_id             = $request->photo_id;
-            $user->password              = Hash::make($request->password);
-            $user->assignRole($request->rol);
-            $user->save();
-        //? Capturamos el id del user registrdo
-
-        //? Guardamos los archivos cargados y capturamos la ruta
-        if (!empty($request->photo)) {
-            $carpetaphoto = "proveedores/$request->id/perfil";
-            Storage::putFileAs("public/$carpetaphoto", $request->photo , 'photo_perfil.'. $extensionPerfil);
-        }
-        if (!empty($request->photo_id)) {
-            $carpetaidentif = "proveedores/$request->id/identificacion";
-            Storage::putFileAs("public/$carpetaidentif", $request->photo_id , 'photo_documento.'. $extensionIdentif);
+        $input = $request->all();
+        if (!empty($input['password'])) {
+            $input['password'] = Hash::make($input['password']);
+        } else {
+            $input = Arr::except($input, array('password'));
         }
 
-        //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
-        if (!empty($request->photo) && !empty($request->photo_id)) {
-            User::where('id', $request->id)
-                    ->update([
-                    'photo'                 => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
-                    ]);
-        }
-        if (!empty($request->photo)) {
+        $user = User::find($id);
+        $user->update($input);
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
 
-            User::where('id', $request->id)
-                       ->update([
-                       'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                       ]);
-        }
-        if (!empty($request->photo_id)) {
-
-            User::where('id', $request->id)
-                       ->update([
-                       'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
-                       ]);
-        }
+        $user->assignRole($request->input('roles'));
 
         return response()->json([
             'status' => '200',
             'message' => "Usuario Actualizado correctamente",
         ]);
+    }
+
+    public function profile()
+    {
+        return auth()->user();
+    }
+
+    public function role()
+    {
+        $roles = Role::pluck('name', 'name')->all();
+        return response()->json([
+            'response' => $roles,
+        ]);
+    }
+
+    #[QueryParam("name", "","string", required: true)]
+    #[QueryParam("permission", "","string", required: true)]
+    public function createRole(Request $request)
+    {
+        $role = Role::create(['name' => $request->input('name')]);
+        $role->syncPermissions($request->input('permission'));
+    }
+
+    #[QueryParam("id", "role identifier","string", required: true)]
+    public function editRole(Request $request)
+    {
+        $role = Role::find($request->id);
+        $permission = Permission::get();
+        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $request->id)
+            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+            ->all();
+            return response()->json(['success' => true, 'data' => compact('role', 'permission', 'rolePermissions')]);
+    }
+
+    #[QueryParam("name", "","string", required: false)]
+    #[QueryParam("permission", "","string", required: false)]
+    #[QueryParam("id", "role identifier","string", required: false)]
+    public function updateRole(Request $request, $id)
+    {
+
+        $role = Role::find($id);
+        $role->name = $request->input('name');
+        $role->save();
+
+        $role->syncPermissions($request->input('permission'));
+
+        return response()->json([
+            'status' => '200',
+            'message' => "Rol Actualizado correctamente",
+        ]);
+    }
+
+    public function permission()
+    {
+        $permission = Permission::get();
+        return response()->json([
+            'response' => $permission,
+        ]);
+    }
+
+
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("userId", "user","int", required: true)]
+    public function delete(Request $request)
+    {
+        DB::table('users')->where('id', $request->userId)->delete();
+        return response()->json(['success' => true,
+            'message' => "Usuario eliminado correctamente"]);
+
     }
 
     #[QueryParam("email", "string", required: true)]
@@ -238,19 +366,122 @@ class AuthController extends Controller
         }
     }
 
+    #[QueryParam("Token", "Authorization", "string", required: true)]
     public function logout()
     {
         // Revoke all tokens...
-        auth()->user()->tokens();
+        auth()->user()->tokens()->delete();
         return response()->json(['message' => 'successfully logged out']);
 
     }
 
-    #[QueryParam("identification", "integer", required: true)]
+    #[QueryParam("userId", "Kinship id, to consult the provider to which it is associated", "integer", required: true)]
+    public function proveedorEncargado(Request $request)
+    {
+        if ($request->userId != '') {
+
+            $user = DB::table('relationship')
+                ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
+                ->where('relationship.user_assigne_id',  $request->userId)
+                ->where('relationship.deleted_at', '=', null)
+                ->select('users.*')
+                ->first();
+
+            return response()->json(['success' => true, 'data' => $user]);
+        }
+        return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
+    }
+
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("id", "user","int", required: true)]
+    public function consultaOTM(Request $request)
+    {
+        try {
+            $userData = User::find($request->id);
+            $document = ($userData->document_type == "NIT") ? RequestNit::getNit($userData->number_id) : $userData->number_id;
+
+            $arrayResultLocal = [
+                'number_id'     => $document,
+                'name'          => $userData->name,
+                'email'         => $userData->email,
+                'phone'         => $userData->phone,
+                'estado'        => $userData->status,
+            ];
+
+            $params = [
+                'limit'   => '1',
+                'expand'  => 'contacts',
+                'showPks' => 'true',
+                'fields'  => 'locationXid,locationName,isActive,contacts'
+            ];
+
+            $response = OracleRestOtm::getLocationsCustomers($document, $params);
+            if ($response->successful()) {
+                $result          = $response->object();
+                $result_contacts = $response->object()->contacts->items[0];
+                $arrayResultOtm = [
+                    'locationXid'  => $result->locationXid,
+                    'fullName'     => $result->locationName,
+                    'isActive'     => $result->isActive,
+                    'emailAddress' => isset($result_contacts->emailAddress) ? $result_contacts->emailAddress : null,
+                    'phone'        => isset($result_contacts->phone1) ? $result_contacts->phone1 : null,
+                ];
+            } else {
+                Log::error(__METHOD__ . '. General error: ' . $response->body());
+                $arrayResultOtm =
+                    [
+                        'locationXid'  => null,
+                        'fullName'     => null,
+                        'isActive'     => null,
+                        'emailAddress' => null,
+                        'phone'        => null,
+                    ];
+            }
+
+            $paramsErp = [
+                'q'        => "(TaxpayerId = '{$document}')",
+                'limit'    => '200',
+                'fields'   => 'TaxpayerId,Supplier,SupplierNumber;addresses:Email,PhoneNumber,Status',
+                'onlyData' => 'true'
+            ];
+
+            $responseErp = OracleRestErp::procurementGetSuppliers($paramsErp);
+            $responseDataArrayErp = $responseErp->object();
+            if ($responseDataArrayErp->count > 0) {
+                $resultErp = $responseDataArrayErp->items[0];
+                $resultAddressErp = $resultErp->addresses[0];
+                $arrayResultErp =
+                    [
+                        'TaxpayerId'   => $resultErp->TaxpayerId,
+                        'fullName'     => $resultErp->Supplier,
+                        'isActive'     => $resultAddressErp->Status,
+                        'emailAddress' => $resultAddressErp->Email,
+                        'phone'        => $resultAddressErp->PhoneNumber
+                    ];
+            } else {
+                $arrayResultErp =
+                    [
+                        'TaxpayerId'   => null,
+                        'fullName'     => null,
+                        'isActive'     => null,
+                        'emailAddress' => null,
+                        'phone'        => null
+                    ];
+            }
+            return response()->json(['success' => true, 'data' => ['arrayResultLocal' => $arrayResultLocal,
+            'arrayResultErp'   => $arrayResultErp,
+            'arrayResultOtm'   => $arrayResultOtm]]);
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+            session()->flash('message', "Special message goes here");
+            return back();
+        }
+    }
+
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("PaidStatus", "It is to check the paid status of the invoice. [Pagadas, Impagado, Pagada parcialmente]", "string", required: true)]
     #[QueryParam("FlagStatus", "It is to check if the invoice is valid or canceled [true, false]", "string", required: true)]
-    #[QueryParam("PaidStatus", "It is to check the paid status of the invoice. [Unpaid]", "string", required: true)]
-    #[QueryParam("InvoiceType", "It is to consult the invoices by type of invoice.", "string", required: false)]
-    public function suppliers(Request $request)
+    public function invoiceSuppliers(Request $request)
     {
         // return response()->json(['success' => true, 'data' => 'hola']);
         $statusErpOtm = "Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.";
@@ -288,44 +519,196 @@ class AuthController extends Controller
 
             $params      =  [
                 'limit'    => '20',
-                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
+                'fields'  => 'InvoiceNumber,InvoiceDate,PaidStatus,InvoiceAmount,AmountPaid;invoiceInstallments:UnpaidAmount,GrossAmount,DueDate',
                 'onlyData' => 'true',
-                'orderBy' => 'AccountingDate:desc'
+                'orderBy' => 'InvoiceDate:desc'
             ];
+
             try {
+                    $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (PaidStatus = '{$request->PaidStatus}') and (CanceledFlag = '{$request->FlagStatus}')";
 
-                $params['q'] = "(SupplierNumber = '{$SupplierNumber}') and (PaidStatus = '{$request->PaidStatus}')";
+                    $invoice = OracleRestErp::getInvoiceSuppliers($params);
 
+                    //? Validamos que nos traiga las facturas
+                    if ($invoice['count'] == 0) {
 
-                $invoice = OracleRestErp::getInvoiceSuppliers($params);
-                // return response()->json(['success' => true, 'data' => $invoice['count']]);
-
-                //? Validamos que nos traiga las facturas
-                if ($invoice['count'] == 0) {
-                    if (!empty($request->InvoiceType)) {
-                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus) . ' con el tipo de factura ' . trans('locale.' . $request->InvoiceType), 'status' => '404']);
-                    } else {
-                        return response()->json(['response' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus), 'status' => '404']);
+                        if (!empty($request->InvoiceType)) {
+                            return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' .$request->PaidStatus . ' con el tipo de factura ' .$request->InvoiceType]);
+                        } else {
+                            return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' .$request->PaidStatus]);
+                        }
                     }
+
+                    $invoce =  $invoice->json();
+                    // return response()->json(['success' => true, 'data' => $invoce]);
+
+                    return response()->json(['success' => true, 'data' => $invoce['items']]);
+                    // return response()->json(array('semestres' => $semestres), 200);
+                } catch (\Throwable $th) {
+                    Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+                    return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
                 }
-
-                $invoce =  $invoice->json();
-
-                return response()->json(['response' => $invoce['items'], 'status' => '200']);
-                // return response()->json(array('semestres' => $semestres), 200);
-            } catch (\Throwable $th) {
-                Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
-                return response()->json(['response' => 'Algo fallo con la comunicacion']);
-            }
-            return response()->json(['response' => $res['items'], 'status' => '200']);
-        } catch (\Throwable $th) {
-            return response()->json(['message' => 'Algo fallo con la comunicacion']);
+        }catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+            return response()->json(['success' => false, 'data' => 'Algo fallo con el proveedor']);
         }
-
 
         //aqui trabajamos con name de las tablas de users
         // $roles = Role::pluck('name','name')->all();
         // return view('usuarios.crear',compact('roles'));
+    }
+
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("InvoiceNumber", "", "int", required: true)]
+    public function getInvoiceLines(Request $request)
+    {
+        $dataInvoiceFull = [];
+        try {
+            $params      =  [
+                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
+                'onlyData' => 'true',
+            ];
+
+            $params['q'] = "(InvoiceNumber = '{$request->InvoiceNumber}')";
+            $invoice = OracleRestErp::getInvoiceSuppliers($params);
+            $invoce =  $invoice->object()->items;
+
+
+            $params = [
+                'fields' => 'PaymentDate',
+                'finder' => 'PaidInvoicesFinder;InvoiceNumber = '.$invoce[0]->InvoiceNumber,
+                'onlyData' => 'true',
+            ];
+            $invoiceF = OracleRestErp::getPayablesPayments($params);
+            $invoceF =  $invoiceF->object()->items;
+
+            if ($invoceF == []) {
+                $invoceF = array(['PaymentDate' => 'Indefinida']);
+            }
+
+            $params = [
+                'limit'    => '200',
+                'fields'   => 'LineNumber,LineAmount,AccountingDate,Description,BudgetDate,LineType',
+                'onlyData' => 'true'
+            ];
+
+            $reques = OracleRestErp::getInvoicesLines($invoce[0]->InvoiceId, $params);
+            $requesData = $reques->object()->items;
+
+            $dataInvoiceFull = [
+                'invoiceLines'  => $requesData,
+                'invoiceData'   => $invoce,
+                'invoiceFechaPago' => $invoceF,
+            ];
+            return response()->json(['success' => true, 'data' => $dataInvoiceFull]);
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return response()->json(['message' => 'Algo fallo con la comunicacion']);
+        }
+    }
+
+    protected function parametros()
+    {
+        $params = [
+            'onlyData' => 'true',
+            'limit'    => '20',
+            'orderBy' => 'insertDate:desc'
+        ];
+        return $params;
+    }
+
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("number_id", "user identification number","integer", required: true)]
+    protected function getShipmentOtm(Request $request)
+    {
+
+        try {
+            $params = self::parametros();
+            $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.' . $request->number_id . '" and statuses.statusValueGid eq "TCL.MANIFIESTO_CUMPL_NUEVO"';
+            $params['fields'] = 'shipmentXid,shipmentName,totalActualCost,totalWeightedCost,numStops,attribute9,attribute10,attribute11,insertDate';
+            $request = OracleRestOtm::getShipments($params);
+
+            return response()->json(['success' => true, 'data' => $request->object()->items]);
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return  $e->getMessage();
+        }
+    }
+
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("shipmentXid", "Transport invoice identifier", "int", required: true)]
+    public function getShipmentDetalle(Request $request)
+    {
+        $response = ReporteRestOtm::manifiestoSoapOtmReport($request->shipmentXid);
+        return response()->json(['success' => true, 'data' => $response]);
+    }
+
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("number_id", "identification number", "int", required: true)]
+    public function supplierNumber(Request $request)
+    {
+        try {
+            $params = [
+                'q'        => "(TaxpayerId = '{$request->number_id}')",
+                'limit'    => '200',
+                'fields'   => 'SupplierNumber',
+                'onlyData' => 'true'
+            ];
+            $response = OracleRestErp::procurementGetSuppliers($params);
+            $res = $response->json();
+            //? Validanos que nos traiga el proveedor
+            if ($res['count'] == 0) {
+                // return response()->json(['message' => 'No se encontro el proveedor'], 404);
+                session()->flash('message', 'No se encontro el proveedor');
+                return back();
+            }
+            $SupplierNumber =  (float)$res['items'][0]['SupplierNumber'];
+
+            return response()->json(['success' => true, 'data' => $SupplierNumber]);
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+            return response()->json(['message' => 'Algo fallo con la comunicacion']);
+        }
+    }
+
+    #[QueryParam("Token", "Authorization", "string", required: true)]
+    #[QueryParam("PaidStatus", "Impagado", "string", required: true)]
+    #[QueryParam("SupplierNumber", "integer", required: true)]
+    public function TotalAmount(Request $request)
+    {
+
+        try {
+            $PaidStatu = explode('"', $request->PaidStatus);
+            $collection = [];
+            foreach ($PaidStatu as $key => $PaidStatus) {
+
+                $params = [
+                    'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = false) and (PaidStatus ='{$PaidStatus}')",
+                    'fields'   => 'InvoiceAmount',
+                    'onlyData' => 'true',
+                    'limit'    => '500'
+
+                ];
+                $res = OracleRestErp::getInvoiceSuppliers($params);
+                $response = $res->object();
+
+                $total = 0;
+                foreach ($response->items as $amountTotal) {
+                    $total = $total + $amountTotal->InvoiceAmount;
+                }
+                $collection[$key] = [
+                    $PaidStatus => $total,
+                    "count $PaidStatus" => $response->count
+
+                ];
+            }
+
+
+            return response()->json(['success' => true, 'data' => $collection]);
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+            return response()->json(['message' => 'Algo fallo con la comunicacion']);
+        }
     }
 
     //Muestro el formulario para introducir el email

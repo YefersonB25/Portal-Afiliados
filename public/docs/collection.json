@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "The Affiliate Portal API",
-        "_postman_id": "e7f0f5b0-284b-4089-9baa-a2b27ede1b34",
+        "_postman_id": "01990268-2f6a-4df4-8567-fad2f18f7e14",
         "description": "Start (and never finish) side projects with this API.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json",
         "version": "2.0.0"
@@ -21,28 +21,34 @@
             "description": "",
             "item": [
                 {
-                    "name": "POST api\/facturas\/total",
+                    "name": "GET api\/invoice\/afiliate-supplier",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/facturas\/total",
+                            "path": "api\/invoice\/afiliate-supplier",
                             "query": [
                                 {
-                                    "key": "PaidStatus",
-                                    "value": "totam",
-                                    "description": "",
+                                    "key": "Token",
+                                    "value": "voluptatem",
+                                    "description": "string",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "SupplierNumber",
-                                    "value": "4",
-                                    "description": "",
+                                    "key": "PaidStatus",
+                                    "value": "sed",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "FlagStatus",
+                                    "value": "voluptatem",
+                                    "description": "string",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/facturas\/total?PaidStatus=totam&SupplierNumber=4"
+                            "raw": "{{baseUrl}}\/api\/invoice\/afiliate-supplier?Token=voluptatem&PaidStatus=sed&FlagStatus=voluptatem"
                         },
-                        "method": "POST",
+                        "method": "GET",
                         "header": [
                             {
                                 "key": "Api-Version",
@@ -59,158 +65,685 @@
                             "type": "noauth"
                         }
                     },
-                    "response": []
-                },
-                {
-                    "name": "POST api\/invoiceLines",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/invoiceLines",
-                            "query": [
+                    "response": [
+                        {
+                            "header": [
                                 {
-                                    "key": "Developing",
-                                    "value": "qui",
-                                    "description": "",
-                                    "disabled": false
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/invoiceLines?Developing=qui"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
                         }
-                    },
-                    "response": []
+                    ]
                 },
                 {
-                    "name": "Store a newly created resource in storage.",
+                    "name": "GET api\/invoice\/transportation",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/facturas\/pagadas",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/facturas\/pagadas"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "POST api\/suppliernumber",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/suppliernumber",
+                            "path": "api\/invoice\/transportation",
                             "query": [
                                 {
-                                    "key": "id",
-                                    "value": "quia",
-                                    "description": "int",
+                                    "key": "Token",
+                                    "value": "ut",
+                                    "description": "string",
                                     "disabled": false
-                                }
-                            ],
-                            "raw": "{{baseUrl}}\/api\/suppliernumber?id=quia"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "POST api\/consultaOTM\/afiliado",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/consultaOTM\/afiliado",
-                            "query": [
+                                },
                                 {
-                                    "key": "Developing",
-                                    "value": "eos",
-                                    "description": "",
-                                    "disabled": false
-                                }
-                            ],
-                            "raw": "{{baseUrl}}\/api\/consultaOTM\/afiliado?Developing=eos"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "POST api\/proveedor",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/proveedor",
-                            "query": [
-                                {
-                                    "key": "userId",
-                                    "value": "facere",
+                                    "key": "number_id",
+                                    "value": "voluptatem",
                                     "description": "integer",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/proveedor?userId=facere"
+                            "raw": "{{baseUrl}}\/api\/invoice\/transportation?Token=ut&number_id=voluptatem"
                         },
-                        "method": "POST",
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/invoice\/transportation\/details",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/invoice\/transportation\/details",
+                            "query": [
+                                {
+                                    "key": "Token",
+                                    "value": "sed",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "shipmentXid",
+                                    "value": "nisi",
+                                    "description": "int",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/invoice\/transportation\/details?Token=sed&shipmentXid=nisi"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/invoice\/lines",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/invoice\/lines",
+                            "query": [
+                                {
+                                    "key": "Token",
+                                    "value": "nihil",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "InvoiceNumber",
+                                    "value": "est",
+                                    "description": "int",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/invoice\/lines?Token=nihil&InvoiceNumber=est"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/amount\/invoice\/worth",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/amount\/invoice\/worth",
+                            "query": [
+                                {
+                                    "key": "Token",
+                                    "value": "quia",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "PaidStatus",
+                                    "value": "qui",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "SupplierNumber",
+                                    "value": "19",
+                                    "description": "",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/amount\/invoice\/worth?Token=quia&PaidStatus=qui&SupplierNumber=19"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/suppliers",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/suppliers",
+                            "query": [
+                                {
+                                    "key": "Token",
+                                    "value": "tempora",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "number_id",
+                                    "value": "rerum",
+                                    "description": "int",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/suppliers?Token=tempora&number_id=rerum"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "59"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\">127.0.0.1:8000<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/users\/validation\/otm\/erp",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/validation\/otm\/erp",
+                            "query": [
+                                {
+                                    "key": "Token",
+                                    "value": "aspernatur",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "id",
+                                    "value": "est",
+                                    "description": "int",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users\/validation\/otm\/erp?Token=aspernatur&id=est"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/users\/dad",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/dad",
+                            "query": [
+                                {
+                                    "key": "userId",
+                                    "value": "velit",
+                                    "description": "integer",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users\/dad?userId=velit"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/users\/edit",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/edit",
+                            "query": [
+                                {
+                                    "key": "Token",
+                                    "value": "nostrum",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "id",
+                                    "value": "iusto",
+                                    "description": "int",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users\/edit?Token=nostrum&id=iusto"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "PUT api\/users\/updated",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/updated",
+                            "query": [
+                                {
+                                    "key": "Token",
+                                    "value": "consectetur",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "id",
+                                    "value": "earum",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "email",
+                                    "value": "colleen77%40example.org",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "document_type",
+                                    "value": "est",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "number_id",
+                                    "value": "8",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "name",
+                                    "value": "qui",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "phone",
+                                    "value": "8",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "Photo",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13DF.tmp",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "rol",
+                                    "value": "vitae",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "photo_id",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13E0.tmp",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "password",
+                                    "value": "E8tI3c",
+                                    "description": "",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users\/updated?Token=consectetur&id=earum&email=colleen77%40example.org&document_type=est&number_id=8&name=qui&phone=8&Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13DF.tmp&rol=vitae&photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13E0.tmp&password=E8tI3c"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"provident\",\"phone\":2542132.08634,\"roles\":\"temporibus\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "DELETE api\/users\/deleted",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/deleted",
+                            "query": [
+                                {
+                                    "key": "Token",
+                                    "value": "accusantium",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "userId",
+                                    "value": "aliquid",
+                                    "description": "int",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users\/deleted?Token=accusantium&userId=aliquid"
+                        },
+                        "method": "DELETE",
                         "header": [
                             {
                                 "key": "Api-Version",
@@ -228,6 +761,357 @@
                         }
                     },
                     "response": []
+                },
+                {
+                    "name": "GET api\/users\/profile",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/profile",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/profile"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/permission",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/permission",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/permission"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/role",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/role",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/role"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/role\/create",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/role\/create",
+                            "query": [
+                                {
+                                    "key": "name",
+                                    "value": "eligendi",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "permission",
+                                    "value": "quis",
+                                    "description": "string",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/role\/create?name=eligendi&permission=quis"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/role\/edit",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/role\/edit",
+                            "query": [
+                                {
+                                    "key": "id",
+                                    "value": "repellendus",
+                                    "description": "string",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/role\/edit?id=repellendus"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/role\/updated",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/role\/updated",
+                            "query": [
+                                {
+                                    "key": "name",
+                                    "value": "itaque",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "permission",
+                                    "value": "dolor",
+                                    "description": "string",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "id",
+                                    "value": "ipsam",
+                                    "description": "string",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/role\/updated?name=itaque&permission=dolor&id=ipsam"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Api-Version",
+                                "value": "v1"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "location",
+                                    "value": "127.0.0.1:8000\/127.0.0.1:8000\/login"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "text\/html; charset=UTF-8"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 302,
+                            "body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\" \/>\n        <meta http-equiv=\"refresh\" content=\"0;url='127.0.0.1:8000\/127.0.0.1:8000\/login'\" \/>\n\n        <title>Redirecting to 127.0.0.1:8000\/127.0.0.1:8000\/login<\/title>\n    <\/head>\n    <body>\n        Redirecting to <a href=\"127.0.0.1:8000\/127.0.0.1:8000\/login\">127.0.0.1:8000\/127.0.0.1:8000\/login<\/a>.\n    <\/body>\n<\/html>",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
                     "name": "POST api\/auth\/register",
@@ -237,49 +1121,55 @@
                             "path": "api\/auth\/register",
                             "query": [
                                 {
-                                    "key": "Photo",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B66.tmp",
+                                    "key": "email",
+                                    "value": "corene21%40example.org",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "document_type",
+                                    "value": "debitis",
+                                    "description": "",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "number_id",
+                                    "value": "3",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "name",
-                                    "value": "eveniet",
+                                    "value": "sed",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "email",
-                                    "value": "nobis",
+                                    "key": "phone",
+                                    "value": "20",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "identification",
-                                    "value": "19",
+                                    "key": "Photo",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1400.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
-                                    "key": "telefono",
-                                    "value": "18",
+                                    "key": "photo_id",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1401.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "inventore",
-                                    "description": "",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "identificationPhoto",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B67.tmp",
+                                    "value": "%5EDW%7B%3EgB%7DZ%5Ee%2B",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/register?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B66.tmp&name=eveniet&email=nobis&identification=19&telefono=18&password=inventore&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B67.tmp"
+                            "raw": "{{baseUrl}}\/api\/auth\/register?email=corene21%40example.org&document_type=debitis&number_id=3&name=sed&phone=20&Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1400.tmp&photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1401.tmp&password=%5EDW%7B%3EgB%7DZ%5Ee%2B"
                         },
                         "method": "POST",
                         "header": [
@@ -309,144 +1199,20 @@
                             "query": [
                                 {
                                     "key": "email",
-                                    "value": "et",
+                                    "value": "mattie.ritchie%40example.org",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "sequi",
+                                    "value": "%3A%24%258h%2B%3C.Ba4%3DWMB",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/login?email=et&password=sequi"
+                            "raw": "{{baseUrl}}\/api\/auth\/login?email=mattie.ritchie%40example.org&password=%3A%24%258h%2B%3C.Ba4%3DWMB"
                         },
                         "method": "POST",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "Show the form for creating a new resource.",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/suppliers",
-                            "query": [
-                                {
-                                    "key": "identification",
-                                    "value": "17",
-                                    "description": "",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "FlagStatus",
-                                    "value": "culpa",
-                                    "description": "string",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "PaidStatus",
-                                    "value": "facere",
-                                    "description": "string",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "InvoiceType",
-                                    "value": "eum",
-                                    "description": "string",
-                                    "disabled": false
-                                }
-                            ],
-                            "raw": "{{baseUrl}}\/api\/suppliers?identification=17&FlagStatus=culpa&PaidStatus=facere&InvoiceType=eum"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "PUT api\/user\/updated",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/user\/updated",
-                            "query": [
-                                {
-                                    "key": "Photo",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B77.tmp",
-                                    "description": "",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "name",
-                                    "value": "consequatur",
-                                    "description": "",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "email",
-                                    "value": "commodi",
-                                    "description": "",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "identification",
-                                    "value": "9",
-                                    "description": "",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "telefono",
-                                    "value": "8",
-                                    "description": "",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "password",
-                                    "value": "rerum",
-                                    "description": "",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "identificationPhoto",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B78.tmp",
-                                    "description": "",
-                                    "disabled": false
-                                }
-                            ],
-                            "raw": "{{baseUrl}}\/api\/user\/updated?Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B77.tmp&name=consequatur&email=commodi&identification=9&telefono=8&password=rerum&identificationPhoto=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp3B78.tmp"
-                        },
-                        "method": "PUT",
                         "header": [
                             {
                                 "key": "Api-Version",
@@ -471,8 +1237,15 @@
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/auth\/logout",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/auth\/logout"
+                            "query": [
+                                {
+                                    "key": "Token",
+                                    "value": "esse",
+                                    "description": "string",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/auth\/logout?Token=esse"
                         },
                         "method": "POST",
                         "header": [

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultarAfiliadoController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,37 +31,54 @@ use Illuminate\Support\Facades\Route;
  * @responseField services Map of each downstream service and their status (`up` or `down`).
  */
 
-// Route::post('status', [UsuarioController::class, 'cambiarEstado'])->name('status');
-
-
-// Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(ConsultarAfiliadoController::class)->group(function () {
-Route::prefix('facturas')->controller(AuthController::class)->middleware(['auth:sanctum', 'ability:check-status,place-orders'])->group(function () {
-    Route::get('/afiliado', 'invoiceSuppliers');
+Route::prefix('invoice')->controller(AuthController::class)->middleware(['auth:sanctum', 'ability:check-status,place-orders'])->group(function () {
+    Route::get('/afiliate-supplier', 'invoiceSuppliers');
+    Route::get('/transportation', 'getShipmentOtm');
+    Route::get('/transportation/details', 'getShipmentDetalle');
+    Route::get('/lines', 'getInvoiceLines');
 });
 
-// Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(UsuarioController::class)->group( function () {
-Route::controller(UsuarioController::class)->group(function () {
-    Route::delete('user/deleted', 'destroy')->name('usuario.eliminar');
+Route::prefix('amount')->controller(AuthController::class)->middleware(['auth:sanctum', 'ability:check-status,place-orders'])->group(function () {
+    Route::get('/invoice/worth', 'TotalAmount');
+});
+
+Route::get('suppliers', [AuthController::class, 'supplierNumber']);
+
+Route::prefix('users')->controller(AuthController::class)->middleware(['auth:sanctum', 'ability:check-status,place-orders'])->group(function () {
+    Route::get('/validation/otm/erp', 'consultaOTM');
+    Route::get('/dad', 'proveedorEncargado');
+    Route::get('/edit', 'edit');
+    Route::put('/updated', 'update');
+    Route::delete('/deleted', 'delete');
+    Route::get('/profile', 'profile');
+});
+
+Route::prefix('permission')->controller(AuthController::class)->middleware(['auth:sanctum', 'ability:check-status,place-orders'])->group(function () {
+    Route::get('/', 'permission');
+});
+
+Route::prefix('role')->controller(AuthController::class)->middleware(['auth:sanctum', 'ability:check-status,place-orders'])->group(function () {
+    Route::get('/', 'role');
+    Route::get('/create', 'createRole');
+    Route::get('/edit', 'editRole');
+    Route::get('/updated', 'updateRole');
+});
+
+
+Route::prefix('auth')->controller(AuthController::class)->group(function () {
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
+    Route::post('/logout', 'logout');
 });
 
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(RolController::class)->group( function () {
-Route::controller(RolController::class)->group(function () {
-    Route::delete('rol/deleted', 'destroy')->name('roles.eliminar');
-});
-Route::post('/auth/usuario/edit', [AuthController::class, 'edit']);
+    // Route::controller(RolController::class)->group(function () {
+    //     Route::delete('rol/deleted', 'destroy')->name('roles.eliminar');
+    // });
 
-Route::post('/auth/register', [AuthController::class, 'register']);
-
-
-Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-
-
-Route::post('/auth/login', [AuthController::class, 'login']);
 
 // Route::group(['middleware' => ['auth:sanctum']], function () {
 // Route::group(['middleware' => ['auth:sanctum']], function () {
-Route::post('suppliers', [ConsultarAfiliadoController::class, 'suppliers']);
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->post('suppliers', [ConsultarAfiliadoController::class, 'suppliers']);
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->put('/user/updated', [AuthController::class, 'update']);
-Route::put('/user/updated', [AuthController::class, 'update']);
 // });

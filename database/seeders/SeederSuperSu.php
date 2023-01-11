@@ -68,6 +68,7 @@ class SeederSuperSu extends Seeder
         Permission::create(['name' => '/profile', 'grupo' => 'Informacion-Personal', 'description' => 'Cunsultar/editar informacion, creacion de usuarios hijos'])
             ->syncRoles([
                 $ClienteHijo,
+                $Consultor,
                 $Cliente,
                 $Admin,
             ]);

@@ -58,7 +58,7 @@ Route::prefix('consultaOTM')->controller(ConsultarAfiliadoController::class)->mi
     Route::get('afiliado/{id}', 'consultaOTM')->name('consultar.afiliado');
 });
 
-Route::controller(ConsultarAfiliadoController::class)->group(function () {
+Route::controller(ConsultarAfiliadoController::class)->middleware('auth')->group(function () {
     Route::post('facturas/total', 'TotalAmount')->name('total');
     Route::post('invoiceLines', 'getInvoiceLines')->name('invoice.lines');
     Route::post('facturas/pagadas', 'customers')->name('falturas.pagadas');
