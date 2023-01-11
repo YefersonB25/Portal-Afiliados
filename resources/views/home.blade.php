@@ -1373,7 +1373,7 @@
                 success: function(response) {
                     let datos =  response.data;
                     if (response.success == true) {
-                        console.log(datos);
+                        // console.log(datos);
                         tblColectionData.clear().draw();
                         tblColectionData.rows.add(datos).draw();
 
@@ -1514,7 +1514,7 @@
                         let lines = response.data.invoiceLines
                         let FPago = response.data.invoiceFechaPago[0]
 
-                        console.log(invoice);
+                        // console.log(invoice);
                         if (response.success == true) {
                             $('#date').html('')
                             plantillaDate = `
