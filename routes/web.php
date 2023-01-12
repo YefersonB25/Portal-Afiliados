@@ -38,6 +38,7 @@ Route::prefix('portal/users')->controller(UsuarioController::class)->middleware(
     Route::get('confirmar/{usuario}/{estado}', 'confirmarDatos')->name('usuario.estado');
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
     Route::post('/', 'filtros')->name('user.filtros');
+    Route::delete('/deleted', 'destroy')->name('usuario.eliminar');
 });
 Route::resource('portal/usuarios', UsuarioController::class);
 
