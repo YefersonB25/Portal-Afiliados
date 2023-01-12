@@ -110,18 +110,20 @@ class UsuarioController extends Controller
 
     public function filtros(Request $request)
     {
-
         $usuarios = User::orderBy('updated_at', 'desc');
         //? Filtro por estado
-        if (!empty($request->estado)) {
+
+        if ($request->estado != 'Todos') {
             $usuarios->where('status', $request->estado);
         }
         //? Filtro por numero de identificacion
-        if (!empty($request->number_id)) {
+        if ($request->number_id != '') {
             $usuarios->where('number_id', $request->number_id);
         }
-        return response()->json(['success' => true, 'data' => $usuarios->paginate(20)]);
-        return $usuarios->paginate(20);
+        // return response()->json(['success' => true, 'data' => $usuarios->paginate(20)]);
+        $users = $usuarios->paginate(20);
+        return view('usuarios.index', ['usuarios' => $users]);
+
         // return response()->json(['success' => true, 'data' => $user]);
 
     }

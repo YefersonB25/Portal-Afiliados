@@ -239,7 +239,6 @@
 <script>
     window.onload = function () {
         swal.close();
-
     }
 
     // load
@@ -374,22 +373,22 @@
             });
         });
 
-        $(document).on("submit","#filter",function(e){
-            e.preventDefault();//detemos el formluario
-                $.ajax({
-                    type: $('#filter').attr('method'),
-                    headers: {
-                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                    url: $('#filter').attr('action'),
-                    data: $('#filter').serialize(),
-                    success: function (res) {
-                        console.log(res.data);
-                    }
-                });
+        // $(document).on("submit","#filter",function(e){
+        //     e.preventDefault();//detemos el formluario
+        //         $.ajax({
+        //             type: $('#filter').attr('method'),
+        //             headers: {
+        //                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 },
+        //             url: $('#filter').attr('action'),
+        //             data: $('#filter').serialize(),
+        //             success: function (res) {
+        //                 console.log(res.data);
+        //             }
+        //         });
 
-                // })
-        });
+        //         // })
+        // });
 
         $(document).on('click', "#consultAfiliado", function (e) {
             Loader();
