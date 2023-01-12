@@ -44,6 +44,7 @@ Route::resource('portal/usuarios', UsuarioController::class);
 
 Route::get('forgot-password', [AuthController::class, 'email'])->name('forgot-password');
 
+    // Route::delete('/deleted', 'destroy')->name('usuario.eliminar');
 
 //? Perfil - Usuarios Asociados
 Route::prefix('profile')->controller(PerfilController::class)->middleware('auth')->group(function () {
@@ -78,6 +79,8 @@ Route::prefix('customers')->controller(FacturaController::class)->middleware('au
 
 Route::middleware('auth', 'can:/roles')->group(function () {
     Route::resource('portal/roles', RolController::class);
+
+    Route::delete('portal/roles/deleted', [RolController::class, 'destroy'])->name('roles.eliminar');
 });
 
 Route::prefix('portal/setting')->controller(Configs::class)->middleware('auth')->group(function () {
