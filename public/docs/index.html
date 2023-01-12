@@ -102,9 +102,6 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-PUTapi-users-updated">
                                 <a href="#endpoints-PUTapi-users-updated">PUT api/users/updated</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-users-deleted">
-                                <a href="#endpoints-DELETEapi-users-deleted">DELETE api/users/deleted</a>
-                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-users-profile">
                                 <a href="#endpoints-GETapi-users-profile">GET api/users/profile</a>
                             </li>
@@ -143,7 +140,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: January 11, 2023</li>
+        <li>Last updated: January 12, 2023</li>
     </ul>
 </div>
 
@@ -180,7 +177,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/invoice/afiliate-supplier?Token=voluptatem&amp;PaidStatus=sed&amp;FlagStatus=voluptatem" \
+    --get "127.0.0.1:8000/api/invoice/afiliate-supplier?Token=id&amp;PaidStatus=eum&amp;FlagStatus=aut" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -190,9 +187,9 @@ You can switch the language used with the tabs at the top right (or from the nav
 );
 
 const params = {
-    "Token": "voluptatem",
-    "PaidStatus": "sed",
-    "FlagStatus": "voluptatem",
+    "Token": "id",
+    "PaidStatus": "eum",
+    "FlagStatus": "aut",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -294,10 +291,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="GETapi-invoice-afiliate-supplier"
-               value="voluptatem"
+               value="id"
                data-component="query">
     <br>
-<p>string Example: <code>voluptatem</code></p>
+<p>string Example: <code>id</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>PaidStatus</code></b>&nbsp;&nbsp;
@@ -305,10 +302,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="PaidStatus"                data-endpoint="GETapi-invoice-afiliate-supplier"
-               value="sed"
+               value="eum"
                data-component="query">
     <br>
-<p>string Example: <code>sed</code></p>
+<p>string Example: <code>eum</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>FlagStatus</code></b>&nbsp;&nbsp;
@@ -316,10 +313,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="FlagStatus"                data-endpoint="GETapi-invoice-afiliate-supplier"
-               value="voluptatem"
+               value="aut"
                data-component="query">
     <br>
-<p>string Example: <code>voluptatem</code></p>
+<p>string Example: <code>aut</code></p>
             </div>
                 </form>
 
@@ -336,7 +333,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/invoice/transportation?Token=ut&amp;number_id=voluptatem" \
+    --get "127.0.0.1:8000/api/invoice/transportation?Token=quam&amp;number_id=animi" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -346,8 +343,8 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "Token": "ut",
-    "number_id": "voluptatem",
+    "Token": "quam",
+    "number_id": "animi",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -449,10 +446,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="GETapi-invoice-transportation"
-               value="ut"
+               value="quam"
                data-component="query">
     <br>
-<p>string Example: <code>ut</code></p>
+<p>string Example: <code>quam</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>number_id</code></b>&nbsp;&nbsp;
@@ -460,10 +457,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="number_id"                data-endpoint="GETapi-invoice-transportation"
-               value="voluptatem"
+               value="animi"
                data-component="query">
     <br>
-<p>integer Example: <code>voluptatem</code></p>
+<p>integer Example: <code>animi</code></p>
             </div>
                 </form>
 
@@ -480,7 +477,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/invoice/transportation/details?Token=sed&amp;shipmentXid=nisi" \
+    --get "127.0.0.1:8000/api/invoice/transportation/details?Token=ratione&amp;shipmentXid=quis" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -490,8 +487,8 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "Token": "sed",
-    "shipmentXid": "nisi",
+    "Token": "ratione",
+    "shipmentXid": "quis",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -593,10 +590,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="GETapi-invoice-transportation-details"
-               value="sed"
+               value="ratione"
                data-component="query">
     <br>
-<p>string Example: <code>sed</code></p>
+<p>string Example: <code>ratione</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>shipmentXid</code></b>&nbsp;&nbsp;
@@ -604,10 +601,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="shipmentXid"                data-endpoint="GETapi-invoice-transportation-details"
-               value="nisi"
+               value="quis"
                data-component="query">
     <br>
-<p>int Example: <code>nisi</code></p>
+<p>int Example: <code>quis</code></p>
             </div>
                 </form>
 
@@ -624,7 +621,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/invoice/lines?Token=nihil&amp;InvoiceNumber=est" \
+    --get "127.0.0.1:8000/api/invoice/lines?Token=esse&amp;InvoiceNumber=recusandae" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -634,8 +631,8 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "Token": "nihil",
-    "InvoiceNumber": "est",
+    "Token": "esse",
+    "InvoiceNumber": "recusandae",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -737,10 +734,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="GETapi-invoice-lines"
-               value="nihil"
+               value="esse"
                data-component="query">
     <br>
-<p>string Example: <code>nihil</code></p>
+<p>string Example: <code>esse</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>InvoiceNumber</code></b>&nbsp;&nbsp;
@@ -748,10 +745,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="InvoiceNumber"                data-endpoint="GETapi-invoice-lines"
-               value="est"
+               value="recusandae"
                data-component="query">
     <br>
-<p>int Example: <code>est</code></p>
+<p>int Example: <code>recusandae</code></p>
             </div>
                 </form>
 
@@ -768,7 +765,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/amount/invoice/worth?Token=quia&amp;PaidStatus=qui&amp;SupplierNumber=19" \
+    --get "127.0.0.1:8000/api/amount/invoice/worth?Token=temporibus&amp;PaidStatus=ex&amp;SupplierNumber=5" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -778,9 +775,9 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "Token": "quia",
-    "PaidStatus": "qui",
-    "SupplierNumber": "19",
+    "Token": "temporibus",
+    "PaidStatus": "ex",
+    "SupplierNumber": "5",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -882,10 +879,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="GETapi-amount-invoice-worth"
-               value="quia"
+               value="temporibus"
                data-component="query">
     <br>
-<p>string Example: <code>quia</code></p>
+<p>string Example: <code>temporibus</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>PaidStatus</code></b>&nbsp;&nbsp;
@@ -893,10 +890,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="PaidStatus"                data-endpoint="GETapi-amount-invoice-worth"
-               value="qui"
+               value="ex"
                data-component="query">
     <br>
-<p>string Example: <code>qui</code></p>
+<p>string Example: <code>ex</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>SupplierNumber</code></b>&nbsp;&nbsp;
@@ -904,10 +901,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="number" style="display: none"
                name="SupplierNumber"                data-endpoint="GETapi-amount-invoice-worth"
-               value="19"
+               value="5"
                data-component="query">
     <br>
-<p>Example: <code>19</code></p>
+<p>Example: <code>5</code></p>
             </div>
                 </form>
 
@@ -924,7 +921,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/suppliers?Token=tempora&amp;number_id=rerum" \
+    --get "127.0.0.1:8000/api/suppliers?Token=temporibus&amp;number_id=quis" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -934,8 +931,8 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "Token": "tempora",
-    "number_id": "rerum",
+    "Token": "temporibus",
+    "number_id": "quis",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1039,10 +1036,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="GETapi-suppliers"
-               value="tempora"
+               value="temporibus"
                data-component="query">
     <br>
-<p>string Example: <code>tempora</code></p>
+<p>string Example: <code>temporibus</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>number_id</code></b>&nbsp;&nbsp;
@@ -1050,10 +1047,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="number_id"                data-endpoint="GETapi-suppliers"
-               value="rerum"
+               value="quis"
                data-component="query">
     <br>
-<p>int Example: <code>rerum</code></p>
+<p>int Example: <code>quis</code></p>
             </div>
                 </form>
 
@@ -1070,7 +1067,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/users/validation/otm/erp?Token=aspernatur&amp;id=est" \
+    --get "127.0.0.1:8000/api/users/validation/otm/erp?Token=laborum&amp;id=architecto" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -1080,8 +1077,8 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "Token": "aspernatur",
-    "id": "est",
+    "Token": "laborum",
+    "id": "architecto",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1183,10 +1180,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="GETapi-users-validation-otm-erp"
-               value="aspernatur"
+               value="laborum"
                data-component="query">
     <br>
-<p>string Example: <code>aspernatur</code></p>
+<p>string Example: <code>laborum</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
@@ -1194,10 +1191,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="id"                data-endpoint="GETapi-users-validation-otm-erp"
-               value="est"
+               value="architecto"
                data-component="query">
     <br>
-<p>int Example: <code>est</code></p>
+<p>int Example: <code>architecto</code></p>
             </div>
                 </form>
 
@@ -1214,7 +1211,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/users/dad?userId=velit" \
+    --get "127.0.0.1:8000/api/users/dad?userId=soluta" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -1224,7 +1221,7 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "userId": "velit",
+    "userId": "soluta",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1326,10 +1323,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="userId"                data-endpoint="GETapi-users-dad"
-               value="velit"
+               value="soluta"
                data-component="query">
     <br>
-<p>integer Example: <code>velit</code></p>
+<p>integer Example: <code>soluta</code></p>
             </div>
                 </form>
 
@@ -1346,7 +1343,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/users/edit?Token=nostrum&amp;id=iusto" \
+    --get "127.0.0.1:8000/api/users/edit?Token=aut&amp;id=dignissimos" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -1356,8 +1353,8 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "Token": "nostrum",
-    "id": "iusto",
+    "Token": "aut",
+    "id": "dignissimos",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1459,10 +1456,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="GETapi-users-edit"
-               value="nostrum"
+               value="aut"
                data-component="query">
     <br>
-<p>string Example: <code>nostrum</code></p>
+<p>string Example: <code>aut</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
@@ -1470,10 +1467,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="id"                data-endpoint="GETapi-users-edit"
-               value="iusto"
+               value="dignissimos"
                data-component="query">
     <br>
-<p>int Example: <code>iusto</code></p>
+<p>int Example: <code>dignissimos</code></p>
             </div>
                 </form>
 
@@ -1490,13 +1487,13 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "127.0.0.1:8000/api/users/updated?Token=consectetur&amp;id=earum&amp;email=colleen77%40example.org&amp;document_type=est&amp;number_id=8&amp;name=qui&amp;phone=8&amp;Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13DF.tmp&amp;rol=vitae&amp;photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13E0.tmp&amp;password=E8tI3c" \
+    "127.0.0.1:8000/api/users/updated?Token=sapiente&amp;id=debitis&amp;email=kjakubowski%40example.org&amp;document_type=dolor&amp;number_id=5&amp;name=qui&amp;phone=9&amp;Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB910.tmp&amp;rol=et&amp;photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB920.tmp&amp;password=e7ZU8%26%3FbxZ%24%26" \
     --header "Api-Version: v1" \
     --header "Content-Type: application/json" \
     --data "{
-    \"name\": \"provident\",
-    \"phone\": 2542132.08634,
-    \"roles\": \"temporibus\"
+    \"name\": \"voluptatem\",
+    \"phone\": 10105.17,
+    \"roles\": \"velit\"
 }"
 </code></pre></div>
 
@@ -1507,17 +1504,17 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "Token": "consectetur",
-    "id": "earum",
-    "email": "colleen77@example.org",
-    "document_type": "est",
-    "number_id": "8",
+    "Token": "sapiente",
+    "id": "debitis",
+    "email": "kjakubowski@example.org",
+    "document_type": "dolor",
+    "number_id": "5",
     "name": "qui",
-    "phone": "8",
-    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php13DF.tmp",
-    "rol": "vitae",
-    "photo_id": "C:\Users\ybolaños\AppData\Local\Temp\php13E0.tmp",
-    "password": "E8tI3c",
+    "phone": "9",
+    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\phpB910.tmp",
+    "rol": "et",
+    "photo_id": "C:\Users\ybolaños\AppData\Local\Temp\phpB920.tmp",
+    "password": "e7ZU8&amp;?bxZ$&amp;",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -1529,9 +1526,9 @@ const headers = {
 };
 
 let body = {
-    "name": "provident",
-    "phone": 2542132.08634,
-    "roles": "temporibus"
+    "name": "voluptatem",
+    "phone": 10105.17,
+    "roles": "velit"
 };
 
 fetch(url, {
@@ -1612,10 +1609,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="PUTapi-users-updated"
-               value="consectetur"
+               value="sapiente"
                data-component="query">
     <br>
-<p>string Example: <code>consectetur</code></p>
+<p>string Example: <code>sapiente</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
@@ -1623,10 +1620,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="id"                data-endpoint="PUTapi-users-updated"
-               value="earum"
+               value="debitis"
                data-component="query">
     <br>
-<p>Example: <code>earum</code></p>
+<p>Example: <code>debitis</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
@@ -1634,10 +1631,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="email"                data-endpoint="PUTapi-users-updated"
-               value="colleen77@example.org"
+               value="kjakubowski@example.org"
                data-component="query">
     <br>
-<p>Example: <code>colleen77@example.org</code></p>
+<p>Example: <code>kjakubowski@example.org</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>document_type</code></b>&nbsp;&nbsp;
@@ -1645,10 +1642,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="document_type"                data-endpoint="PUTapi-users-updated"
-               value="est"
+               value="dolor"
                data-component="query">
     <br>
-<p>Example: <code>est</code></p>
+<p>Example: <code>dolor</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>number_id</code></b>&nbsp;&nbsp;
@@ -1656,10 +1653,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                name="number_id"                data-endpoint="PUTapi-users-updated"
-               value="8"
+               value="5"
                data-component="query">
     <br>
-<p>Example: <code>8</code></p>
+<p>Example: <code>5</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
@@ -1678,10 +1675,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="number" style="display: none"
                name="phone"                data-endpoint="PUTapi-users-updated"
-               value="8"
+               value="9"
                data-component="query">
     <br>
-<p>Example: <code>8</code></p>
+<p>Example: <code>9</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Photo</code></b>&nbsp;&nbsp;
@@ -1692,7 +1689,7 @@ fetch(url, {
                value=""
                data-component="query">
     <br>
-<p>Example: <code>C:\Users\ybolaños\AppData\Local\Temp\php13DF.tmp</code></p>
+<p>Example: <code>C:\Users\ybolaños\AppData\Local\Temp\phpB910.tmp</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>rol</code></b>&nbsp;&nbsp;
@@ -1700,10 +1697,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="rol"                data-endpoint="PUTapi-users-updated"
-               value="vitae"
+               value="et"
                data-component="query">
     <br>
-<p>Example: <code>vitae</code></p>
+<p>Example: <code>et</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>photo_id</code></b>&nbsp;&nbsp;
@@ -1714,7 +1711,7 @@ fetch(url, {
                value=""
                data-component="query">
     <br>
-<p>Example: <code>C:\Users\ybolaños\AppData\Local\Temp\php13E0.tmp</code></p>
+<p>Example: <code>C:\Users\ybolaños\AppData\Local\Temp\phpB920.tmp</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -1722,10 +1719,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="password"                data-endpoint="PUTapi-users-updated"
-               value="E8tI3c"
+               value="e7ZU8&?bxZ$&"
                data-component="query">
     <br>
-<p>Example: <code>E8tI3c</code></p>
+<p>Example: <code>e7ZU8&amp;?bxZ$&amp;</code></p>
             </div>
                         <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -1734,10 +1731,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="name"                data-endpoint="PUTapi-users-updated"
-               value="provident"
+               value="voluptatem"
                data-component="body">
     <br>
-<p>Example: <code>provident</code></p>
+<p>Example: <code>voluptatem</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
@@ -1756,10 +1753,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="phone"                data-endpoint="PUTapi-users-updated"
-               value="2542132.08634"
+               value="10105.17"
                data-component="body">
     <br>
-<p>Example: <code>2542132.08634</code></p>
+<p>Example: <code>10105.17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -1778,130 +1775,12 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="roles"                data-endpoint="PUTapi-users-updated"
-               value="temporibus"
+               value="velit"
                data-component="body">
     <br>
-<p>Example: <code>temporibus</code></p>
+<p>Example: <code>velit</code></p>
         </div>
         </form>
-
-                    <h2 id="endpoints-DELETEapi-users-deleted">DELETE api/users/deleted</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-DELETEapi-users-deleted">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request DELETE \
-    "127.0.0.1:8000/api/users/deleted?Token=accusantium&amp;userId=aliquid" \
-    --header "Api-Version: v1"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "127.0.0.1:8000/api/users/deleted"
-);
-
-const params = {
-    "Token": "accusantium",
-    "userId": "aliquid",
-};
-Object.keys(params)
-    .forEach(key =&gt; url.searchParams.append(key, params[key]));
-
-const headers = {
-    "Api-Version": "v1",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "DELETE",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-DELETEapi-users-deleted">
-</span>
-<span id="execution-results-DELETEapi-users-deleted" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-DELETEapi-users-deleted"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-DELETEapi-users-deleted" style="max-height: 400px;"></code></pre>
-</span>
-<span id="execution-error-DELETEapi-users-deleted" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-DELETEapi-users-deleted"></code></pre>
-</span>
-<form id="form-DELETEapi-users-deleted" data-method="DELETE"
-      data-path="api/users/deleted"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-users-deleted', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-DELETEapi-users-deleted"
-                    onclick="tryItOut('DELETEapi-users-deleted');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-DELETEapi-users-deleted"
-                    onclick="cancelTryOut('DELETEapi-users-deleted');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-DELETEapi-users-deleted" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-red">DELETE</small>
-            <b><code>api/users/deleted</code></b>
-        </p>
-                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
-                                <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Api-Version</code></b>&nbsp;&nbsp;
-&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-               name="Api-Version"                data-endpoint="DELETEapi-users-deleted"
-               value="v1"
-               data-component="header">
-    <br>
-<p>Example: <code>v1</code></p>
-            </div>
-                            <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
-                                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>Token</code></b>&nbsp;&nbsp;
-<small>Authorization</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-               name="Token"                data-endpoint="DELETEapi-users-deleted"
-               value="accusantium"
-               data-component="query">
-    <br>
-<p>string Example: <code>accusantium</code></p>
-            </div>
-                                    <div style="padding-left: 28px; clear: unset;">
-                <b style="line-height: 2;"><code>userId</code></b>&nbsp;&nbsp;
-<small>user</small>&nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-               name="userId"                data-endpoint="DELETEapi-users-deleted"
-               value="aliquid"
-               data-component="query">
-    <br>
-<p>int Example: <code>aliquid</code></p>
-            </div>
-                </form>
 
                     <h2 id="endpoints-GETapi-users-profile">GET api/users/profile</h2>
 
@@ -2258,7 +2137,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/role/create?name=eligendi&amp;permission=quis" \
+    --get "127.0.0.1:8000/api/role/create?name=dolores&amp;permission=quis" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -2268,7 +2147,7 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "name": "eligendi",
+    "name": "dolores",
     "permission": "quis",
 };
 Object.keys(params)
@@ -2371,10 +2250,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="name"                data-endpoint="GETapi-role-create"
-               value="eligendi"
+               value="dolores"
                data-component="query">
     <br>
-<p>string Example: <code>eligendi</code></p>
+<p>string Example: <code>dolores</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>permission</code></b>&nbsp;&nbsp;
@@ -2402,7 +2281,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/role/edit?id=repellendus" \
+    --get "127.0.0.1:8000/api/role/edit?id=voluptas" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -2412,7 +2291,7 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "id": "repellendus",
+    "id": "voluptas",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -2514,10 +2393,10 @@ access-control-allow-origin: *
  &nbsp;
                 <input type="text" style="display: none"
                name="id"                data-endpoint="GETapi-role-edit"
-               value="repellendus"
+               value="voluptas"
                data-component="query">
     <br>
-<p>string Example: <code>repellendus</code></p>
+<p>string Example: <code>voluptas</code></p>
             </div>
                 </form>
 
@@ -2534,7 +2413,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "127.0.0.1:8000/api/role/updated?name=itaque&amp;permission=dolor&amp;id=ipsam" \
+    --get "127.0.0.1:8000/api/role/updated?name=impedit&amp;permission=molestiae&amp;id=optio" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -2544,9 +2423,9 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "name": "itaque",
-    "permission": "dolor",
-    "id": "ipsam",
+    "name": "impedit",
+    "permission": "molestiae",
+    "id": "optio",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -2648,10 +2527,10 @@ access-control-allow-origin: *
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="name"                data-endpoint="GETapi-role-updated"
-               value="itaque"
+               value="impedit"
                data-component="query">
     <br>
-<p>string Example: <code>itaque</code></p>
+<p>string Example: <code>impedit</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>permission</code></b>&nbsp;&nbsp;
@@ -2659,10 +2538,10 @@ access-control-allow-origin: *
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="permission"                data-endpoint="GETapi-role-updated"
-               value="dolor"
+               value="molestiae"
                data-component="query">
     <br>
-<p>string Example: <code>dolor</code></p>
+<p>string Example: <code>molestiae</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
@@ -2670,10 +2549,10 @@ access-control-allow-origin: *
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="id"                data-endpoint="GETapi-role-updated"
-               value="ipsam"
+               value="optio"
                data-component="query">
     <br>
-<p>string Example: <code>ipsam</code></p>
+<p>string Example: <code>optio</code></p>
             </div>
                 </form>
 
@@ -2690,7 +2569,7 @@ access-control-allow-origin: *
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/auth/register?email=corene21%40example.org&amp;document_type=debitis&amp;number_id=3&amp;name=sed&amp;phone=20&amp;Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1400.tmp&amp;photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1401.tmp&amp;password=%5EDW%7B%3EgB%7DZ%5Ee%2B" \
+    "127.0.0.1:8000/api/auth/register?email=oking%40example.net&amp;document_type=sequi&amp;number_id=17&amp;name=saepe&amp;phone=18&amp;Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB941.tmp&amp;photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB942.tmp&amp;password=%7BB%2FGjCE%7E4oK%7E0%60Xa%7C%23" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -2700,14 +2579,14 @@ access-control-allow-origin: *
 );
 
 const params = {
-    "email": "corene21@example.org",
-    "document_type": "debitis",
-    "number_id": "3",
-    "name": "sed",
-    "phone": "20",
-    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\php1400.tmp",
-    "photo_id": "C:\Users\ybolaños\AppData\Local\Temp\php1401.tmp",
-    "password": "^DW{&gt;gB}Z^e+",
+    "email": "oking@example.net",
+    "document_type": "sequi",
+    "number_id": "17",
+    "name": "saepe",
+    "phone": "18",
+    "Photo": "C:\Users\ybolaños\AppData\Local\Temp\phpB941.tmp",
+    "photo_id": "C:\Users\ybolaños\AppData\Local\Temp\phpB942.tmp",
+    "password": "{B/GjCE~4oK~0`Xa|#",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -2783,10 +2662,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="email"                data-endpoint="POSTapi-auth-register"
-               value="corene21@example.org"
+               value="oking@example.net"
                data-component="query">
     <br>
-<p>Example: <code>corene21@example.org</code></p>
+<p>Example: <code>oking@example.net</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>document_type</code></b>&nbsp;&nbsp;
@@ -2794,10 +2673,10 @@ fetch(url, {
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                name="document_type"                data-endpoint="POSTapi-auth-register"
-               value="debitis"
+               value="sequi"
                data-component="query">
     <br>
-<p>Example: <code>debitis</code></p>
+<p>Example: <code>sequi</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>number_id</code></b>&nbsp;&nbsp;
@@ -2805,10 +2684,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="number_id"                data-endpoint="POSTapi-auth-register"
-               value="3"
+               value="17"
                data-component="query">
     <br>
-<p>Example: <code>3</code></p>
+<p>Example: <code>17</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
@@ -2816,10 +2695,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="name"                data-endpoint="POSTapi-auth-register"
-               value="sed"
+               value="saepe"
                data-component="query">
     <br>
-<p>Example: <code>sed</code></p>
+<p>Example: <code>saepe</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
@@ -2827,10 +2706,10 @@ fetch(url, {
  &nbsp;
                 <input type="number" style="display: none"
                name="phone"                data-endpoint="POSTapi-auth-register"
-               value="20"
+               value="18"
                data-component="query">
     <br>
-<p>Example: <code>20</code></p>
+<p>Example: <code>18</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Photo</code></b>&nbsp;&nbsp;
@@ -2841,7 +2720,7 @@ fetch(url, {
                value=""
                data-component="query">
     <br>
-<p>Example: <code>C:\Users\ybolaños\AppData\Local\Temp\php1400.tmp</code></p>
+<p>Example: <code>C:\Users\ybolaños\AppData\Local\Temp\phpB941.tmp</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>photo_id</code></b>&nbsp;&nbsp;
@@ -2852,7 +2731,7 @@ fetch(url, {
                value=""
                data-component="query">
     <br>
-<p>Example: <code>C:\Users\ybolaños\AppData\Local\Temp\php1401.tmp</code></p>
+<p>Example: <code>C:\Users\ybolaños\AppData\Local\Temp\phpB942.tmp</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -2860,10 +2739,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="password"                data-endpoint="POSTapi-auth-register"
-               value="^DW{>gB}Z^e+"
+               value="{B/GjCE~4oK~0`Xa|#"
                data-component="query">
     <br>
-<p>Example: <code>^DW{&gt;gB}Z^e+</code></p>
+<p>Example: <code>{B/GjCE~4oK~0</code>Xa|#`</p>
             </div>
                 </form>
 
@@ -2880,7 +2759,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/auth/login?email=mattie.ritchie%40example.org&amp;password=%3A%24%258h%2B%3C.Ba4%3DWMB" \
+    "127.0.0.1:8000/api/auth/login?email=jayne.mann%40example.org&amp;password=Zl%27t%3D%2B%26J%5EeUC%3BU" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -2890,8 +2769,8 @@ fetch(url, {
 );
 
 const params = {
-    "email": "mattie.ritchie@example.org",
-    "password": ":$%8h+&lt;.Ba4=WMB",
+    "email": "jayne.mann@example.org",
+    "password": "Zl't=+&amp;J^eUC;U",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -2967,10 +2846,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="email"                data-endpoint="POSTapi-auth-login"
-               value="mattie.ritchie@example.org"
+               value="jayne.mann@example.org"
                data-component="query">
     <br>
-<p>Example: <code>mattie.ritchie@example.org</code></p>
+<p>Example: <code>jayne.mann@example.org</code></p>
             </div>
                                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>password</code></b>&nbsp;&nbsp;
@@ -2978,10 +2857,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="password"                data-endpoint="POSTapi-auth-login"
-               value=":$%8h+<.Ba4=WMB"
+               value="Zl't=+&J^eUC;U"
                data-component="query">
     <br>
-<p>Example: <code>:$%8h+&lt;.Ba4=WMB</code></p>
+<p>Example: <code>Zl't=+&amp;J^eUC;U</code></p>
             </div>
                 </form>
 
@@ -2998,7 +2877,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "127.0.0.1:8000/api/auth/logout?Token=esse" \
+    "127.0.0.1:8000/api/auth/logout?Token=rerum" \
     --header "Api-Version: v1"</code></pre></div>
 
 
@@ -3008,7 +2887,7 @@ fetch(url, {
 );
 
 const params = {
-    "Token": "esse",
+    "Token": "rerum",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -3084,10 +2963,10 @@ fetch(url, {
  &nbsp;
                 <input type="text" style="display: none"
                name="Token"                data-endpoint="POSTapi-auth-logout"
-               value="esse"
+               value="rerum"
                data-component="query">
     <br>
-<p>string Example: <code>esse</code></p>
+<p>string Example: <code>rerum</code></p>
             </div>
                 </form>
 

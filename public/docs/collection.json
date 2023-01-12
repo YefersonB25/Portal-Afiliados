@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "The Affiliate Portal API",
-        "_postman_id": "01990268-2f6a-4df4-8567-fad2f18f7e14",
+        "_postman_id": "acea64e3-95c9-4872-aa50-4f4e514ed772",
         "description": "Start (and never finish) side projects with this API.",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json",
         "version": "2.0.0"
@@ -29,24 +29,24 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "voluptatem",
+                                    "value": "id",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "PaidStatus",
-                                    "value": "sed",
+                                    "value": "eum",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "FlagStatus",
-                                    "value": "voluptatem",
+                                    "value": "aut",
                                     "description": "string",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/invoice\/afiliate-supplier?Token=voluptatem&PaidStatus=sed&FlagStatus=voluptatem"
+                            "raw": "{{baseUrl}}\/api\/invoice\/afiliate-supplier?Token=id&PaidStatus=eum&FlagStatus=aut"
                         },
                         "method": "GET",
                         "header": [
@@ -100,18 +100,18 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "ut",
+                                    "value": "quam",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "number_id",
-                                    "value": "voluptatem",
+                                    "value": "animi",
                                     "description": "integer",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/invoice\/transportation?Token=ut&number_id=voluptatem"
+                            "raw": "{{baseUrl}}\/api\/invoice\/transportation?Token=quam&number_id=animi"
                         },
                         "method": "GET",
                         "header": [
@@ -165,18 +165,18 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "sed",
+                                    "value": "ratione",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "shipmentXid",
-                                    "value": "nisi",
+                                    "value": "quis",
                                     "description": "int",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/invoice\/transportation\/details?Token=sed&shipmentXid=nisi"
+                            "raw": "{{baseUrl}}\/api\/invoice\/transportation\/details?Token=ratione&shipmentXid=quis"
                         },
                         "method": "GET",
                         "header": [
@@ -230,18 +230,18 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "nihil",
+                                    "value": "esse",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "InvoiceNumber",
-                                    "value": "est",
+                                    "value": "recusandae",
                                     "description": "int",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/invoice\/lines?Token=nihil&InvoiceNumber=est"
+                            "raw": "{{baseUrl}}\/api\/invoice\/lines?Token=esse&InvoiceNumber=recusandae"
                         },
                         "method": "GET",
                         "header": [
@@ -295,24 +295,24 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "quia",
+                                    "value": "temporibus",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "PaidStatus",
-                                    "value": "qui",
+                                    "value": "ex",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "SupplierNumber",
-                                    "value": "19",
+                                    "value": "5",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/amount\/invoice\/worth?Token=quia&PaidStatus=qui&SupplierNumber=19"
+                            "raw": "{{baseUrl}}\/api\/amount\/invoice\/worth?Token=temporibus&PaidStatus=ex&SupplierNumber=5"
                         },
                         "method": "GET",
                         "header": [
@@ -366,18 +366,18 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "tempora",
+                                    "value": "temporibus",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "number_id",
-                                    "value": "rerum",
+                                    "value": "quis",
                                     "description": "int",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/suppliers?Token=tempora&number_id=rerum"
+                            "raw": "{{baseUrl}}\/api\/suppliers?Token=temporibus&number_id=quis"
                         },
                         "method": "GET",
                         "header": [
@@ -439,18 +439,18 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "aspernatur",
+                                    "value": "laborum",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "id",
-                                    "value": "est",
+                                    "value": "architecto",
                                     "description": "int",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/users\/validation\/otm\/erp?Token=aspernatur&id=est"
+                            "raw": "{{baseUrl}}\/api\/users\/validation\/otm\/erp?Token=laborum&id=architecto"
                         },
                         "method": "GET",
                         "header": [
@@ -504,12 +504,12 @@
                             "query": [
                                 {
                                     "key": "userId",
-                                    "value": "velit",
+                                    "value": "soluta",
                                     "description": "integer",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/users\/dad?userId=velit"
+                            "raw": "{{baseUrl}}\/api\/users\/dad?userId=soluta"
                         },
                         "method": "GET",
                         "header": [
@@ -563,18 +563,18 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "nostrum",
+                                    "value": "aut",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "id",
-                                    "value": "iusto",
+                                    "value": "dignissimos",
                                     "description": "int",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/users\/edit?Token=nostrum&id=iusto"
+                            "raw": "{{baseUrl}}\/api\/users\/edit?Token=aut&id=dignissimos"
                         },
                         "method": "GET",
                         "header": [
@@ -628,31 +628,31 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "consectetur",
+                                    "value": "sapiente",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "id",
-                                    "value": "earum",
+                                    "value": "debitis",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "email",
-                                    "value": "colleen77%40example.org",
+                                    "value": "kjakubowski%40example.org",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "document_type",
-                                    "value": "est",
+                                    "value": "dolor",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "number_id",
-                                    "value": "8",
+                                    "value": "5",
                                     "description": "",
                                     "disabled": false
                                 },
@@ -664,36 +664,36 @@
                                 },
                                 {
                                     "key": "phone",
-                                    "value": "8",
+                                    "value": "9",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "Photo",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13DF.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB910.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "rol",
-                                    "value": "vitae",
+                                    "value": "et",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "photo_id",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13E0.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB920.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "E8tI3c",
+                                    "value": "e7ZU8%26%3FbxZ%24%26",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/users\/updated?Token=consectetur&id=earum&email=colleen77%40example.org&document_type=est&number_id=8&name=qui&phone=8&Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13DF.tmp&rol=vitae&photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp13E0.tmp&password=E8tI3c"
+                            "raw": "{{baseUrl}}\/api\/users\/updated?Token=sapiente&id=debitis&email=kjakubowski%40example.org&document_type=dolor&number_id=5&name=qui&phone=9&Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB910.tmp&rol=et&photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB920.tmp&password=e7ZU8%26%3FbxZ%24%26"
                         },
                         "method": "PUT",
                         "header": [
@@ -712,49 +712,8 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"provident\",\"phone\":2542132.08634,\"roles\":\"temporibus\"}"
+                            "raw": "{\"name\":\"voluptatem\",\"phone\":10105.17,\"roles\":\"velit\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "DELETE api\/users\/deleted",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/users\/deleted",
-                            "query": [
-                                {
-                                    "key": "Token",
-                                    "value": "accusantium",
-                                    "description": "string",
-                                    "disabled": false
-                                },
-                                {
-                                    "key": "userId",
-                                    "value": "aliquid",
-                                    "description": "int",
-                                    "disabled": false
-                                }
-                            ],
-                            "raw": "{{baseUrl}}\/api\/users\/deleted?Token=accusantium&userId=aliquid"
-                        },
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Api-Version",
-                                "value": "v1"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
                         "description": "",
                         "auth": {
                             "type": "noauth"
@@ -927,7 +886,7 @@
                             "query": [
                                 {
                                     "key": "name",
-                                    "value": "eligendi",
+                                    "value": "dolores",
                                     "description": "string",
                                     "disabled": false
                                 },
@@ -938,7 +897,7 @@
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/role\/create?name=eligendi&permission=quis"
+                            "raw": "{{baseUrl}}\/api\/role\/create?name=dolores&permission=quis"
                         },
                         "method": "GET",
                         "header": [
@@ -992,12 +951,12 @@
                             "query": [
                                 {
                                     "key": "id",
-                                    "value": "repellendus",
+                                    "value": "voluptas",
                                     "description": "string",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/role\/edit?id=repellendus"
+                            "raw": "{{baseUrl}}\/api\/role\/edit?id=voluptas"
                         },
                         "method": "GET",
                         "header": [
@@ -1051,24 +1010,24 @@
                             "query": [
                                 {
                                     "key": "name",
-                                    "value": "itaque",
+                                    "value": "impedit",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "permission",
-                                    "value": "dolor",
+                                    "value": "molestiae",
                                     "description": "string",
                                     "disabled": false
                                 },
                                 {
                                     "key": "id",
-                                    "value": "ipsam",
+                                    "value": "optio",
                                     "description": "string",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/role\/updated?name=itaque&permission=dolor&id=ipsam"
+                            "raw": "{{baseUrl}}\/api\/role\/updated?name=impedit&permission=molestiae&id=optio"
                         },
                         "method": "GET",
                         "header": [
@@ -1122,54 +1081,54 @@
                             "query": [
                                 {
                                     "key": "email",
-                                    "value": "corene21%40example.org",
+                                    "value": "oking%40example.net",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "document_type",
-                                    "value": "debitis",
+                                    "value": "sequi",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "number_id",
-                                    "value": "3",
+                                    "value": "17",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "name",
-                                    "value": "sed",
+                                    "value": "saepe",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "phone",
-                                    "value": "20",
+                                    "value": "18",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "Photo",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1400.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB941.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "photo_id",
-                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1401.tmp",
+                                    "value": "C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB942.tmp",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "%5EDW%7B%3EgB%7DZ%5Ee%2B",
+                                    "value": "%7BB%2FGjCE%7E4oK%7E0%60Xa%7C%23",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/register?email=corene21%40example.org&document_type=debitis&number_id=3&name=sed&phone=20&Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1400.tmp&photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5Cphp1401.tmp&password=%5EDW%7B%3EgB%7DZ%5Ee%2B"
+                            "raw": "{{baseUrl}}\/api\/auth\/register?email=oking%40example.net&document_type=sequi&number_id=17&name=saepe&phone=18&Photo=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB941.tmp&photo_id=C%3A%5CUsers%5Cybola%C3%B1os%5CAppData%5CLocal%5CTemp%5CphpB942.tmp&password=%7BB%2FGjCE%7E4oK%7E0%60Xa%7C%23"
                         },
                         "method": "POST",
                         "header": [
@@ -1199,18 +1158,18 @@
                             "query": [
                                 {
                                     "key": "email",
-                                    "value": "mattie.ritchie%40example.org",
+                                    "value": "jayne.mann%40example.org",
                                     "description": "",
                                     "disabled": false
                                 },
                                 {
                                     "key": "password",
-                                    "value": "%3A%24%258h%2B%3C.Ba4%3DWMB",
+                                    "value": "Zl%27t%3D%2B%26J%5EeUC%3BU",
                                     "description": "",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/login?email=mattie.ritchie%40example.org&password=%3A%24%258h%2B%3C.Ba4%3DWMB"
+                            "raw": "{{baseUrl}}\/api\/auth\/login?email=jayne.mann%40example.org&password=Zl%27t%3D%2B%26J%5EeUC%3BU"
                         },
                         "method": "POST",
                         "header": [
@@ -1240,12 +1199,12 @@
                             "query": [
                                 {
                                     "key": "Token",
-                                    "value": "esse",
+                                    "value": "rerum",
                                     "description": "string",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/api\/auth\/logout?Token=esse"
+                            "raw": "{{baseUrl}}\/api\/auth\/logout?Token=rerum"
                         },
                         "method": "POST",
                         "header": [

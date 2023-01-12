@@ -17,32 +17,32 @@ paths:
           in: query
           name: Token
           description: string
-          example: voluptatem
+          example: id
           required: true
           schema:
             type: Authorization
             description: string
-            example: voluptatem
+            example: id
         -
           in: query
           name: PaidStatus
           description: string
-          example: sed
+          example: eum
           required: true
           schema:
             type: 'It is to check the paid status of the invoice. [Pagadas, Impagado, Pagada parcialmente]'
             description: string
-            example: sed
+            example: eum
         -
           in: query
           name: FlagStatus
           description: string
-          example: voluptatem
+          example: aut
           required: true
           schema:
             type: 'It is to check if the invoice is valid or canceled [true, false]'
             description: string
-            example: voluptatem
+            example: aut
         -
           in: header
           name: Api-Version
@@ -71,22 +71,22 @@ paths:
           in: query
           name: Token
           description: string
-          example: ut
+          example: quam
           required: true
           schema:
             type: Authorization
             description: string
-            example: ut
+            example: quam
         -
           in: query
           name: number_id
           description: integer
-          example: voluptatem
+          example: animi
           required: true
           schema:
             type: 'user identification number'
             description: integer
-            example: voluptatem
+            example: animi
         -
           in: header
           name: Api-Version
@@ -115,22 +115,22 @@ paths:
           in: query
           name: Token
           description: string
-          example: sed
+          example: ratione
           required: true
           schema:
             type: Authorization
             description: string
-            example: sed
+            example: ratione
         -
           in: query
           name: shipmentXid
           description: int
-          example: nisi
+          example: quis
           required: true
           schema:
             type: 'Transport invoice identifier'
             description: int
-            example: nisi
+            example: quis
         -
           in: header
           name: Api-Version
@@ -159,22 +159,22 @@ paths:
           in: query
           name: Token
           description: string
-          example: nihil
+          example: esse
           required: true
           schema:
             type: Authorization
             description: string
-            example: nihil
+            example: esse
         -
           in: query
           name: InvoiceNumber
           description: int
-          example: est
+          example: recusandae
           required: true
           schema:
             type: string
             description: int
-            example: est
+            example: recusandae
         -
           in: header
           name: Api-Version
@@ -203,32 +203,32 @@ paths:
           in: query
           name: Token
           description: string
-          example: quia
+          example: temporibus
           required: true
           schema:
             type: Authorization
             description: string
-            example: quia
+            example: temporibus
         -
           in: query
           name: PaidStatus
           description: string
-          example: qui
+          example: ex
           required: true
           schema:
             type: Impagado
             description: string
-            example: qui
+            example: ex
         -
           in: query
           name: SupplierNumber
           description: ''
-          example: 19
+          example: 5
           required: true
           schema:
             type: integer
             description: ''
-            example: 19
+            example: 5
         -
           in: header
           name: Api-Version
@@ -257,22 +257,22 @@ paths:
           in: query
           name: Token
           description: string
-          example: tempora
+          example: temporibus
           required: true
           schema:
             type: Authorization
             description: string
-            example: tempora
+            example: temporibus
         -
           in: query
           name: number_id
           description: int
-          example: rerum
+          example: quis
           required: true
           schema:
             type: 'identification number'
             description: int
-            example: rerum
+            example: quis
         -
           in: header
           name: Api-Version
@@ -301,22 +301,22 @@ paths:
           in: query
           name: Token
           description: string
-          example: aspernatur
+          example: laborum
           required: true
           schema:
             type: Authorization
             description: string
-            example: aspernatur
+            example: laborum
         -
           in: query
           name: id
           description: int
-          example: est
+          example: architecto
           required: true
           schema:
             type: user
             description: int
-            example: est
+            example: architecto
         -
           in: header
           name: Api-Version
@@ -345,12 +345,12 @@ paths:
           in: query
           name: userId
           description: integer
-          example: velit
+          example: soluta
           required: true
           schema:
             type: 'Kinship id, to consult the provider to which it is associated'
             description: integer
-            example: velit
+            example: soluta
         -
           in: header
           name: Api-Version
@@ -379,22 +379,22 @@ paths:
           in: query
           name: Token
           description: string
-          example: nostrum
+          example: aut
           required: true
           schema:
             type: Authorization
             description: string
-            example: nostrum
+            example: aut
         -
           in: query
           name: id
           description: int
-          example: iusto
+          example: dignissimos
           required: true
           schema:
             type: user
             description: int
-            example: iusto
+            example: dignissimos
         -
           in: header
           name: Api-Version
@@ -423,52 +423,52 @@ paths:
           in: query
           name: Token
           description: string
-          example: consectetur
+          example: sapiente
           required: true
           schema:
             type: Authorization
             description: string
-            example: consectetur
+            example: sapiente
         -
           in: query
           name: id
           description: ''
-          example: earum
+          example: debitis
           required: false
           schema:
             type: string
             description: ''
-            example: earum
+            example: debitis
         -
           in: query
           name: email
           description: ''
-          example: colleen77@example.org
+          example: kjakubowski@example.org
           required: false
           schema:
             type: string
             description: ''
-            example: colleen77@example.org
+            example: kjakubowski@example.org
         -
           in: query
           name: document_type
           description: ''
-          example: est
+          example: dolor
           required: false
           schema:
             type: string
             description: ''
-            example: est
+            example: dolor
         -
           in: query
           name: number_id
           description: ''
-          example: 8
+          example: 5
           required: false
           schema:
             type: integer
             description: ''
-            example: 8
+            example: 5
         -
           in: query
           name: name
@@ -483,12 +483,12 @@ paths:
           in: query
           name: phone
           description: ''
-          example: 8
+          example: 9
           required: false
           schema:
             type: integer
             description: ''
-            example: 8
+            example: 9
         -
           in: query
           name: Photo
@@ -503,12 +503,12 @@ paths:
           in: query
           name: rol
           description: ''
-          example: vitae
+          example: et
           required: false
           schema:
             type: string
             description: ''
-            example: vitae
+            example: et
         -
           in: query
           name: photo_id
@@ -523,12 +523,12 @@ paths:
           in: query
           name: password
           description: ''
-          example: E8tI3c
+          example: 'e7ZU8&?bxZ$&'
           required: false
           schema:
             type: string
             description: ''
-            example: E8tI3c
+            example: 'e7ZU8&?bxZ$&'
         -
           in: header
           name: Api-Version
@@ -556,7 +556,7 @@ paths:
                 name:
                   type: string
                   description: ''
-                  example: provident
+                  example: voluptatem
                 email:
                   type: string
                   description: ''
@@ -564,7 +564,7 @@ paths:
                 phone:
                   type: number
                   description: ''
-                  example: 2542132.08634
+                  example: 10105.17
                 password:
                   type: string
                   description: ':attribute y <code>confirm-password</code> deben coincidir.'
@@ -572,48 +572,11 @@ paths:
                 roles:
                   type: string
                   description: ''
-                  example: temporibus
+                  example: velit
               required:
                 - name
                 - phone
                 - roles
-      security: []
-  /api/users/deleted:
-    delete:
-      summary: ''
-      operationId: deleteApiUsersDeleted
-      description: ''
-      parameters:
-        -
-          in: query
-          name: Token
-          description: string
-          example: accusantium
-          required: true
-          schema:
-            type: Authorization
-            description: string
-            example: accusantium
-        -
-          in: query
-          name: userId
-          description: int
-          example: aliquid
-          required: true
-          schema:
-            type: user
-            description: int
-            example: aliquid
-        -
-          in: header
-          name: Api-Version
-          description: ''
-          example: v1
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
       security: []
   /api/users/profile:
     get:
@@ -697,12 +660,12 @@ paths:
           in: query
           name: name
           description: string
-          example: eligendi
+          example: dolores
           required: true
           schema:
             type: string
             description: string
-            example: eligendi
+            example: dolores
         -
           in: query
           name: permission
@@ -741,12 +704,12 @@ paths:
           in: query
           name: id
           description: string
-          example: repellendus
+          example: voluptas
           required: true
           schema:
             type: 'role identifier'
             description: string
-            example: repellendus
+            example: voluptas
         -
           in: header
           name: Api-Version
@@ -775,32 +738,32 @@ paths:
           in: query
           name: name
           description: string
-          example: itaque
+          example: impedit
           required: false
           schema:
             type: string
             description: string
-            example: itaque
+            example: impedit
         -
           in: query
           name: permission
           description: string
-          example: dolor
+          example: molestiae
           required: false
           schema:
             type: string
             description: string
-            example: dolor
+            example: molestiae
         -
           in: query
           name: id
           description: string
-          example: ipsam
+          example: optio
           required: false
           schema:
             type: 'role identifier'
             description: string
-            example: ipsam
+            example: optio
         -
           in: header
           name: Api-Version
@@ -829,52 +792,52 @@ paths:
           in: query
           name: email
           description: ''
-          example: corene21@example.org
+          example: oking@example.net
           required: true
           schema:
             type: string
             description: ''
-            example: corene21@example.org
+            example: oking@example.net
         -
           in: query
           name: document_type
           description: ''
-          example: debitis
+          example: sequi
           required: false
           schema:
             type: string
             description: ''
-            example: debitis
+            example: sequi
         -
           in: query
           name: number_id
           description: ''
-          example: 3
+          example: 17
           required: true
           schema:
             type: integer
             description: ''
-            example: 3
+            example: 17
         -
           in: query
           name: name
           description: ''
-          example: sed
+          example: saepe
           required: true
           schema:
             type: string
             description: ''
-            example: sed
+            example: saepe
         -
           in: query
           name: phone
           description: ''
-          example: 20
+          example: 18
           required: true
           schema:
             type: integer
             description: ''
-            example: 20
+            example: 18
         -
           in: query
           name: Photo
@@ -899,12 +862,12 @@ paths:
           in: query
           name: password
           description: ''
-          example: '^DW{>gB}Z^e+'
+          example: '{B/GjCE~4oK~0`Xa|#'
           required: true
           schema:
             type: string
             description: ''
-            example: '^DW{>gB}Z^e+'
+            example: '{B/GjCE~4oK~0`Xa|#'
         -
           in: header
           name: Api-Version
@@ -926,22 +889,22 @@ paths:
           in: query
           name: email
           description: ''
-          example: mattie.ritchie@example.org
+          example: jayne.mann@example.org
           required: true
           schema:
             type: string
             description: ''
-            example: mattie.ritchie@example.org
+            example: jayne.mann@example.org
         -
           in: query
           name: password
           description: ''
-          example: ':$%8h+<.Ba4=WMB'
+          example: 'Zl''t=+&J^eUC;U'
           required: true
           schema:
             type: password
             description: ''
-            example: ':$%8h+<.Ba4=WMB'
+            example: 'Zl''t=+&J^eUC;U'
         -
           in: header
           name: Api-Version
@@ -963,12 +926,12 @@ paths:
           in: query
           name: Token
           description: string
-          example: esse
+          example: rerum
           required: true
           schema:
             type: Authorization
             description: string
-            example: esse
+            example: rerum
         -
           in: header
           name: Api-Version

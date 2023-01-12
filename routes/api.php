@@ -49,7 +49,7 @@ Route::prefix('users')->controller(AuthController::class)->middleware(['auth:san
     Route::get('/dad', 'proveedorEncargado');
     Route::get('/edit', 'edit');
     Route::put('/updated', 'update');
-    Route::delete('/deleted', 'delete');
+    // Route::delete('/deleted', 'delete');
     Route::get('/profile', 'profile');
 });
 

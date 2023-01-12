@@ -25,27 +25,27 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: voluptatem
+        example: id
         type: Authorization
         custom: []
       PaidStatus:
         name: PaidStatus
         description: string
         required: true
-        example: sed
+        example: eum
         type: 'It is to check the paid status of the invoice. [Pagadas, Impagado, Pagada parcialmente]'
         custom: []
       FlagStatus:
         name: FlagStatus
         description: string
         required: true
-        example: voluptatem
+        example: aut
         type: 'It is to check if the invoice is valid or canceled [true, false]'
         custom: []
     cleanQueryParameters:
-      Token: voluptatem
-      PaidStatus: sed
-      FlagStatus: voluptatem
+      Token: id
+      PaidStatus: eum
+      FlagStatus: aut
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -100,19 +100,19 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: ut
+        example: quam
         type: Authorization
         custom: []
       number_id:
         name: number_id
         description: integer
         required: true
-        example: voluptatem
+        example: animi
         type: 'user identification number'
         custom: []
     cleanQueryParameters:
-      Token: ut
-      number_id: voluptatem
+      Token: quam
+      number_id: animi
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -167,19 +167,19 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: sed
+        example: ratione
         type: Authorization
         custom: []
       shipmentXid:
         name: shipmentXid
         description: int
         required: true
-        example: nisi
+        example: quis
         type: 'Transport invoice identifier'
         custom: []
     cleanQueryParameters:
-      Token: sed
-      shipmentXid: nisi
+      Token: ratione
+      shipmentXid: quis
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -234,19 +234,19 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: nihil
+        example: esse
         type: Authorization
         custom: []
       InvoiceNumber:
         name: InvoiceNumber
         description: int
         required: true
-        example: est
+        example: recusandae
         type: string
         custom: []
     cleanQueryParameters:
-      Token: nihil
-      InvoiceNumber: est
+      Token: esse
+      InvoiceNumber: recusandae
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -301,27 +301,27 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: quia
+        example: temporibus
         type: Authorization
         custom: []
       PaidStatus:
         name: PaidStatus
         description: string
         required: true
-        example: qui
+        example: ex
         type: Impagado
         custom: []
       SupplierNumber:
         name: SupplierNumber
         description: ''
         required: true
-        example: 19
+        example: 5
         type: integer
         custom: []
     cleanQueryParameters:
-      Token: quia
-      PaidStatus: qui
-      SupplierNumber: 19
+      Token: temporibus
+      PaidStatus: ex
+      SupplierNumber: 5
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -376,19 +376,19 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: tempora
+        example: temporibus
         type: Authorization
         custom: []
       number_id:
         name: number_id
         description: int
         required: true
-        example: rerum
+        example: quis
         type: 'identification number'
         custom: []
     cleanQueryParameters:
-      Token: tempora
-      number_id: rerum
+      Token: temporibus
+      number_id: quis
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -445,19 +445,19 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: aspernatur
+        example: laborum
         type: Authorization
         custom: []
       id:
         name: id
         description: int
         required: true
-        example: est
+        example: architecto
         type: user
         custom: []
     cleanQueryParameters:
-      Token: aspernatur
-      id: est
+      Token: laborum
+      id: architecto
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -512,11 +512,11 @@ endpoints:
         name: userId
         description: integer
         required: true
-        example: velit
+        example: soluta
         type: 'Kinship id, to consult the provider to which it is associated'
         custom: []
     cleanQueryParameters:
-      userId: velit
+      userId: soluta
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -571,19 +571,19 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: nostrum
+        example: aut
         type: Authorization
         custom: []
       id:
         name: id
         description: int
         required: true
-        example: iusto
+        example: dignissimos
         type: user
         custom: []
     cleanQueryParameters:
-      Token: nostrum
-      id: iusto
+      Token: aut
+      id: dignissimos
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -639,35 +639,35 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: consectetur
+        example: sapiente
         type: Authorization
         custom: []
       id:
         name: id
         description: ''
         required: false
-        example: earum
+        example: debitis
         type: string
         custom: []
       email:
         name: email
         description: ''
         required: false
-        example: colleen77@example.org
+        example: kjakubowski@example.org
         type: string
         custom: []
       document_type:
         name: document_type
         description: ''
         required: false
-        example: est
+        example: dolor
         type: string
         custom: []
       number_id:
         name: number_id
         description: ''
         required: false
-        example: 8
+        example: 5
         type: integer
         custom: []
       name:
@@ -681,7 +681,7 @@ endpoints:
         name: phone
         description: ''
         required: false
-        example: 8
+        example: 9
         type: integer
         custom: []
       Photo:
@@ -695,7 +695,7 @@ endpoints:
         name: rol
         description: ''
         required: false
-        example: vitae
+        example: et
         type: string
         custom: []
       photo_id:
@@ -709,27 +709,27 @@ endpoints:
         name: password
         description: ''
         required: false
-        example: E8tI3c
+        example: 'e7ZU8&?bxZ$&'
         type: string
         custom: []
     cleanQueryParameters:
-      Token: consectetur
-      id: earum
-      email: colleen77@example.org
-      document_type: est
-      number_id: 8
+      Token: sapiente
+      id: debitis
+      email: kjakubowski@example.org
+      document_type: dolor
+      number_id: 5
       name: qui
-      phone: 8
+      phone: 9
       Photo: null
-      rol: vitae
+      rol: et
       photo_id: null
-      password: E8tI3c
+      password: 'e7ZU8&?bxZ$&'
     bodyParameters:
       name:
         name: name
         description: ''
         required: true
-        example: provident
+        example: voluptatem
         type: string
         custom: []
       email:
@@ -743,7 +743,7 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: 2542132.08634
+        example: 10105.17
         type: number
         custom: []
       password:
@@ -757,58 +757,13 @@ endpoints:
         name: roles
         description: ''
         required: true
-        example: temporibus
+        example: velit
         type: string
         custom: []
     cleanBodyParameters:
-      name: provident
-      phone: 2542132.08634
-      roles: temporibus
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - DELETE
-    uri: api/users/deleted
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Api-Version: v1
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters:
-      Token:
-        name: Token
-        description: string
-        required: true
-        example: accusantium
-        type: Authorization
-        custom: []
-      userId:
-        name: userId
-        description: int
-        required: true
-        example: aliquid
-        type: user
-        custom: []
-    cleanQueryParameters:
-      Token: accusantium
-      userId: aliquid
-    bodyParameters: []
-    cleanBodyParameters: []
+      name: voluptatem
+      phone: 10105.17
+      roles: velit
     fileParameters: []
     responses: []
     responseFields: []
@@ -992,7 +947,7 @@ endpoints:
         name: name
         description: string
         required: true
-        example: eligendi
+        example: dolores
         type: string
         custom: []
       permission:
@@ -1003,7 +958,7 @@ endpoints:
         type: string
         custom: []
     cleanQueryParameters:
-      name: eligendi
+      name: dolores
       permission: quis
     bodyParameters: []
     cleanBodyParameters: []
@@ -1059,11 +1014,11 @@ endpoints:
         name: id
         description: string
         required: true
-        example: repellendus
+        example: voluptas
         type: 'role identifier'
         custom: []
     cleanQueryParameters:
-      id: repellendus
+      id: voluptas
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -1118,27 +1073,27 @@ endpoints:
         name: name
         description: string
         required: false
-        example: itaque
+        example: impedit
         type: string
         custom: []
       permission:
         name: permission
         description: string
         required: false
-        example: dolor
+        example: molestiae
         type: string
         custom: []
       id:
         name: id
         description: string
         required: false
-        example: ipsam
+        example: optio
         type: 'role identifier'
         custom: []
     cleanQueryParameters:
-      name: itaque
-      permission: dolor
-      id: ipsam
+      name: impedit
+      permission: molestiae
+      id: optio
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -1193,35 +1148,35 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: corene21@example.org
+        example: oking@example.net
         type: string
         custom: []
       document_type:
         name: document_type
         description: ''
         required: false
-        example: debitis
+        example: sequi
         type: string
         custom: []
       number_id:
         name: number_id
         description: ''
         required: true
-        example: 3
+        example: 17
         type: integer
         custom: []
       name:
         name: name
         description: ''
         required: true
-        example: sed
+        example: saepe
         type: string
         custom: []
       phone:
         name: phone
         description: ''
         required: true
-        example: 20
+        example: 18
         type: integer
         custom: []
       Photo:
@@ -1242,18 +1197,18 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: '^DW{>gB}Z^e+'
+        example: '{B/GjCE~4oK~0`Xa|#'
         type: string
         custom: []
     cleanQueryParameters:
-      email: corene21@example.org
-      document_type: debitis
-      number_id: 3
-      name: sed
-      phone: 20
+      email: oking@example.net
+      document_type: sequi
+      number_id: 17
+      name: saepe
+      phone: 18
       Photo: null
       photo_id: null
-      password: '^DW{>gB}Z^e+'
+      password: '{B/GjCE~4oK~0`Xa|#'
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -1286,19 +1241,19 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: mattie.ritchie@example.org
+        example: jayne.mann@example.org
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: ':$%8h+<.Ba4=WMB'
+        example: 'Zl''t=+&J^eUC;U'
         type: password
         custom: []
     cleanQueryParameters:
-      email: mattie.ritchie@example.org
-      password: ':$%8h+<.Ba4=WMB'
+      email: jayne.mann@example.org
+      password: 'Zl''t=+&J^eUC;U'
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
@@ -1331,11 +1286,11 @@ endpoints:
         name: Token
         description: string
         required: true
-        example: esse
+        example: rerum
         type: Authorization
         custom: []
     cleanQueryParameters:
-      Token: esse
+      Token: rerum
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []

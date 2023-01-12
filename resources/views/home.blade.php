@@ -183,120 +183,121 @@
                         {{-- Fin --}}
 
                         {{-- Card de tablas de facturas --}}
-                        <div class="collapse" id="FacturasGenerales" style="display: none">
-                            <body class="ltr app sidebar-mini light-mode">
-                                <div class="row row-sm">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <!-- CONTAINER -->
-                                                <div class="main-container container-fluid">
-                                                    <div class="card" id="facturas-all">
-                                                        <h3 class="text-center" style="text-decoration: underline">
-                                                            FACTURAS
-                                                        </h3>
-                                                        <div class="card-header border-bottom">
-                                                            <div class="row g-2">
-                                                                <h3 class="card-title">Fitros</h3>
-                                                                <div class="form-horizontal">
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-md">
-                                                                            <label for="tipoFactura"
-                                                                                class="form-label">tipo de
-                                                                                factura</label>
-                                                                            <select type="text" name="tipoFactura"
-                                                                                id="tipoFactura" class="form-select"
-                                                                                tabindex="3"
-                                                                                value="{{ old('tipoFactura') }}"
-                                                                                autofocus>
-                                                                                <option selected value="">Todos</option>
-                                                                                <option value="Pago por adelantado">
-                                                                                    Anticipo</option>
-                                                                                <option value="Estándar">Estandar
-                                                                                </option>
-                                                                                <option value="Nota de crédito">Nota
-                                                                                    Credito</option>
-                                                                            </select>
+                            <div class="collapse" id="FacturasGenerales" style="display: none">
+                                <body class="ltr app sidebar-mini light-mode">
+                                    <div class="row row-sm">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <!-- CONTAINER -->
+                                                    <div class="main-container container-fluid">
+                                                        <div class="card" id="facturas-all">
+                                                            <h3 class="text-center" style="text-decoration: underline">
+                                                                FACTURAS
+                                                            </h3>
+                                                            <div class="card-header border-bottom">
+                                                                <div class="row g-2">
+                                                                    <h3 class="card-title">Fitros</h3>
+                                                                    <div class="form-horizontal">
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-md">
+                                                                                <label for="tipoFactura"
+                                                                                    class="form-label">tipo de
+                                                                                    factura</label>
+                                                                                <select type="text" name="tipoFactura"
+                                                                                    id="tipoFactura" class="form-select"
+                                                                                    tabindex="3"
+                                                                                    value="{{ old('tipoFactura') }}"
+                                                                                    autofocus>
+                                                                                    <option selected value="">Todos</option>
+                                                                                    <option value="Pago por adelantado">
+                                                                                        Anticipo</option>
+                                                                                    <option value="Estándar">Estandar
+                                                                                    </option>
+                                                                                    <option value="Nota de crédito">Nota
+                                                                                        Credito</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md">
+                                                                                <label for="ValidationStatus"
+                                                                                    class="form-label">Estado</label>
+                                                                                <select type="text" name="ValidationStatus"
+                                                                                    id="ValidationStatus"
+                                                                                    class="form-select" tabindex="3"
+                                                                                    value="{{ old('ValidationStatus') }}"
+                                                                                    autofocus>
+                                                                                    <option selected value="">Todos</option>
+                                                                                    <option value="Cancelada">Cancelada
+                                                                                    </option>
+                                                                                    <option value="Validada">Validada
+                                                                                    </option>
+                                                                                    <option value="Necesita revalidación">
+                                                                                        Necesita revalidación</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md">
+                                                                                <label for="PaidStatus"
+                                                                                    class="form-label">Estado Pago</label>
+                                                                                <select type="text" name="PaidStatus"
+                                                                                    id="PaidStatus" class="form-select"
+                                                                                    tabindex="3"
+                                                                                    value="{{ old('PaidStatus') }}"
+                                                                                    autofocus>
+                                                                                    <option selected value="">Todos</option>
+                                                                                    <option value="Pagadas">Pagadas</option>
+                                                                                    <option value="Impagado">Impagado
+                                                                                    </option>
+                                                                                    <option value="Pagada parcialmente">
+                                                                                        parsialmente pagada</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md">
+                                                                                <label for="CanceledFlag"
+                                                                                    class="form-label">Bandera
+                                                                                    cancelada</label>
+                                                                                <select type="text" name="CanceledFlag"
+                                                                                    id="CanceledFlag" class="form-select"
+                                                                                    tabindex="3"
+                                                                                    value="{{ old('CanceledFlag') }}"
+                                                                                    autofocus>
+                                                                                    <option selected value="false">No
+                                                                                    </option>
+                                                                                    <option value="true">Si</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md">
+                                                                                <label for="startDate"
+                                                                                    class="form-label">Fecha Inicio</label>
+                                                                                <input type="date" name="startDate"
+                                                                                    id="startDate" class="form-select"
+                                                                                    tabindex="3"
+                                                                                    value="{{ old('startDate') }}"
+                                                                                    autofocus>
+                                                                            </div>
+                                                                            <div class="col-md">
+                                                                                <label for="endDate"
+                                                                                    class="form-label">Fecha Fin</label>
+                                                                                <input type="date" name="endDate"
+                                                                                    id="endDate" class="form-select"
+                                                                                    tabindex="3"
+                                                                                    value="{{ old('endDate') }}" autofocus>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-md">
-                                                                            <label for="ValidationStatus"
-                                                                                class="form-label">Estado</label>
-                                                                            <select type="text" name="ValidationStatus"
-                                                                                id="ValidationStatus"
-                                                                                class="form-select" tabindex="3"
-                                                                                value="{{ old('ValidationStatus') }}"
-                                                                                autofocus>
-                                                                                <option selected value="">Todos</option>
-                                                                                <option value="Cancelada">Cancelada
-                                                                                </option>
-                                                                                <option value="Validada">Validada
-                                                                                </option>
-                                                                                <option value="Necesita revalidación">
-                                                                                    Necesita revalidación</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-md">
-                                                                            <label for="PaidStatus"
-                                                                                class="form-label">Estado Pago</label>
-                                                                            <select type="text" name="PaidStatus"
-                                                                                id="PaidStatus" class="form-select"
-                                                                                tabindex="3"
-                                                                                value="{{ old('PaidStatus') }}"
-                                                                                autofocus>
-                                                                                <option selected value="">Todos</option>
-                                                                                <option value="Pagadas">Pagadas</option>
-                                                                                <option value="Impagado">Impagado
-                                                                                </option>
-                                                                                <option value="Pagada parcialmente">
-                                                                                    parsialmente pagada</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-md">
-                                                                            <label for="CanceledFlag"
-                                                                                class="form-label">Bandera
-                                                                                cancelada</label>
-                                                                            <select type="text" name="CanceledFlag"
-                                                                                id="CanceledFlag" class="form-select"
-                                                                                tabindex="3"
-                                                                                value="{{ old('CanceledFlag') }}"
-                                                                                autofocus>
-                                                                                <option selected value="false">No
-                                                                                </option>
-                                                                                <option value="true">Si</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-md">
-                                                                            <label for="startDate"
-                                                                                class="form-label">Fecha Inicio</label>
-                                                                            <input type="date" name="startDate"
-                                                                                id="startDate" class="form-select"
-                                                                                tabindex="3"
-                                                                                value="{{ old('startDate') }}"
-                                                                                autofocus>
-                                                                        </div>
-                                                                        <div class="col-md">
-                                                                            <label for="endDate"
-                                                                                class="form-label">Fecha Fin</label>
-                                                                            <input type="date" name="endDate"
-                                                                                id="endDate" class="form-select"
-                                                                                tabindex="3"
-                                                                                value="{{ old('endDate') }}" autofocus>
-                                                                        </div>
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                            id="btnPrFiltr">Filtrar</button>
                                                                     </div>
-                                                                    <button type="submit" class="btn btn-primary"
-                                                                        id="btnPrFiltr">Filtrar</button>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="row row-sm">
-                                                                <div class="col-lg-12">
-                                                                    <div class="card">
-                                                                        <div class="card-body">
-                                                                            <div class="table-responsive">
-                                                                                <table id="TablaFacturasAll"
-                                                                                    class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                                                </table>
+                                                            <div class="card-body">
+                                                                <div class="row row-sm">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <div class="table-responsive">
+                                                                                    <table id="TablaFacturasAll"
+                                                                                        class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                                    </table>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -308,69 +309,67 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </body>
-                        </div>
+                                </body>
+                            </div>
 
-                        <div class="card" id="oculto-por-pagar" style="display: none">
-                            <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                POR PAGAR </h3>
-                            <div class="card-body">
-                                <div class="row row-sm">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table id="TablePorPagar"
-                                                        class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                    </table>
+                            <div class="card" id="oculto-por-pagar" style="display: none">
+                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                    POR PAGAR </h3>
+                                <div class="card-body">
+                                    <div class="row row-sm">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table id="TablePorPagar"
+                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
-                            <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS
-                            </h3>
-                            <div class="card-body">
-                                <div class="row row-sm">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table id="TablePagadasNovedad"
-                                                        class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                    </table>
+                            <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
+                                <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS
+                                </h3>
+                                <div class="card-body">
+                                    <div class="row row-sm">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table id="TablePagadasNovedad"
+                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="card" id="facturas-en-transporte" style="display: none">
-                            <h3 class="text-center" style="text-decoration: underline">FACTURAS EN TRANSPORTE</h3>
-                            <div class="card-body">
-                                <div class="row row-sm">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table id="TableEnTransporte"
-                                                        class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                    </table>
+                            <div class="card" id="facturas-en-transporte" style="display: none">
+                                <h3 class="text-center" style="text-decoration: underline">FACTURAS EN TRANSPORTE</h3>
+                                <div class="card-body">
+                                    <div class="row row-sm">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table id="TableEnTransporte"
+                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
                         {{-- Fin --}}
 
                         {{-- Modal de visualizacionde facturas --}}
@@ -455,7 +454,8 @@
                             </div>
                         </div>
                         {{-- Fin --}}
-                        {{-- Modal de visualizacionde facturas --}}
+
+                        {{-- Modal de visualizacionde facturas en trasnporte--}}
                         <div class="modal fade" id="exampleModalTransporte" data-bs-backdrop="static"
                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                             aria-hidden="true">
@@ -537,7 +537,9 @@
                             </div>
                         </div>
                         {{-- Fin --}}
+
                         @endcan
+
                         @can('/facturasGeneral')
                         <div class="card" id="Fullfacturas-all">
                             <h3 class="text-center" style="text-decoration: underline">FACTURAS
