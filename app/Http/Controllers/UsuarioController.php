@@ -153,7 +153,7 @@ class UsuarioController extends Controller
                 break;
         }
 
-        sendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
+        SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
 
         return redirect('/portal/users');
         // return back();
