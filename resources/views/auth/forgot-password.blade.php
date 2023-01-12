@@ -3,7 +3,7 @@
     Forgot Password
 @endsection
 @section('content')
-    <body class="ltr logo_img">
+    <body class="ltr login-img">
         <div class="container-login100">
             <div class="wrap-login100 p-0">
                 <div class="card-body">

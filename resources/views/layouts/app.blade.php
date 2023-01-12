@@ -114,6 +114,9 @@
 <!-- CUSTOM JS -->
 <script src={{ asset('assets/js/custom.js') }}></script>
 
+<!-- Form Validations js -->
+<script src= {{asset('assets/js/form-validation.js')}}></script>
+
 <!-- CHART-CIRCLE JS-->
 <script src={{ asset('assets/js/circle-progress.min.js') }}></script>
 
