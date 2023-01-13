@@ -387,10 +387,12 @@
 										<p>
 											@if($status == 'aprobado')
 
-											<a href={{"http://127.0.0.1:8000/login"}} class="
+											<a href={{"http://146.190.66.89/login"}} class="
 												btn btn-primary">Ingresar</a>
 											@else
 											<h4>Comunicarese con el Administrador</h4>
+                                            <h4><p class="tx-13 text-muted mb-0"><a
+                                                href="mailto:ybolanos@tractocar.com">ybolanos@tractocar.com </a></p></h4>
 											@endif
 										</p>
 									</div>

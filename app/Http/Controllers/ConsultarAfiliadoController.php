@@ -177,8 +177,6 @@ class ConsultarAfiliadoController extends Controller
             }
     }
 
-
-
     public function TotalAmount(Request $request)
     {
         try {
@@ -454,21 +452,22 @@ class ConsultarAfiliadoController extends Controller
      * @var numStops        = numero de paradas,
      */
 
-    protected function parametros()
-    {
-        $params = [
-            'onlyData' => 'true',
-            'limit'    => '20',
-            'orderBy' => 'insertDate:desc'
-        ];
-        return $params;
-    }
+    // protected function parametros()
+    // {
+
+    //     return $params;
+    // }
 
     protected function getShipmentOtm(Request $request)
     {
 
         try {
-            $params = self::parametros();
+            // $params = self::parametros();
+            $params = [
+                'onlyData' => 'true',
+                'limit'    => $request->ShipmentsLimit,
+                'orderBy' => 'insertDate:desc'
+            ];
             $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.' . $request->number_id . '" and statuses.statusValueGid eq "TCL.MANIFIESTO_CUMPL_NUEVO"';
             $params['fields'] = 'shipmentXid,shipmentName,totalActualCost,totalWeightedCost,numStops,attribute9,attribute10,attribute11,insertDate';
             $request = OracleRestOtm::getShipments($params);

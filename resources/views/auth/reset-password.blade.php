@@ -54,6 +54,6 @@
         </div>
     </div>
     <div class="mt-5 text-muted text-center">
-        Recalled your login info? <a href="{{ route('login') }}">Sign In</a>
+        Recordó su información de inicio de sesión? <a href="{{ route('login') }}">Login</a>
     </div>
 @endsection

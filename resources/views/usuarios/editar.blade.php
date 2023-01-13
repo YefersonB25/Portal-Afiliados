@@ -28,6 +28,18 @@
                                     $user->id]])
                                     !!}
                                     <div class="row">
+                                        {{-- <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="document_type">Tipo identificacion</label>
+                                                {!! Form::select('document_type', null, array('class' => 'form-control')) !!}
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="number_id">Numero identificacion</label>
+                                                {!! Form::text('number_id', null, array('class' => 'form-control')) !!}
+                                            </div>
+                                        </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="name">Nombre</label>
@@ -42,10 +54,16 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
-                                                <label for="email">Celular</label>
+                                                <label for="phone">Celular</label>
                                                 {!! Form::text('phone', null, array('class' => 'form-control')) !!}
                                             </div>
                                         </div>
+                                        {{-- <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="status">Estado</label>
+                                                {!! Form::text('status', null, array('class' => 'form-control')) !!}
+                                            </div>
+                                        </div> --}}
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="password">Password</label>

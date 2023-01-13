@@ -6,6 +6,7 @@
             <a class="header-brand1" href="{{route('home')}}">
                 <img src={{asset('assets/images/brand/negative-blue-xxlarge-horizontal.png')}} class="header-brand-img desktop-logo" alt="logo">
                 <img src={{asset('assets/images/brand/white-tiny.png')}} class="header-brand-img toggle-logo" alt="logo">
+
                 <img src={{asset('assets/images/brand/logo-1.png')}} class="header-brand-img light-logo" alt="logo">
                 <img src={{asset('assets/images/brand/full-color-xxlarge-horizontal2.png')}} class="header-brand-img light-logo1" alt="logo">
             </a><!-- LOGO -->
