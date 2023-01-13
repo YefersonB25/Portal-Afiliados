@@ -435,7 +435,6 @@ class ConsultarAfiliadoController extends Controller
                 ->where('relationship.deleted_at', '=', null)
                 ->select('users.*')
                 ->first();
-
             return response()->json(['success' => true, 'data' => $user]);
         }
         return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);

@@ -345,21 +345,72 @@
                 success: function(response) {
                     let data = response.data;
                     if(response.success == true){
-                        $('#dataProveedor').html('')
-                        plantillaBody = `
-                        <form>
-                            <div class="float-left">
-                                <h6 class="mb-0 p-2"> <b>Nombre Completo:</b> ${data.name}</h6>
-                                <h6 class="mb-0 p-2"> <b>Numero Identificacion:</b> ${data.number_id}</h6>
-                                <h6 class="mb-0 p-2"> <b>Correo:</b> ${data.email}</h6>
-                                <h6 class="mb-0 p-2"> <b>Telefono:</b> ${data.phone}</h6>
-                            </div>
-                        </form>
+                        if ( data != null) {
+                            $('#dataProveedor').html('')
+                            plantillaBody = `
+                            <form>
+                                <div class="float-left">
+                                    <h6 class="mb-0 p-2"> <b>Nombre Completo:</b> ${data.name}</h6>
+                                    <h6 class="mb-0 p-2"> <b>Numero Identificacion:</b> ${data.number_id}</h6>
+                                    <h6 class="mb-0 p-2"> <b>Correo:</b> ${data.email}</h6>
+                                    <h6 class="mb-0 p-2"> <b>Telefono:</b> ${data.phone}</h6>
+                                </div>
+                            </form>
 
-                        `
-                        $('#dataProveedor').append(plantillaBody)
+                            `
+                            $('#dataProveedor').append(plantillaBody)
 
                             $('#exampleModalProveedor').modal('show');
+                        }else if( data == null) {
+                            Swal.fire({
+                            title: 'Advertencia!',
+                            text: "El usuario no se ecuentra asignado a ningun proveedor, desea asignarlo a un proveedor!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, Asignar!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    (async () => {
+                                        const { value: number } = await Swal.fire({
+                                        title: 'Ingrese numero de identificacion del proveedor',
+                                        input: 'text',
+                                        inputLabel: 'Proveedor a asignar',
+                                        inputPlaceholder: 'Ingrese identificacion'
+                                        })
+
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: "{{ route('consultar.proveedorLocal')}}",
+                                            data: {
+                                                "_token": "{{ csrf_token() }}",
+                                                "number_id": number,
+                                                id: id
+                                            },
+                                            success: function(response) {
+                                                let data = response.data;
+
+                                                if(response.success == true){
+                                                    Swal.fire(`Usuario asociado al proveedor: ${data[0].name}`)
+                                                }
+                                                if(response.success == false){
+                                                    Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: data,
+                                                    })
+                                                }
+                                            }
+                                        })
+
+                                        // if (number) {
+                                        // Swal.fire(`Entered email: ${number}`)
+                                        // }
+                                    })()
+                                }
+                            })
+                        }
                     }
                     if(response.success == false){
                         Swal.fire({

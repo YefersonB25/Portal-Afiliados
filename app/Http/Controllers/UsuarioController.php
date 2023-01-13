@@ -59,11 +59,6 @@ class UsuarioController extends Controller
         $user_relation = DB::table('relationship')->where('user_id', Auth::user()->id)->count();
         if ($user_relation <= 3) {
 
-            //?Capturamos la extencion de los archivos
-            if (!empty($request->photo)) {
-                $extensionPerfil = $request->photo->getClientOriginalExtension();
-            }
-
             //?Capturamos el id del user registrdo
             DB::transaction(function () use ($request) {
                 $user = User::create([
@@ -77,7 +72,6 @@ class UsuarioController extends Controller
                 Relationship::create([
                     'user_id'         => Auth::user()->id,
                     'user_assigne_id' => $user->id,
-                    'deleted_status'  => 'ACTIVE'
                 ]);
                 //? le asignamos el rol
                 $user->roles()->sync(3);
@@ -213,7 +207,24 @@ class UsuarioController extends Controller
         return response()->json('The post successfully updated');
     }
 
-    public function checkout($cedula)
+    public function confirmarUser(Request $request)
     {
+        $result = DB::table('users')->select('id','name')->where('number_id', $request->number_id)->get();
+
+
+        if (count($result) == 0) {
+            return response()->json(['success' => false, 'data' => 'No se encontro el proveedor']);
+        }
+        else if(count($result) != 0){
+
+            DB::table('relationship')->insert([
+                'user_id' => $result[0]->id,
+                'user_assigne_id' => $request->id
+            ]);
+
+            return response()->json(['success' => true, 'data' => $result]);
+        }
+
+        // dd($result);
     }
 }

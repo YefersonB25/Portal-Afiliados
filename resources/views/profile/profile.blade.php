@@ -52,11 +52,13 @@
                                                         data-bs-toggle="tab">Perfil</a></li>
                                                 <li><a href="#editProfile" data-bs-toggle="tab">Editar Perfil</a></li>
                                                 @can('/facturas')
-                                                <li><a href="#friends" data-bs-toggle="tab">Usuarios Asociados</a></li>
-                                                <li><a href="#accountSettings" data-bs-toggle="tab">Registrar
-                                                        Usuario</a>
-                                                    @endcan
-                                                </li>
+                                                    @if ($user->status != 'ASOCIADO')
+                                                        <li><a href="#friends" data-bs-toggle="tab">Usuarios Asociados</a></li>
+                                                        <li><a href="#accountSettings" data-bs-toggle="tab">Registrar
+                                                                Usuario</a>
+                                                            </li>
+                                                    @endif
+                                                @endcan
                                             </ul>
                                         </div>
                                     </div>
@@ -138,7 +140,7 @@
                                                             <i class="fe fe-more-vertical text-muted"></i>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right shadow">
-                                                            <a class="dropdown-item" href="{{url("profile/userAsociado/{$asociado->id}")}}">
+                                                            <a class="dropdown-item clickDeleted" id="{{$asociado->deleted_status}}" href="{{url("profile/userAsociado/{$asociado->id}")}}">
                                                                 <i class="fe fe-trash-2 me-2"></i> Delete
                                                             </a>
                                                         </div>
@@ -161,7 +163,7 @@
                                             <div
                                                 class="card-alert alert alert-{{$asociado->deleted_at == null ? 'success' : 'danger'}} mb-0">
                                                 {{$asociado->deleted_at == null ? 'Usuario vigente' : 'Usuario
-                                                desactivado'}}
+                                                inabilitado'}}
                                             </div>
                                             <div class="card-body text-center">
                                                 <a href="#">
@@ -188,7 +190,7 @@
                                         {{-- <div class="alert alert-success" id="alert" style="display: none;">&nbsp;
                                         </div> --}}
                                         <form method="POST" id="rgisterform" action="{{route('userAsociado.create')}}"
-                                            enctype="multipart/form-data" class="form-horizontal" data-select2-id="11">
+                                            enctype="multipart/form-data" class="form-horizontal validate-form" data-select2-id="11">
                                             <div class="mb-4 main-content-label">Account</div>
                                             @csrf
                                             <div class="form-group ">
@@ -350,6 +352,49 @@
                 }
             });
         });
+
+    // $('.clickDeleted').on('click', function(e) {
+    //     e.preventDefault();
+    //     let status = this.id
+    //     console.log(status);
+    //     if (status == "RESIGNED") {
+    //         const swalWithBootstrapButtons = Swal.mixin({
+    //         customClass: {
+    //             confirmButton: 'btn btn-success',
+    //             cancelButton: 'btn btn-danger'
+    //         },
+    //         buttonsStyling: false
+    //         })
+
+    //         swalWithBootstrapButtons.fire({
+    //         title: 'Advertencia!',
+    //         text: "El usuario ha sido eliminado y reasignado anteriormente, tenga en cuenta que si lo vuelve a eliminar no podrá volver a ser reasignado!",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonText: 'Si, eliminar!',
+    //         cancelButtonText: 'No, cancelar!',
+    //         reverseButtons: true
+    //         }).then((result) => {
+    //         if (result.isConfirmed) {
+
+    //             swalWithBootstrapButtons.fire(
+    //             'Eliminado!',
+    //             'El usuario eliminado correctamente',
+    //             'success'
+    //             )
+    //         } else if (
+    //             /* Read more about handling dismissals below */
+    //             result.dismiss === Swal.DismissReason.cancel
+    //         ) {
+    //             swalWithBootstrapButtons.fire(
+    //             'Cancelado',
+    //             'Tu usuario está a salvo :)',
+    //             'error'
+    //             )
+    //         }
+    //         })
+    //     }
+    // })
 </script>
 @if(session("message"))
 <script>

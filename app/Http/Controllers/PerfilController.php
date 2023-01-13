@@ -31,7 +31,7 @@ class PerfilController extends Controller
         $user          = User::find(Auth::user()->id);
         $user_relation = DB::table('users')
             ->leftJoin('relationship', 'users.id', '=', 'relationship.user_assigne_id')
-            ->where([['relationship.user_id',  Auth::user()->id], ['relationship.deleted_status', '<>', 'INACTIVE']])
+            ->where([['relationship.user_id',  $user->id], ['relationship.deleted_status', '!=', 'INACTIVE']])
             ->select(
                 'users.id',
                 'users.email',
@@ -39,12 +39,12 @@ class PerfilController extends Controller
                 'users.number_id',
                 'users.name',
                 'users.phone',
-                'users.photo',
-                'users.photo_id',
                 'users.status',
+                'relationship.deleted_status',
                 'users.deleted_at as delete',
                 'relationship.deleted_at',
             )->get();
+            // dd($user_relation);
 
         return view('profile.profile', [
             'user_relation' => $user_relation,

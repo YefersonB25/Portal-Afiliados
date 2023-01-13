@@ -58,12 +58,12 @@
                                                 {!! Form::text('phone', null, array('class' => 'form-control')) !!}
                                             </div>
                                         </div>
-                                        {{-- <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="status">Estado</label>
                                                 {!! Form::text('status', null, array('class' => 'form-control')) !!}
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="password">Password</label>

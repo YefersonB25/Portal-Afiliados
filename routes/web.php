@@ -39,6 +39,7 @@ Route::prefix('portal/users')->controller(UsuarioController::class)->middleware(
     Route::post('userAsociado', 'createUserAsociado')->name('userAsociado.create');
     Route::post('/', 'filtros')->name('user.filtros');
     Route::delete('/deleted', 'destroy')->name('usuario.eliminar');
+    Route::get('/confimacion', 'confirmarUser')->name('consultar.proveedorLocal');
 });
 Route::resource('portal/usuarios', UsuarioController::class);
 
