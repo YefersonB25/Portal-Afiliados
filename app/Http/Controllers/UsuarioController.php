@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -186,12 +187,24 @@ class UsuarioController extends Controller
             $input = Arr::except($input, array('password'));
         }
 
+        if ($request->status != 'ASOCIADO' && $request->roles[0] == 'ClienteHijo' || $request->status == 'ASOCIADO' && $request->roles[0] != 'ClienteHijo') {
+            // dd($request);
+            // echo "<script>";
+            // echo "console.log($request);";
+            // echo "</script>";
+            // return '<script type="text/javascript">alert("hello!");</script>';
+            Session::flash('message', 'store');
+            return redirect()->back();
+
+        }
+
         $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $user->assignRole($request->input('roles'));
 
+        Session::flash('message1', 'store');
         return back();
     }
 

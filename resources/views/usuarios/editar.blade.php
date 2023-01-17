@@ -28,12 +28,12 @@
                                     $user->id]])
                                     !!}
                                     <div class="row">
-                                        {{-- <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="document_type">Tipo identificacion</label>
-                                                {!! Form::select('document_type', null, array('class' => 'form-control')) !!}
+                                                {!! Form::select('document_type', ['NIT'=>'NIT','CC'=>'Cedula de Ciudadania'], null, array('class' => 'form-control')) !!}
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="number_id">Numero identificacion</label>
@@ -61,7 +61,7 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="status">Estado</label>
-                                                {!! Form::text('status', null, array('class' => 'form-control')) !!}
+                                                {!! Form::select('status', ['NUEVO'=>'NUEVO', 'CONFIRMADO'=>'CONFIRMADO', 'RECHAZADO'=>'RECHAZADO', 'ASOCIADO'=>'ASOCIADO'] ,null, array('class' => 'form-control')) !!}
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -98,4 +98,35 @@
         </div>
     </div>
 </body>
+@endsection
+@section('scripts')
+@if(Session::has('message'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'El estado del usuario no concuerda con el rol asignado o viceversa!',
+        })
+    </script>
+@endif
+@if(Session::has('message1'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+        icon: 'success',
+        title: 'Signed in successfully'
+        })
+    </script>
+@endif
 @endsection
