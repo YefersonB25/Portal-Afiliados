@@ -99,8 +99,13 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                {{ !empty($usuario->rol->rol_nombre['name']) ?
-                                                $usuario->rol->rol_nombre['name'] : '' }}
+                                                @if (!empty($usuario->rol->rol_nombre['name']))
+                                                {{
+                                                $usuario->rol->rol_nombre['name'] == 'ClienteHijo' ? 'Cliente Hijo' :
+                                                $usuario->rol->rol_nombre['name']
+                                                }}
+                                                @endif
+
                                             </td>
                                             <td>
                                                 <span
@@ -288,7 +293,7 @@
 
             swalWithBootstrapButtons.fire({
             title:'¿Estás seguro que deseas eliminar este usuario?',
-            text: "¡No podrás revertir esto!",
+            text: "¡No podrás revertir esto, ten en cuenta que los usuarios asociados a este igulmente serán eliminados!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Si, Eliminarlo',

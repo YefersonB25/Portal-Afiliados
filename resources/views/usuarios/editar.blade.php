@@ -125,7 +125,7 @@
 
         Toast.fire({
         icon: 'success',
-        title: 'Signed in successfully'
+        title: 'Los datos se guardaron correctamente'
         })
     </script>
 @endif

@@ -485,18 +485,18 @@ class ConsultarAfiliadoController extends Controller
      * @var statusValueGid = Estado,
      */
 
-    protected function getShipmentStatusOtm($shipmentGid)
-    {
-        try {
-            $params = self::parametros();
-            $params['q'] = 'statusValueGid eq "TCL.MANIFIESTO_CUMPL_NO"';
-            $request = OracleRestOtm::getShipmentStatus($shipmentGid, $params);
-            return $request->object();
-        } catch (Exception $e) {
-            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
-            return  $e->getMessage();
-        }
-    }
+    // protected function getShipmentStatusOtm($shipmentGid)
+    // {
+    //     try {
+    //         $params = self::parametros();
+    //         $params['q'] = 'statusValueGid eq "TCL.MANIFIESTO_CUMPL_NO"';
+    //         $request = OracleRestOtm::getShipmentStatus($shipmentGid, $params);
+    //         return $request->object();
+    //     } catch (Exception $e) {
+    //         Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+    //         return  $e->getMessage();
+    //     }
+    // }
 
     public function getShipmentDetalle(Request $request)
     {

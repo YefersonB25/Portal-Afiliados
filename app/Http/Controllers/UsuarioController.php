@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Studio\Totem\Events\Deleted;
 
 class UsuarioController extends Controller
 {
@@ -188,11 +189,7 @@ class UsuarioController extends Controller
         }
 
         if ($request->status != 'ASOCIADO' && $request->roles[0] == 'ClienteHijo' || $request->status == 'ASOCIADO' && $request->roles[0] != 'ClienteHijo') {
-            // dd($request);
-            // echo "<script>";
-            // echo "console.log($request);";
-            // echo "</script>";
-            // return '<script type="text/javascript">alert("hello!");</script>';
+
             Session::flash('message', 'store');
             return redirect()->back();
 
@@ -210,8 +207,20 @@ class UsuarioController extends Controller
 
     public function destroy(Request $request)
     {
-        $result = User::find($request->userId)->delete();
-        return response()->json(['success' => $result]);
+        User::find($request->userId)->delete();
+        $userShilder = Relationship::where([['user_id', $request->userId],['deleted_status', '!=' ,'INACTIVE']])->select('user_assigne_id')->get();
+
+        if (count($userShilder) > 0) {
+
+            foreach ($userShilder as $userAsocie) {
+                $id = $userAsocie->user_assigne_id;
+                // return response()->json(['success' => true, 'data' => $id]);
+                relationship::where('user_assigne_id', $id)->update(['deleted_status' => 'INACTIVE']);
+                // relationship::find($id)->delete();
+                User::find($id)->delete();
+            }
+        }
+        // return response()->json(['success' => true]);
     }
 
     public function cambiarEstado($idUsuario)
