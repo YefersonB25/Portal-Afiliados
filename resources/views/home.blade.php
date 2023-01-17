@@ -78,6 +78,7 @@
                             <div id="global-loader2">
                                 <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
                             </div>
+
                             {{-- Card de valor/cantidad de facturas --}}
                                 <div class="row">
                                     <div class="col-lg-6 col-sm-12 col-md-6 col-xl-6">
@@ -85,7 +86,11 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <h3 id="mtPorPagar" class="mb-2 fw-semibold"></h3>
+                                                        <h3 id="mtPorPagar" class="mb-2 fw-semibold">
+                                                            <div class="spinner-grow text-success" role="status" id="piner">
+                                                                <span class="sr-only">Loading...</span>
+                                                            </div>
+                                                        </h3>
                                                         <p class="text-muted fs-13 mb-0">Monto de Facturas por Pagar</p>
                                                     </div>
                                                     <div class="col col-auto top-icn dash">
@@ -107,7 +112,11 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <h3 id="totalFt" class="mb-2 fw-semibold"></h3>
+                                                        <h3 id="totalFt" class="mb-2 fw-semibold">
+                                                            <div class="spinner-grow text-success" role="status" id="piner1">
+                                                                <span class="sr-only">Loading...</span>
+                                                            </div>
+                                                        </h3>
                                                         <p class="text-muted fs-13 mb-0">Facturas por Pagar</p>
                                                     </div>
                                                     <div class="col col-auto top-icn dash">
@@ -900,18 +909,25 @@
                                     let dollarUSLocale = Intl.NumberFormat('en-US');
                                     let mtPorPagar = dollarUSLocale.format(datos[0]['Impagado']);
                                     let totalFt = datos[0]['count Impagado'];
+                                    var x = document.getElementById("piner");
+                                    var y = document.getElementById("piner1");
 
                                     plantillaMtPorPagar =
                                     `
                                     <h3 class="mb-2 fw-semibold">$${mtPorPagar}</h3>
                                     `
+                                    x.style.display = "none";
                                     $('#mtPorPagar').append(plantillaMtPorPagar)
 
                                     plantillaTotalFt =
                                     `
                                     <h3 class="mb-2 fw-semibold">${totalFt}</h3>
                                     `
+
+
+                                    y.style.display = "none";
                                     $('#totalFt').append(plantillaTotalFt)
+
                                     Loader1();
                                 }
                             },

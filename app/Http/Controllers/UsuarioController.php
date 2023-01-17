@@ -55,7 +55,6 @@ class UsuarioController extends Controller
         return view('usuarios.crear', compact('roles'));
     }
 
-
     public function createUserAsociado(Request $request)
     {
         $user_relation = DB::table('relationship')->where('user_id', Auth::user()->id)->count();
