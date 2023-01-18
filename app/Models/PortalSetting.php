@@ -9,4 +9,6 @@ class PortalSetting extends Model
 {
     use HasFactory;
     protected $table = 'portal_settings';
+    protected $fillable = ['name', 'val', 'isEncrypt', 'type'];
+
 }

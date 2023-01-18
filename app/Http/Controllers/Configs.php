@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 require('../vendor/autoload.php');
 
 use App\Http\Helpers\CommonUtils;
+use App\Models\PortalSetting;
 use Illuminate\Http\Request;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
@@ -34,8 +35,24 @@ class Configs extends Controller
 
             return response()->json(['success' => true, 'data' => $result]);
         }
+    }
 
+    public function create () {
+        return view('config.crear');
+    }
+
+    public function store (Request $request) {
+
+        $this->validate($request, [
+            'name' => 'required',
+            'val' => 'required',
+        ]);
+
+        PortalSetting::create(['name' => $request->input('name'), 'val' => $request->input('val')]);
+
+        return redirect()->route('setting');
 
     }
+
 
 }

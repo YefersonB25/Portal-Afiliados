@@ -88,6 +88,11 @@ Route::prefix('portal/setting')->controller(Configs::class)->middleware('auth')-
     Route::get('/', 'index', 'can:/usuario.index')->name('setting');
     Route::post('/date', 'getDecryptedData', 'can:/usuario.index')->name('setting.date');
     Route::post('/', 'update', 'can:/usuario.index')->name('setting.update');
+    Route::get('/create', 'create', 'can:/usuario.index')->name('setting.create');
+    Route::post('/store', 'store', 'can:/usuario.index')->name('setting.store');
+
+
+
 });
 
 

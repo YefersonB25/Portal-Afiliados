@@ -8,6 +8,13 @@
             <div class="main-container container-fluid">
                 <div class="card">
                     <div class="card-body">
+                        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <a type="button" class="btn btn-primary" href="{{route('setting.create')}}">Crear</a>
+                            </div>
+                        </div>
+
+
                         <div class="table-responsive">
                             <table class="table table-bordered text-nowrap border-bottom" id="basic-datatable">
                                 <thead>

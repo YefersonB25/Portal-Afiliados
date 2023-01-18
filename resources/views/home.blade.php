@@ -11,15 +11,28 @@
                 <div class="side-app">
                     <div class="main-container container-fluid">
                         <div class="page-header">
-                            <div>
-                                <h1 class="page-title">Consultar Facturas</h1>
-                            </div>
-                            <div class="ms-auto pageheader-btn">
+                        @can('/facturasGeneral')
+                        <div>
+                            <h1 class="page-title">Consultar Facturas</h1>
+                        </div>
+                        @endcan
+                        @can('/facturas')
+                        <div>
+                            <h1 class="page-title">Consultar Facturas</h1>
+                        </div>
+                        @endcan
+                        @can('/usuario.index')
+                        <div>
+                            <h1 class="page-title">Home</h1>
+                        </div>
+                        @endcan
+
+                            {{-- <div class="ms-auto pageheader-btn">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Consultar Facturas</li>
                                 </ol>
-                            </div>
+                            </div> --}}
                         </div>
                         @can('/usuario.index')
                         <div class="row">
@@ -74,6 +87,7 @@
                             </div>
                         </div>
                         @endcan
+
                         @can('/facturas')
                             <div id="global-loader2">
                                 <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
