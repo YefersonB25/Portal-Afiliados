@@ -224,8 +224,7 @@
                                                                         <div class="form-horizontal">
                                                                             <div class="row mb-2">
                                                                                 <div class="col-md-3">
-                                                                                    <label for="InvoiceLimit" class="form-label">Numero
-                                                                                        de Factoras que desea visualizar</label>
+                                                                                    <label for="InvoiceLimit" class="form-label"># Factoras que desea visualizar</label>
                                                                                     <select type="text" name="InvoiceLimit"
                                                                                         id="InvoiceLimit" class="form-control"
                                                                                         tabindex="3" value="{{ old('InvoiceLimit') }}"
@@ -242,7 +241,7 @@
                                                                                 </div>
                                                                                 <div class="col-md">
                                                                                     <label for="tipoFactura"
-                                                                                        class="form-label">tipo de
+                                                                                        class="form-label">Tipo de
                                                                                         factura</label>
                                                                                     <select type="text" name="tipoFactura"
                                                                                         id="tipoFactura" class="form-select"
@@ -252,15 +251,15 @@
                                                                                         <option selected value="">Todos</option>
                                                                                         <option value="Pago por adelantado">
                                                                                             Anticipo</option>
-                                                                                        <option value="Estándar">Estandar
+                                                                                        <option value="Estándar">Estándar
                                                                                         </option>
                                                                                         <option value="Nota de crédito">Nota
-                                                                                            Credito</option>
+                                                                                            Crédito</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-md">
                                                                                     <label for="ValidationStatus"
-                                                                                        class="form-label">Estado</label>
+                                                                                        class="form-label">Estado Validación</label>
                                                                                     <select type="text" name="ValidationStatus"
                                                                                         id="ValidationStatus"
                                                                                         class="form-select" tabindex="3"
@@ -293,8 +292,7 @@
                                                                                 </div>
                                                                                 <div class="col-md">
                                                                                     <label for="CanceledFlag"
-                                                                                        class="form-label">Bandera
-                                                                                        cancelada</label>
+                                                                                        class="form-label">Canceladas</label>
                                                                                     <select type="text" name="CanceledFlag"
                                                                                         id="CanceledFlag" class="form-select"
                                                                                         tabindex="3"
@@ -305,22 +303,22 @@
                                                                                         <option value="true">Si</option>
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="col-md">
-                                                                                    <label for="startDate"
-                                                                                        class="form-label">Fecha Inicio</label>
-                                                                                    <input type="date" name="startDate"
-                                                                                        id="startDate" class="form-select"
-                                                                                        tabindex="3"
-                                                                                        value="{{ old('startDate') }}"
-                                                                                        autofocus>
-                                                                                </div>
-                                                                                <div class="col-md">
-                                                                                    <label for="endDate"
-                                                                                        class="form-label">Fecha Fin</label>
-                                                                                    <input type="date" name="endDate"
-                                                                                        id="endDate" class="form-select"
-                                                                                        tabindex="3"
-                                                                                        value="{{ old('endDate') }}" autofocus>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="title" class="form-label">Fecha Inicio y
+                                                                                        Fecha Fin</label>
+                                                                                    <div class="input-group">
+                                                                                        <input name="startDate"
+                                                                                            id="startDate" class="form-control"
+                                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                            tabindex="3" value="{{ old('startDate') }}"
+                                                                                            onKeyUp="ValidarFecha('startDate','btnPrFiltr');"
+                                                                                            autofocus>
+                                                                                        <input name="endDate" id="endDate"
+                                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                            class="form-control" tabindex="3"
+                                                                                            onKeyUp="ValidarFecha('endDate','btnPrFiltr');"
+                                                                                            value="{{ old('endDate') }}" autofocus>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                             <button type="submit" class="btn btn-primary"
@@ -403,9 +401,8 @@
                                                             <h3 class="card-title">Fitros</h3>
                                                             <div class="form-horizontal">
                                                                 <div class="row mb-2">
-                                                                    <div class="col-md-6">
-                                                                        <label for="" class="form-label">Numero
-                                                                            de Factoras que desea visualizar</label>
+                                                                    <div class="col-md-12">
+                                                                        <label for="" class="form-label"># Factoras que desea visualizar</label>
                                                                         <select type="text" name="ShipmentsLimit"
                                                                             id="ShipmentsLimit" class="form-control"
                                                                             tabindex="3" value="{{ old('ShipmentsLimit') }}"
@@ -458,11 +455,44 @@
                                                             </div>
                                                             <!--end card-body-->
                                                             <div class="card-body" id="body">
-                                                                <div class="row" id="row1">
-                                                                </div>
-                                                                <!--end row-->
-                                                                <div class="row">
+                                                                <div class="row p-2">
                                                                     <div class="col-lg-12">
+                                                                        {{-- <h5 class="btn btn-outline-primary" for="btn-check-outlined"> Detalles </h5> --}}
+                                                                        <h5 class="bg-info col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">Detalles</h5>
+                                                                        <div class="table-responsive project-invoice">
+                                                                            <table class="table table-bordered mb-0">
+                                                                                <thead class="thead-light">
+                                                                                    <tr>
+                                                                                        <th>Tipo de factura</th>
+                                                                                        <th>Estado de pago</th>
+                                                                                        <th>Metodo de pago</th>
+                                                                                        <th>Estado de validación</th>
+                                                                                        <th>Numero de cuenta</th>
+                                                                                        <th>Categoría de documento</th>
+                                                                                        <th>Secuencia de documento</th>
+                                                                                        <th>Fecha Contable</th>
+                                                                                        <th>Fecha de Vencimiento</th>
+                                                                                        <th>Fecha Pago</th>
+                                                                                    </tr>
+                                                                                    <!--end tr-->
+                                                                                </thead>
+                                                                                <tbody id="row1">
+
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <!--end table-->
+                                                                        </div>
+                                                                        <!--end /div-->
+                                                                    </div>
+                                                                    <!--end col-->
+                                                                </div>
+
+
+                                                                <div class="row p-2">
+                                                                    <div class="col-lg-6">
+                                                                        <h5 class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Pagos </h5>
+
                                                                         <div class="table-responsive project-invoice">
                                                                             <table class="table table-bordered mb-0">
                                                                                 <thead class="thead-light">
@@ -473,6 +503,29 @@
                                                                                     <!--end tr-->
                                                                                 </thead>
                                                                                 <tbody id="row2">
+
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <!--end table-->
+                                                                        </div>
+                                                                        <!--end /div-->
+                                                                    </div>
+                                                                    <!--end col-->
+
+                                                                    <div class="col-lg-6">
+                                                                        <h5 class="bg-danger col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Bloqueos </h5>
+
+                                                                        <div class="table-responsive project-invoice">
+                                                                            <table class="table table-bordered mb-0">
+                                                                                <thead class="thead-light">
+                                                                                    <tr>
+                                                                                        <th>@lang('locale.Description')</th>
+                                                                                        <th>@lang('locale.Amount')</th>
+                                                                                    </tr>
+                                                                                    <!--end tr-->
+                                                                                </thead>
+                                                                                <tbody id="row3">
 
 
                                                                                 </tbody>
@@ -611,12 +664,13 @@
                         <div class="card" id="Fullfacturas-all">
                             <h3 class="text-center" style="text-decoration: underline">FACTURAS
                             </h3>
-                            <div class="card-header border-bottom">
-                                <div class="row g-2">
+                            {{-- <div class="card-header border-bottom"> --}}
+                                {{-- <div class="row g-2"> --}}
                                     {{-- <div class="form-horizontal"> --}}
                                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
                                             data-bs-target=".multi-collapse" aria-expanded="false"
-                                            aria-controls="multiCollapseExample1 multiCollapseExample2">Filtros</button>
+                                            aria-controls="multiCollapseExample1">Filtros</button>
+
                                         <div class="row">
                                             <div class="col">
                                                 <div class="collapse multi-collapse" id="multiCollapseExample1">
@@ -647,16 +701,14 @@
                                                                 </div>
                                                                 <div class="col-md-9">
                                                                     <label for="SupplierNumber"
-                                                                        class="form-label">Nombre Proveedor(ingresar
-                                                                        datos en Mayúscula)</label>
+                                                                        class="form-label">Nombre Proveedor</label>
                                                                     <div class="form-group">
                                                                         <input type="hidden" class="form-control"
                                                                             id="customer-code" name="SupplierNumber" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
-                                                                    <label for="InvoiceLimit" class="form-label">Numero
-                                                                        de Factoras que desea visualizar</label>
+                                                                    <label for="InvoiceLimit" class="form-label"># Factoras que desea visualizar</label>
                                                                     <select type="text" name="InvoiceLimit"
                                                                         id="InvoiceLimit" class="form-control"
                                                                         tabindex="3" value="{{ old('InvoiceLimit') }}"
@@ -672,7 +724,7 @@
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-md-3">
-                                                                    <label for="InvoiceType" class="form-label">tipo
+                                                                    <label for="InvoiceType" class="form-label">Tipo
                                                                         de factura</label>
                                                                     <select type="text" name="InvoiceType"
                                                                         id="InvoiceType" class="form-control"
@@ -681,14 +733,14 @@
                                                                         <option selected value="">Todos</option>
                                                                         <option value="Pago por adelantado">Anticipo
                                                                         </option>
-                                                                        <option value="Estándar">Estandar</option>
-                                                                        <option value="Nota de crédito">Nota Credito
+                                                                        <option value="Estándar">Estándar</option>
+                                                                        <option value="Nota de crédito">Nota Crédito
                                                                         </option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <label for="ValidationStatus"
-                                                                        class="form-label">Estado</label>
+                                                                        class="form-label">Estado Validación</label>
                                                                     <select type="text" name="ValidationStatus"
                                                                         id="ValidationStatus" class="form-control"
                                                                         tabindex="3"
@@ -715,8 +767,7 @@
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-md">
-                                                                    <label for="CanceledFlag" class="form-label">Bandera
-                                                                        cancelada</label>
+                                                                    <label for="CanceledFlag" class="form-label">Canceladas</label>
                                                                     <select type="text" name="CanceledFlag"
                                                                         id="CanceledFlag" class="form-control"
                                                                         tabindex="3" value="{{ old('CanceledFlag') }}"
@@ -727,7 +778,7 @@
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <label for="title" class="form-label">Fecha
-                                                                        Factura(Invoice Date)</label>
+                                                                        Factura</label>
                                                                     <div class="input-group">
                                                                         <select type="text" name="core" id="core"
                                                                             class="form-control" tabindex="3"
@@ -737,8 +788,10 @@
                                                                             <option value=">">Después</option>
                                                                             <option value="<">Antes</option>
                                                                         </select>
-                                                                        <input type="date" name="InvoiceDate"
+                                                                        <input name="InvoiceDate"
                                                                             id="InvoiceDate" class="form-control"
+                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                            onKeyUp="ValidarFecha('InvoiceDate','btnPrFiltr');"
                                                                             tabindex="3"
                                                                             value="{{ old('InvoiceDate') }}" autofocus>
                                                                     </div>
@@ -747,12 +800,16 @@
                                                                     <label for="title" class="form-label">Fecha Inicio y
                                                                         Fecha Fin</label>
                                                                     <div class="input-group">
-                                                                        <input type="date" name="startDate"
+                                                                        <input name="startDate"
                                                                             id="startDate" class="form-control"
+                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
                                                                             tabindex="3" value="{{ old('startDate') }}"
+                                                                            onKeyUp="ValidarFecha('startDate','btnPrFiltr');"
                                                                             autofocus>
-                                                                        <input type="date" name="endDate" id="endDate"
+                                                                        <input name="endDate" id="endDate"
+                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
                                                                             class="form-control" tabindex="3"
+                                                                            onKeyUp="ValidarFecha('endDate','btnPrFiltr');"
                                                                             value="{{ old('endDate') }}" autofocus>
                                                                     </div>
                                                                 </div>
@@ -766,8 +823,8 @@
                                         </div>
                                         {{--
                                     </div> --}}
-                                </div>
-                            </div>
+                                {{-- </div> --}}
+                            {{-- </div> --}}
                             <div class="card-body">
                                 <div class="row row-sm">
                                     <div class="col-lg-12">
@@ -802,11 +859,44 @@
                                                     </div>
                                                     <!--end card-body-->
                                                     <div class="card-body" id="body">
-                                                        <div class="row" id="row1">
-                                                        </div>
-                                                        <!--end row-->
-                                                        <div class="row">
+                                                        <div class="row p-2">
                                                             <div class="col-lg-12">
+                                                                {{-- <h5 class="btn btn-outline-primary" for="btn-check-outlined"> Detalles </h5> --}}
+                                                                <h5 class="bg-info col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">Detalles</h5>
+                                                                <div class="table-responsive project-invoice">
+                                                                    <table class="table table-bordered mb-0">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                                <th>Tipo de factura</th>
+                                                                                <th>Estado de pago</th>
+                                                                                <th>Metodo de pago</th>
+                                                                                <th>Estado de validación</th>
+                                                                                <th>Numero de cuenta</th>
+                                                                                <th>Categoría de documento</th>
+                                                                                <th>Secuencia de documento</th>
+                                                                                <th>Fecha Contable</th>
+                                                                                <th>Fecha de Vencimiento</th>
+                                                                                <th>Fecha Pago</th>
+                                                                            </tr>
+                                                                            <!--end tr-->
+                                                                        </thead>
+                                                                        <tbody id="row1">
+
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!--end table-->
+                                                                </div>
+                                                                <!--end /div-->
+                                                            </div>
+                                                            <!--end col-->
+                                                        </div>
+
+
+                                                        <div class="row p-2">
+                                                            <div class="col-lg-6">
+                                                                <h5 class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Pagos </h5>
+
                                                                 <div class="table-responsive project-invoice">
                                                                     <table class="table table-bordered mb-0">
                                                                         <thead class="thead-light">
@@ -817,6 +907,29 @@
                                                                             <!--end tr-->
                                                                         </thead>
                                                                         <tbody id="row2">
+
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!--end table-->
+                                                                </div>
+                                                                <!--end /div-->
+                                                            </div>
+                                                            <!--end col-->
+
+                                                            <div class="col-lg-6">
+                                                                <h5 class="bg-danger col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Bloqueos </h5>
+
+                                                                <div class="table-responsive project-invoice">
+                                                                    <table class="table table-bordered mb-0">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                                <th>@lang('locale.Description')</th>
+                                                                                <th>@lang('locale.Amount')</th>
+                                                                            </tr>
+                                                                            <!--end tr-->
+                                                                        </thead>
+                                                                        <tbody id="row3">
 
 
                                                                         </tbody>
@@ -890,76 +1003,95 @@
 @endif
 
 <script>
+
     let Loader1 = function(){
-            let $yourUl = $("#global-loader2");
-            $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
-        }
-        window.onload = function() {
-            $.ajax({
-                type: "POST",
-                url: "{{ route('supplier.number') }}",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    id: "{{ Auth::user()->id}}"},
-                success: function(response) {
-                    let data = response.data;
-                    if(response.success == true)
-                    {
-                        let = plantillaMtPorPagar = ''
-                        let = plantillaTotalFt = ''
+        let $yourUl = $("#global-loader2");
+        $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
+    }
+    window.onload = function() {
+        $('.multi-collapse').collapse()
+        $.ajax({
+            type: "POST",
+            url: "{{ route('supplier.number') }}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                id: "{{ Auth::user()->id}}"},
+            success: function(response) {
+                let data = response.data;
+                if(response.success == true)
+                {
+                    let = plantillaMtPorPagar = ''
+                    let = plantillaTotalFt = ''
 
-                        $.ajax({
-                            type: 'POST',
-                            url: "{{ route('total') }}",
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                SupplierNumber:data,
-                                PaidStatus: ['Impagado'],
-                            },
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('total') }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            SupplierNumber:data,
+                            PaidStatus: ['Impagado'],
+                        },
 
-                            success: function(response) {
-                                let datos = response.data;
-                                if (response.success == true) {
-                                    let dollarUSLocale = Intl.NumberFormat('en-US');
-                                    let mtPorPagar = dollarUSLocale.format(datos[0]['Impagado']);
-                                    let totalFt = datos[0]['count Impagado'];
-                                    var x = document.getElementById("piner");
-                                    var y = document.getElementById("piner1");
+                        success: function(response) {
+                            let datos = response.data;
+                            if (response.success == true) {
+                                let dollarUSLocale = Intl.NumberFormat('en-US');
+                                let mtPorPagar = dollarUSLocale.format(datos[0]['Impagado']);
+                                let totalFt = datos[0]['count Impagado'];
+                                var x = document.getElementById("piner");
+                                var y = document.getElementById("piner1");
 
-                                    plantillaMtPorPagar =
-                                    `
-                                    <h3 class="mb-2 fw-semibold">$${mtPorPagar}</h3>
-                                    `
-                                    x.style.display = "none";
-                                    $('#mtPorPagar').append(plantillaMtPorPagar)
+                                plantillaMtPorPagar =
+                                `
+                                <h3 class="mb-2 fw-semibold">$${mtPorPagar}</h3>
+                                `
+                                x.style.display = "none";
+                                $('#mtPorPagar').append(plantillaMtPorPagar)
 
-                                    plantillaTotalFt =
-                                    `
-                                    <h3 class="mb-2 fw-semibold">${totalFt}</h3>
-                                    `
+                                plantillaTotalFt =
+                                `
+                                <h3 class="mb-2 fw-semibold">${totalFt}</h3>
+                                `
 
 
-                                    y.style.display = "none";
-                                    $('#totalFt').append(plantillaTotalFt)
+                                y.style.display = "none";
+                                $('#totalFt').append(plantillaTotalFt)
 
-                                    Loader1();
-                                }
-                            },
-                            error: function(error){
-                                console.error(error);
+                                Loader1();
                             }
-                        })
-                    }
+                        },
+                        error: function(error){
+                            console.error(error);
+                        }
+                    })
                 }
-            })
-        }
+            }
+        })
+    }
+    function ValidarFecha(id, btn){
+        // Almacenamos el valor digitado en TxtFecha
+        var Fecha = document.getElementById(id).value;
+        const button = document.getElementById(btn)
+        var Mensaje = '';
+
+        // Si la fecha está completa comenzamos la validación
+            if(Fecha.length != 10 )
+                button.disabled = true
+            if(Fecha.length == 10 )
+                button.disabled = false
+            if(Fecha.length == "")
+                button.disabled = false
+            // Mostramos el mesaje
+            // document.getElementById('Mensaje').innerHTML = Mensaje;
+    }
 
 </script>
 
 @can('/facturas')
+{{-- <script src={{ asset('assets/js/table-invoice.js') }}></script> --}}
 <script>
     // Funccion de consulta validaciones y carga de datos Datatable
-        let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType,ValidationStatus, Card, startDate, endDate, InvoiceLimit ) {
+        let LoadData = function(PaidStatus, CanceledFlag, TableName, InvoiceType,ValidationStatus, Card, startDate, endDate, InvoiceLimit ) {
             // let start = performance.now();
             tblColectionData =  $(TableName).DataTable({
 
@@ -1225,7 +1357,7 @@
                             data: {
                                 "_token": "{{ csrf_token() }}",
                                 SupplierNumber: {{$SupplierNumber}},
-                                FlagStatus: FlagStatus,
+                                CanceledFlag: CanceledFlag,
                                 PaidStatus: PaidStatus,
                                 InvoiceType: InvoiceType,
                                 InvoiceLimit: InvoiceLimit,
@@ -1283,7 +1415,7 @@
                     data: {
                         "_token": "{{ csrf_token() }}",
                         SupplierNumber: {{$SupplierNumber}},
-                        FlagStatus: FlagStatus,
+                        CanceledFlag: CanceledFlag,
                         PaidStatus: PaidStatus,
                         InvoiceType: InvoiceType,
                         InvoiceLimit: 20,
@@ -1333,7 +1465,7 @@
                     data: {
                         "_token": "{{ csrf_token() }}",
                         SupplierNumber: {{$SupplierNumber}},
-                        FlagStatus: FlagStatus,
+                        CanceledFlag: CanceledFlag,
                         PaidStatus: PaidStatus,
                         InvoiceType: InvoiceType,
                         InvoiceLimit: 20,
@@ -1781,9 +1913,8 @@
                 LoaderView();
                 //Fin
 
-                // Cargamos el numero de la factura seleccionado, para hacer la peticion
+                // Cargamos los datos de la factura al modal
                 let invoice = table.row($(this).parents("tr") ).data();
-                // console.log(invoice.InvoiceNumber);
                 plantillaDate = '';
                 plantiilabody = '';
                 plantillarow1 = '';
@@ -1798,9 +1929,17 @@
                     success : function(response) {
                         let invoice = response.data.invoiceData[0]
                         let lines = response.data.invoiceLines
-                        let FPago = response.data.invoiceFechaPago[0]
+                        let fPago = response.data.invoiceFechaPago[0].PaymentDate
 
-                        // console.log(invoice);
+                        const formatterDolar = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })
+
+                        let InvoiceAmount = formatterDolar.format(invoice.InvoiceAmount);
+
                         if (response.success == true) {
                             $('#date').html('')
                             plantillaDate = `
@@ -1810,16 +1949,20 @@
                                     <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
                                 </div><!--end col-->
                                 <div class="col-md-4 ms-auto">
-                                    <ul class="list-inline mb-0 contact-detail float-right" >
+                                    <ul class="list-inline mb-0 contact-detail float-right">
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h6 class="mb-0"><b>@lang('locale.Invoice Date') : ${invoice.InvoiceDate}</b> </h6>
-                                                <h6><b>@lang('locale.Invoice Number'):</b> # ${invoice.InvoiceNumber}</h6>
+                                                <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${invoice.Supplier} </h6>
                                             </div>
                                         </li>
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> $${invoice.InvoiceAmount}</h5>
+                                                <h6 class="mb-0"><b>@lang('locale.Invoice Date') : </b>${invoice.InvoiceDate} </h6>
+                                            </div>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <div class="pl-3">
+                                                <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> ${ InvoiceAmount }</h5>
                                             </div>
                                         </li>
                                     </ul>
@@ -1840,69 +1983,53 @@
 
                             $('#row1').html('')
                             plantillarow1 = `
-                                <div class="col-md-6">
-                                    <div class="float-left">
-                                        <address class="font-13">
-                                            <strong class="font-14"> @lang('locale.Supplier') :</strong><br>
-                                            ${ invoice.Supplier }<br>
-                                            ${ invoice.SupplierSite }<br>
-                                        </address>
-                                        <address class="font-13">
-                                            <strong class="font-14">@lang('locale.Third-party sites'):</strong><br>
-                                            ${ invoice.Party }<br>
-                                            ${ invoice.PartySite }<br>
-                                        </address>
-                                    </div>
-                                    <div class="float-left">
-                                        <h6><b>@lang('locale.Invoice Type') :</b>
-                                            ${
-                                                invoice.InvoiceType
-                                            }
-                                        </h6>
-                                        <h6><b>@lang('locale.Payment status') : </b>
-                                            ${  invoice.PaidStatus
-                                            }
-                                        </h6>
-                                        <h6><b>@lang('locale.Validation Status') :</b>
-                                            ${
-                                                invoice.ValidationStatus
-                                            }
-                                        </h6>
-                                        <h6><b>@lang('locale.Bank Account') :</b>
-                                            ${
-                                                invoice.invoiceInstallments[0]['BankAccount']
-                                            }
-                                        </h6>
-                                    </div>
-                                </div><!--end col-->
 
-                                <div class="col-md-6">
-                                    <div class="text-left bg-light p-3 mb-3">
-                                        <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
-                                        <h6 class="font-13">@lang('locale.Accounting Date') : ${ invoice.AccountingDate }</h6>
-                                        <h6 class="font-13">@lang('locale.Due Date') : ${ invoice.invoiceInstallments[0]['DueDate'] }</h6>
-                                        <h6 class="font-13">Fecha Pago : ${ FPago.PaymentDate }</h6>
-                                        <h6 class="font-13">@lang('locale.Document Category') :
-                                            ${
-                                                invoice.DocumentCategory = "Prepayment Invoices" ? 'Facturas de anticipo' : 'Facturas Estandar'
-                                            }
-                                            </h6>
-                                        <h6 class="font-13">@lang('locale.Document Sequence') : ${ invoice.DocumentSequence }</h6>
-                                    </div>
-                                </div><!--end col-->
+                                <tr>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ invoice.InvoiceType }</p>
+                                    </td>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ invoice.PaidStatus }</p>
+                                    </td>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ invoice.PaymentMethod }</p>
+                                    </td>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ invoice.ValidationStatus }</p>
+                                    </td>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ invoice.invoiceInstallments[0]['BankAccount'] }</p>
+                                    </td>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ invoice.DocumentCategory = "Prepayment Invoices" ? 'Facturas de anticipo' : 'Facturas Estandar' }</p>
+                                    </td>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ invoice.DocumentSequence }.</p>
+                                    </td>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ invoice.AccountingDate }</p>
+                                    </td>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ invoice.invoiceInstallments[0]['DueDate'] }</p>
+                                    </td>
+                                    <td >
+                                        <p class="mb-0 text-muted">${ fPago }</p>
+                                    </td>
+                                </tr><!--end tr-->
                             `
                             $('#row1').append(plantillarow1)
 
                             $('#row2').html('')
                             lines.forEach(line => {
-                                if (line.LineAmount != 0) {
+                                var LineAmount = formatterDolar.format(line.LineAmount);
+                                if(line.LineAmount != 0){
                                     plantillarow2 = `
                                         <tr>
                                             <td >
                                                 <h5 class="mt-0 mb-1">${ line.LineType }</h5>
                                                 <p class="mb-0 text-muted">${ line.Description }.</p>
                                             </td>
-                                            <td>$ ${ line.LineAmount }</td>
+                                            <td> ${ LineAmount }</td>
                                         </tr><!--end tr-->
                                     `
                                     $('#row2').append(plantillarow2)
@@ -2053,6 +2180,14 @@
 
 @can('/facturasGeneral')
 <script>
+    // Función para permitir sólo números, retroceso y enter
+
+
+        // Función para verificar que la fecha escrita sea correcta según el formato YYYYMMDD
+
+            function mayus(e) {
+                e.value = e.value.toUpperCase();
+            }
             // load inicial, se visualiza al seleccionar un opcion de las facturas
                 let Loader = function(cant){
                     Swal.fire({
@@ -2272,8 +2407,8 @@
                                             var date2 = new Date (`${year}-${month}-${day}`);
                                             var dateDefined = date1 - date2;
                                             var dias =  dateDefined/(1000*60*60*24);
-                                            if (d.PaidStatus != 'Pagadas') {
-
+                                            if (d.CanceledFlag == true) {
+                                                return 'Cancelada'
                                             }
                                             if ( dias <= 0 && d.PaidStatus != 'Pagadas') {
                                                 return 'dentro de la programación de pago';
@@ -2284,6 +2419,7 @@
                                             return ('El pago se le generara dentro de ' + dias + ' Dias');
                                         }
                                     },
+
                                     {title: "Fecha Factura",  data: "InvoiceDate" },
 
                                     // {title: "Tipo de Factura", data: "InvoiceType" },
@@ -2431,7 +2567,19 @@
                             {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
                             // {title: "ID Factura", data: "InvoiceId" },
                             {title: "Numero Factura", data: "InvoiceNumber" },
-                            {title: "Fecha Factura",  data: "InvoiceDate" },
+                            {title: "Valor Factura",
+                                data: function ( d ) {
+
+                                    const formatterDolar = new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD',
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    })
+
+                                    return formatterDolar.format(d.InvoiceAmount);
+                                }
+                            },
                             // {title: "Descripción", data: "Description" },
                             {title: "Saldo",
                                 data: function ( d ) {
@@ -2447,19 +2595,7 @@
                                 }
                             },
                             // {title: "ValidationStatus", data: "ValidationStatus"},
-                            {title: "Valor Factura",
-                                data: function ( d ) {
 
-                                    const formatterDolar = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    })
-
-                                    return formatterDolar.format(d.InvoiceAmount);
-                                }
-                            },
                             {title: "Monto Pagado",
                                 data: function ( d ) {
                                     const formatterDolar = new Intl.NumberFormat('en-US', {
@@ -2473,6 +2609,7 @@
 
                                 }
                             },
+
                             // {title: "Cuenta bancaria",
                             //     data: function ( d ) {
                             //         return d.invoiceInstallments[0]["BankAccount"]}
@@ -2496,8 +2633,8 @@
                                     var date2 = new Date (`${year}-${month}-${day}`);
                                     var dateDefined = date1 - date2;
                                     var dias =  dateDefined/(1000*60*60*24);
-                                    if (d.PaidStatus != 'Pagadas') {
-
+                                    if (d.CanceledFlag == true ) {
+                                        return 'Cancelada';
                                     }
                                     if ( dias <= 0 && d.PaidStatus != 'Pagadas') {
                                         return 'dentro de la programación de pago';
@@ -2509,11 +2646,10 @@
                                 }
                             },
 
+                            {title: "Fecha Factura",  data: "InvoiceDate" },
+
                             // {title: "Tipo de Factura", data: "InvoiceType" },
                             // {title: "Pago realizado", data: "AccountingDate" }
-
-
-
                         ],
 
                         columnDefs: [
@@ -2595,7 +2731,16 @@
                             success : function(response) {
                                 let invoice = response.data.invoiceData[0]
                                 let lines = response.data.invoiceLines
-                                let FPago = response.data.invoiceFechaPago[0]
+                                let fPago = response.data.invoiceFechaPago[0].PaymentDate
+
+                                const formatterDolar = new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })
+
+                                let InvoiceAmount = formatterDolar.format(invoice.InvoiceAmount);
 
                                 if (response.success == true) {
                                     $('#date').html('')
@@ -2606,16 +2751,20 @@
                                             <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
                                         </div><!--end col-->
                                         <div class="col-md-4 ms-auto">
-                                            <ul class="list-inline mb-0 contact-detail float-right" >
+                                            <ul class="list-inline mb-0 contact-detail float-right">
                                                 <li class="list-inline-item">
                                                     <div class="pl-3">
-                                                        <h6 class="mb-0"><b>@lang('locale.Invoice Date') : ${invoice.InvoiceDate}</b> </h6>
-                                                        <h6><b>@lang('locale.Invoice Number'):</b> # ${invoice.InvoiceId}</h6>
+                                                        <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${invoice.Supplier} </h6>
                                                     </div>
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <div class="pl-3">
-                                                        <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> $${invoice.InvoiceAmount}</h5>
+                                                        <h6 class="mb-0"><b>@lang('locale.Invoice Date') : </b>${invoice.InvoiceDate} </h6>
+                                                    </div>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <div class="pl-3">
+                                                        <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> ${ InvoiceAmount }</h5>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -2636,62 +2785,45 @@
 
                                     $('#row1').html('')
                                     plantillarow1 = `
-                                        <div class="col-md-6">
-                                            <div class="float-left">
-                                                <address class="font-13">
-                                                    <strong class="font-14"> @lang('locale.Supplier') :</strong><br>
-                                                    ${ invoice.Supplier }<br>
-                                                    ${ invoice.SupplierSite }<br>
-                                                </address>
-                                                <address class="font-13">
-                                                    <strong class="font-14">@lang('locale.Third-party sites'):</strong><br>
-                                                    ${ invoice.Party }<br>
-                                                    ${ invoice.PartySite }<br>
-                                                </address>
-                                            </div>
-                                            <div class="float-left">
-                                                <h6><b>@lang('locale.Invoice Type') :</b>
-                                                    ${
-                                                        invoice.InvoiceType
-                                                    }
-                                                </h6>
-                                                <h6><b>@lang('locale.Payment status') : </b>
-                                                    ${  invoice.PaidStatus
-                                                    }
-                                                </h6>
-                                                <h6><b>@lang('locale.Validation Status') :</b>
-                                                    ${
-                                                        invoice.ValidationStatus
-                                                    }
-                                                </h6>
-                                                <h6><b>@lang('locale.Bank Account') :</b>
-                                                    ${
-                                                        invoice.invoiceInstallments[0]['BankAccount']
-                                                    }
-                                                </h6>
-                                            </div>
-                                        </div><!--end col-->
 
-                                        <div class="col-md-6">
-                                            <div class="text-left bg-light p-3 mb-3">
-                                                <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
-                                                <h6 class="font-13">@lang('locale.Accounting Date') : ${ invoice.AccountingDate }</h6>
-                                                <h6 class="font-13">@lang('locale.Due Date') : ${ invoice.invoiceInstallments[0]['DueDate'] }</h6>
-                                                <h6 class="font-13">Fecha Pago : ${ FPago.PaymentDate }</h6>
-
-                                                <h6 class="font-13">@lang('locale.Document Category') :
-                                                    ${
-                                                        invoice.DocumentCategory = "Prepayment Invoices" ? 'Facturas de anticipo' : 'Facturas Estandar'
-                                                    }
-                                                    </h6>
-                                                <h6 class="font-13">@lang('locale.Document Sequence') : ${ invoice.DocumentSequence }</h6>
-                                            </div>
-                                        </div><!--end col-->
+                                        <tr>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ invoice.InvoiceType }</p>
+                                            </td>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ invoice.PaidStatus }</p>
+                                            </td>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ invoice.PaymentMethod }</p>
+                                            </td>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ invoice.ValidationStatus }</p>
+                                            </td>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ invoice.invoiceInstallments[0]['BankAccount'] }</p>
+                                            </td>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ invoice.DocumentCategory = "Prepayment Invoices" ? 'Facturas de anticipo' : 'Facturas Estandar' }</p>
+                                            </td>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ invoice.DocumentSequence }.</p>
+                                            </td>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ invoice.AccountingDate }</p>
+                                            </td>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ invoice.invoiceInstallments[0]['DueDate'] }</p>
+                                            </td>
+                                            <td >
+                                                <p class="mb-0 text-muted">${ fPago }</p>
+                                            </td>
+                                        </tr><!--end tr-->
                                     `
                                     $('#row1').append(plantillarow1)
 
                                     $('#row2').html('')
                                     lines.forEach(line => {
+                                        var LineAmount = formatterDolar.format(line.LineAmount);
                                         if(line.LineAmount != 0){
                                             plantillarow2 = `
                                                 <tr>
@@ -2699,7 +2831,7 @@
                                                         <h5 class="mt-0 mb-1">${ line.LineType }</h5>
                                                         <p class="mb-0 text-muted">${ line.Description }.</p>
                                                     </td>
-                                                    <td>$ ${ line.LineAmount }</td>
+                                                    <td> ${ LineAmount }</td>
                                                 </tr><!--end tr-->
                                             `
                                             $('#row2').append(plantillarow2)

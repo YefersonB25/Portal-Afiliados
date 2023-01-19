@@ -30,6 +30,8 @@
         href={{asset(('assets/thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.css'))}}>
     <link rel="stylesheet" href={{asset(('assets/thema/plugins/bower_components/multiselect/css/multi-select.css'))}}>
 
+    <link rel="stylesheet" href="https://bossanova.uk/jsuites/v2/jsuites.css" type="text/css" />
+
     <!-- DATA TABLE CSS-->
     {{--
     <link href={{asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}} rel="stylesheet" /> --}}
@@ -126,15 +128,23 @@
 <!-- REPLY JS-->
 <script src={{ asset('assets/js/reply.js') }}></script>
 
+<script src="https://bossanova.uk/jsuites/v2/jsuites.js"></script>
+
+
+{{-- <script src="https://jsuites.net/v4/jsuites.js"></script> --}}
 <!-- PERFECT SCROLLBAR JS-->
 {{-- <script src={{ asset('assets/plugins/p-scroll/perfect-scrollbar.js') }}></script>
 <script src={{ asset('assets/plugins/p-scroll/pscroll.js') }}></script> --}}
 
+{{-- <script src={{ asset('assets/js/form-elements.js')}}></script> --}}
 <!-- STICKY JS -->
 <script src={{ asset('assets/js/sticky.js') }}></script>
 
 <!-- COLOR THEME JS -->
 <script src={{ asset('assets/js/themeColors.js') }}></script>
+
+
+
 @yield('scripts')
 
 </html>

@@ -141,7 +141,7 @@ class ConsultarAfiliadoController extends Controller
     {
         $params      =  [
             'limit'    => $request->InvoiceLimit,
-            'fields'  => 'InvoiceNumber,InvoiceDate,PaidStatus,InvoiceAmount,AmountPaid;invoiceInstallments:UnpaidAmount,GrossAmount,DueDate',
+            'fields'  => 'InvoiceNumber,InvoiceDate,PaidStatus,InvoiceAmount,CanceledFlag,AmountPaid;invoiceInstallments:UnpaidAmount,GrossAmount,DueDate',
             'onlyData' => 'true',
             'orderBy' => 'InvoiceDate:desc'
         ];
@@ -152,7 +152,7 @@ class ConsultarAfiliadoController extends Controller
             $NumberInvoice = $request->InvoiceNumber;
         }
         try {
-                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceNumber = '{$NumberInvoice}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->FlagStatus}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceNumber = '{$NumberInvoice}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->CanceledFlag}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
 
                 $invoice = OracleRestErp::getInvoiceSuppliers($params);
 
@@ -313,7 +313,7 @@ class ConsultarAfiliadoController extends Controller
             $invoceF =  $invoiceF->object()->items;
 
             if ($invoceF == []) {
-                $invoceF = array(['PaymentDate' => 'Indefinida']);
+                $invoceF = array(['PaymentDate' => 'dentro de la programación de pago']);
             }
 
             $params = [
