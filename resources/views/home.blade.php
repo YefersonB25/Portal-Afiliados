@@ -5,12 +5,9 @@
 <body class="ltr app sidebar-mini">
     <div class="page">
         <div class="page-main">
-            @can('/usuario.index')
-            <div class="app-content main-content mt-0">
-                @endcan
-                <div class="side-app">
-                    <div class="main-container container-fluid">
-                        <div class="page-header">
+            <div class="side-app">
+                <div class="main-container container-fluid">
+                    <div class="page-header">
                         @can('/facturasGeneral')
                         <div>
                             <h1 class="page-title">Consultar Facturas</h1>
@@ -26,15 +23,10 @@
                             <h1 class="page-title">Home</h1>
                         </div>
                         @endcan
+                    </div>
 
-                            {{-- <div class="ms-auto pageheader-btn">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Consultar Facturas</li>
-                                </ol>
-                            </div> --}}
-                        </div>
-                        @can('/usuario.index')
+                    @can('/usuario.index')
+                    <div class="app-content main-content mt-0">
                         <div class="row">
                             @php
                             $counter = 0;
@@ -86,143 +78,638 @@
                                 </div>
                             </div>
                         </div>
-                        @endcan
+                    </div>
+                    @endcan
 
-                        @can('/facturas')
-                            <div id="global-loader2">
-                                <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
+                    @can('/facturas')
+                        <div id="global-loader2">
+                            <img src={{asset('assets/images/loader.svg')}} class="loader-img" alt="Loader">
+                        </div>
+
+                        {{-- Card de valor/cantidad de facturas --}}
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-12 col-md-6 col-xl-6">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h3 id="mtPorPagar" class="mb-2 fw-semibold">
+                                                        <div class="spinner-grow text-success" role="status" id="piner">
+                                                            <span class="sr-only">Loading...</span>
+                                                        </div>
+                                                    </h3>
+                                                    <p class="text-muted fs-13 mb-0">Monto de Facturas por Pagar</p>
+                                                </div>
+                                                <div class="col col-auto top-icn dash">
+                                                    <div
+                                                        class="counter-icon bg-secondary dash ms-auto box-shadow-secondary">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="fill-white"
+                                                            enable-background="new 0 0 24 24" viewBox="0 0 24 24">
+                                                            <path
+                                                                d="M19.5,7H16V5.9169922c0-2.2091064-1.7908325-4-4-4s-4,1.7908936-4,4V7H4.5C4.4998169,7,4.4996338,7,4.4993896,7C4.2234497,7.0001831,3.9998169,7.223999,4,7.5V19c0.0018311,1.6561279,1.3438721,2.9981689,3,3h10c1.6561279-0.0018311,2.9981689-1.3438721,3-3V7.5c0-0.0001831,0-0.0003662,0-0.0006104C19.9998169,7.2234497,19.776001,6.9998169,19.5,7z M9,5.9169922c0-1.6568604,1.3431396-3,3-3s3,1.3431396,3,3V7H9V5.9169922z M19,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2H7c-1.1040039-0.0014038-1.9985962-0.8959961-2-2V8h3v2.5C8,10.776123,8.223877,11,8.5,11S9,10.776123,9,10.5V8h6v2.5c0,0.0001831,0,0.0003662,0,0.0005493C15.0001831,10.7765503,15.223999,11.0001831,15.5,11c0.0001831,0,0.0003662,0,0.0006104,0C15.7765503,10.9998169,16.0001831,10.776001,16,10.5V8h3V19z" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="" class="col-lg-6 col-sm-12 col-md-6 col-xl-6">
+                                    <div class="card overflow-hidden">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h3 id="totalFt" class="mb-2 fw-semibold">
+                                                        <div class="spinner-grow text-success" role="status" id="piner1">
+                                                            <span class="sr-only">Loading...</span>
+                                                        </div>
+                                                    </h3>
+                                                    <p class="text-muted fs-13 mb-0">Facturas por Pagar</p>
+                                                </div>
+                                                <div class="col col-auto top-icn dash">
+                                                    <div class="counter-icon bg-warning dash ms-auto box-shadow-warning">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="fill-white"
+                                                            enable-background="new 0 0 24 24" viewBox="0 0 24 24">
+                                                            <path
+                                                                d="M9,10h2.5c0.276123,0,0.5-0.223877,0.5-0.5S11.776123,9,11.5,9H10V8c0-0.276123-0.223877-0.5-0.5-0.5S9,7.723877,9,8v1c-1.1045532,0-2,0.8954468-2,2s0.8954468,2,2,2h1c0.5523071,0,1,0.4476929,1,1s-0.4476929,1-1,1H7.5C7.223877,15,7,15.223877,7,15.5S7.223877,16,7.5,16H9v1.0005493C9.0001831,17.2765503,9.223999,17.5001831,9.5,17.5h0.0006104C9.7765503,17.4998169,10.0001831,17.276001,10,17v-1c1.1045532,0,2-0.8954468,2-2s-0.8954468-2-2-2H9c-0.5523071,0-1-0.4476929-1-1S8.4476929,10,9,10z M21.5,12H17V2.5c0.000061-0.0875244-0.0228882-0.1735229-0.0665283-0.2493896c-0.1375732-0.2393188-0.4431152-0.3217773-0.6824951-0.1842041l-3.2460327,1.8603516L9.7481079,2.0654297c-0.1536865-0.0878906-0.3424072-0.0878906-0.4960938,0l-3.256897,1.8613281L2.7490234,2.0664062C2.6731567,2.0227661,2.5871582,1.9998779,2.4996338,1.9998779C2.2235718,2.000061,1.9998779,2.223938,2,2.5v17c0.0012817,1.380188,1.119812,2.4987183,2.5,2.5H19c1.6561279-0.0018311,2.9981689-1.3438721,3-3v-6.5006104C21.9998169,12.2234497,21.776001,11.9998169,21.5,12z M4.5,21c-0.828064-0.0009155-1.4990845-0.671936-1.5-1.5V3.3623047l2.7412109,1.5712891c0.1575928,0.0872192,0.348877,0.0875854,0.5068359,0.0009766L9.5,3.0761719l3.2519531,1.8583984c0.157959,0.0866089,0.3492432,0.0862427,0.5068359-0.0009766L16,3.3623047V19c0.0008545,0.7719116,0.3010864,1.4684448,0.7803345,2H4.5z M21,19c0,1.1045532-0.8954468,2-2,2s-2-0.8954468-2-2v-6h4V19z" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{-- Fin --}}
+
+                        {{-- Botones facturas --}}
+                            <div class="card overflow-hidden">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <a id="por-pagar" class="card text-center btn btn-icon btn-primary-light me-2"
+                                                data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                                data-bs-original-title="Facturas por pagar">
+                                                <div class="card-body">
+                                                    <img class="card-img-top"
+                                                        src="{{asset('assets/images/invoiceIcon/factura-proceso-pago-modulo-1.png')}}">
+                                                </div>
+                                                <h5 class="card-title">Facturas por pagar</h5>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a id="en-transporte"
+                                                class="card text-center btn btn-icon btn-primary-light me-2"
+                                                data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                                data-bs-original-title="Facturas en transporte">
+                                                <div class="card-body">
+                                                    <img class="card-img-top"
+                                                        src="{{asset('assets/images/invoiceIcon/factura-en-viaje-modulo-2.png')}}">
+                                                </div>
+                                                <h5 class="card-title">Facturas en transporte</h5>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a id="pagadas-con-novedad"
+                                                class="card text-center btn btn-icon btn-primary-light me-2"
+                                                data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                                data-bs-original-title="Facturas con novedad">
+                                                <div class="card-body">
+                                                    <img class="card-img-top"
+                                                        src="{{asset('assets/images/invoiceIcon/facturas-bloqueadas-modulo-3.png')}}">
+                                                </div>
+                                                <h5 class="card-title">Facturas con novedad</h5>
+                                            </a>
+                                        </div>
+                                        <div class="col">
+                                            <a id="Fullfacturas-all"
+                                                class="card text-center btn btn-icon btn-primary-light me-2"
+                                                data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                                data-bs-original-title="Todas las facturas">
+                                                <div class="card-body">
+                                                    <img class="card-img-top"
+                                                        src="{{asset('assets/images/invoiceIcon/factura.png')}}">
+                                                </div>
+                                                <h5 class="card-title">Todas las facturas</h5>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{-- Fin --}}
+
+                        {{-- Card de tablas de facturas --}}
+                            <div class="collapse" id="FacturasGenerales" style="display: none">
+                                <body class="ltr app sidebar-mini">
+                                    <div class="row row-sm">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <!-- CONTAINER -->
+                                                    <div class="main-container container-fluid">
+                                                        <div class="card" id="facturas-all">
+                                                            <h3 class="text-center" style="text-decoration: underline">
+                                                                FACTURAS
+                                                            </h3>
+                                                            <div class="card-header border-bottom">
+                                                                <div class="row g-2">
+                                                                    <h3 class="card-title">Fitros</h3>
+                                                                    <div class="form-horizontal">
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-md-3">
+                                                                                <label for="InvoiceLimit" class="form-label"># Factoras que desea visualizar</label>
+                                                                                <select type="text" name="InvoiceLimit"
+                                                                                    id="InvoiceLimit" class="form-control"
+                                                                                    tabindex="3" value="{{ old('InvoiceLimit') }}"
+                                                                                    autofocus>
+                                                                                    <option selected value="20">20</option>
+                                                                                    <option value="40">40</option>
+                                                                                    <option value="60">60</option>
+                                                                                    <option value="80">80</option>
+                                                                                    <option value="100">100</option>
+                                                                                    <option value="200">200</option>
+                                                                                    <option value="350">350</option>
+                                                                                    <option value="500">500</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md">
+                                                                                <label for="tipoFactura"
+                                                                                    class="form-label">Tipo de
+                                                                                    factura</label>
+                                                                                <select type="text" name="tipoFactura"
+                                                                                    id="tipoFactura" class="form-select"
+                                                                                    tabindex="3"
+                                                                                    value="{{ old('tipoFactura') }}"
+                                                                                    autofocus>
+                                                                                    <option selected value="">Todos</option>
+                                                                                    <option value="Pago por adelantado">
+                                                                                        Anticipo</option>
+                                                                                    <option value="Estándar">Estándar
+                                                                                    </option>
+                                                                                    <option value="Nota de crédito">Nota
+                                                                                        Crédito</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md">
+                                                                                <label for="ValidationStatus"
+                                                                                    class="form-label">Estado Validación</label>
+                                                                                <select type="text" name="ValidationStatus"
+                                                                                    id="ValidationStatus"
+                                                                                    class="form-select" tabindex="3"
+                                                                                    value="{{ old('ValidationStatus') }}"
+                                                                                    autofocus>
+                                                                                    <option selected value="">Todos</option>
+                                                                                    <option value="Cancelada">Cancelada
+                                                                                    </option>
+                                                                                    <option value="Validada">Validada
+                                                                                    </option>
+                                                                                    <option value="Necesita revalidación">
+                                                                                        Necesita revalidación</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md">
+                                                                                <label for="PaidStatus"
+                                                                                    class="form-label">Estado Pago</label>
+                                                                                <select type="text" name="PaidStatus"
+                                                                                    id="PaidStatus" class="form-select"
+                                                                                    tabindex="3"
+                                                                                    value="{{ old('PaidStatus') }}"
+                                                                                    autofocus>
+                                                                                    <option selected value="">Todos</option>
+                                                                                    <option value="Pagadas">Pagadas</option>
+                                                                                    <option value="Impagado">Impagado
+                                                                                    </option>
+                                                                                    <option value="Pagada parcialmente">
+                                                                                        parsialmente pagada</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md">
+                                                                                <label for="CanceledFlag"
+                                                                                    class="form-label">Canceladas</label>
+                                                                                <select type="text" name="CanceledFlag"
+                                                                                    id="CanceledFlag" class="form-select"
+                                                                                    tabindex="3"
+                                                                                    value="{{ old('CanceledFlag') }}"
+                                                                                    autofocus>
+                                                                                    <option selected value="false">No
+                                                                                    </option>
+                                                                                    <option value="true">Si</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <label for="title" class="form-label">Fecha Inicio y
+                                                                                    Fecha Fin</label>
+                                                                                <div class="input-group">
+                                                                                    <input name="startDate"
+                                                                                        id="startDate" class="form-control"
+                                                                                        placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                        tabindex="3" value="{{ old('startDate') }}"
+                                                                                        onKeyUp="ValidarFecha('startDate','btnPrFiltr');"
+                                                                                        autofocus>
+                                                                                    <input name="endDate" id="endDate"
+                                                                                        placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                        class="form-control" tabindex="3"
+                                                                                        onKeyUp="ValidarFecha('endDate','btnPrFiltr');"
+                                                                                        value="{{ old('endDate') }}" autofocus>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                            id="btnPrFiltr">Filtrar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="row row-sm">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card">
+                                                                            <div class="card-body">
+                                                                                <div class="table-responsive">
+                                                                                    <table id="TablaFacturasAll"
+                                                                                        class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </body>
                             </div>
 
-                            {{-- Card de valor/cantidad de facturas --}}
-                                <div class="row">
-                                    <div class="col-lg-6 col-sm-12 col-md-6 col-xl-6">
-                                        <div class="card overflow-hidden">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <h3 id="mtPorPagar" class="mb-2 fw-semibold">
-                                                            <div class="spinner-grow text-success" role="status" id="piner">
-                                                                <span class="sr-only">Loading...</span>
-                                                            </div>
-                                                        </h3>
-                                                        <p class="text-muted fs-13 mb-0">Monto de Facturas por Pagar</p>
-                                                    </div>
-                                                    <div class="col col-auto top-icn dash">
-                                                        <div
-                                                            class="counter-icon bg-secondary dash ms-auto box-shadow-secondary">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-white"
-                                                                enable-background="new 0 0 24 24" viewBox="0 0 24 24">
-                                                                <path
-                                                                    d="M19.5,7H16V5.9169922c0-2.2091064-1.7908325-4-4-4s-4,1.7908936-4,4V7H4.5C4.4998169,7,4.4996338,7,4.4993896,7C4.2234497,7.0001831,3.9998169,7.223999,4,7.5V19c0.0018311,1.6561279,1.3438721,2.9981689,3,3h10c1.6561279-0.0018311,2.9981689-1.3438721,3-3V7.5c0-0.0001831,0-0.0003662,0-0.0006104C19.9998169,7.2234497,19.776001,6.9998169,19.5,7z M9,5.9169922c0-1.6568604,1.3431396-3,3-3s3,1.3431396,3,3V7H9V5.9169922z M19,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2H7c-1.1040039-0.0014038-1.9985962-0.8959961-2-2V8h3v2.5C8,10.776123,8.223877,11,8.5,11S9,10.776123,9,10.5V8h6v2.5c0,0.0001831,0,0.0003662,0,0.0005493C15.0001831,10.7765503,15.223999,11.0001831,15.5,11c0.0001831,0,0.0003662,0,0.0006104,0C15.7765503,10.9998169,16.0001831,10.776001,16,10.5V8h3V19z" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="" class="col-lg-6 col-sm-12 col-md-6 col-xl-6">
-                                        <div class="card overflow-hidden">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <h3 id="totalFt" class="mb-2 fw-semibold">
-                                                            <div class="spinner-grow text-success" role="status" id="piner1">
-                                                                <span class="sr-only">Loading...</span>
-                                                            </div>
-                                                        </h3>
-                                                        <p class="text-muted fs-13 mb-0">Facturas por Pagar</p>
-                                                    </div>
-                                                    <div class="col col-auto top-icn dash">
-                                                        <div class="counter-icon bg-warning dash ms-auto box-shadow-warning">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="fill-white"
-                                                                enable-background="new 0 0 24 24" viewBox="0 0 24 24">
-                                                                <path
-                                                                    d="M9,10h2.5c0.276123,0,0.5-0.223877,0.5-0.5S11.776123,9,11.5,9H10V8c0-0.276123-0.223877-0.5-0.5-0.5S9,7.723877,9,8v1c-1.1045532,0-2,0.8954468-2,2s0.8954468,2,2,2h1c0.5523071,0,1,0.4476929,1,1s-0.4476929,1-1,1H7.5C7.223877,15,7,15.223877,7,15.5S7.223877,16,7.5,16H9v1.0005493C9.0001831,17.2765503,9.223999,17.5001831,9.5,17.5h0.0006104C9.7765503,17.4998169,10.0001831,17.276001,10,17v-1c1.1045532,0,2-0.8954468,2-2s-0.8954468-2-2-2H9c-0.5523071,0-1-0.4476929-1-1S8.4476929,10,9,10z M21.5,12H17V2.5c0.000061-0.0875244-0.0228882-0.1735229-0.0665283-0.2493896c-0.1375732-0.2393188-0.4431152-0.3217773-0.6824951-0.1842041l-3.2460327,1.8603516L9.7481079,2.0654297c-0.1536865-0.0878906-0.3424072-0.0878906-0.4960938,0l-3.256897,1.8613281L2.7490234,2.0664062C2.6731567,2.0227661,2.5871582,1.9998779,2.4996338,1.9998779C2.2235718,2.000061,1.9998779,2.223938,2,2.5v17c0.0012817,1.380188,1.119812,2.4987183,2.5,2.5H19c1.6561279-0.0018311,2.9981689-1.3438721,3-3v-6.5006104C21.9998169,12.2234497,21.776001,11.9998169,21.5,12z M4.5,21c-0.828064-0.0009155-1.4990845-0.671936-1.5-1.5V3.3623047l2.7412109,1.5712891c0.1575928,0.0872192,0.348877,0.0875854,0.5068359,0.0009766L9.5,3.0761719l3.2519531,1.8583984c0.157959,0.0866089,0.3492432,0.0862427,0.5068359-0.0009766L16,3.3623047V19c0.0008545,0.7719116,0.3010864,1.4684448,0.7803345,2H4.5z M21,19c0,1.1045532-0.8954468,2-2,2s-2-0.8954468-2-2v-6h4V19z" />
-                                                            </svg>
-                                                        </div>
+                            <div class="card" id="oculto-por-pagar" style="display: none">
+                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                    POR PAGAR </h3>
+                                <div class="card-body">
+                                    <div class="row row-sm">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table id="TablePorPagar"
+                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            {{-- Fin --}}
+                            </div>
 
-                            {{-- Botones facturas --}}
-                                <div class="card overflow-hidden">
-                                    <div class="card-body">
+                            <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
+                                <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS
+                                </h3>
+                                <div class="card-body">
+                                    <div class="row row-sm">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table id="TablePagadasNovedad"
+                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" id="facturas-en-transporte" style="display: none">
+                                <h3 class="text-center" style="text-decoration: underline">FACTURAS EN TRANSPORTE</h3>
+                                <div class="card-body">
+                                    <div class="row row-sm">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="card-header border-bottom">
+                                                    <div class="row g-2">
+                                                        <h3 class="card-title">Fitros</h3>
+                                                        <div class="form-horizontal">
+                                                            <div class="row mb-2">
+                                                                <div class="col-md-12">
+                                                                    <label for="" class="form-label"># Factoras que desea visualizar</label>
+                                                                    <select type="text" name="ShipmentsLimit"
+                                                                        id="ShipmentsLimit" class="form-control"
+                                                                        tabindex="3" value="{{ old('ShipmentsLimit') }}"
+                                                                        autofocus>
+                                                                        <option selected value="20">20</option>
+                                                                        <option value="40">40</option>
+                                                                        <option value="60">60</option>
+                                                                        <option value="80">80</option>
+                                                                        <option value="100">100</option>
+                                                                        <option value="200">200</option>
+                                                                        <option value="350">350</option>
+                                                                        <option value="500">500</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary"
+                                                                id="btnFiltr">Filtrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table id="TableEnTransporte"
+                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{-- Fin --}}
+
+                        {{-- Modal de visualizacionde facturas --}}
+                            <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="container-fluid">
                                         <div class="row">
-                                            <div class="col">
-                                                <a id="por-pagar" class="card text-center btn btn-icon btn-primary-light me-2"
-                                                    data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
-                                                    data-bs-original-title="Facturas por pagar">
-                                                    <div class="card-body">
-                                                        <img class="card-img-top"
-                                                            src="{{asset('assets/images/invoiceIcon/factura-proceso-pago-modulo-1.png')}}">
+                                            <div class="col-lg-12 mx-auto">
+                                                <div class="modal-content">
+                                                    <div class="card">
+                                                        <div class="card-body invoice-head">
+                                                            <div class="row" id="date">
+
+                                                            </div>
+                                                            <!--end row-->
+                                                        </div>
+                                                        <!--end card-body-->
+                                                        <div class="card-body" id="body">
+                                                            <div class="row p-2">
+                                                                <div class="col-lg-12">
+                                                                    {{-- <h5 class="btn btn-outline-primary" for="btn-check-outlined"> Detalles </h5> --}}
+                                                                    <h5 class="bg-info col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">Detalles</h5>
+                                                                    <div class="table-responsive project-invoice">
+                                                                        <table class="table table-bordered mb-0">
+                                                                            <thead class="thead-light">
+                                                                                <tr>
+                                                                                    <th>Tipo de factura</th>
+                                                                                    <th>Estado de pago</th>
+                                                                                    <th>Estado de validación</th>
+                                                                                    <th>Numero de cuenta</th>
+                                                                                    <th>Categoría de documento</th>
+                                                                                    <th>Secuencia de documento</th>
+                                                                                    <th>Fecha Contable</th>
+                                                                                    <th>Fecha de Vencimiento</th>
+                                                                                    <th>Fecha Pago</th>
+                                                                                </tr>
+                                                                                <!--end tr-->
+                                                                            </thead>
+                                                                            <tbody id="row1">
+
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <!--end table-->
+                                                                    </div>
+                                                                    <!--end /div-->
+                                                                </div>
+                                                                <!--end col-->
+                                                            </div>
+
+
+                                                            <div class="row p-2">
+                                                                <div class="col-lg-12">
+                                                                    <h5 class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Pagos </h5>
+
+                                                                    <div class="table-responsive project-invoice">
+                                                                        <table class="table table-bordered mb-0">
+                                                                            <thead class="thead-light">
+                                                                                <tr>
+                                                                                    <th>@lang('locale.Description')</th>
+                                                                                    <th>@lang('locale.Amount')</th>
+                                                                                </tr>
+                                                                                <!--end tr-->
+                                                                            </thead>
+                                                                            <tbody id="row2">
+
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <!--end table-->
+                                                                    </div>
+                                                                    <!--end /div-->
+                                                                </div>
+                                                                <!--end col-->
+
+                                                            </div>
+                                                            <!--end row-->
+                                                            <div class="row p-2">
+                                                                <div class="col-lg-12">
+                                                                    <h5 class="bg-danger col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Bloqueos </h5>
+
+                                                                    <div class="table-responsive project-invoice">
+                                                                        <table class="table table-bordered mb-0">
+                                                                            <thead class="thead-light">
+                                                                                <tr>
+                                                                                    <th>Nombre Retencion</th>
+                                                                                    <th>Razón Retencion</th>
+                                                                                    <th>Retenida Por</th>
+                                                                                    <th>Fecha Retencion</th>
+                                                                                </tr>
+                                                                                <!--end tr-->
+                                                                            </thead>
+                                                                            <tbody id="row3">
+
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <!--end table-->
+                                                                    </div>
+                                                                    <!--end /div-->
+                                                                </div>
+                                                                <!--end col-->
+
+                                                            </div>
+                                                            <!--end row-->
+
+                                                            {{-- <div class="row justify-content-center">
+                                                                <div class="col-lg-12">
+                                                                    <h5 class="mt-4"><i
+                                                                            class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
+                                                                        :</h5>
+                                                                </div>
+                                                                <!--end col-->
+                                                            </div> --}}
+                                                            <!--end row-->
+                                                            <div class="row d-flex justify-content-center">
+                                                                <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
+                                                                    <div class="text-center"><small
+                                                                            class="font-12">Tractocar
+                                                                            Logistics SAS.</small>
+                                                                    </div>
+                                                                </div>
+                                                                <!--end col-->
+                                                            </div>
+                                                            <!--end row-->
+                                                        </div>
+                                                        <!--end card-body-->
                                                     </div>
-                                                    <h5 class="card-title">Facturas por pagar</h5>
-                                                </a>
-                                            </div>
-                                            <div class="col">
-                                                <a id="en-transporte"
-                                                    class="card text-center btn btn-icon btn-primary-light me-2"
-                                                    data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
-                                                    data-bs-original-title="Facturas en transporte">
-                                                    <div class="card-body">
-                                                        <img class="card-img-top"
-                                                            src="{{asset('assets/images/invoiceIcon/factura-en-viaje-modulo-2.png')}}">
+                                                    <div class="modal-footer">
+                                                        <button type="button" id="closet-modal" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cerrar</button>
                                                     </div>
-                                                    <h5 class="card-title">Facturas en transporte</h5>
-                                                </a>
+                                                </div>
+                                                <!--end card-->
                                             </div>
-                                            <div class="col">
-                                                <a id="pagadas-con-novedad"
-                                                    class="card text-center btn btn-icon btn-primary-light me-2"
-                                                    data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
-                                                    data-bs-original-title="Facturas con novedad">
-                                                    <div class="card-body">
-                                                        <img class="card-img-top"
-                                                            src="{{asset('assets/images/invoiceIcon/facturas-bloqueadas-modulo-3.png')}}">
-                                                    </div>
-                                                    <h5 class="card-title">Facturas con novedad</h5>
-                                                </a>
-                                            </div>
-                                            <div class="col">
-                                                <a id="Fullfacturas-all"
-                                                    class="card text-center btn btn-icon btn-primary-light me-2"
-                                                    data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
-                                                    data-bs-original-title="Todas las facturas">
-                                                    <div class="card-body">
-                                                        <img class="card-img-top"
-                                                            src="{{asset('assets/images/invoiceIcon/factura.png')}}">
-                                                    </div>
-                                                    <h5 class="card-title">Todas las facturas</h5>
-                                                </a>
-                                            </div>
+                                            <!--end col-->
                                         </div>
+                                        <!--end row-->
                                     </div>
                                 </div>
-                            {{-- Fin --}}
+                            </div>
+                        {{-- Fin --}}
 
-                            {{-- Card de tablas de facturas --}}
-                                <div class="collapse" id="FacturasGenerales" style="display: none">
-                                    <body class="ltr app sidebar-mini light-mode">
-                                        <div class="row row-sm">
-                                            <div class="col-lg-12">
+                        {{-- Modal de visualizacionde facturas en trasnporte--}}
+                            <div class="modal fade" id="exampleModalTransporte" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-lg-12 mx-auto">
+                                                <div class="modal-content">
+                                                    <div class="card">
+                                                        <div class="card-body invoice-head">
+                                                            <div class="row" id="date_1">
+
+                                                            </div>
+                                                            <!--end row-->
+                                                        </div>
+                                                        <!--end card-body-->
+                                                        <div class="card-body" id="body">
+                                                            <div class="row" id="row1_1">
+                                                            </div>
+                                                            <!--end row-->
+                                                            {{-- <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="table-responsive project-invoice">
+                                                                        <table class="table table-bordered mb-0">
+                                                                            <thead class="thead-light">
+                                                                                <tr>
+                                                                                    <th>@lang('locale.Description')</th>
+                                                                                    <th>@lang('locale.Amount')</th>
+                                                                                </tr>
+                                                                                <!--end tr-->
+                                                                            </thead>
+                                                                            <tbody id="row2">
+
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <!--end table-->
+                                                                    </div>
+                                                                    <!--end /div-->
+                                                                </div>
+                                                                <!--end col-->
+                                                            </div> --}}
+                                                            <!--end row-->
+
+
+                                                            {{-- <div class="row justify-content-center">
+                                                                <div class="col-lg-12">
+                                                                    <h5 class="mt-4"><i
+                                                                            class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
+                                                                        :</h5>
+                                                                </div>
+                                                                <!--end col-->
+                                                            </div> --}}
+                                                            <!--end row-->
+                                                            <div class="row d-flex justify-content-center">
+                                                                <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
+                                                                    <div class="text-center"><small
+                                                                            class="font-12">Tractocar
+                                                                            Logistics SAS.</small>
+                                                                    </div>
+                                                                </div>
+                                                                <!--end col-->
+                                                            </div>
+                                                            <!--end row-->
+                                                        </div>
+                                                        <!--end card-body-->
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" id="closet-modal" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
+                                                <!--end card-->
+                                            </div>
+                                            <!--end col-->
+                                        </div>
+                                        <!--end row-->
+                                    </div>
+                                </div>
+                            </div>
+                        {{-- Fin --}}
+                    @endcan
+
+                    @can('/facturasGeneral')
+                    <div class="collapse" id="faturasGeneral" style="display: none">
+                        <body class="ltr app sidebar-mini">
+                            <div class="row row-sm">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                            </h3>
+                                            <div class="main-container container-fluid">
                                                 <div class="card">
-                                                    <div class="card-body">
-                                                        <!-- CONTAINER -->
-                                                        <div class="main-container container-fluid">
-                                                            <div class="card" id="facturas-all">
-                                                                <h3 class="text-center" style="text-decoration: underline">
-                                                                    FACTURAS
-                                                                </h3>
-                                                                <div class="card-header border-bottom">
-                                                                    <div class="row g-2">
-                                                                        <h3 class="card-title">Fitros</h3>
-                                                                        <div class="form-horizontal">
+                                                    <div class="row">
+                                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                                            data-bs-target=".multi-collapse" aria-expanded="false"
+                                                            aria-controls="multiCollapseExample1">Filtros</button>
+                                                    </div>
+                                                    <div class="card-header border-bottom">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                                                    <div class="card card-body">
+                                                                        <form class="form-horizontal" id="filter"
+                                                                            action="{{ route('falturas.pagadas') }}" method="post"
+                                                                            novalidate>
+                                                                            @csrf
                                                                             <div class="row mb-2">
+                                                                                <div class="col-md-3">
+                                                                                    <label for="SupplierNumber" class="form-label">Tipo
+                                                                                        Factura y Numero Factura</label>
+                                                                                    <div class="input-group">
+                                                                                        <select type="text" name="TipoF" id="TipoF"
+                                                                                            class="form-control" tabindex="3"
+                                                                                            value="{{ old('TipoF') }}" autofocus>
+                                                                                            <option selected value="">Seleccione
+                                                                                            </option>
+                                                                                            <option value="M">Manifiesto</option>
+                                                                                            <option value="">Otro</option>
+                                                                                        </select>
+                                                                                        <input type="text" name="InvoiceNumber"
+                                                                                            id="InvoiceNumber" class="form-control"
+                                                                                            tabindex="3"
+                                                                                            value="{{ old('InvoiceNumber') }}"
+                                                                                            autofocus>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-9">
+                                                                                    <label for="SupplierNumber"
+                                                                                        class="form-label">Nombre Proveedor</label>
+                                                                                    <div class="form-group">
+                                                                                        <input type="hidden" class="form-control"
+                                                                                            id="customer-code" name="SupplierNumber" />
+                                                                                    </div>
+                                                                                </div>
                                                                                 <div class="col-md-3">
                                                                                     <label for="InvoiceLimit" class="form-label"># Factoras que desea visualizar</label>
                                                                                     <select type="text" name="InvoiceLimit"
@@ -239,69 +726,78 @@
                                                                                         <option value="500">500</option>
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="col-md">
-                                                                                    <label for="tipoFactura"
-                                                                                        class="form-label">Tipo de
-                                                                                        factura</label>
-                                                                                    <select type="text" name="tipoFactura"
-                                                                                        id="tipoFactura" class="form-select"
-                                                                                        tabindex="3"
-                                                                                        value="{{ old('tipoFactura') }}"
+                                                                                <div class="col-md-3">
+                                                                                    <label for="InvoiceType" class="form-label">Tipo
+                                                                                        de factura</label>
+                                                                                    <select type="text" name="InvoiceType"
+                                                                                        id="InvoiceType" class="form-control"
+                                                                                        tabindex="3" value="{{ old('InvoiceType') }}"
                                                                                         autofocus>
                                                                                         <option selected value="">Todos</option>
-                                                                                        <option value="Pago por adelantado">
-                                                                                            Anticipo</option>
-                                                                                        <option value="Estándar">Estándar
+                                                                                        <option value="Pago por adelantado">Anticipo
                                                                                         </option>
-                                                                                        <option value="Nota de crédito">Nota
-                                                                                            Crédito</option>
+                                                                                        <option value="Estándar">Estándar</option>
+                                                                                        <option value="Nota de crédito">Nota Crédito
+                                                                                        </option>
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="col-md">
+                                                                                <div class="col-md-3">
                                                                                     <label for="ValidationStatus"
                                                                                         class="form-label">Estado Validación</label>
                                                                                     <select type="text" name="ValidationStatus"
-                                                                                        id="ValidationStatus"
-                                                                                        class="form-select" tabindex="3"
-                                                                                        value="{{ old('ValidationStatus') }}"
-                                                                                        autofocus>
+                                                                                        id="ValidationStatus" class="form-control"
+                                                                                        tabindex="3"
+                                                                                        value="{{ old('ValidationStatus') }}" autofocus>
                                                                                         <option selected value="">Todos</option>
-                                                                                        <option value="Cancelada">Cancelada
-                                                                                        </option>
-                                                                                        <option value="Validada">Validada
-                                                                                        </option>
+                                                                                        <option value="Cancelada">Cancelada</option>
+                                                                                        <option value="Validada">Validada</option>
                                                                                         <option value="Necesita revalidación">
                                                                                             Necesita revalidación</option>
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="col-md">
-                                                                                    <label for="PaidStatus"
-                                                                                        class="form-label">Estado Pago</label>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="PaidStatus" class="form-label">Estado
+                                                                                        Pago</label>
                                                                                     <select type="text" name="PaidStatus"
-                                                                                        id="PaidStatus" class="form-select"
-                                                                                        tabindex="3"
-                                                                                        value="{{ old('PaidStatus') }}"
+                                                                                        id="PaidStatus" class="form-control"
+                                                                                        tabindex="3" value="{{ old('PaidStatus') }}"
                                                                                         autofocus>
                                                                                         <option selected value="">Todos</option>
                                                                                         <option value="Pagadas">Pagadas</option>
-                                                                                        <option value="Impagado">Impagado
-                                                                                        </option>
+                                                                                        <option value="Impagado">Impagado</option>
                                                                                         <option value="Pagada parcialmente">
-                                                                                            parsialmente pagada</option>
+                                                                                            Parcialmente Pagada</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-md">
-                                                                                    <label for="CanceledFlag"
-                                                                                        class="form-label">Canceladas</label>
+                                                                                    <label for="CanceledFlag" class="form-label">Canceladas</label>
                                                                                     <select type="text" name="CanceledFlag"
-                                                                                        id="CanceledFlag" class="form-select"
-                                                                                        tabindex="3"
-                                                                                        value="{{ old('CanceledFlag') }}"
+                                                                                        id="CanceledFlag" class="form-control"
+                                                                                        tabindex="3" value="{{ old('CanceledFlag') }}"
                                                                                         autofocus>
-                                                                                        <option selected value="false">No
-                                                                                        </option>
+                                                                                        <option selected value="false">No</option>
                                                                                         <option value="true">Si</option>
                                                                                     </select>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <label for="title" class="form-label">Fecha
+                                                                                        Factura</label>
+                                                                                    <div class="input-group">
+                                                                                        <select type="text" name="core" id="core"
+                                                                                            class="form-control" tabindex="3"
+                                                                                            value="{{ old('core') }}" autofocus>
+                                                                                            <option selected value="=">Igual que
+                                                                                            </option>
+                                                                                            <option value=">">Después</option>
+                                                                                            <option value="<">Antes</option>
+                                                                                        </select>
+                                                                                        <input name="InvoiceDate"
+                                                                                            id="InvoiceDate" class="form-control"
+                                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                            onKeyUp="ValidarFecha('InvoiceDate','btnPrFiltr');"
+                                                                                            tabindex="3"
+                                                                                            value="{{ old('InvoiceDate') }}" autofocus>
+                                                                                    </div>
                                                                                 </div>
                                                                                 <div class="col-md-3">
                                                                                     <label for="title" class="form-label">Fecha Inicio y
@@ -323,524 +819,35 @@
                                                                             </div>
                                                                             <button type="submit" class="btn btn-primary"
                                                                                 id="btnPrFiltr">Filtrar</button>
-                                                                        </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                    <div class="row row-sm">
-                                                                        <div class="col-lg-12">
-                                                                            <div class="card">
-                                                                                <div class="card-body">
-                                                                                    <div class="table-responsive">
-                                                                                        <table id="TablaFacturasAll"
-                                                                                            class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                                                        </table>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </body>
-                                </div>
-
-                                <div class="card" id="oculto-por-pagar" style="display: none">
-                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                        POR PAGAR </h3>
-                                    <div class="card-body">
-                                        <div class="row row-sm">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="table-responsive">
-                                                            <table id="TablePorPagar"
-                                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card" id="oculto-pagadas-con-novedad" style="display: none">
-                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS PARCIALMENTE PAGADAS
-                                    </h3>
-                                    <div class="card-body">
-                                        <div class="row row-sm">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="table-responsive">
-                                                            <table id="TablePagadasNovedad"
-                                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card" id="facturas-en-transporte" style="display: none">
-                                    <h3 class="text-center" style="text-decoration: underline">FACTURAS EN TRANSPORTE</h3>
-                                    <div class="card-body">
-                                        <div class="row row-sm">
-                                            <div class="col-lg-12">
-                                                <div class="card">
-                                                    <div class="card-header border-bottom">
-                                                        <div class="row g-2">
-                                                            <h3 class="card-title">Fitros</h3>
-                                                            <div class="form-horizontal">
-                                                                <div class="row mb-2">
-                                                                    <div class="col-md-12">
-                                                                        <label for="" class="form-label"># Factoras que desea visualizar</label>
-                                                                        <select type="text" name="ShipmentsLimit"
-                                                                            id="ShipmentsLimit" class="form-control"
-                                                                            tabindex="3" value="{{ old('ShipmentsLimit') }}"
-                                                                            autofocus>
-                                                                            <option selected value="20">20</option>
-                                                                            <option value="40">40</option>
-                                                                            <option value="60">60</option>
-                                                                            <option value="80">80</option>
-                                                                            <option value="100">100</option>
-                                                                            <option value="200">200</option>
-                                                                            <option value="350">350</option>
-                                                                            <option value="500">500</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <button type="submit" class="btn btn-primary"
-                                                                    id="btnFiltr">Filtrar</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="card-body">
-                                                        <div class="table-responsive">
-                                                            <table id="TableEnTransporte"
-                                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                            </table>
+                                                        <div class="row row-sm">
+                                                            <div class="col-lg-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="table-responsive">
+                                                                            <table id="TablaFullFacturasAll"
+                                                                                class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {{-- Fin --}}
-
-                            {{-- Modal de visualizacionde facturas --}}
-                                <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-lg-12 mx-auto">
-                                                    <div class="modal-content">
-                                                        <div class="card">
-                                                            <div class="card-body invoice-head">
-                                                                <div class="row" id="date">
-
-                                                                </div>
-                                                                <!--end row-->
-                                                            </div>
-                                                            <!--end card-body-->
-                                                            <div class="card-body" id="body">
-                                                                <div class="row p-2">
-                                                                    <div class="col-lg-12">
-                                                                        {{-- <h5 class="btn btn-outline-primary" for="btn-check-outlined"> Detalles </h5> --}}
-                                                                        <h5 class="bg-info col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">Detalles</h5>
-                                                                        <div class="table-responsive project-invoice">
-                                                                            <table class="table table-bordered mb-0">
-                                                                                <thead class="thead-light">
-                                                                                    <tr>
-                                                                                        <th>Tipo de factura</th>
-                                                                                        <th>Estado de pago</th>
-                                                                                        <th>Metodo de pago</th>
-                                                                                        <th>Estado de validación</th>
-                                                                                        <th>Numero de cuenta</th>
-                                                                                        <th>Categoría de documento</th>
-                                                                                        <th>Secuencia de documento</th>
-                                                                                        <th>Fecha Contable</th>
-                                                                                        <th>Fecha de Vencimiento</th>
-                                                                                        <th>Fecha Pago</th>
-                                                                                    </tr>
-                                                                                    <!--end tr-->
-                                                                                </thead>
-                                                                                <tbody id="row1">
-
-
-                                                                                </tbody>
-                                                                            </table>
-                                                                            <!--end table-->
-                                                                        </div>
-                                                                        <!--end /div-->
-                                                                    </div>
-                                                                    <!--end col-->
-                                                                </div>
-
-
-                                                                <div class="row p-2">
-                                                                    <div class="col-lg-6">
-                                                                        <h5 class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Pagos </h5>
-
-                                                                        <div class="table-responsive project-invoice">
-                                                                            <table class="table table-bordered mb-0">
-                                                                                <thead class="thead-light">
-                                                                                    <tr>
-                                                                                        <th>@lang('locale.Description')</th>
-                                                                                        <th>@lang('locale.Amount')</th>
-                                                                                    </tr>
-                                                                                    <!--end tr-->
-                                                                                </thead>
-                                                                                <tbody id="row2">
-
-
-                                                                                </tbody>
-                                                                            </table>
-                                                                            <!--end table-->
-                                                                        </div>
-                                                                        <!--end /div-->
-                                                                    </div>
-                                                                    <!--end col-->
-
-                                                                    <div class="col-lg-6">
-                                                                        <h5 class="bg-danger col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Bloqueos </h5>
-
-                                                                        <div class="table-responsive project-invoice">
-                                                                            <table class="table table-bordered mb-0">
-                                                                                <thead class="thead-light">
-                                                                                    <tr>
-                                                                                        <th>@lang('locale.Description')</th>
-                                                                                        <th>@lang('locale.Amount')</th>
-                                                                                    </tr>
-                                                                                    <!--end tr-->
-                                                                                </thead>
-                                                                                <tbody id="row3">
-
-
-                                                                                </tbody>
-                                                                            </table>
-                                                                            <!--end table-->
-                                                                        </div>
-                                                                        <!--end /div-->
-                                                                    </div>
-                                                                    <!--end col-->
-                                                                </div>
-                                                                <!--end row-->
-
-
-                                                                {{-- <div class="row justify-content-center">
-                                                                    <div class="col-lg-12">
-                                                                        <h5 class="mt-4"><i
-                                                                                class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
-                                                                            :</h5>
-                                                                    </div>
-                                                                    <!--end col-->
-                                                                </div> --}}
-                                                                <!--end row-->
-                                                                <div class="row d-flex justify-content-center">
-                                                                    <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
-                                                                        <div class="text-center"><small
-                                                                                class="font-12">Tractocar
-                                                                                Logistics SAS.</small>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end col-->
-                                                                </div>
-                                                                <!--end row-->
-                                                            </div>
-                                                            <!--end card-body-->
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" id="closet-modal" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Cerrar</button>
-                                                        </div>
-                                                    </div>
-                                                    <!--end card-->
-                                                </div>
-                                                <!--end col-->
-                                            </div>
-                                            <!--end row-->
-                                        </div>
-                                    </div>
-                                </div>
-                            {{-- Fin --}}
-
-                            {{-- Modal de visualizacionde facturas en trasnporte--}}
-                                <div class="modal fade" id="exampleModalTransporte" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-lg-12 mx-auto">
-                                                    <div class="modal-content">
-                                                        <div class="card">
-                                                            <div class="card-body invoice-head">
-                                                                <div class="row" id="date_1">
-
-                                                                </div>
-                                                                <!--end row-->
-                                                            </div>
-                                                            <!--end card-body-->
-                                                            <div class="card-body" id="body">
-                                                                <div class="row" id="row1_1">
-                                                                </div>
-                                                                <!--end row-->
-                                                                {{-- <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <div class="table-responsive project-invoice">
-                                                                            <table class="table table-bordered mb-0">
-                                                                                <thead class="thead-light">
-                                                                                    <tr>
-                                                                                        <th>@lang('locale.Description')</th>
-                                                                                        <th>@lang('locale.Amount')</th>
-                                                                                    </tr>
-                                                                                    <!--end tr-->
-                                                                                </thead>
-                                                                                <tbody id="row2">
-
-
-                                                                                </tbody>
-                                                                            </table>
-                                                                            <!--end table-->
-                                                                        </div>
-                                                                        <!--end /div-->
-                                                                    </div>
-                                                                    <!--end col-->
-                                                                </div> --}}
-                                                                <!--end row-->
-
-
-                                                                {{-- <div class="row justify-content-center">
-                                                                    <div class="col-lg-12">
-                                                                        <h5 class="mt-4"><i
-                                                                                class="fas fa-divide mr-2 text-info font-16"></i>@lang('locale.Installments')
-                                                                            :</h5>
-                                                                    </div>
-                                                                    <!--end col-->
-                                                                </div> --}}
-                                                                <!--end row-->
-                                                                <div class="row d-flex justify-content-center">
-                                                                    <div class="col-lg-12 col-xl-4 ml-auto align-self-center">
-                                                                        <div class="text-center"><small
-                                                                                class="font-12">Tractocar
-                                                                                Logistics SAS.</small>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--end col-->
-                                                                </div>
-                                                                <!--end row-->
-                                                            </div>
-                                                            <!--end card-body-->
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" id="closet-modal" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Cerrar</button>
-                                                        </div>
-                                                    </div>
-                                                    <!--end card-->
-                                                </div>
-                                                <!--end col-->
-                                            </div>
-                                            <!--end row-->
-                                        </div>
-                                    </div>
-                                </div>
-                            {{-- Fin --}}
-                        @endcan
-
-                        @can('/facturasGeneral')
-                        <div class="card" id="Fullfacturas-all">
-                            <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                            </h3>
-                            {{-- <div class="card-header border-bottom"> --}}
-                                {{-- <div class="row g-2"> --}}
-                                    {{-- <div class="form-horizontal"> --}}
-                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                                            data-bs-target=".multi-collapse" aria-expanded="false"
-                                            aria-controls="multiCollapseExample1">Filtros</button>
-
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                                                    <div class="card card-body">
-                                                        <form class="form-horizontal" id="filter"
-                                                            action="{{ route('falturas.pagadas') }}" method="post"
-                                                            novalidate>
-                                                            @csrf
-                                                            <div class="row mb-2">
-                                                                <div class="col-md-3">
-                                                                    <label for="SupplierNumber" class="form-label">Tipo
-                                                                        Factura y Numero Factura</label>
-                                                                    <div class="input-group">
-                                                                        <select type="text" name="TipoF" id="TipoF"
-                                                                            class="form-control" tabindex="3"
-                                                                            value="{{ old('TipoF') }}" autofocus>
-                                                                            <option selected value="">Seleccione
-                                                                            </option>
-                                                                            <option value="M">Manifiesto</option>
-                                                                            <option value="">Otro</option>
-                                                                        </select>
-                                                                        <input type="text" name="InvoiceNumber"
-                                                                            id="InvoiceNumber" class="form-control"
-                                                                            tabindex="3"
-                                                                            value="{{ old('InvoiceNumber') }}"
-                                                                            autofocus>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-9">
-                                                                    <label for="SupplierNumber"
-                                                                        class="form-label">Nombre Proveedor</label>
-                                                                    <div class="form-group">
-                                                                        <input type="hidden" class="form-control"
-                                                                            id="customer-code" name="SupplierNumber" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label for="InvoiceLimit" class="form-label"># Factoras que desea visualizar</label>
-                                                                    <select type="text" name="InvoiceLimit"
-                                                                        id="InvoiceLimit" class="form-control"
-                                                                        tabindex="3" value="{{ old('InvoiceLimit') }}"
-                                                                        autofocus>
-                                                                        <option selected value="20">20</option>
-                                                                        <option value="40">40</option>
-                                                                        <option value="60">60</option>
-                                                                        <option value="80">80</option>
-                                                                        <option value="100">100</option>
-                                                                        <option value="200">200</option>
-                                                                        <option value="350">350</option>
-                                                                        <option value="500">500</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label for="InvoiceType" class="form-label">Tipo
-                                                                        de factura</label>
-                                                                    <select type="text" name="InvoiceType"
-                                                                        id="InvoiceType" class="form-control"
-                                                                        tabindex="3" value="{{ old('InvoiceType') }}"
-                                                                        autofocus>
-                                                                        <option selected value="">Todos</option>
-                                                                        <option value="Pago por adelantado">Anticipo
-                                                                        </option>
-                                                                        <option value="Estándar">Estándar</option>
-                                                                        <option value="Nota de crédito">Nota Crédito
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label for="ValidationStatus"
-                                                                        class="form-label">Estado Validación</label>
-                                                                    <select type="text" name="ValidationStatus"
-                                                                        id="ValidationStatus" class="form-control"
-                                                                        tabindex="3"
-                                                                        value="{{ old('ValidationStatus') }}" autofocus>
-                                                                        <option selected value="">Todos</option>
-                                                                        <option value="Cancelada">Cancelada</option>
-                                                                        <option value="Validada">Validada</option>
-                                                                        <option value="Necesita revalidación">
-                                                                            Necesita revalidación</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label for="PaidStatus" class="form-label">Estado
-                                                                        Pago</label>
-                                                                    <select type="text" name="PaidStatus"
-                                                                        id="PaidStatus" class="form-control"
-                                                                        tabindex="3" value="{{ old('PaidStatus') }}"
-                                                                        autofocus>
-                                                                        <option selected value="">Todos</option>
-                                                                        <option value="Pagadas">Pagadas</option>
-                                                                        <option value="Impagado">Impagado</option>
-                                                                        <option value="Pagada parcialmente">
-                                                                            Parcialmente Pagada</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md">
-                                                                    <label for="CanceledFlag" class="form-label">Canceladas</label>
-                                                                    <select type="text" name="CanceledFlag"
-                                                                        id="CanceledFlag" class="form-control"
-                                                                        tabindex="3" value="{{ old('CanceledFlag') }}"
-                                                                        autofocus>
-                                                                        <option selected value="false">No</option>
-                                                                        <option value="true">Si</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label for="title" class="form-label">Fecha
-                                                                        Factura</label>
-                                                                    <div class="input-group">
-                                                                        <select type="text" name="core" id="core"
-                                                                            class="form-control" tabindex="3"
-                                                                            value="{{ old('core') }}" autofocus>
-                                                                            <option selected value="=">Igual que
-                                                                            </option>
-                                                                            <option value=">">Después</option>
-                                                                            <option value="<">Antes</option>
-                                                                        </select>
-                                                                        <input name="InvoiceDate"
-                                                                            id="InvoiceDate" class="form-control"
-                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
-                                                                            onKeyUp="ValidarFecha('InvoiceDate','btnPrFiltr');"
-                                                                            tabindex="3"
-                                                                            value="{{ old('InvoiceDate') }}" autofocus>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <label for="title" class="form-label">Fecha Inicio y
-                                                                        Fecha Fin</label>
-                                                                    <div class="input-group">
-                                                                        <input name="startDate"
-                                                                            id="startDate" class="form-control"
-                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
-                                                                            tabindex="3" value="{{ old('startDate') }}"
-                                                                            onKeyUp="ValidarFecha('startDate','btnPrFiltr');"
-                                                                            autofocus>
-                                                                        <input name="endDate" id="endDate"
-                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
-                                                                            class="form-control" tabindex="3"
-                                                                            onKeyUp="ValidarFecha('endDate','btnPrFiltr');"
-                                                                            value="{{ old('endDate') }}" autofocus>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary"
-                                                                id="btnPrFiltr">Filtrar</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{--
-                                    </div> --}}
-                                {{-- </div> --}}
-                            {{-- </div> --}}
-                            <div class="card-body">
-                                <div class="row row-sm">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table id="TablaFullFacturasAll"
-                                                        class="table table-bordered text-nowrap key-buttons border-bottom  w-100">
-                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </body>
+                    </div>
                         {{-- Modal de visualizacion de facturas --}}
                         <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static"
                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
@@ -894,7 +901,7 @@
 
 
                                                         <div class="row p-2">
-                                                            <div class="col-lg-6">
+                                                            <div class="col-lg-12">
                                                                 <h5 class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Pagos </h5>
 
                                                                 <div class="table-responsive project-invoice">
@@ -917,15 +924,20 @@
                                                             </div>
                                                             <!--end col-->
 
-                                                            <div class="col-lg-6">
+                                                        </div>
+                                                        <!--end row-->
+                                                        <div class="row p-2">
+                                                            <div class="col-lg-12">
                                                                 <h5 class="bg-danger col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block"> Bloqueos </h5>
 
                                                                 <div class="table-responsive project-invoice">
                                                                     <table class="table table-bordered mb-0">
                                                                         <thead class="thead-light">
                                                                             <tr>
-                                                                                <th>@lang('locale.Description')</th>
-                                                                                <th>@lang('locale.Amount')</th>
+                                                                                <th>Nombre Retencion</th>
+                                                                                <th>Razón Retencion</th>
+                                                                                <th>Retenida Por</th>
+                                                                                <th>Fecha Retencion</th>
                                                                             </tr>
                                                                             <!--end tr-->
                                                                         </thead>
@@ -939,9 +951,9 @@
                                                                 <!--end /div-->
                                                             </div>
                                                             <!--end col-->
+
                                                         </div>
                                                         <!--end row-->
-
 
                                                         {{-- <div class="row justify-content-center">
                                                             <div class="col-lg-12">
@@ -979,13 +991,9 @@
                             </div>
                         </div>
                         {{-- Fin --}}
-
-                        @endcan
-                    </div>
+                    @endcan
                 </div>
-                @can('/usuario.index')
             </div>
-            @endcan
         </div>
     </div>
 </body>
@@ -1009,6 +1017,10 @@
         $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
     }
     window.onload = function() {
+        if( $("#faturasGeneral").css("display") == 'none' )
+        $("#faturasGeneral").show("slow");
+        else
+        $("#faturasGeneral").hide("slow");
         $('.multi-collapse').collapse()
         $.ajax({
             type: "POST",
@@ -1905,6 +1917,7 @@
         });
     // Fin
 
+
     // consulta y carga de visualizar de facturas individuales
         let obtener_data = function(tbody, table){
             $(tbody).on("click", "button.ver", function(){
@@ -1919,6 +1932,8 @@
                 plantiilabody = '';
                 plantillarow1 = '';
                 plantillarow2 = '';
+                plantillarow3 = '';
+
                 $.ajax({
                     type: "POST",
                     url: "{{ route('invoice.lines') }}",
@@ -1930,6 +1945,7 @@
                         let invoice = response.data.invoiceData[0]
                         let lines = response.data.invoiceLines
                         let fPago = response.data.invoiceFechaPago[0].PaymentDate
+                        let holds = response.data.holds[0]
 
                         const formatterDolar = new Intl.NumberFormat('en-US', {
                             style: 'currency',
@@ -1953,6 +1969,11 @@
                                         <li class="list-inline-item">
                                             <div class="pl-3">
                                                 <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${invoice.Supplier} </h6>
+                                            </div>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <div class="pl-3">
+                                                <h6 class="mb-0"><b>@lang('locale.Invoice Number') : </b>${invoice.InvoiceNumber} </h6>
                                             </div>
                                         </li>
                                         <li class="list-inline-item">
@@ -1990,9 +2011,6 @@
                                     </td>
                                     <td >
                                         <p class="mb-0 text-muted">${ invoice.PaidStatus }</p>
-                                    </td>
-                                    <td >
-                                        <p class="mb-0 text-muted">${ invoice.PaymentMethod }</p>
                                     </td>
                                     <td >
                                         <p class="mb-0 text-muted">${ invoice.ValidationStatus }</p>
@@ -2034,6 +2052,21 @@
                                     `
                                     $('#row2').append(plantillarow2)
                                 }
+                            });
+
+                            $('#row3').html('')
+                            holds.forEach(hold => {
+                                const date = hold.HoldDate.split('T')[0];
+
+                                plantillarow3 = `
+                                    <tr>
+                                        <td >${ hold.HoldName }</td>
+                                        <td> ${ hold.HoldReason }</td>
+                                        <td> ${ hold.HeldBy }</td>
+                                        <td> ${ date }</td>
+                                    </tr><!--end tr-->
+                                `
+                                $('#row3').append(plantillarow3)
                             });
 
                         }
@@ -2214,6 +2247,10 @@
                 }
             // Fin
 
+            $("#closet-modal").click(function(e) {
+                $("#global-loader3").modal('hide');//ocultamos el modal
+            });
+
             $('#customer-code').select2({
                 placeholder: "Buscar un cliente en OTM",
                 minimumInputLength: 3,
@@ -2338,7 +2375,7 @@
                                 },
 
                                 columns: [
-                                    {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
+                                    {title: "Accion", data: null, defaultContent: "<button type='button' class='verY btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
                                     // {title: "ID Factura", data: "InvoiceId" },
                                     {title: "Numero Factura", data: "InvoiceNumber" },
                                     {title: "Valor Factura",
@@ -2454,7 +2491,6 @@
                                         // console.log(datos);
                                         tblColectionData.clear().draw();
                                         tblColectionData.rows.add(datos).draw();
-
                                         // validacionButton(Card);
 
                                         swal.close();
@@ -2564,7 +2600,7 @@
                         },
 
                         columns: [
-                            {title: "Accion", data: null, defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
+                            {title: "Accion", data: null, defaultContent: "<button type='button' class='verY btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
                             // {title: "ID Factura", data: "InvoiceId" },
                             {title: "Numero Factura", data: "InvoiceNumber" },
                             {title: "Valor Factura",
@@ -2709,7 +2745,8 @@
 
             // consulta y carga de visualizar de facturas individuales
                 let obtener_data = function(tbody, table){
-                    $(tbody).on("click", "button.ver", function(){
+                    $(tbody).on("click", "button.verY", function(e){
+
                         // Activar el spiner de cargar al momento de visualizar la factura
                         // document.getElementById("global-loader3").style.display = "";
                         LoaderView();
@@ -2721,6 +2758,8 @@
                         plantiilabody = '';
                         plantillarow1 = '';
                         plantillarow2 = '';
+                        plantillarow3 = '';
+
                         $.ajax({
                             type: "POST",
                             url: "{{ route('invoice.lines') }}",
@@ -2729,9 +2768,11 @@
                                 InvoiceNumber: invoice.InvoiceNumber
                             },
                             success : function(response) {
+                                // console.log(response.data);
                                 let invoice = response.data.invoiceData[0]
                                 let lines = response.data.invoiceLines
                                 let fPago = response.data.invoiceFechaPago[0].PaymentDate
+                                let holds = response.data.holds[0]
 
                                 const formatterDolar = new Intl.NumberFormat('en-US', {
                                     style: 'currency',
@@ -2755,6 +2796,11 @@
                                                 <li class="list-inline-item">
                                                     <div class="pl-3">
                                                         <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${invoice.Supplier} </h6>
+                                                    </div>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <div class="pl-3">
+                                                        <h6 class="mb-0"><b>@lang('locale.Invoice Number') : </b>${invoice.InvoiceNumber} </h6>
                                                     </div>
                                                 </li>
                                                 <li class="list-inline-item">
@@ -2838,8 +2884,24 @@
                                         }
                                     });
 
+                                    $('#row3').html('')
+                                    holds.forEach(hold => {
+                                        const date = hold.HoldDate.split('T')[0];
+
+                                        plantillarow3 = `
+                                            <tr>
+                                                <td >${ hold.HoldName }</td>
+                                                <td> ${ hold.HoldReason }</td>
+                                                <td> ${ hold.HeldBy }</td>
+                                                <td> ${ date }</td>
+                                            </tr><!--end tr-->
+                                        `
+                                        $('#row3').append(plantillarow3)
+                                    });
+
                                 }
                                 swal.close();
+
                                 $('#exampleModalToggle').modal('show');
                             },
                             error: function(error){

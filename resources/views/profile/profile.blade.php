@@ -3,7 +3,9 @@
 @section('content')
 
 <body class="ltr app sidebar-mini light-mode">
+    @can('/usuario.index')
     <div class="app-content main-content mt-0">
+    @endcan
         <div class="side-app">
             <div class="main-container container-fluid">
                 <div class="row" id="user-profile">

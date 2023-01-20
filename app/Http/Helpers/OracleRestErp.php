@@ -47,6 +47,18 @@ class OracleRestErp
         return $response;
     }
 
+    public static function getinvoiceHolds($params = null){
+        $path = '/fscmRestApi/resources/11.13.18.05/invoiceHolds';
+        $erp = self::getDataAccess();
+        $url  = $erp['server'] . $path;
+        $response = Http::withBasicAuth($erp['username'], $erp['password'])->timeout(60)
+            ->retry(3, 1000)->withHeaders([
+                'REST-Framework-Version' => '2',
+                'Accept-Language' => 'es'
+            ])->get($url, $params);
+        return $response;
+    }
+
     public static function getInvoiceSuppliers($params = null)
     {
         $path = '/fscmRestApi/resources/11.13.18.05/invoices';

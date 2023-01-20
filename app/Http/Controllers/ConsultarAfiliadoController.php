@@ -295,7 +295,7 @@ class ConsultarAfiliadoController extends Controller
         $dataInvoiceFull = [];
         try {
             $params      =  [
-                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
+                'fields'   => 'Supplier,InvoiceId,InvoiceNumber,SupplierNumber,Description,InvoiceAmount,PaymentMethod,CanceledFlag,InvoiceDate,PaidStatus,AmountPaid,InvoiceType,ValidationStatus,AccountingDate,DocumentCategory,DocumentSequence,SupplierSite,Party,PartySite;appliedPrepayments:InvoiceNumber,AppliedAmount;invoiceInstallments:InstallmentNumber,UnpaidAmount,DueDate,GrossAmount,BankAccount',
                 'onlyData' => 'true',
             ];
 
@@ -312,8 +312,22 @@ class ConsultarAfiliadoController extends Controller
             $invoiceF = OracleRestErp::getPayablesPayments($params);
             $invoceF =  $invoiceF->object()->items;
 
-            if ($invoceF == []) {
-                $invoceF = array(['PaymentDate' => 'dentro de la programación de pago']);
+            if ($invoceF == [] && $invoce[0]->PaidStatus == "Pagadas") {
+
+                $params = [
+                    'fields' => 'PaymentDate',
+                    'finder' => 'PaidInvoicesFinder;InvoiceNumber = '.$invoce[0]->appliedPrepayments[0]->InvoiceNumber,
+                    'onlyData' => 'true',
+                ];
+                $invoiceF = OracleRestErp::getPayablesPayments($params);
+                $invoceAnticF =  $invoiceF->object()->items;
+
+                $invoceF = $invoceAnticF[0]->PaymentDate;
+                // return response()->json(['success' => true, 'data' => $invoceF]);
+            }
+            if ($invoceF == [] && $invoce[0]->PaidStatus != "Pagadas") {
+
+                $invoceF = array(['PaymentDate' => '']);
             }
 
             $params = [
@@ -325,10 +339,21 @@ class ConsultarAfiliadoController extends Controller
             $reques = OracleRestErp::getInvoicesLines($invoce[0]->InvoiceId, $params);
             $requesData = $reques->object()->items;
 
+            $params = [
+                'limit' => '5',
+                'fields' => 'HoldName,HoldReason,HeldBy,HoldDate',
+                'onlyData' => 'true'
+            ];
+            $params['q'] = "(InvoiceNumber = '{$invoce[0]->InvoiceNumber}') and (ReleaseName IS NULL)";
+
+            $reques = OracleRestErp::getinvoiceHolds($params);
+            $retenciones = $reques->object()->items;
+
             $dataInvoiceFull = [
-                'invoiceLines'  => $requesData,
                 'invoiceData'   => $invoce,
                 'invoiceFechaPago' => $invoceF,
+                'invoiceLines'  => $requesData,
+                'holds' => array($retenciones),
             ];
             return response()->json(['success' => true, 'data' => $dataInvoiceFull]);
         } catch (Exception $e) {
