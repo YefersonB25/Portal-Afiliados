@@ -323,9 +323,9 @@ class ConsultarAfiliadoController extends Controller
                 $invoceAnticF =  $invoiceF->object()->items;
 
                 $invoceF = $invoceAnticF[0]->PaymentDate;
-                // return response()->json(['success' => true, 'data' => $invoceF]);
             }
             if ($invoceF == [] && $invoce[0]->PaidStatus != "Pagadas") {
+                // return response()->json(['success' => true, 'data' => $invoceF]);
 
                 $invoceF = array(['PaymentDate' => '']);
             }

@@ -2771,7 +2771,7 @@
                                 // console.log(response.data);
                                 let invoice = response.data.invoiceData[0]
                                 let lines = response.data.invoiceLines
-                                let fPago = response.data.invoiceFechaPago[0].PaymentDate
+                                let fPago = response.data.invoiceFechaPago
                                 let holds = response.data.holds[0]
 
                                 const formatterDolar = new Intl.NumberFormat('en-US', {
