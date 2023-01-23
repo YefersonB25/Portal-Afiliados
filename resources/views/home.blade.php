@@ -2453,7 +2453,8 @@
                                             if(d.PaidStatus == 'Pagadas'){
                                                 return 'Pagada';
                                             }
-                                            return ('El pago se le generara dentro de ' + dias + ' Dias');
+                                            var Ndias = Math.trunc(dias)
+                                            return ('El pago se le generara dentro de ' + Ndias + ' Dias');
                                         }
                                     },
 
@@ -2678,7 +2679,8 @@
                                     if(d.PaidStatus == 'Pagadas'){
                                         return 'Pagada';
                                     }
-                                    return ('El pago se le generara dentro de ' + dias + ' Dias');
+                                    var Ndias = Math.trunc(dias)
+                                    return ('El pago se le generara dentro de ' + Ndias + ' Dias');
                                 }
                             },
 
