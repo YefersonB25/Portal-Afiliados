@@ -658,174 +658,173 @@
                     @endcan
 
                     @can('/facturasGeneral')
-                    <div class="collapse" id="faturasGeneral" style="display: none">
-                        <body class="ltr app sidebar-mini">
-                            <div class="row row-sm">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h3 class="text-center" style="text-decoration: underline">FACTURAS
-                                            </h3>
-                                            <div class="main-container container-fluid">
-                                                <div class="card">
-                                                    <div class="row">
-                                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                                                            data-bs-target=".multi-collapse" aria-expanded="false"
-                                                            aria-controls="multiCollapseExample1">Filtros</button>
-                                                    </div>
-                                                    <div class="card-header border-bottom">
+                        <div class="collapse" id="faturasGeneral" style="display: none">
+                            <body class="ltr app sidebar-mini">
+                                <div class="row row-sm">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3 class="text-center" style="text-decoration: underline">FACTURAS
+                                                </h3>
+                                                <div class="main-container container-fluid">
+                                                    <div class="card">
                                                         <div class="row">
-                                                            <div class="col">
-                                                                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                                                                    <div class="card card-body">
-                                                                        <form class="form-horizontal" id="filter"
-                                                                            action="{{ route('falturas.pagadas') }}" method="post"
-                                                                            novalidate>
-                                                                            @csrf
-                                                                            <div class="row mb-2">
-                                                                                <div class="col-md-3">
-                                                                                    <label for="SupplierNumber" class="form-label">Tipo
-                                                                                        Factura y Numero Factura</label>
-                                                                                    <div class="input-group">
-                                                                                        <select type="text" name="TipoF" id="TipoF"
-                                                                                            class="form-control" tabindex="3"
-                                                                                            value="{{ old('TipoF') }}" autofocus>
-                                                                                            <option selected value="">Seleccione
-                                                                                            </option>
-                                                                                            <option value="M">Manifiesto</option>
-                                                                                            <option value="">Otro</option>
-                                                                                        </select>
-                                                                                        <input type="text" name="InvoiceNumber"
-                                                                                            id="InvoiceNumber" class="form-control"
-                                                                                            tabindex="3"
-                                                                                            value="{{ old('InvoiceNumber') }}"
+                                                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target=".multi-collapse" aria-expanded="false"
+                                                                aria-controls="multiCollapseExample1">Filtros</button>
+                                                        </div>
+                                                        <div class="card-header border-bottom">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                                                        <div class="card card-body">
+                                                                            <form class="form-horizontal" id="filter"
+                                                                                action="{{ route('falturas.pagadas') }}" method="post"
+                                                                                novalidate>
+                                                                                @csrf
+                                                                                <div class="row mb-2">
+                                                                                    <div class="col-md-3">
+                                                                                        <label for="SupplierNumber" class="form-label">Tipo
+                                                                                            Factura y Numero Factura</label>
+                                                                                        <div class="input-group">
+                                                                                            <select type="text" name="TipoF" id="TipoF"
+                                                                                                class="form-control" tabindex="3"
+                                                                                                value="{{ old('TipoF') }}" autofocus>
+                                                                                                <option selected value="">Seleccione
+                                                                                                </option>
+                                                                                                <option value="M">Manifiesto</option>
+                                                                                                <option value="">Otro</option>
+                                                                                            </select>
+                                                                                            <input type="text" name="InvoiceNumber"
+                                                                                                id="InvoiceNumber" class="form-control"
+                                                                                                tabindex="3"
+                                                                                                value="{{ old('InvoiceNumber') }}"
+                                                                                                autofocus>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-9">
+                                                                                        <label for="SupplierNumber"
+                                                                                            class="form-label">Nombre Proveedor</label>
+                                                                                        <div class="form-group">
+                                                                                            <input type="hidden" class="form-control"
+                                                                                                id="customer-code" name="SupplierNumber" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <label for="InvoiceLimit" class="form-label"># Factoras que desea visualizar</label>
+                                                                                        <select type="text" name="InvoiceLimit"
+                                                                                            id="InvoiceLimit" class="form-control"
+                                                                                            tabindex="3" value="{{ old('InvoiceLimit') }}"
                                                                                             autofocus>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-9">
-                                                                                    <label for="SupplierNumber"
-                                                                                        class="form-label">Nombre Proveedor</label>
-                                                                                    <div class="form-group">
-                                                                                        <input type="hidden" class="form-control"
-                                                                                            id="customer-code" name="SupplierNumber" />
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <label for="InvoiceLimit" class="form-label"># Factoras que desea visualizar</label>
-                                                                                    <select type="text" name="InvoiceLimit"
-                                                                                        id="InvoiceLimit" class="form-control"
-                                                                                        tabindex="3" value="{{ old('InvoiceLimit') }}"
-                                                                                        autofocus>
-                                                                                        <option selected value="20">20</option>
-                                                                                        <option value="40">40</option>
-                                                                                        <option value="60">60</option>
-                                                                                        <option value="80">80</option>
-                                                                                        <option value="100">100</option>
-                                                                                        <option value="200">200</option>
-                                                                                        <option value="350">350</option>
-                                                                                        <option value="500">500</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <label for="InvoiceType" class="form-label">Tipo
-                                                                                        de factura</label>
-                                                                                    <select type="text" name="InvoiceType"
-                                                                                        id="InvoiceType" class="form-control"
-                                                                                        tabindex="3" value="{{ old('InvoiceType') }}"
-                                                                                        autofocus>
-                                                                                        <option selected value="">Todos</option>
-                                                                                        <option value="Pago por adelantado">Anticipo
-                                                                                        </option>
-                                                                                        <option value="Estándar">Estándar</option>
-                                                                                        <option value="Nota de crédito">Nota Crédito
-                                                                                        </option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <label for="ValidationStatus"
-                                                                                        class="form-label">Estado Validación</label>
-                                                                                    <select type="text" name="ValidationStatus"
-                                                                                        id="ValidationStatus" class="form-control"
-                                                                                        tabindex="3"
-                                                                                        value="{{ old('ValidationStatus') }}" autofocus>
-                                                                                        <option selected value="">Todos</option>
-                                                                                        <option value="Cancelada">Cancelada</option>
-                                                                                        <option value="Validada">Validada</option>
-                                                                                        <option value="Necesita revalidación">
-                                                                                            Necesita revalidación</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <label for="PaidStatus" class="form-label">Estado
-                                                                                        Pago</label>
-                                                                                    <select type="text" name="PaidStatus"
-                                                                                        id="PaidStatus" class="form-control"
-                                                                                        tabindex="3" value="{{ old('PaidStatus') }}"
-                                                                                        autofocus>
-                                                                                        <option selected value="">Todos</option>
-                                                                                        <option value="Pagadas">Pagadas</option>
-                                                                                        <option value="Impagado">Impagado</option>
-                                                                                        <option value="Pagada parcialmente">
-                                                                                            Parcialmente Pagada</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-md">
-                                                                                    <label for="CanceledFlag" class="form-label">Canceladas</label>
-                                                                                    <select type="text" name="CanceledFlag"
-                                                                                        id="CanceledFlag" class="form-control"
-                                                                                        tabindex="3" value="{{ old('CanceledFlag') }}"
-                                                                                        autofocus>
-                                                                                        <option selected value="false">No</option>
-                                                                                        <option value="true">Si</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <label for="title" class="form-label">Fecha
-                                                                                        Factura</label>
-                                                                                    <div class="input-group">
-                                                                                        <select type="text" name="core" id="core"
-                                                                                            class="form-control" tabindex="3"
-                                                                                            value="{{ old('core') }}" autofocus>
-                                                                                            <option selected value="=">Igual que
-                                                                                            </option>
-                                                                                            <option value=">">Después</option>
-                                                                                            <option value="<">Antes</option>
+                                                                                            <option selected value="20">20</option>
+                                                                                            <option value="40">40</option>
+                                                                                            <option value="60">60</option>
+                                                                                            <option value="80">80</option>
+                                                                                            <option value="100">100</option>
+                                                                                            <option value="200">200</option>
+                                                                                            <option value="350">350</option>
+                                                                                            <option value="500">500</option>
                                                                                         </select>
-                                                                                        <input name="InvoiceDate"
-                                                                                            id="InvoiceDate" class="form-control"
-                                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
-                                                                                            onKeyUp="ValidarFecha('InvoiceDate','btnPrFiltr');"
-                                                                                            tabindex="3"
-                                                                                            value="{{ old('InvoiceDate') }}" autofocus>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="col-md-3">
-                                                                                    <label for="title" class="form-label">Fecha Inicio y
-                                                                                        Fecha Fin</label>
-                                                                                    <div class="input-group">
-                                                                                        <input name="startDate"
-                                                                                            id="startDate" class="form-control"
-                                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
-                                                                                            tabindex="3" value="{{ old('startDate') }}"
-                                                                                            onKeyUp="ValidarFecha('startDate','btnPrFiltr');"
+                                                                                    <div class="col-md-3">
+                                                                                        <label for="InvoiceType" class="form-label">Tipo
+                                                                                            de factura</label>
+                                                                                        <select type="text" name="InvoiceType"
+                                                                                            id="InvoiceType" class="form-control"
+                                                                                            tabindex="3" value="{{ old('InvoiceType') }}"
                                                                                             autofocus>
-                                                                                        <input name="endDate" id="endDate"
-                                                                                            placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
-                                                                                            class="form-control" tabindex="3"
-                                                                                            onKeyUp="ValidarFecha('endDate','btnPrFiltr');"
-                                                                                            value="{{ old('endDate') }}" autofocus>
+                                                                                            <option selected value="">Todos</option>
+                                                                                            <option value="Pago por adelantado">Anticipo
+                                                                                            </option>
+                                                                                            <option value="Estándar">Estándar</option>
+                                                                                            <option value="Nota de crédito">Nota Crédito
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <label for="ValidationStatus"
+                                                                                            class="form-label">Estado Validación</label>
+                                                                                        <select type="text" name="ValidationStatus"
+                                                                                            id="ValidationStatus" class="form-control"
+                                                                                            tabindex="3"
+                                                                                            value="{{ old('ValidationStatus') }}" autofocus>
+                                                                                            <option selected value="">Todos</option>
+                                                                                            <option value="Cancelada">Cancelada</option>
+                                                                                            <option value="Validada">Validada</option>
+                                                                                            <option value="Necesita revalidación">
+                                                                                                Necesita revalidación</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <label for="PaidStatus" class="form-label">Estado
+                                                                                            Pago</label>
+                                                                                        <select type="text" name="PaidStatus"
+                                                                                            id="PaidStatus" class="form-control"
+                                                                                            tabindex="3" value="{{ old('PaidStatus') }}"
+                                                                                            autofocus>
+                                                                                            <option selected value="">Todos</option>
+                                                                                            <option value="Pagadas">Pagadas</option>
+                                                                                            <option value="Impagado">Impagado</option>
+                                                                                            <option value="Pagada parcialmente">
+                                                                                                Parcialmente Pagada</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col-md">
+                                                                                        <label for="CanceledFlag" class="form-label">Canceladas</label>
+                                                                                        <select type="text" name="CanceledFlag"
+                                                                                            id="CanceledFlag" class="form-control"
+                                                                                            tabindex="3" value="{{ old('CanceledFlag') }}"
+                                                                                            autofocus>
+                                                                                            <option selected value="false">No</option>
+                                                                                            <option value="true">Si</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <label for="title" class="form-label">Fecha
+                                                                                            Factura</label>
+                                                                                        <div class="input-group">
+                                                                                            <select type="text" name="core" id="core"
+                                                                                                class="form-control" tabindex="3"
+                                                                                                value="{{ old('core') }}" autofocus>
+                                                                                                <option selected value="=">Igual que
+                                                                                                </option>
+                                                                                                <option value=">">Después</option>
+                                                                                                <option value="<">Antes</option>
+                                                                                            </select>
+                                                                                            <input name="InvoiceDate"
+                                                                                                id="InvoiceDate" class="form-control"
+                                                                                                placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                                onKeyUp="ValidarFecha('InvoiceDate','btnPrFiltr');"
+                                                                                                tabindex="3"
+                                                                                                value="{{ old('InvoiceDate') }}" autofocus>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <label for="title" class="form-label">Fecha Inicio y
+                                                                                            Fecha Fin</label>
+                                                                                        <div class="input-group">
+                                                                                            <input name="startDate"
+                                                                                                id="startDate" class="form-control"
+                                                                                                placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                                tabindex="3" value="{{ old('startDate') }}"
+                                                                                                onKeyUp="ValidarFecha('startDate','btnPrFiltr');"
+                                                                                                autofocus>
+                                                                                            <input name="endDate" id="endDate"
+                                                                                                placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                                class="form-control" tabindex="3"
+                                                                                                onKeyUp="ValidarFecha('endDate','btnPrFiltr');"
+                                                                                                value="{{ old('endDate') }}" autofocus>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <button type="submit" class="btn btn-primary"
-                                                                                id="btnPrFiltr">Filtrar</button>
-                                                                        </form>
+                                                                                <button type="submit" class="btn btn-primary"
+                                                                                    id="btnPrFiltr">Filtrar</button>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="card-body">
                                                         <div class="row row-sm">
                                                             <div class="col-lg-12">
                                                                 <div class="card">
@@ -845,9 +844,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </body>
-                    </div>
+                            </body>
+                        </div>
                         {{-- Modal de visualizacion de facturas --}}
                         <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static"
                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
@@ -1100,7 +1098,6 @@
 </script>
 
 @can('/facturas')
-{{-- <script src={{ asset('assets/js/table-invoice.js') }}></script> --}}
 <script>
     // Funccion de consulta validaciones y carga de datos Datatable
         let LoadData = function(PaidStatus, CanceledFlag, TableName, InvoiceType,ValidationStatus, Card, startDate, endDate, InvoiceLimit ) {
@@ -1270,6 +1267,7 @@
                 ],
 
             });
+
             let validacionButton = function (Card) {
                 if(Card == "#oculto-por-pagar")  {
 
@@ -1340,187 +1338,55 @@
 
                 }
             }
-            // e.preventDefault();//detemos el formluario
-            if (InvoiceLimit > 20) {
-                const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('falturas.pagadas') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    SupplierNumber: {{$SupplierNumber}},
+                    CanceledFlag: CanceledFlag,
+                    PaidStatus: PaidStatus,
+                    InvoiceType: InvoiceType,
+                    InvoiceLimit: InvoiceLimit,
+                    core: "=",
+                    ValidationStatus: ValidationStatus,
+                    startDate: startDate,
+                    endDate: endDate
+
+
                 },
-                buttonsStyling: false
-                })
+                success: function(response) {
+                    let datos =  response.data;
+                    if (response.success == true) {
 
-                swalWithBootstrapButtons.fire({
-                title: 'Advertencia',
-                text: "Tenga en cuanta que al aumentar el rango de carga de facturas la respuesta demorara un poco más.!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, Entiendo',
-                cancelButtonText: 'Cancelar',
-                reverseButtons: true
-                }).then((result) => {
-                    if (result.isConfirmed) {
+                        tblColectionData.clear().draw();
+                        tblColectionData.rows.add(datos).draw();
 
-                        Load(InvoiceLimit);
+                        validacionButton(Card);
 
-                        $.ajax({
-                            type: 'POST',
-                            url: "{{ route('falturas.pagadas') }}",
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                SupplierNumber: {{$SupplierNumber}},
-                                CanceledFlag: CanceledFlag,
-                                PaidStatus: PaidStatus,
-                                InvoiceType: InvoiceType,
-                                InvoiceLimit: InvoiceLimit,
-                                core: "=",
-                                ValidationStatus: ValidationStatus,
-                                startDate: startDate,
-                                endDate: endDate
-
-
-                            },
-                            success: function(response) {
-                                let datos =  response.data;
-                                if (response.success == true) {
-
-                                    tblColectionData.clear().draw();
-                                    tblColectionData.rows.add(datos).draw();
-
-                                    validacionButton(Card);
-
-                                    swal.close();
-                                }else {
-                                    swal.close();
-                                    Loader();
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Oops...',
-                                        text: datos,
-                                    })
-                                }
-                            },
-                            error: function(error){
-                                swal.close();
-                                Loader();
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'Algo fallo con la respuesta!',
-                                })
-                                console.error(error);
-                            }
-                        })
-
-                    }else if (
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire(
-                            'Consulta Cancelada'
-                        )
-                    }
-                })
-            } else if(InvoiceLimit == 20) {
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('falturas.pagadas') }}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        SupplierNumber: {{$SupplierNumber}},
-                        CanceledFlag: CanceledFlag,
-                        PaidStatus: PaidStatus,
-                        InvoiceType: InvoiceType,
-                        InvoiceLimit: 20,
-                        core: "=",
-                        ValidationStatus: ValidationStatus,
-                        startDate: startDate,
-                        endDate: endDate
-
-
-                    },
-                    success: function(response) {
-                        let datos =  response.data;
-                        if (response.success == true) {
-
-                            tblColectionData.clear().draw();
-                            tblColectionData.rows.add(datos).draw();
-
-                            validacionButton(Card);
-
-                            swal.close();
-                        }else {
-                            swal.close();
-                            Loader();
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: datos,
-                            })
-                        }
-                    },
-                    error: function(error){
+                        swal.close();
+                    }else {
                         swal.close();
                         Loader();
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Algo fallo con la respuesta!',
+                            text: datos,
                         })
-                        console.error(error);
                     }
-                })
-            }
-            if (InvoiceLimit == '') {
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('falturas.pagadas') }}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        SupplierNumber: {{$SupplierNumber}},
-                        CanceledFlag: CanceledFlag,
-                        PaidStatus: PaidStatus,
-                        InvoiceType: InvoiceType,
-                        InvoiceLimit: 20,
-                        core: "=",
-                        ValidationStatus: ValidationStatus,
-                        startDate: startDate,
-                        endDate: endDate
-
-
-                    },
-                    success: function(response) {
-                        let datos =  response.data;
-                        if (response.success == true) {
-
-                            tblColectionData.clear().draw();
-                            tblColectionData.rows.add(datos).draw();
-
-                            validacionButton(Card);
-
-                            swal.close();
-                        }else {
-                            swal.close();
-                            Loader();
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: datos,
-                            })
-                        }
-                    },
-                    error: function(error){
-                        swal.close();
-                        Loader();
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Algo fallo con la respuesta!',
-                        })
-                        console.error(error);
-                    }
-                })
-            }
-
+                },
+                error: function(error){
+                    swal.close();
+                    Loader();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Algo fallo con la respuesta!',
+                    })
+                    console.error(error);
+                }
+            })
         }
 
         let LoadDataShipment = function(TableName, Card, ShipmentsLimit ) {
@@ -1825,7 +1691,7 @@
             var ShipmentsLimit = document.getElementById("ShipmentsLimit").value;
             tblColectionData.clear().draw();
             // Loader();
-        if (ShipmentsLimit > 20) {
+            if (ShipmentsLimit > 20) {
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
                         confirmButton: 'btn btn-success',
@@ -1851,7 +1717,7 @@
                                 'Consulta Cancelada'
                             )
                         }
-                });
+                    });
 
             }else if(ShipmentsLimit == 20) {
 
@@ -1872,7 +1738,40 @@
             var endDate = document.getElementById("endDate").value;
             tblColectionData.clear().draw();
             // Loader();
-            LoadData(PaidStatus, CanceledFlag, "#TablaFacturasAll",InvoiceType,ValidationStatus,"",startDate,endDate, InvoiceLimit);
+            if (InvoiceLimit > 20) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: 'Advertencia',
+                    text: "Tenga en cuanta que al aumentar el rango de carga de facturas la respuesta demorara un poco más.!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, Entiendo',
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                            Load(InvoiceLimit);
+                            LoadData(PaidStatus, CanceledFlag, "#TablaFacturasAll",InvoiceType,ValidationStatus,"",startDate,endDate, InvoiceLimit);
+
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            swalWithBootstrapButtons.fire(
+                                'Consulta Cancelada'
+                            )
+                        }
+                    });
+
+            }else if(InvoiceLimit == 20) {
+
+                Load(InvoiceLimit);
+                LoadData(PaidStatus, CanceledFlag, "#TablaFacturasAll",InvoiceType,ValidationStatus,"",startDate,endDate, InvoiceLimit);
+            }
             obtener_data("#TablaFacturasAll tbody", tblColectionData);
         });
     // Fin
@@ -2213,10 +2112,226 @@
 
 @can('/facturasGeneral')
 <script>
-    // Función para permitir sólo números, retroceso y enter
+    // Funccion de consulta validaciones y carga de datos Datatable
+        let LoadDataAll = function (table,form) {
+            tblColectionData =  $(table).DataTable({
+
+                retrieve: true,
+
+                dom: 'Bfrtip',
+                "buttons": [
+                    {
+                        extend: 'collection',
+                        text: 'Exportar',
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                className: 'btn',
+                                text: "Excel",
+                                exportOptions: {
+                                columns: ":not(.no-exportar)"
+                                }
+                            },
+                            {
+                                extend: 'csv',
+                                className: 'btn',
+                                text: "CSV",
+                                exportOptions: {
+                                    columns: ":not(.no-exportar)"
+                                }
+                            },
+                            {
+                                extend: 'pdf',
+                                className: 'btn',
+                                text: "PDF",
+                                exportOptions: {
+                                columns: ":not(.no-exportar)"
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                className: 'btn',
+                                text: "Imprimir",
+                                exportOptions: {
+                                columns: ":not(.no-exportar)"
+                                }
+                            },
+                        ],
+                    }
+                ],
+
+                language: {
+                    "sProcessing": "Procesando...",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+
+                    "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                    },
+
+                    "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+
+                },
+
+                columns: [
+                    {title: "Accion", data: null, defaultContent: "<button type='button' class='verY btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
+                    // {title: "ID Factura", data: "InvoiceId" },
+                    {title: "Numero Factura", data: "InvoiceNumber" },
+                    {title: "Valor Factura",
+                        data: function ( d ) {
+
+                            const formatterDolar = new Intl.NumberFormat('en-US', {
+                                style: 'currency',
+                                currency: 'USD',
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            })
+
+                            return formatterDolar.format(d.InvoiceAmount);
+                        }
+                    },
+                    // {title: "Descripción", data: "Description" },
+                    {title: "Saldo",
+                        data: function ( d ) {
+
+                            const formatterDolar = new Intl.NumberFormat('en-US', {
+                                style: 'currency',
+                                currency: 'USD',
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            })
+
+                            return formatterDolar.format( d.invoiceInstallments[0]["UnpaidAmount"] );
+                        }
+                    },
+                    // {title: "ValidationStatus", data: "ValidationStatus"},
+
+                    {title: "Monto Pagado",
+                        data: function ( d ) {
+                            const formatterDolar = new Intl.NumberFormat('en-US', {
+                                style: 'currency',
+                                currency: 'USD',
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            })
+
+                            return formatterDolar.format(d.AmountPaid);
+
+                        }
+                    },
+
+                    // {title: "Cuenta bancaria",
+                    //     data: function ( d ) {
+                    //         return d.invoiceInstallments[0]["BankAccount"]}
+                    // },
+                    {title: "Estado Pago",
+                        data: function ( d ) {
+
+                            // create a new `Date` object
+                            var today = new Date();
+
+                            // `getDate()` returns the day of the month (from 1 to 31)
+                            var day = today.getDate();
+
+                            // `getMonth()` returns the month (from 0 to 11)
+                            var month = today.getMonth() + 1;
+
+                            // `getFullYear()` returns the full year
+                            var year = today.getFullYear();
+
+                            var date1 = new Date(d.invoiceInstallments[0]["DueDate"]);
+                            var date2 = new Date (`${year}-${month}-${day}`);
+                            var dateDefined = date1 - date2;
+                            var dias =  dateDefined/(1000*60*60*24);
+                            if (d.CanceledFlag == true) {
+                                return 'Cancelada'
+                            }
+                            if ( dias <= 0 && d.PaidStatus != 'Pagadas') {
+                                return 'dentro de la programación de pago';
+                            }
+                            if(d.PaidStatus == 'Pagadas'){
+                                return 'Pagada';
+                            }
+                            var Ndias = Math.trunc(dias)
+                            return ('El pago se le generara dentro de ' + Ndias + ' Dias');
+                        }
+                    },
+
+                    {title: "Fecha Factura",  data: "InvoiceDate" },
+
+                    // {title: "Tipo de Factura", data: "InvoiceType" },
+                    // {title: "Pago realizado", data: "AccountingDate" }
 
 
-        // Función para verificar que la fecha escrita sea correcta según el formato YYYYMMDD
+
+                ],
+
+                columnDefs: [
+                    { responsivePriority: 1, targets: 0 },
+                    { responsivePriority: 1, targets: 1 },
+                    { responsivePriority: 1, targets: 2 },
+                    { responsivePriority: 1, targets: 3 },
+                    { responsivePriority: 1, targets: 4 },
+                    { responsivePriority: 1, targets: 5 },
+                    // { responsivePriority: 1, targets: 6 },
+                ],
+
+            });
+
+            $.ajax({
+                type: $(form).attr('method'),
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                url: $(form).attr('action'),
+                data: $(form).serialize(),
+                success: function(response) {
+                    let datos =  response.data;
+                    // var invoiceInstallments = datos[0].invoiceInstallments;
+                    if (response.success == true) {
+                        // console.log(datos);
+                        tblColectionData.clear().draw();
+                        tblColectionData.rows.add(datos).draw();
+                        // validacionButton(Card);
+
+                        swal.close();
+                    }else {
+                        swal.close();
+                        Loader();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: datos,
+                        })
+                    }
+                },
+                error: function(error){
+                    swal.close();
+                    Loader();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Algo fallo con la respuesta!',
+                    })
+                    console.error(error);
+                }
+            });
+        }
+    // Fin
 
             function mayus(e) {
                 e.value = e.value.toUpperCase();
@@ -2277,9 +2392,12 @@
                 }
             });
 
+
             $(document).on("submit","#filter",function(e){
                 e.preventDefault();//detemos el formluario
+
                 let InvoiceLimit = document.getElementById('InvoiceLimit').value
+
                 if (InvoiceLimit > 20) {
                     const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
@@ -2301,225 +2419,11 @@
                         if (result.isConfirmed) {
 
                             Loader(InvoiceLimit);
-                            tblColectionData =  $('#TablaFullFacturasAll').DataTable({
-
-                                retrieve: true,
-
-                                dom: 'Bfrtip',
-                                "buttons": [
-                                    {
-                                        extend: 'collection',
-                                        text: 'Exportar',
-                                        buttons: [
-                                            {
-                                                extend: 'excel',
-                                                className: 'btn',
-                                                text: "Excel",
-                                                exportOptions: {
-                                                columns: ":not(.no-exportar)"
-                                                }
-                                            },
-                                            {
-                                                extend: 'csv',
-                                                className: 'btn',
-                                                text: "CSV",
-                                                exportOptions: {
-                                                    columns: ":not(.no-exportar)"
-                                                }
-                                            },
-                                            {
-                                                extend: 'pdf',
-                                                className: 'btn',
-                                                text: "PDF",
-                                                exportOptions: {
-                                                columns: ":not(.no-exportar)"
-                                                }
-                                            },
-                                            {
-                                                extend: 'print',
-                                                className: 'btn',
-                                                text: "Imprimir",
-                                                exportOptions: {
-                                                columns: ":not(.no-exportar)"
-                                                }
-                                            },
-                                        ],
-                                    }
-                                ],
-
-                                language: {
-                                    "sProcessing": "Procesando...",
-                                    "sZeroRecords": "No se encontraron resultados",
-                                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-                                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
-                                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                                    "sInfoPostFix": "",
-                                    "sSearch": "Buscar:",
-                                    "sUrl": "",
-                                    "sInfoThousands": ",",
-                                    "sLoadingRecords": "Cargando...",
-
-                                    "oPaginate": {
-                                    "sFirst": "Primero",
-                                    "sLast": "Último",
-                                    "sNext": "Siguiente",
-                                    "sPrevious": "Anterior"
-                                    },
-
-                                    "oAria": {
-                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                                    }
-
-                                },
-
-                                columns: [
-                                    {title: "Accion", data: null, defaultContent: "<button type='button' class='verY btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
-                                    // {title: "ID Factura", data: "InvoiceId" },
-                                    {title: "Numero Factura", data: "InvoiceNumber" },
-                                    {title: "Valor Factura",
-                                        data: function ( d ) {
-
-                                            const formatterDolar = new Intl.NumberFormat('en-US', {
-                                                style: 'currency',
-                                                currency: 'USD',
-                                                minimumFractionDigits: 2,
-                                                maximumFractionDigits: 2
-                                            })
-
-                                            return formatterDolar.format(d.InvoiceAmount);
-                                        }
-                                    },
-                                    // {title: "Descripción", data: "Description" },
-                                    {title: "Saldo",
-                                        data: function ( d ) {
-
-                                            const formatterDolar = new Intl.NumberFormat('en-US', {
-                                                style: 'currency',
-                                                currency: 'USD',
-                                                minimumFractionDigits: 2,
-                                                maximumFractionDigits: 2
-                                            })
-
-                                            return formatterDolar.format( d.invoiceInstallments[0]["UnpaidAmount"] );
-                                        }
-                                    },
-                                    // {title: "ValidationStatus", data: "ValidationStatus"},
-
-                                    {title: "Monto Pagado",
-                                        data: function ( d ) {
-                                            const formatterDolar = new Intl.NumberFormat('en-US', {
-                                                style: 'currency',
-                                                currency: 'USD',
-                                                minimumFractionDigits: 2,
-                                                maximumFractionDigits: 2
-                                            })
-
-                                            return formatterDolar.format(d.AmountPaid);
-
-                                        }
-                                    },
-
-                                    // {title: "Cuenta bancaria",
-                                    //     data: function ( d ) {
-                                    //         return d.invoiceInstallments[0]["BankAccount"]}
-                                    // },
-                                    {title: "Estado Pago",
-                                        data: function ( d ) {
-
-                                            // create a new `Date` object
-                                            var today = new Date();
-
-                                            // `getDate()` returns the day of the month (from 1 to 31)
-                                            var day = today.getDate();
-
-                                            // `getMonth()` returns the month (from 0 to 11)
-                                            var month = today.getMonth() + 1;
-
-                                            // `getFullYear()` returns the full year
-                                            var year = today.getFullYear();
-
-                                            var date1 = new Date(d.invoiceInstallments[0]["DueDate"]);
-                                            var date2 = new Date (`${year}-${month}-${day}`);
-                                            var dateDefined = date1 - date2;
-                                            var dias =  dateDefined/(1000*60*60*24);
-                                            if (d.CanceledFlag == true) {
-                                                return 'Cancelada'
-                                            }
-                                            if ( dias <= 0 && d.PaidStatus != 'Pagadas') {
-                                                return 'dentro de la programación de pago';
-                                            }
-                                            if(d.PaidStatus == 'Pagadas'){
-                                                return 'Pagada';
-                                            }
-                                            var Ndias = Math.trunc(dias)
-                                            return ('El pago se le generara dentro de ' + Ndias + ' Dias');
-                                        }
-                                    },
-
-                                    {title: "Fecha Factura",  data: "InvoiceDate" },
-
-                                    // {title: "Tipo de Factura", data: "InvoiceType" },
-                                    // {title: "Pago realizado", data: "AccountingDate" }
-
-
-
-                                ],
-
-                                columnDefs: [
-                                    { responsivePriority: 1, targets: 0 },
-                                    { responsivePriority: 1, targets: 1 },
-                                    { responsivePriority: 1, targets: 2 },
-                                    { responsivePriority: 1, targets: 3 },
-                                    { responsivePriority: 1, targets: 4 },
-                                    { responsivePriority: 1, targets: 5 },
-                                    // { responsivePriority: 1, targets: 6 },
-                                ],
-
-                            });
-                            $.ajax({
-                                type: $('#filter').attr('method'),
-                                headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                url: $('#filter').attr('action'),
-                                data: $('#filter').serialize(),
-                                success: function(response) {
-                                    let datos =  response.data;
-                                    // var invoiceInstallments = datos[0].invoiceInstallments;
-                                    if (response.success == true) {
-                                        // console.log(datos);
-                                        tblColectionData.clear().draw();
-                                        tblColectionData.rows.add(datos).draw();
-                                        // validacionButton(Card);
-
-                                        swal.close();
-                                    }else {
-                                        swal.close();
-                                        Loader();
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Oops...',
-                                            text: datos,
-                                        })
-                                    }
-                                },
-                                error: function(error){
-                                    swal.close();
-                                    Loader();
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Oops...',
-                                        text: 'Algo fallo con la respuesta!',
-                                    })
-                                    console.error(error);
-                                }
-                            });
+                            LoadDataAll('#TablaFullFacturasAll','#filter');
+                            tblColectionData.clear().draw();
                             obtener_data("#TablaFullFacturasAll tbody", tblColectionData);
-                        }else if (
-                            result.dismiss === Swal.DismissReason.cancel
-                        ) {
+
+                        }else if ( result.dismiss === Swal.DismissReason.cancel) {
                             swalWithBootstrapButtons.fire(
                                 'Consulta Cancelada'
                             )
@@ -2527,222 +2431,11 @@
                     })
                 } else if(InvoiceLimit == 20) {
                     Loader(InvoiceLimit);
-                    tblColectionData =  $('#TablaFullFacturasAll').DataTable({
-
-                        retrieve: true,
-
-                        dom: 'Bfrtip',
-                        "buttons": [
-                            {
-                                extend: 'collection',
-                                text: 'Exportar',
-                                buttons: [
-                                    {
-                                        extend: 'excel',
-                                        className: 'btn',
-                                        text: "Excel",
-                                        exportOptions: {
-                                        columns: ":not(.no-exportar)"
-                                        }
-                                    },
-                                    {
-                                        extend: 'csv',
-                                        className: 'btn',
-                                        text: "CSV",
-                                        exportOptions: {
-                                            columns: ":not(.no-exportar)"
-                                        }
-                                    },
-                                    {
-                                        extend: 'pdf',
-                                        className: 'btn',
-                                        text: "PDF",
-                                        exportOptions: {
-                                        columns: ":not(.no-exportar)"
-                                        }
-                                    },
-                                    {
-                                        extend: 'print',
-                                        className: 'btn',
-                                        text: "Imprimir",
-                                        exportOptions: {
-                                        columns: ":not(.no-exportar)"
-                                        }
-                                    },
-                                ],
-                            }
-                        ],
-
-                        language: {
-                            "sProcessing": "Procesando...",
-                            "sZeroRecords": "No se encontraron resultados",
-                            "sEmptyTable": "Ningún dato disponible en esta tabla",
-                            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-                            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
-                            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                            "sInfoPostFix": "",
-                            "sSearch": "Buscar:",
-                            "sUrl": "",
-                            "sInfoThousands": ",",
-                            "sLoadingRecords": "Cargando...",
-
-                            "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                            },
-
-                            "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                            }
-
-                        },
-
-                        columns: [
-                            {title: "Accion", data: null, defaultContent: "<button type='button' class='verY btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
-                            // {title: "ID Factura", data: "InvoiceId" },
-                            {title: "Numero Factura", data: "InvoiceNumber" },
-                            {title: "Valor Factura",
-                                data: function ( d ) {
-
-                                    const formatterDolar = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    })
-
-                                    return formatterDolar.format(d.InvoiceAmount);
-                                }
-                            },
-                            // {title: "Descripción", data: "Description" },
-                            {title: "Saldo",
-                                data: function ( d ) {
-
-                                    const formatterDolar = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    })
-
-                                    return formatterDolar.format( d.invoiceInstallments[0]["UnpaidAmount"] );
-                                }
-                            },
-                            // {title: "ValidationStatus", data: "ValidationStatus"},
-
-                            {title: "Monto Pagado",
-                                data: function ( d ) {
-                                    const formatterDolar = new Intl.NumberFormat('en-US', {
-                                        style: 'currency',
-                                        currency: 'USD',
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    })
-
-                                    return formatterDolar.format(d.AmountPaid);
-
-                                }
-                            },
-
-                            // {title: "Cuenta bancaria",
-                            //     data: function ( d ) {
-                            //         return d.invoiceInstallments[0]["BankAccount"]}
-                            // },
-                            {title: "Estado Pago",
-                                data: function ( d ) {
-
-                                    // create a new `Date` object
-                                    var today = new Date();
-
-                                    // `getDate()` returns the day of the month (from 1 to 31)
-                                    var day = today.getDate();
-
-                                    // `getMonth()` returns the month (from 0 to 11)
-                                    var month = today.getMonth() + 1;
-
-                                    // `getFullYear()` returns the full year
-                                    var year = today.getFullYear();
-
-                                    var date1 = new Date(d.invoiceInstallments[0]["DueDate"]);
-                                    var date2 = new Date (`${year}-${month}-${day}`);
-                                    var dateDefined = date1 - date2;
-                                    var dias =  dateDefined/(1000*60*60*24);
-                                    if (d.CanceledFlag == true ) {
-                                        return 'Cancelada';
-                                    }
-                                    if ( dias <= 0 && d.PaidStatus != 'Pagadas') {
-                                        return 'dentro de la programación de pago';
-                                    }
-                                    if(d.PaidStatus == 'Pagadas'){
-                                        return 'Pagada';
-                                    }
-                                    var Ndias = Math.trunc(dias)
-                                    return ('El pago se le generara dentro de ' + Ndias + ' Dias');
-                                }
-                            },
-
-                            {title: "Fecha Factura",  data: "InvoiceDate" },
-
-                            // {title: "Tipo de Factura", data: "InvoiceType" },
-                            // {title: "Pago realizado", data: "AccountingDate" }
-                        ],
-
-                        columnDefs: [
-                            { responsivePriority: 1, targets: 0 },
-                            { responsivePriority: 1, targets: 1 },
-                            { responsivePriority: 1, targets: 2 },
-                            { responsivePriority: 1, targets: 3 },
-                            { responsivePriority: 1, targets: 4 },
-                            { responsivePriority: 1, targets: 5 },
-                            // { responsivePriority: 1, targets: 6 },
-                        ],
-
-                    });
-                    $.ajax({
-                        type: $('#filter').attr('method'),
-                        headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                        url: $('#filter').attr('action'),
-                        data: $('#filter').serialize(),
-                        success: function(response) {
-                            let datos =  response.data;
-                            // var invoiceInstallments = datos[0].invoiceInstallments;
-                            if (response.success == true) {
-                                // console.log(datos);
-                                tblColectionData.clear().draw();
-                                tblColectionData.rows.add(datos).draw();
-
-                                // validacionButton(Card);
-
-                                swal.close();
-                            }else {
-                                swal.close();
-                                Loader();
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: datos,
-                                })
-                            }
-                        },
-                        error: function(error){
-                            swal.close();
-                            Loader();
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Algo fallo con la respuesta!',
-                            })
-                            console.error(error);
-                        }
-                    });
+                    LoadDataAll('#TablaFullFacturasAll','#filter');
+                    tblColectionData.clear().draw();
                     obtener_data("#TablaFullFacturasAll tbody", tblColectionData);
-                }
 
+                }
             });
 
             // consulta y carga de visualizar de facturas individuales
@@ -2770,10 +2463,10 @@
                                 InvoiceNumber: invoice.InvoiceNumber
                             },
                             success : function(response) {
-                                // console.log(response.data);
+                                // console.log(response.data.invoiceFechaPago);
                                 let invoice = response.data.invoiceData[0]
                                 let lines = response.data.invoiceLines
-                                let fPago = response.data.invoiceFechaPago
+                                let fPago = response.data.invoiceFechaPago[0]['PaymentDate']
                                 let holds = response.data.holds[0]
 
                                 const formatterDolar = new Intl.NumberFormat('en-US', {

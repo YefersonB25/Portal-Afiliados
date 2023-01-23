@@ -48,10 +48,7 @@ class ConsultarAfiliadoController extends Controller
      */
     //? Consulta facturas api
 
-    #[QueryParam("identification", "integer", required: true)]
-    #[QueryParam("FlagStatus", "It is to check if the invoice is valid or canceled [true, false]", "string", required: true)]
-    #[QueryParam("PaidStatus", "It is to check the paid status of the invoice. [Paid, Unpaid, Partially paid]", "string", required: true)]
-    #[QueryParam("InvoiceType", "It is to consult the invoices by type of invoice.", "string", required: false)]
+
     public function suppliers(Request $request)
     {
         // return response()->json(['success' => true, 'data' => 'hola']);
@@ -225,7 +222,6 @@ class ConsultarAfiliadoController extends Controller
         // }
     }
 
-    #[QueryParam("id", "user ID", "int", required: true)]
     public function getSupplierNumber(Request $request)
     {
         try {
@@ -289,7 +285,6 @@ class ConsultarAfiliadoController extends Controller
         }
     }
 
-    #[QueryParam("Developing", "null")]
     public function getInvoiceLines(Request $request)
     {
         $dataInvoiceFull = [];
@@ -308,6 +303,7 @@ class ConsultarAfiliadoController extends Controller
                 'fields' => 'PaymentDate',
                 'finder' => 'PaidInvoicesFinder;InvoiceNumber = '.$invoce[0]->InvoiceNumber,
                 'onlyData' => 'true',
+                'limit' => '1'
             ];
             $invoiceF = OracleRestErp::getPayablesPayments($params);
             $invoceF =  $invoiceF->object()->items;
@@ -320,15 +316,16 @@ class ConsultarAfiliadoController extends Controller
                     'onlyData' => 'true',
                 ];
                 $invoiceF = OracleRestErp::getPayablesPayments($params);
-                $invoceAnticF =  $invoiceF->object()->items;
+                $invoceF =  $invoiceF->object()->items;
 
-                $invoceF = $invoceAnticF[0]->PaymentDate;
             }
             if ($invoceF == [] && $invoce[0]->PaidStatus != "Pagadas") {
-                // return response()->json(['success' => true, 'data' => $invoceF]);
 
-                $invoceF = array(['PaymentDate' => '']);
+                $invoceF =  [
+                    ['PaymentDate' => '0000-00-00'],
+                ];
             }
+            // return response()->json(['success' => true, 'data' => $invoceF[0]['PaymentDate']]);
 
             $params = [
                 'limit'    => '200',
@@ -362,7 +359,6 @@ class ConsultarAfiliadoController extends Controller
         }
     }
 
-    #[QueryParam("Developing", "null")]
     public function consultaOTM($id)
     {
         try {
@@ -449,7 +445,6 @@ class ConsultarAfiliadoController extends Controller
         }
     }
 
-    #[QueryParam("userId", "kinship id, to consult the provider to which it is associated", "integer", required: true)]
     public function proveedorEncargado(Request $request)
     {
         if ($request->userId != '') {
