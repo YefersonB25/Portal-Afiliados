@@ -78,6 +78,12 @@
                                                 !!}
                                             </div>
                                         </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12" style = "visibility:hidden">
+                                            <div class="form-group">
+                                                <label for="status" >Estado</label>
+                                                {!! Form::text('status', null, array('class' => 'form-control')) !!}
+                                            </div>
+                                        </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <button type="submit" class="btn btn-primary">Guardar</button>
                                         </div>

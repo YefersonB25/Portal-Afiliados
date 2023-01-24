@@ -95,6 +95,8 @@ class UsuarioController extends Controller
         ]);
 
         $input = $request->all();
+
+        $input['status'] = 'NUEVO';
         $input['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
