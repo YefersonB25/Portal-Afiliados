@@ -44,7 +44,6 @@ class PerfilController extends Controller
                 'users.deleted_at as delete',
                 'relationship.deleted_at',
             )->get();
-            // dd($user_relation);
 
         return view('profile.profile', [
             'user_relation' => $user_relation,

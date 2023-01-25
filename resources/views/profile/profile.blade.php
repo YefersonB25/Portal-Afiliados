@@ -28,6 +28,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if ($user->status != 'ASOCIADO')
                                     <div class="col-lg-12 col-md-12 col-xl-6">
                                         <div class="d-md-flex flex-wrap justify-content-lg-end">
                                             <div class="media m-3">
@@ -43,6 +44,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="border-top">
