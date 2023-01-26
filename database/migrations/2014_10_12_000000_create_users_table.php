@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('phone', 11)->nullable();
             $table->string('photo', 500)->nullable();
             $table->string('photo_id', 500)->nullable();
-            $table->enum('status', ['NUEVO', 'CONFIRMADO', 'RECHAZADO', 'ASOCIADO'])->nullable();
+            $table->enum('status', ['NUEVO', 'CONFIRMADO', 'RECHAZADO', 'ASOCIADO'])->default('NUEVO');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
