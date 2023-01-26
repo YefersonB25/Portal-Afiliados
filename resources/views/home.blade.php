@@ -645,6 +645,7 @@
                                                         <button type="button" id="closet-modal" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Cerrar</button>
                                                     </div>
+
                                                 </div>
                                                 <!--end card-->
                                             </div>
@@ -1001,10 +1002,18 @@
 @if (Session::has('message'))
 <script>
     Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: '{{Session::get('message')}}',
-            })
+        icon: 'error',
+        title: 'Oops...',
+        text: '{{Session::get('message')}}',
+        })
+
+    // function printDiv(nombreDiv) {
+    //     var contenido = document.getElementById(nombreDiv).innerHTML;
+    //     var contenidoOriginal= document.body.innerHTML;
+    //     document.body.innerHTML = contenido;
+    //     window.print();
+    //     document.body.innerHTML = contenidoOriginal;
+    // }
 </script>
 @endif
 
@@ -1014,6 +1023,7 @@
         let $yourUl = $("#global-loader2");
         $yourUl.css("display", $yourUl.css("display") === 'none' ? '' : 'none');
     }
+
     window.onload = function() {
         if( $("#faturasGeneral").css("display") == 'none' )
         $("#faturasGeneral").show("slow");
@@ -1078,11 +1088,11 @@
             }
         })
     }
+
     function ValidarFecha(id, btn){
         // Almacenamos el valor digitado en TxtFecha
         var Fecha = document.getElementById(id).value;
         const button = document.getElementById(btn)
-        var Mensaje = '';
 
         // Si la fecha está completa comenzamos la validación
             if(Fecha.length != 10 )
@@ -1091,8 +1101,7 @@
                 button.disabled = false
             if(Fecha.length == "")
                 button.disabled = false
-            // Mostramos el mesaje
-            // document.getElementById('Mensaje').innerHTML = Mensaje;
+
     }
 
 </script>
@@ -1706,7 +1715,7 @@
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Sí, Entiendo',
-                    cancelButtonText: 'Cancelar',
+                    cancelButtonText: 'Mmm... mejor no',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -1752,8 +1761,9 @@
                     text: "Tenga en cuanta que al aumentar el rango de carga de facturas la respuesta demorara un poco más.!",
                     icon: 'warning',
                     showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
                     confirmButtonText: 'Sí, Entiendo',
-                    cancelButtonText: 'Cancelar',
+                    cancelButtonText: 'Mmm... mejor no',
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
