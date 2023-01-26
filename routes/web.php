@@ -40,6 +40,8 @@ Route::prefix('portal/users')->controller(UsuarioController::class)->middleware(
     Route::post('/', 'filtros')->name('user.filtros');
     Route::delete('/deleted', 'destroy')->name('usuario.eliminar');
     Route::get('/confimacion', 'confirmarUser')->name('consultar.proveedorLocal');
+
+    Route::get('/testinvoice', 'test')->name('consultar.invoicetest');
 });
 Route::resource('portal/usuarios', UsuarioController::class);
 

@@ -203,7 +203,7 @@ class UsuarioController extends Controller
         $user->assignRole($request->input('roles'));
 
         Session::flash('message1', 'store');
-        return back();
+        return redirect()->route('usuario.index');
     }
 
     public function destroy(Request $request)
@@ -249,5 +249,10 @@ class UsuarioController extends Controller
         }
 
         // dd($result);
+    }
+
+    public function test(Request $request)
+    {
+        return view('vendor.invoices.templates.default');
     }
 }
