@@ -72,4 +72,10 @@
         Swal.fire('Espere a que se verifique su información, esto podría tardar unos minutos, al correo registrado le estará llegando la confirmación.')
     </script>
 @endif
+
+{{-- @if(session("mantenimiento"))
+<script>
+    Swal.fire('Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.')
+</script> --}}
+@endif
 @endsection

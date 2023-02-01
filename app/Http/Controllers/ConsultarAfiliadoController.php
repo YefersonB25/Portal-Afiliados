@@ -152,6 +152,7 @@ class ConsultarAfiliadoController extends Controller
                 $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceNumber = '{$NumberInvoice}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->CanceledFlag}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
 
                 $invoice = OracleRestErp::getInvoiceSuppliers($params);
+                // return response()->json(['success' => true, 'data' => $params['q']]);
 
                 //? Validamos que nos traiga las facturas
                 if ($invoice['count'] == 0) {

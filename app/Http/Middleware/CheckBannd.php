@@ -27,6 +27,10 @@ class CheckBannd
             return redirect()->route('login')->with('error', 'Los datos de la cuenta aun no han sido validados.');
         }
 
+        // if (auth()->check() && (auth()->user()->status != 'NUEVO')) {
+        //     return redirect()->route('login')->with('mantenimiento', 'Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.');
+        // }
+
         return $next($request);
     }
 }

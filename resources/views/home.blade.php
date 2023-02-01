@@ -302,12 +302,12 @@
                                                                                 <div class="input-group">
                                                                                     <input name="startDate"
                                                                                         id="startDate" class="form-control"
-                                                                                        placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                        placeholder="YYYY-MM-DD" data-mask="yyyy-mm-dd"
                                                                                         tabindex="3" value="{{ old('startDate') }}"
                                                                                         onKeyUp="ValidarFecha('startDate','btnPrFiltr');"
                                                                                         autofocus>
                                                                                     <input name="endDate" id="endDate"
-                                                                                        placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                        placeholder="YYYY-MM-DD" data-mask="yyyy-mm-dd"
                                                                                         class="form-control" tabindex="3"
                                                                                         onKeyUp="ValidarFecha('endDate','btnPrFiltr');"
                                                                                         value="{{ old('endDate') }}" autofocus>
@@ -794,7 +794,7 @@
                                                                                             </select>
                                                                                             <input name="InvoiceDate"
                                                                                                 id="InvoiceDate" class="form-control"
-                                                                                                placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                                placeholder="YYYY-MM-DD" data-mask="yyyy-mm-dd"
                                                                                                 onKeyUp="ValidarFecha('InvoiceDate','btnPrFiltr');"
                                                                                                 tabindex="3"
                                                                                                 value="{{ old('InvoiceDate') }}" autofocus>
@@ -806,12 +806,12 @@
                                                                                         <div class="input-group">
                                                                                             <input name="startDate"
                                                                                                 id="startDate" class="form-control"
-                                                                                                placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                                placeholder="YYYY-MM-DD" data-mask="yyyy-mm-dd"
                                                                                                 tabindex="3" value="{{ old('startDate') }}"
                                                                                                 onKeyUp="ValidarFecha('startDate','btnPrFiltr');"
                                                                                                 autofocus>
                                                                                             <input name="endDate" id="endDate"
-                                                                                                placeholder="MM/DD/YYYY" data-mask="dd/mm/yyyy"
+                                                                                                placeholder="YYYY-MM-DD" data-mask="yyyy-mm-dd"
                                                                                                 class="form-control" tabindex="3"
                                                                                                 onKeyUp="ValidarFecha('endDate','btnPrFiltr');"
                                                                                                 value="{{ old('endDate') }}" autofocus>
@@ -1347,7 +1347,6 @@
 
                 }
             }
-
             $.ajax({
                 type: 'POST',
                 url: "{{ route('falturas.pagadas') }}",
@@ -1362,7 +1361,6 @@
                     ValidationStatus: ValidationStatus,
                     startDate: startDate,
                     endDate: endDate
-
 
                 },
                 success: function(response) {
@@ -2068,7 +2066,7 @@
                                                 }
                                             </h6>
                                             <h6> <b>Estado Anticipo : </b>
-                                                ANTICIPO_CUMPLIDO_NUEVO
+                                                MANIFIESTO_CUMPLIDO_NUEVO
                                             </h6>
                                         </div>
                                     </div>
@@ -2197,6 +2195,16 @@
 
                 },
 
+                "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                    if (aData.InvoiceAmount < 0) {
+                        $('td:eq(2)', nRow).css('background-color', '#ed5c42');
+                    }if (aData.invoiceInstallments[0].UnpaidAmount < 0) {
+                        $('td:eq(3)', nRow).css('background-color', '#ed5c42');
+                    }if (aData.AmountPaid < 0) {
+                        $('td:eq(4)', nRow).css('background-color', '#ed5c42');
+                    }
+                },
+                
                 columns: [
                     {title: "Accion", data: null, defaultContent: "<button type='button' class='verY btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"},
                     // {title: "ID Factura", data: "InvoiceId" },
@@ -2210,7 +2218,10 @@
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2
                             })
-
+                            // if(d.InvoiceAmount < 0){
+                            //     let valor = formatterDolar.format(d.InvoiceAmount);
+                            //     return valor.style.color = "red";
+                            // }
                             return formatterDolar.format(d.InvoiceAmount);
                         }
                     },
