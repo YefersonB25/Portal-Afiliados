@@ -73,9 +73,5 @@
     </script>
 @endif
 
-{{-- @if(session("mantenimiento"))
-<script>
-    Swal.fire('Los sistemas ERP y OTM en este momento estan fuera de servicio, reeintentelo mas tarde.')
-</script> --}}
 @endif
 @endsection
