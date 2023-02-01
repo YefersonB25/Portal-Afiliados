@@ -73,5 +73,4 @@
     </script>
 @endif
 
-@endif
 @endsection
