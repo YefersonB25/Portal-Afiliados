@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultarAfiliadoController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\WebserviceOtmController;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +70,13 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
     Route::post('/logout', 'logout');
 });
+
+
+// Prueba Api OrderReleases OTM
+Route::post('webservice/orderReleases/create', [WebserviceOtmController::class, 'store'])
+    ->middleware('auth.basic');
+
+
 
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(RolController::class)->group( function () {
     // Route::controller(RolController::class)->group(function () {
