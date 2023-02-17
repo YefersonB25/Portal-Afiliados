@@ -31,6 +31,8 @@ class WebserviceOtmController extends Controller
                 'result'           => null
             ];
             // HelperIntegration::storeIntegrationResult($integrationResult);
+            Log::info("ReleaseGid: '{$ReleaseGid}'");
+
             return response()->json(
                 [
                     'result' => $integrationResult,
