@@ -14,7 +14,7 @@ class WebserviceOtmController extends Controller
     {
         try {
             // Process convert XML
-            $xmlContent         = str_replace('otm:', '', $request->getContent());
+            $xmlContent         = str_replace('otm:', '', $request->xml->getContent());
             $xmlToJson          = json_decode(json_encode((array)simplexml_load_string($xmlContent), true));
             $transmissionHeader = $xmlToJson->TransmissionHeader;
             $transmissionBody   = $xmlToJson->TransmissionBody;
@@ -26,7 +26,7 @@ class WebserviceOtmController extends Controller
                 'integration_name' => 'OTM Process OrderReleases',
                 'integration_id'   => $ReleaseGid,
                 'activity_name'    => 'XML reception',
-                'payload'          => print_r($request->getContent(), true),
+                'payload'          => print_r($request->xml->getContent(), true),
                 'status_code'      => 201,
                 'result'           => null
             ];
