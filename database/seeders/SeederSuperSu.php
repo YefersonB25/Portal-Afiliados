@@ -62,24 +62,15 @@ class SeederSuperSu extends Seeder
             ]);
 
 
-            User::create([
-                'name'          => 'Yeferson Bolaños Cardales',
-                'number_id'     => '1002249426',
-                'document_type' => 'CC',
-                'email'         => 'ybolanos@tractocar.com',
-                'phone'         => '3022360722',
-                'status'        => 'CONFIRMADO',
-                'password'      => bcrypt('123456')
-            ])->assignRole('Administrador');
-            User::create([
-                'name'          => 'Elkin Moreno',
-                'number_id'     => '1143413441',
-                'document_type' => 'CC',
-                'email'         => 'emoreno@tractocar.com',
-                'phone'         => '3162543022',
-                'status'        => 'CONFIRMADO',
-                'password'      => bcrypt('123456')
-            ])->assignRole('Administrador');
+        User::create([
+            'name'          => 'Usuario Administrador',
+            'number_id'     => '1002249426',
+            'document_type' => 'CC',
+            'email'         => 'info@tractocar.com',
+            'phone'         => '3022360722',
+            'status'        => 'CONFIRMADO',
+            'password'      => bcrypt('mlP30o#T9#pYgf')
+        ])->assignRole('Administrador');
 
     }
 }
