@@ -14,33 +14,43 @@ class WebserviceOtmController extends Controller
     {
         try {
             // Process convert XML
-            $xmlContent         = str_replace('otm:', '', $request->xml->getContent());
+            // $xmlContent         = str_replace('otm:', '', $request->getContent());
+            // $xmlToJson          = json_decode(json_encode((array)simplexml_load_string($xmlContent), true));
+            // $transmissionHeader = $xmlToJson->TransmissionHeader;
+            // $transmissionBody   = $xmlToJson->TransmissionBody;
+            // $body               = $transmissionBody->GLogXMLElement;
+            // $ReleaseGid = $body->Release->ReleaseGid->Gid->Xid;
+            $xmlContent         = str_replace('otm:', '', $request->getContent());
             $xmlToJson          = json_decode(json_encode((array)simplexml_load_string($xmlContent), true));
             $transmissionHeader = $xmlToJson->TransmissionHeader;
             $transmissionBody   = $xmlToJson->TransmissionBody;
             $body               = $transmissionBody->GLogXMLElement;
-            $ReleaseGid = $body->Release->ReleaseGid->Gid->Xid;
+            $shipmentXid        = $body->PlannedShipment->Shipment->ShipmentHeader->ShipmentGid->Gid->Xid;
+            $shipmentGid        = 'TCL.' . $shipmentXid;
+
 
             // Store Database Logs
             $integrationResult = [
                 'integration_name' => 'OTM Process OrderReleases',
-                'integration_id'   => $ReleaseGid,
+                'integration_id'   => $shipmentXid,
                 'activity_name'    => 'XML reception',
-                'payload'          => print_r($request->xml->getContent(), true),
+                'payload'          => print_r($request->getContent(), true),
                 'status_code'      => 201,
                 'result'           => null
             ];
             // HelperIntegration::storeIntegrationResult($integrationResult);
+            Log::info("shipmentXid: '{$shipmentXid}'");
+
             return response()->json(
                 [
                     'result' => $integrationResult,
-                    'ReleaseGid' => $ReleaseGid
+                    'shipmentXid' => $shipmentXid
                 ]
             );
         } catch (Exception $e) {
             $integrationResult = [
                 'integration_name' => 'OTM Process OrderReleases',
-                'integration_id'   => $ReleaseGid,
+                'integration_id'   => $shipmentXid,
                 'activity_name'    => 'Pit Process Error',
                 'payload'          => '',
                 'status_code'      => 400,
