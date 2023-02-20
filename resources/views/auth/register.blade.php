@@ -14,6 +14,15 @@
                 </div>
                 <div class="container-login100">
                     <div class="wrap-login100 p-0">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div><br />
+                        @endif
                         <div class="card-body">
                             <form method="POST" action="{{ route('register') }}" class="login100-form validate-form" enctype="multipart/form-data">
                                 <span class="login100-form-title">
@@ -143,6 +152,22 @@
                                     </span>
                                 </div>
 
+                                <div class="form-group mt-3 mb-3">
+                                    <div class="captcha">
+                                        <span>{!! captcha_img() !!}</span>
+                                        <button type="button" class="btn btn-danger" class="refresh-captcha" id="refresh-captcha">
+                                            &#x21bb;
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-4">
+                                    <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('captcha') }}
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12 mt-4">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
@@ -162,3 +187,18 @@
     </body>
 @endsection
 
+@section('scripts')
+<script>
+
+    $('#refresh-captcha').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: "{{route('refresh.captcha')}}",
+            success: function (data) {
+                $(".captcha span").html(data.captcha);
+            }
+        });
+    });
+
+</script>
+@endsection

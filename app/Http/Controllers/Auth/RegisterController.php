@@ -61,7 +61,9 @@ class RegisterController extends Controller
             'phone' => ['required','numeric'],
             'document_type' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'captcha' => ['required','captcha:'. request('key') . ',math']
         ]);
+
     }
 
     /**
@@ -73,6 +75,7 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+
         // dd($data);
         $roles = Role::get();
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Configs;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ConsultarAfiliadoController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\PerfilController;
 use Illuminate\Support\Facades\Auth;
 
@@ -92,11 +93,9 @@ Route::prefix('portal/setting')->controller(Configs::class)->middleware('auth')-
     Route::post('/', 'update', 'can:/usuario.index')->name('setting.update');
     Route::get('/create', 'create', 'can:/usuario.index')->name('setting.create');
     Route::post('/store', 'store', 'can:/usuario.index')->name('setting.store');
-
-
-
 });
 
+Route::get('/refresh-captcha', [FormController::class, 'refreshCaptcha'])->name('refresh.captcha');
 
 
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function () use ($router) {

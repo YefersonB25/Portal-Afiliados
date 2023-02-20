@@ -184,6 +184,9 @@ return [
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Propaganistas\LaravelDisposableEmail\DisposableEmailServiceProvider::class,
 
+        //Captcha
+        Mews\Captcha\CaptchaServiceProvider::class,
+
     ],
 
     /*
@@ -238,7 +241,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ],
 
 ];

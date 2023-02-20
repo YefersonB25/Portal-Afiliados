@@ -48,6 +48,8 @@
 <!-- PERFECT SCROLLBAR JS-->
 <script src={{ asset('assets/plugins/p-scroll/perfect-scrollbar.js') }}></script>
 {{-- <script src={{ asset('assets/plugins/p-scroll/pscroll.js') }}></script> --}}
+<!-- JQUERY JS -->
+<script src={{ asset('assets/js/jquery.min.js') }}></script>
 
 <!-- Form Validations js -->
 <script src= {{asset('assets/js/form-validation.js')}}></script>
