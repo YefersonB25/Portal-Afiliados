@@ -7,7 +7,10 @@ use App\Providers\RouteServiceProvider;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -26,14 +29,14 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    // use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -57,11 +60,11 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
-            'number_id' => ['required','numeric', 'unique:users',],
+            'number_id' => ['required','numeric', 'unique:users'],
             'phone' => ['required','numeric'],
             'document_type' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'captcha' => ['required','captcha:'. request('key') . ',math']
+            // 'captcha' => ['required','captcha:'. request('key') . ',math']
         ]);
 
     }
@@ -72,6 +75,11 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
+
+     public function showRegistrationForm()
+     {
+         return view('auth.register');
+     }
 
     protected function create(array $data)
     {
@@ -96,6 +104,9 @@ class RegisterController extends Controller
                 'phone'              => $data['phone'],
                 'status'                =>'NUEVO',
                 'password'              => Hash::make($data['password']),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+
             ]);
 
         //? le asignamos el rol
@@ -134,6 +145,19 @@ class RegisterController extends Controller
                        'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
                        ]);
         }
+
+
+
+    }
+
+    public function register(Request $request)
+    {
+
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return redirect()->route('login')->with('error', 'Los datos de la cuenta aun no han sido validados.');
 
     }
 
