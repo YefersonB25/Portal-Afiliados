@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('auth/login');
-});
+})->name('login');
 
 Auth::routes(['verify' => true]);
 
@@ -51,7 +51,7 @@ Route::resource('portal/usuarios', UsuarioController::class);
 
 Route::get('forgot-password', [AuthController::class, 'email'])->name('forgot-password');
 
-    // Route::delete('/deleted', 'destroy')->name('usuario.eliminar');
+// Route::delete('/deleted', 'destroy')->name('usuario.eliminar');
 
 //? Perfil - Usuarios Asociados
 Route::prefix('profile')->controller(PerfilController::class)->middleware('auth')->group(function () {
@@ -98,13 +98,12 @@ Route::prefix('portal/setting')->controller(Configs::class)->middleware('auth')-
     Route::post('/store', 'store', 'can:/usuario.index')->name('setting.store');
     Route::get('/statistics', 'statistics', 'can:/usuario.index')->name('setting.statistics');
     Route::get('/statistics/filter', 'filter', 'can:/usuario.index')->name('setting.statistics.filter');
-
 });
 
 Route::get('/refresh-captcha', [FormController::class, 'refreshCaptcha'])->name('refresh.captcha');
 
 Route::prefix('error')->controller(ErrorController::class)->middleware('auth')->group(function () {
-    Route::get('/404','error404')->name('error404');
+    Route::get('/404', 'error404')->name('error404');
 });
 
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer', 'can:/usuario.index'], function () use ($router) {

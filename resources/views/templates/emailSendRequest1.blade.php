@@ -379,14 +379,15 @@
 									<div class="text" style="padding: 0 2.5em; text-align: center;">
 										<h2>{{$request->name}}</h2>
 
-                                            @if ($status == 'aprobado')
-                                                <h3>Sus datos han sido validado satisfactoria mente, ya puede acceder al sistema.</h3>
-                                                @else
-                                                <h3>Sus datos fueron rechazados por falta de informacion o informacion erronea.</h3>
-                                            @endif
+										@if ($status == 'aprobado')
+										<h3>Sus datos han sido validado satisfactoria mente, ya puede acceder al
+											sistema.</h3>
+										@else
+										<h3>Sus datos fueron rechazados por falta de informacion o informacion erronea.
+										</h3>
+										@endif
 										<p>
-											<a href={{"https://proveedores.tractocar.com/"}} class="
-												btn btn-primary">Ingresar</a>
+											<a class="btn btn-primary" href="{{ route('login') }}">Ingresar</a>
 										</p>
 									</div>
 								</td>
