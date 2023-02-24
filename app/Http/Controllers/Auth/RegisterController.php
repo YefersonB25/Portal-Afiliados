@@ -67,6 +67,7 @@ class RegisterController extends Controller
             // 'captcha' => ['required','captcha:'. request('key') . ',math']
         ]);
 
+
     }
 
     /**
