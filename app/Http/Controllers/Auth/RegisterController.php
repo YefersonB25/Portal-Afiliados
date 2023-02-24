@@ -60,7 +60,7 @@ class RegisterController extends Controller
             'phone' => ['required', 'numeric'],
             'document_type' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            // 'captcha' => ['required','captcha:'. request('key') . ',math']
+            'captcha' => ['required','captcha:'. request('key') . ',math']
         ]);
     }
 
