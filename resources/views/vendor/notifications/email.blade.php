@@ -11,9 +11,10 @@
 @endif
 
 {{-- Intro Lines --}}
-<p>
-    Has recibido este mensaje porque has solicitado cambiar la contraseña de tu <strong>Portal Afiliados TC.</strong>.
-</p>
+@foreach ($introLines as $line)
+{{ $line }}
+@endforeach
+
 {{-- Action Button --}}
 @isset($actionText)
 <?php
@@ -32,11 +33,11 @@
 @endisset
 
 {{-- Outro Lines --}}
-<p>
-    Este enlace de restablecimiento de contraseña caducará en 60 minutos.
+@foreach ($outroLines as $line)
+{{ $line }}
 
-    Si no solicitó un restablecimiento de contraseña, no se requiere ninguna otra acción.
-</p>
+@endforeach
+
 
 {{-- Salutation --}}
 @if (! empty($salutation))
@@ -51,8 +52,8 @@ TC LOGISTICS
 @slot('subcopy')
 
 @lang(
-    "Si tiene problemas para hacer clic en el botón \":actionText\", copie y pegue la siguiente URL\n".
-    'en su navegador web:',
+    "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
+    'into your web browser:',
     [
         'actionText' => $actionText,
     ]

@@ -1,21 +1,25 @@
-@extends('layouts.app')
+@extends('layouts.auth_app')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-7" style="margin-top: 2%">
-                <div class="box">
-                    <h3 class="box-title" style="padding: 2%">Verifique su dirección de correo electrónico</h3>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ __('Verifique su dirección de correo electrónico') }}</div>
 
-                    <div class="box-body">
+                    <div class="card-body">
                         @if (session('resent'))
-                            <div class="alert alert-success" role="alert">Se ha enviado un nuevo enlace de verificación a
-                                Su dirección de correo electrónico
+                            <div class="alert alert-success" role="alert">
+                                {{ __('Se ha enviado un nuevo enlace de verificación a su dirección de correo electrónico.') }}
                             </div>
                         @endif
-                        <p>Antes de continuar, verifique su correo electrónico para obtener un enlace de verificación. Si no recibió
-                            el correo electrónico,</p>
-                        <a href="{{ route('verification.resend') }}">haga clic aquí para solicitar otro'</a>.
+
+                        {{ __('Antes de continuar, verifique su electrónico para obtener un enlace de verificación.') }}
+                        {{ __('Si no recibiste el correo electrónico') }},
+                        <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-link p-0 m-0 align-baseline">haga clic aquí para solicitar otro</button>.
+                        </form>
                     </div>
                 </div>
             </div>

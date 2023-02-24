@@ -19,7 +19,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','verified']);
     }
     /**
      * Show the application dashboard.
@@ -28,6 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $rol = Auth::User()->rol;
 
         if ($rol->role_id == 1) {
@@ -60,8 +61,7 @@ class HomeController extends Controller
             $res = $response->json();
 
             if ($res['items'] == []) {
-                $data = 'No se encontro el proveedor';
-                return JsonResponse::create($data, 200, array('Content-Type' => 'application/json; charset=utf-8'));
+                return redirect()->route('error404');
             }
 
             $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
@@ -76,6 +76,7 @@ class HomeController extends Controller
             return view('home');
         }
     }
+    
     public function docs()
     {
         return view('auth/docs/index');

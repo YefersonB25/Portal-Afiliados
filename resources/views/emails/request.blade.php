@@ -386,7 +386,7 @@
                                             @endif
 										<p>
 											@if($estado == 'aprobado')
-											    <a href={{"http://127.0.0.1:8000/login"}} class="btn btn-primary">Ingresar</a>
+											    <a href={{"https://proveedores.tractocar.com/"}} class="btn btn-primary">Ingresar</a>
 											@else
 											<h4>Comunicarese con el Administrador</h4>
 											@endif

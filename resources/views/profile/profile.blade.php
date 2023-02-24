@@ -191,6 +191,15 @@
                             <div class="tab-pane" id="accountSettings">
                                 <div class="card">
                                     <div class="card-body">
+                                        @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div><br />
+                                        @endif
                                         {{-- <div class="alert alert-success" id="alert" style="display: none;">&nbsp;
                                         </div> --}}
                                         <form method="POST" id="rgisterform" action="{{route('userAsociado.create')}}"
@@ -252,16 +261,16 @@
                                                     </div>
                                                     <div class="col-md-9">
                                                         <div class="wrap-input100 validate-input">
-                                                            <select class="form-control" name="document-type"
+                                                            <select class="form-control" name="document_type"
                                                                 aria-label=".form-select-sm example" required>
                                                                 <option selected value="">Seleccione tipo Documento
                                                                 </option>
                                                                 <option value="NIT">NIT</option>
-                                                                <option value="Cedula de Ciudadania">Cedula de
+                                                                <option value="CC">Cedula de
                                                                     Ciudadania</option>
                                                             </select>
                                                             <div class="invalid-feedback">
-                                                                {{ $errors->first('document-type') }}
+                                                                {{ $errors->first('document_type') }}
                                                             </div>
                                                         </div>
                                                     </div>

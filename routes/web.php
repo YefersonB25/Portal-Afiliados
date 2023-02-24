@@ -8,6 +8,7 @@ use App\Http\Controllers\Configs;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ConsultarAfiliadoController;
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\PerfilController;
 use Illuminate\Support\Facades\Auth;
@@ -27,9 +28,11 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes(['verify' => true]);
 
-Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
 
 //? Usuarios-Clientes
 Route::prefix('portal/users')->controller(UsuarioController::class)->middleware('auth')->group(function () {
@@ -93,11 +96,17 @@ Route::prefix('portal/setting')->controller(Configs::class)->middleware('auth')-
     Route::post('/', 'update', 'can:/usuario.index')->name('setting.update');
     Route::get('/create', 'create', 'can:/usuario.index')->name('setting.create');
     Route::post('/store', 'store', 'can:/usuario.index')->name('setting.store');
+    Route::get('/statistics', 'statistics', 'can:/usuario.index')->name('setting.statistics');
+    Route::get('/statistics/filter', 'filter', 'can:/usuario.index')->name('setting.statistics.filter');
+
 });
 
 Route::get('/refresh-captcha', [FormController::class, 'refreshCaptcha'])->name('refresh.captcha');
 
+Route::prefix('error')->controller(ErrorController::class)->middleware('auth')->group(function () {
+    Route::get('/404','error404')->name('error404');
+});
 
-$router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function () use ($router) {
+$router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer', 'can:/usuario.index'], function () use ($router) {
     $router->get('portal/setting/logs', 'LogViewerController@index')->name('setting.logs');
 });

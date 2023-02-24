@@ -75,7 +75,7 @@
                                 </div>
 
                                 <div class="wrap-input100 validate-input">
-                                    <select class="form-select" name="document_type" aria-label=".form-select-sm example" required>
+                                    <select class="form-select input100" name="document_type" aria-label=".form-select-sm example" autofocus value="{{ old('document_type') }}" required>
                                         <option selected value="">Seleccione tipo Documento</option>
                                         <option value="NIT">NIT</option>
                                         <option value="CC">Cedula de Ciudadania</option>
@@ -129,7 +129,7 @@
                                 <div class="wrap-input100 validate-input">
                                     <input id="password" type="password"
                                         class="form-control input100{{ $errors->has('password') ? ' is-invalid': '' }}"
-                                        placeholder="Contraseña" name="password" tabindex="2" required>
+                                        placeholder="Contraseña" name="password" tabindex="2" minlength="8" required>
                                     <div class="invalid-feedback">
                                         {{ $errors->first('password') }}
                                     </div>
@@ -142,7 +142,7 @@
                                 <div class="wrap-input100 validate-input">
                                     <input id="password_confirmation" type="password" placeholder="Confirmar Contraseña"
                                         class="form-control input100{{ $errors->has('password_confirmation') ? ' is-invalid': '' }}"
-                                        name="password_confirmation" tabindex="2">
+                                        name="password_confirmation" minlength="8" tabindex="2">
                                     <div class="invalid-feedback">
                                         {{ $errors->first('password_confirmation') }}
                                     </div>
@@ -175,6 +175,7 @@
                                         </button>
                                     </div>
                                 </div>
+
                                 <div class="mt-5 text-muted text-center">
                                     Ya tienes una cuenta? <a href="{{ route('login') }}">Iniciar</a>
                                 </div>

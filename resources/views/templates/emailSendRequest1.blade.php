@@ -385,15 +385,8 @@
                                                 <h3>Sus datos fueron rechazados por falta de informacion o informacion erronea.</h3>
                                             @endif
 										<p>
-											@if($status == 'aprobado')
-
-											<a href={{"http://146.190.66.89/login"}} class="
+											<a href={{"https://proveedores.tractocar.com/"}} class="
 												btn btn-primary">Ingresar</a>
-											@else
-											<h4>Comunicarese con el Administrador</h4>
-                                            <h4><p class="tx-13 text-muted mb-0"><a
-                                                href="mailto:ybolanos@tractocar.com">ybolanos@tractocar.com </a></p></h4>
-											@endif
 										</p>
 									</div>
 								</td>

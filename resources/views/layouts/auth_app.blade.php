@@ -52,7 +52,7 @@
 <script src={{ asset('assets/js/jquery.min.js') }}></script>
 
 <!-- Form Validations js -->
-<script src= {{asset('assets/js/form-validation.js')}}></script>
+{{-- <script src= {{asset('assets/js/form-validation.js')}}></script> --}}
 <!-- STICKY JS -->
 {{-- <script src={{ asset('assets/js/sticky.js') }}></script> --}}
 
