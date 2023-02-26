@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\SendEmailRequest;
+use App\Http\Helpers\UserTracking;
 use App\Jobs\SendRequestEmailJob;
 use App\Models\Relationship;
 use App\Models\User;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -55,31 +57,57 @@ class UsuarioController extends Controller
         return view('usuarios.crear', compact('roles'));
     }
 
+    // protected function validator(Request $data)
+    // {
+
+    //     return Validator::make($data, [
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
+    //         'number_id' => ['required','numeric', 'unique:users'],
+    //         'phone' => ['required','numeric'],
+    //         'document_type' => ['required'],
+    //         'password' => ['required', 'string', 'min:8', 'confirmed'],
+    //     ]);
+
+    // }
+
     public function createUserAsociado(Request $request)
     {
-        $user_relation = DB::table('relationship')->where('user_id', Auth::user()->id)->count();
-        if ($user_relation <= 3) {
+        try {
+            $user_relation = DB::table('relationship')->where('user_id', Auth::user()->id)->count();
+            if ($user_relation <= 3) {
 
-            //?Capturamos el id del user registrdo
-            DB::transaction(function () use ($request) {
-                $user = User::create([
-                    'name'      => $request->name,
-                    'email'     => $request->email,
-                    'number_id' => $request->identification,
-                    'phone'     => $request->telefono,
-                    'status'    => 'ASOCIADO',
-                    'password'  => Hash::make($request['password']),
-                ]);
-                Relationship::create([
-                    'user_id'         => Auth::user()->id,
-                    'user_assigne_id' => $user->id,
-                ]);
-                //? le asignamos el rol
-                $user->roles()->sync(3);
-            });
-            return response()->json(['success' => true]);
+                //?Capturamos el id del user registrdo
+                DB::transaction(function () use ($request) {
+                    $user = User::create([
+                        'name'      => $request->name,
+                        'email'     => $request->email,
+                        'document_type' => $request->document_type,
+                        'number_id' => $request->identification,
+                        'phone'     => $request->telefono,
+                        'status'    => 'ASOCIADO',
+                        'password'  => Hash::make($request['password']),
+                    ]);
+                    Relationship::create([
+                        'user_id'         => Auth::user()->id,
+                        'user_assigne_id' => $user->id,
+                    ]);
+                    //? le asignamos el rol
+                    $user->roles()->sync(3);
+                });
+
+                $actions = UserTracking::actionsTracking('CUA');
+                UserTracking::createTracking($actions, 1, ['status' => '200']);
+
+                return response()->json(['success' => true]);
+            }
+
+            if($user_relation == 4){
+                return response()->json(['success' => false]);
+            }
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
         }
-        return response()->json(['success' => false]);
     }
 
     public function store(Request $request)

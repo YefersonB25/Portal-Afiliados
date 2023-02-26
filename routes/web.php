@@ -26,13 +26,11 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('auth/login');
-})->name('login');
-
-Auth::routes(['verify' => true]);
-
+})->name('auth.login');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 
+Auth::routes(['verify' => true]);
 
 //? Usuarios-Clientes
 Route::prefix('portal/users')->controller(UsuarioController::class)->middleware('auth')->group(function () {
@@ -97,6 +95,7 @@ Route::prefix('portal/setting')->controller(Configs::class)->middleware('auth')-
     Route::get('/create', 'create', 'can:/usuario.index')->name('setting.create');
     Route::post('/store', 'store', 'can:/usuario.index')->name('setting.store');
     Route::get('/statistics', 'statistics', 'can:/usuario.index')->name('setting.statistics');
+    Route::get('/statistics/affiliate', 'listarAfiliados', 'can:/usuario.index')->name('setting.affiliate');
     Route::get('/statistics/filter', 'filter', 'can:/usuario.index')->name('setting.statistics.filter');
 });
 

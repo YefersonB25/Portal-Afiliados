@@ -10,6 +10,7 @@ use App\Http\Helpers\OracleRestErp;
 use App\Http\Helpers\OracleRestOtm;
 use App\Http\Helpers\ReporteRestOtm;
 use App\Http\Helpers\RequestNit;
+use App\Http\Helpers\UserTracking;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -144,35 +145,50 @@ class ConsultarAfiliadoController extends Controller
         ];
 
         if ($request->TipoF == 'M') {
-            $NumberInvoice = $request->TipoF.$request->InvoiceNumber;
-        }else {
+            $NumberInvoice = $request->TipoF . $request->InvoiceNumber;
+        } else {
             $NumberInvoice = $request->InvoiceNumber;
         }
         try {
-                $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceNumber = '{$NumberInvoice}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->CanceledFlag}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
+            $params['q'] = "(SupplierNumber = '{$request->SupplierNumber}') and (InvoiceNumber = '{$NumberInvoice}') and (InvoiceDate {$request->core} '{$request->InvoiceDate}') and (CanceledFlag = '{$request->CanceledFlag}') and (PaidStatus = '{$request->PaidStatus}') and (InvoiceType = '{$request->InvoiceType}') and (ValidationStatus = '{$request->ValidationStatus}') and (InvoiceDate BETWEEN '{$request->startDate}' and '{$request->endDate}')";
 
-                $invoice = OracleRestErp::getInvoiceSuppliers($params);
-                // return response()->json(['success' => true, 'data' => $params['q']]);
+            $invoice = OracleRestErp::getInvoiceSuppliers($params);
 
-                //? Validamos que nos traiga las facturas
-                if ($invoice['count'] == 0) {
+            // if ($invoice->status() == 200) {
 
-                    if (!empty($request->InvoiceType)) {
-                        return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus) . ' con el tipo de factura ' . trans('locale.' . $request->InvoiceType)]);
-                    } else {
-                        return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' .$request->PaidStatus]);
-                    }
+            // $data =  DB::table('user_tracking')
+            //     ->where('user_id', '=', Auth::user()->id)
+            //     ->whereDate('created_at', '=', date('Y-m-d'))
+            //     ->first();
+            // Log::info($data->description);
+
+            $actions = UserTracking::actionsTracking($request->PaidStatus);
+            UserTracking::createTracking($actions, 1, ['status' => $invoice->status()]);
+            // }
+            // return response()->json(['success' => true, 'data' => $params['q']]);
+
+            //? Validamos que nos traiga las facturas
+            if ($invoice['count'] == 0) {
+
+                if (!empty($request->InvoiceType)) {
+                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus) . ' con el tipo de factura ' . trans('locale.' . $request->InvoiceType)]);
+                } else {
+                    return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . $request->PaidStatus]);
                 }
-
-                $invoce =  $invoice->json();
-                // return response()->json(['success' => true, 'data' => $invoce]);
-
-                return response()->json(['success' => true, 'data' => $invoce['items']]);
-                // return response()->json(array('semestres' => $semestres), 200);
-            } catch (\Throwable $th) {
-                Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
-                return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
             }
+            $invoce =  $invoice->json();
+
+
+            // return response()->json(['success' => true, 'data' => $invoce]);
+
+            return response()->json(['success' => true, 'data' => $invoce['items']]);
+            // return response()->json(array('semestres' => $semestres), 200);
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+            $actions = UserTracking::actionsTracking($request->PaidStatus);
+            UserTracking::createTracking($actions, 1, ['status' => '400', 'body' => $th->getMessage()]);
+            return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
+        }
     }
 
     public function TotalAmount(Request $request)
@@ -302,7 +318,7 @@ class ConsultarAfiliadoController extends Controller
 
             $params = [
                 'fields' => 'PaymentDate',
-                'finder' => 'PaidInvoicesFinder;InvoiceNumber = '.$invoce[0]->InvoiceNumber,
+                'finder' => 'PaidInvoicesFinder;InvoiceNumber = ' . $invoce[0]->InvoiceNumber,
                 'onlyData' => 'true',
                 'limit' => '1'
             ];
@@ -313,12 +329,11 @@ class ConsultarAfiliadoController extends Controller
 
                 $params = [
                     'fields' => 'PaymentDate',
-                    'finder' => 'PaidInvoicesFinder;InvoiceNumber = '.$invoce[0]->appliedPrepayments[0]->InvoiceNumber,
+                    'finder' => 'PaidInvoicesFinder;InvoiceNumber = ' . $invoce[0]->appliedPrepayments[0]->InvoiceNumber,
                     'onlyData' => 'true',
                 ];
                 $invoiceF = OracleRestErp::getPayablesPayments($params);
                 $invoceF =  $invoiceF->object()->items;
-
             }
             if ($invoceF == [] && $invoce[0]->PaidStatus != "Pagadas") {
 
@@ -491,6 +506,13 @@ class ConsultarAfiliadoController extends Controller
             $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.' . $request->number_id . '" and statuses.statusValueGid eq "TCL.MANIFIESTO_CUMPL_NUEVO"';
             $params['fields'] = 'shipmentXid,shipmentName,totalActualCost,totalWeightedCost,numStops,attribute9,attribute10,attribute11,insertDate';
             $request = OracleRestOtm::getShipments($params);
+
+            if ($request->status() == 401) {
+            return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
+            }
+
+            $actions = UserTracking::actionsTracking('FT');
+            UserTracking::createTracking($actions, 1, ['status' => $request->status()]);
 
             return response()->json(['success' => true, 'data' => $request->object()->items]);
         } catch (Exception $e) {

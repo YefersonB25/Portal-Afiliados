@@ -52,6 +52,8 @@
                     <li class="side-menu-label1"><a href="javascript:void(0)">Sub-menus</a></li>
                     <li><a href="{{route('setting')}}" class="slide-item">Variables de Entorno</a></li>
                     <li><a href="{{route('setting.logs')}}" class="slide-item">Logs</a></li>
+                    <li><a href="{{route('setting.statistics')}}" class="slide-item">Estadisticas</a></li>
+
                 </ul>
             </li>
             @endcan
