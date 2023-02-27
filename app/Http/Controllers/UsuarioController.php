@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\GetClientIp;
 use App\Http\Helpers\SendEmailRequest;
 use App\Http\Helpers\UserTracking;
 use App\Jobs\SendRequestEmailJob;
@@ -97,12 +98,14 @@ class UsuarioController extends Controller
                 });
 
                 $actions = UserTracking::actionsTracking('CUA');
-                UserTracking::createTracking($actions, 1, ['status' => '200']);
+                $ip = GetClientIp::getUserIpAddress();
+
+                UserTracking::createTracking($actions, $request->identification, $ip, '');
 
                 return response()->json(['success' => true]);
             }
 
-            if($user_relation == 4){
+            if ($user_relation == 4) {
                 return response()->json(['success' => false]);
             }
         } catch (\Throwable $th) {
@@ -115,8 +118,8 @@ class UsuarioController extends Controller
         $this->validate($request, [
             'name'     => 'required',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
-            'number_id' => ['required','numeric', 'unique:users',],
-            'phone' => ['required','numeric'],
+            'number_id' => ['required', 'numeric', 'unique:users',],
+            'phone' => ['required', 'numeric'],
             'document_type' => ['required'],
             'password' => 'required|same:confirm-password',
             'roles'    => 'required'
@@ -221,7 +224,6 @@ class UsuarioController extends Controller
 
             Session::flash('message', 'store');
             return redirect()->back();
-
         }
 
         $user = User::find($id);
@@ -237,7 +239,7 @@ class UsuarioController extends Controller
     public function destroy(Request $request)
     {
         User::find($request->userId)->delete();
-        $userShilder = Relationship::where([['user_id', $request->userId],['deleted_status', '!=' ,'INACTIVE']])->select('user_assigne_id')->get();
+        $userShilder = Relationship::where([['user_id', $request->userId], ['deleted_status', '!=', 'INACTIVE']])->select('user_assigne_id')->get();
 
         if (count($userShilder) > 0) {
 
@@ -260,13 +262,12 @@ class UsuarioController extends Controller
 
     public function confirmarUser(Request $request)
     {
-        $result = DB::table('users')->select('id','name')->where('number_id', $request->number_id)->get();
+        $result = DB::table('users')->select('id', 'name')->where('number_id', $request->number_id)->get();
 
 
         if (count($result) == 0) {
             return response()->json(['success' => false, 'data' => 'No se encontro el proveedor']);
-        }
-        else if(count($result) != 0){
+        } else if (count($result) != 0) {
 
             DB::table('relationship')->insert([
                 'user_id' => $result[0]->id,

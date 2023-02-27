@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\GetClientIp;
 use App\Http\Helpers\OracleRestErp;
 use App\Http\Helpers\OracleRestOtm;
 use App\Http\Helpers\ReporteRestOtm;
@@ -154,16 +155,20 @@ class ConsultarAfiliadoController extends Controller
 
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
 
-            // if ($invoice->status() == 200) {
-
-            // $data =  DB::table('user_tracking')
-            //     ->where('user_id', '=', Auth::user()->id)
-            //     ->whereDate('created_at', '=', date('Y-m-d'))
-            //     ->first();
-            // Log::info($data->description);
-
             $actions = UserTracking::actionsTracking($request->PaidStatus);
-            UserTracking::createTracking($actions, 1, ['status' => $invoice->status()]);
+            $detail = UserTracking::detailTracking($request->PaidStatus);
+
+            $ip = GetClientIp::getUserIpAddress();
+
+            UserTracking::createTracking($actions, $detail, $ip, [
+                'limit' => $request->InvoiceLimit,
+                'invoiceType_numberInvoice' => $request->TipoF . " " . $request->InvoiceNumber,
+                'CanceledFlag' => $request->CanceledFlag,
+                'PaidStatus' => $request->PaidStatus,
+                'InvoiceType' => $request->InvoiceType,
+                'ValidationStatus' => $request->ValidationStatus,
+                'InvoiceDate' => $request->startDate . " " . $request->endDate,
+            ]);
             // }
             // return response()->json(['success' => true, 'data' => $params['q']]);
 
@@ -186,7 +191,6 @@ class ConsultarAfiliadoController extends Controller
         } catch (\Throwable $th) {
             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
             $actions = UserTracking::actionsTracking($request->PaidStatus);
-            UserTracking::createTracking($actions, 1, ['status' => '400', 'body' => $th->getMessage()]);
             return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
         }
     }
@@ -487,12 +491,6 @@ class ConsultarAfiliadoController extends Controller
      * @var numStops        = numero de paradas,
      */
 
-    // protected function parametros()
-    // {
-
-    //     return $params;
-    // }
-
     protected function getShipmentOtm(Request $request)
     {
 
@@ -508,11 +506,13 @@ class ConsultarAfiliadoController extends Controller
             $request = OracleRestOtm::getShipments($params);
 
             if ($request->status() == 401) {
-            return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
+                return response()->json(['success' => false, 'data' => 'Algo fallo con la comunicacion']);
             }
 
             $actions = UserTracking::actionsTracking('FT');
-            UserTracking::createTracking($actions, 1, ['status' => $request->status()]);
+            $detail = UserTracking::detailTracking('FT');
+            $ip = GetClientIp::getUserIpAddress();
+            UserTracking::createTracking($actions, $detail, $ip, '');
 
             return response()->json(['success' => true, 'data' => $request->object()->items]);
         } catch (Exception $e) {

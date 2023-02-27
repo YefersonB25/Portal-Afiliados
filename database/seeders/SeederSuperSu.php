@@ -72,5 +72,36 @@ class SeederSuperSu extends Seeder
             'password'      => bcrypt('mlP30o#T9#pYgf')
         ])->assignRole('Administrador');
 
+
+        // $A = [
+        //     1 => 'CONSULTO FACTURAS',
+        //     2 => 'CONSULTA TODAS FACTURAS',
+        //     3 => 'INICIO SESSION',
+        // ];
+
+        // $B = [
+        //     1 => 'CONSULTO FACTURAS POR PAGAR',
+        //     2 => 'CONSULTO FACTURAS EN TRANSPORTE',
+        //     3 => 'CONSULTO FACTURAS CON NOVEDADES',
+        //     4 => 'CONSULTA TODAS FACTURAS',
+        // ];
+
+
+        // for ($i = 0; $i < 5000; $i++) {
+        //     $ramdon1 = random_int(1, 3);
+        //     $ramdon2 = random_int(1, 4);
+        //     $conteoA = $A[$ramdon1];
+        //     $conteoB = '';
+        //     if ($conteoA != "INICIO SESSION") {
+        //         $conteoB = $B[$ramdon2];
+        //     }
+
+        //     DB::table('user_tracking')->insert([
+        //         'user_id' => random_int(1, 1000),
+        //         'action'          => $conteoA,
+        //         'detail'     => $conteoB,
+        //     ]);
+        // }
+        // dump('finished');
     }
 }

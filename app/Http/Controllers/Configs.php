@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 require('../vendor/autoload.php');
 
 use App\Http\Helpers\CommonUtils;
+use App\Http\Helpers\GetClientIp;
+use App\Http\Helpers\UserTracking;
 use App\Models\PortalSetting;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Dotenv\Dotenv;
 use Dotenv\Exception\InvalidPathException;
+use Illuminate\Notifications\Action;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -76,13 +80,52 @@ class Configs extends Controller
         return response()->json($test);
     }
 
+    public function countLogin(Request $request)
+    {
+        $start_at = $request->startDate;
+        $end_at = $request->endDate;
+        $action = 'INICIO SESSION';
+
+        $query = DB::table('user_tracking');
+        $query->where('action', $action);
+        if ($start_at != null && $end_at != null) {
+
+            $query->whereBetween('created_at', [$start_at, $end_at]);
+        }
+        $getCountActionLogin = $query->count();
+        return response()->json(['success' => true, 'data' => $getCountActionLogin]);
+    }
+
+    public function countActionHome(Request $request)
+    {
+        $arrayActionInvoice = array();
+        $query = DB::table('user_tracking')
+            ->select('detail', DB::raw('count(*) as total'))
+            ->groupBy('detail')
+            ->get();
+
+        foreach ($query as $line) {
+            if ($line->detail != "") {
+                array_push($arrayActionInvoice, array(
+                    'x' => $line->detail,
+                    'value' => $line->total
+                ));
+            }
+        }
+        return response()->json(['success' => true, 'data' => $arrayActionInvoice]);
+    }
+
     public function filter(Request $request)
     {
+
         $number_id = $request->numberId;
         $start_at = $request->startDate;
         $end_at = $request->endDate;
+        $trackings = array();
+        $detail = "INICIO SESSION";
 
-        $query = DB::table('user_tracking');
+        $query = DB::table('user_tracking')
+            ->select('detail', DB::raw('count(*) as total'));
         if ($number_id != null) {
             $query->where('user_id', $number_id);
         }
@@ -90,48 +133,19 @@ class Configs extends Controller
 
             $query->whereBetween('created_at', [$start_at, $end_at]);
         }
-        $user_trackins = $query->get('description');
-
-        $trackings = array();
-        $total_line_traking = array();
-        $clave = array();
-        $line_trakins = array();
+        $query->groupBy('detail');
+        $user_trackins = $query->get();
 
         foreach ($user_trackins as $user_trackin) {
-            $trackings[] = json_decode($user_trackin->description);
-        }
 
-        foreach ($trackings as $tracking) {
-
-            foreach ($tracking as $line) {
-                $total_line_traking[] = [
-                    'action' => $line->action,
-                    'value' => $line->value
-                ];
-            }
-        }
-
-        foreach ($total_line_traking as $item) {
-            $clave[] = $item['action'];
-        }
-
-        $unico = array_unique($clave);
-
-        foreach ($unico as $uni) {
-            $suma = 0;
-
-            foreach ($total_line_traking as  $original) {
-                if ($uni == $original['action']) {
-                    $suma = $suma + $original['value'];
-                }
-            }
-
-            array_push($line_trakins, array(
-                'x' => $uni,
-                'value' => $suma
+            // if (!empty($user_trackin->detail)) {
+            //     $detail = $user_trackin->detail;
+            array_push($trackings, array(
+                'x' => is_null($user_trackin->detail) ? "INICIO SESSION" : $user_trackin->detail,
+                'value' => $user_trackin->total
             ));
+            // }
         }
-
-        return response()->json(['success' => true, 'data' => $line_trakins]);
+        return response()->json(['success' => true, 'data' => $trackings]);
     }
 }

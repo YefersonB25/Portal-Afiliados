@@ -16,7 +16,10 @@ class CreateUserTrackingTable extends Migration
         Schema::create('user_tracking', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->string('action');
+            $table->string('detail');
             $table->json('description');
+            $table->string('ip');
             $table->timestamps();
         });
     }

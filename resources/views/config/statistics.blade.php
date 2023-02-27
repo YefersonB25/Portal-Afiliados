@@ -8,8 +8,8 @@
                 <div class="main-container container-fluid">
                     <div class="card">
                         <div class="card-body">
-                            <form class="form-horizontal" id="filterSegmentationDay"
-                                action="{{ route('setting.statistics.filter') }}" method="GET" novalidate>
+                            <form class="form-horizontal" id="filterCountLoginDay"
+                                action="{{ route('setting.statistics.countLogin') }}" method="GET" novalidate>
                                 @csrf
                                 <div class="row mb-2">
                                     <div class="col-md-6">
@@ -30,12 +30,11 @@
                                 <button type="submit" class="btn btn-primary" id="btnPr">Filtrar</button>
                             </form>
                         </div>
-                        <div class="card-body">
-                            <div id="containerSegmentationDay"></div>
+                        <div class="card-body" id="count">
                         </div>
 
                         <div class="card-body">
-                            <div id="containerGeneral"></div>
+                            <div id="containerActionHome"></div>
                         </div>
 
                         <div class="card-body">
@@ -69,7 +68,6 @@
                         </div>
 
                         <div class="card-body">
-
                             <div id="container"></div>
                         </div>
                     </div>
@@ -89,8 +87,11 @@
         let url = "{{ route('setting.affiliate') }}"
         listAffiliate(url);
 
-        let urlChart = "{{ route('setting.statistics.filter') }}"
-        ajaxChartGeneral(urlChart);
+        let urlCountLogin = "{{ route('setting.statistics.countLogin') }}"
+        ajaxCountLogin(urlCountLogin);
+
+        let urlConsultedActions = "{{ route('setting.statistics.actionHome') }}"
+        ajaxMostConsultedActions(urlConsultedActions);
     </script>
 @endsection
 @endsection
