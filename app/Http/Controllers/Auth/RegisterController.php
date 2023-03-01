@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Events\MessageSentPrivate;
 use App\Http\Controllers\Controller;
-use App\Http\Helpers\SendEmailRequestNotification;
+use App\Providers\RouteServiceProvider;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -33,6 +35,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+
     /**
      * Where to redirect users after registration.
      *
@@ -40,7 +43,7 @@ class RegisterController extends Controller
      */
     // protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**VerifiesEmails
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -59,17 +62,19 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
-            Rule::unique('users', 'email')->where(function ($query) {
-                return $query->whereNull('deleted_at')->orWhereNotNull('deleted_at');
-            }),
-            'number_id' => ['required', 'numeric', 'unique:users'],
-            'phone' => ['required', 'numeric'],
+            'name'          => ['required', 'string', 'max:255'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
+            'number_id'     => ['required', 'numeric', 'unique:users'],
+            'phone'         => ['required', 'numeric'],
             'document_type' => ['required'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'captcha' => ['required', 'captcha']
+            'password'      => ['required', 'string', 'min:8', 'confirmed'],
+            //'captcha'    => ['required', 'captcha:' . request('key') . ',math']
         ]);
+    }
+
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
     }
 
     /**
@@ -79,10 +84,6 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
 
-    public function showRegistrationForm()
-    {
-        return view('auth.register');
-    }
 
     // protected function create(array $data)
     // {
@@ -192,32 +193,46 @@ class RegisterController extends Controller
             $roles = Role::get();
             $user->roles()->sync([$roles[1]->id]);
 
-            $imagePath = $this->storeFile(isset($data['photo']) ? $data['photo'] : '', 'profile/image', $user->number_id);
-            $pdfPath = $this->storeFile(isset($data['photo_id']) ? $data['photo_id'] : '', 'documet/pdf', $user->number_id);
+        $id = User::create([
+            'name'          => $data['name'],
+            'email'         => $data['email'],
+            'number_id'     => $data['number_id'],
+            'document_type' => $data['document_type'],
+            'phone'         => $data['phone'],
+            'password'      => Hash::make($data['password']),
+            'status'        => 'NUEVO',
+        ]);
 
-            $user->update([
-                'photo_id' => $pdfPath,
-                'photo'    => $imagePath
-            ]);
+        $usuario = User::findOrFail($id);
+        $usuario->roles()->sync($roles[1]->id);
 
+        if (!empty($data['photo'])) {
 
-            DB::commit();
+            $photoConfig = [
+                'ext'    => $data['photo']->getClientOriginalExtension(),
+                'folder' => "proveedores/$id/perfil"
+            ];
 
-            // Redirigir al usuario al formulario de inicio de sesión
-            return redirect()->route('login')->with([
-                'autoLoginData' => [
-                    'email'    => $user->email,
-                    'password' => $data['password'],
-                ]
-            ]);
+            Storage::putFileAs("public/" . $photoConfig['folder'], $data['photo'], 'photo_perfil.' . $photoConfig['ext']);
 
-            // return $user;
-        } catch (\Exception $e) {
-            // DB::rollback();
-            Log::error("Error en la importación: " . $e->getMessage());
+            User::where('id', $id)
+                ->update([
+                    'photo'   => "storage/{$photoConfig['folder']}/photo_perfil.{$photoConfig['ext']}",
+                ]);
+        }
+        if (!empty($data['document'])) {
 
-            // Manejar la excepción, por ejemplo, registrando un error.
-            // return null;
+            $documentConfig = [
+                'ext'    => $data['document']->getClientOriginalExtension(),
+                'folder' => "proveedores/$id/identificacion"
+            ];
+
+            Storage::putFileAs("public/" . $documentConfig['folder'], $data['photo'], 'photo_perfil.' . $documentConfig['ext']);
+
+            User::where('id', $id)
+                ->update([
+                    'photo_id'   => "storage/{$documentConfig['folder']}/photo_documento.{$documentConfig['ext']}",
+                ]);
         }
     }
 
@@ -244,7 +259,6 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-
         $this->validator($request->all())->validate();
 
         event(new Registered($this->create($request->all())));
@@ -252,7 +266,9 @@ class RegisterController extends Controller
         // self::notificationActionPusher();
         // SendEmailRequestNotification::sendEmail($request->name);
 
-        return redirect()->route('login')->with('error', 'Los datos de la cuenta aun no han sido validados.');
+        $name = $request->input('name');
+
+        return view('emails.register-success', compact('name'));
     }
 
     function notificationActionPusher()
