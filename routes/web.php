@@ -94,6 +94,8 @@ Route::prefix('portal/setting')->controller(Configs::class)->middleware('auth')-
     Route::post('/', 'update', 'can:/usuario.index')->name('setting.update');
     Route::get('/create', 'create', 'can:/usuario.index')->name('setting.create');
     Route::post('/store', 'store', 'can:/usuario.index')->name('setting.store');
+    Route::get('/sistem', 'configSistem', 'can:/usuario.index')->name('setting.sistem');
+    Route::get('/sistem/modific', 'configSistemModificacion', 'can:/usuario.index')->name('setting.sistem.modific');
     Route::get('/statistics', 'statistics', 'can:/usuario.index')->name('setting.statistics');
     Route::get('/statistics/affiliate', 'listarAfiliados', 'can:/usuario.index')->name('setting.affiliate');
     Route::get('/statistics/countLogin', 'countLogin', 'can:/usuario.index')->name('setting.statistics.countLogin');

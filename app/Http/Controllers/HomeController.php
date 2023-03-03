@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MyEvent;
 use App\Http\Helpers\CommonUtils;
 use App\Http\Helpers\OracleRestErp;
+use App\Http\Helpers\SendEmailRequestNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Pusher\Pusher;
 
 use function PHPSTORM_META\type;
 
@@ -19,7 +22,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth', 'verified']);
     }
     /**
      * Show the application dashboard.
@@ -28,7 +31,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $rol = Auth::User()->rol;
 
         if ($rol->role_id == 1) {
@@ -76,7 +78,7 @@ class HomeController extends Controller
             return view('home');
         }
     }
-    
+
     public function docs()
     {
         return view('auth/docs/index');

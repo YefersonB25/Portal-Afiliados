@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSentPrivate;
+use App\Events\MyEvent;
 use Illuminate\Http\Request;
-
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\GetClientIp;
@@ -40,6 +41,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
+        // event(new MessageSentPrivate('Nuevo Usuario', 'Se ha resgistrado un nuevo usuario'));
         // $usuarios = self::filtros();
         $usuarios = User::where('deleted_at', NULL)->orderBy('updated_at', 'desc')->paginate(20);
         return view('usuarios.index', ['usuarios' => $usuarios]);

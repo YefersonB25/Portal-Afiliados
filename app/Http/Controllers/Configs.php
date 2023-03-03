@@ -5,20 +5,12 @@ namespace App\Http\Controllers;
 require('../vendor/autoload.php');
 
 use App\Http\Helpers\CommonUtils;
-use App\Http\Helpers\GetClientIp;
-use App\Http\Helpers\UserTracking;
 use App\Models\PortalSetting;
-use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
-use Dotenv\Dotenv;
-use Dotenv\Exception\InvalidPathException;
-use Illuminate\Notifications\Action;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use JsonException;
-use PhpParser\Node\Expr\Cast\Object_;
+
 
 class Configs extends Controller
 {
@@ -147,5 +139,17 @@ class Configs extends Controller
             // }
         }
         return response()->json(['success' => true, 'data' => $trackings]);
+    }
+
+    public function configSistem()
+    {
+        $notificationType = Auth::User()->notifications;
+        return view('config.sistema', ['notifications' => $notificationType]);
+    }
+
+    public function configSistemModificacion(Request $request)
+    {
+        $response =  DB::table('users')->where('id', Auth::User()->id)->update(['notifications' => $request->notification]);
+        return response()->json(['success' => true, 'data' => $response]);
     }
 }

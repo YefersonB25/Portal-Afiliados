@@ -17,8 +17,8 @@ class CreateUserTrackingTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('action');
-            $table->string('detail');
-            $table->json('description');
+            $table->string('detail')->nullable();
+            $table->json('description')->nullable();
             $table->string('ip');
             $table->timestamps();
         });

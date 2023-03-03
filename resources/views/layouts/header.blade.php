@@ -14,9 +14,9 @@
             @endcan
 
             <a class="logo-horizontal " href="{{route('home')}}">
-                <img src={{asset('assets/images/brand/negative-blue-xxlarge-horizontal.png')}}
+                <img src={{asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png')}}
                     class="header-brand-img desktop-logo" alt="logo">
-                <img src={{asset('assets/images/brand/full-color-xxlarge-horizontal2.png')}}
+                <img src={{asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png')}}
                     class="header-brand-img light-logo1" alt="logo">
             </a>
             <!-- LOGO -->

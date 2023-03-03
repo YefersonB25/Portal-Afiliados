@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\MessageSentPrivate;
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\SendEmailRequestNotification;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -12,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Pusher\Pusher;
 
 class RegisterController extends Controller
 {
@@ -60,7 +63,7 @@ class RegisterController extends Controller
             'phone' => ['required', 'numeric'],
             'document_type' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'captcha' => ['required','captcha:'. request('key') . ',math']
+            'captcha' => ['required', 'captcha:' . request('key') . ',math']
         ]);
     }
 
@@ -146,6 +149,22 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
+        self::notificationActionPusher();
+        SendEmailRequestNotification::sendEmail($request->name);
+
         return redirect()->route('login')->with('error', 'Los datos de la cuenta aun no han sido validados.');
+    }
+
+    function notificationActionPusher()
+    {
+
+        $app_id = config('broadcasting.connections.pusher.app_id');
+        $app_key = config('broadcasting.connections.pusher.key');
+        $app_secret = config('broadcasting.connections.pusher.secret');
+        $app_cluster = config('broadcasting.connections.pusher.options.cluster');
+
+        $pusher = new Pusher($app_key, $app_secret, $app_id, ['cluster' => $app_cluster]);
+
+        $pusher->trigger('my-channel', 'MyEvent', 'Nuevo usuario registrado');
     }
 }

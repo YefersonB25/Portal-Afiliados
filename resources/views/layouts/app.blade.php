@@ -73,14 +73,22 @@
     @include('profile.edit_profile')
 
 </body>
+<script src="{{ mix('js/app.js') }}" defer></script>
 <!-- SWEETALERT2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
 <!-- BACK-TO-TOP -->
 <a href="#top" id="back-to-top"><i class="fa fa-long-arrow-up"></i></a>
 
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+
+<!--PUSHER NOTIFICATION -->
+<script src={{ asset('views/js/notification-register/notificationPusher.js') }}></script>
+
+<script src={{ asset('views/js/notification-register/accessToChannelCreation.js') }}></script>
 <!-- JQUERY JS -->
 <script src={{ asset('assets/js/jquery.min.js') }}></script>
+
 <!-- BOOTSTRAP JS -->
 <script src={{ asset('assets/plugins/bootstrap/js/popper.min.js') }}></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
@@ -117,7 +125,7 @@
 <script src={{ asset('assets/js/custom.js') }}></script>
 
 <!-- Form Validations js -->
-<script src= {{asset('assets/js/form-validation.js')}}></script>
+<script src={{asset('assets/js/form-validation.js')}}></script>
 
 <!-- CHART-CIRCLE JS-->
 <script src={{ asset('assets/js/circle-progress.min.js') }}></script>
@@ -129,6 +137,12 @@
 <script src={{ asset('assets/js/reply.js') }}></script>
 
 <script src="https://bossanova.uk/jsuites/v2/jsuites.js"></script>
+
+<!-- INTERNAL Notifications js -->
+{{-- <script src={{asset('assets/plugins/notify/js/rainbow.js')}}></script>
+<script src={{asset('assets/plugins/notify/js/sample.js')}}></script>
+<script src={{asset('assets/plugins/notify/js/jquery.growl.js')}}></script>
+<script src={{asset('assets/plugins/notify/js/notifIt.js')}}></script> --}}
 
 
 {{-- <script src="https://jsuites.net/v4/jsuites.js"></script> --}}
@@ -143,7 +157,10 @@
 <!-- COLOR THEME JS -->
 <script src={{ asset('assets/js/themeColors.js') }}></script>
 
-
+<script>
+    let response = `{{Auth::User()->rol->role_id}}`
+    creationChannel(response);
+</script>
 
 @yield('scripts')
 

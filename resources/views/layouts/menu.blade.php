@@ -50,6 +50,7 @@
                     <i class="angle fa fa-angle-right"></i></a>
                 <ul class="slide-menu">
                     <li class="side-menu-label1"><a href="javascript:void(0)">Sub-menus</a></li>
+                    <li><a href="{{route('setting.sistem')}}" class="slide-item">Sistema</a></li>
                     <li><a href="{{route('setting')}}" class="slide-item">Variables de Entorno</a></li>
                     <li><a href="{{route('setting.logs')}}" class="slide-item">Logs</a></li>
                     <li><a href="{{route('setting.statistics')}}" class="slide-item">Estadisticas</a></li>
@@ -178,7 +179,8 @@
                     <li><a href="chat.html" class="slide-item">Chat</a></li>
                     <li class="sub-slide">
                         <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#"><span
-                                class="sub-side-menu__label">E-Commerce</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                class="sub-side-menu__label">E-Commerce</span><i
+                                class="sub-angle fa fa-angle-right"></i></a>
                         <ul class="sub-slide-menu">
                             <li><a class="sub-slide-item" href="cart.html">Cart</a></li>
                             <li><a class="sub-slide-item" href="checkout.html">Checkout</a></li>
@@ -189,7 +191,8 @@
                     </li>
                     <li class="sub-slide">
                         <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#"><span
-                                class="sub-side-menu__label">File Manager</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                class="sub-side-menu__label">File Manager</span><i
+                                class="sub-angle fa fa-angle-right"></i></a>
                         <ul class="sub-slide-menu">
                             <li><a class="sub-slide-item" href="file-manager.html">Files</a></li>
                             <li><a class="sub-slide-item" href="file-manager-1.html">File Manager</a></li>
@@ -198,7 +201,8 @@
                     </li>
                     <li class="sub-slide">
                         <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#"><span
-                                class="sub-side-menu__label">E-Mail</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                class="sub-side-menu__label">E-Mail</span><i
+                                class="sub-angle fa fa-angle-right"></i></a>
                         <ul class="sub-slide-menu">
                             <li><a class="sub-slide-item" href="mail-inbox.html">Inbox</a></li>
                             <li><a class="sub-slide-item" href="mail-compose.html">Compose Mail</a></li>
@@ -208,7 +212,8 @@
                     </li>
                     <li class="sub-slide">
                         <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#"><span
-                                class="sub-side-menu__label">Invoices</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                class="sub-side-menu__label">Invoices</span><i
+                                class="sub-angle fa fa-angle-right"></i></a>
                         <ul class="sub-slide-menu">
                             <li><a class="sub-slide-item" href="invoice-list.html">Invoice List</a></li>
                             <li><a class="sub-slide-item" href="invoice-details.html">Invoice Details</a></li>
@@ -219,7 +224,8 @@
                     </li>
                     <li class="sub-slide">
                         <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#"><span
-                                class="sub-side-menu__label">Projects</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                class="sub-side-menu__label">Projects</span><i
+                                class="sub-angle fa fa-angle-right"></i></a>
                         <ul class="sub-slide-menu">
                             <li><a class="sub-slide-item" href="projects.html">Projects</a></li>
                             <li><a class="sub-slide-item" href="projects-list.html">Projects List</a></li>
@@ -228,7 +234,8 @@
                             <li><a class="sub-slide-item" href="project-edit.html">Edit Project</a></li>
                         </ul>
                     </li>
-                    <li><a href="ticket-details.html" class="slide-item"><span class="side-menu__label">Tickets</span></a></li>
+                    <li><a href="ticket-details.html" class="slide-item"><span
+                                class="side-menu__label">Tickets</span></a></li>
                     <li class="sub-slide">
                         <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#"><span
                                 class="sub-side-menu__label">Tasks</span><i class="sub-angle fa fa-angle-right"></i></a>
@@ -240,7 +247,8 @@
                     </li>
                     <li class="sub-slide">
                         <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#"><span
-                                class="sub-side-menu__label">Clients</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                class="sub-side-menu__label">Clients</span><i
+                                class="sub-angle fa fa-angle-right"></i></a>
                         <ul class="sub-slide-menu">
                             <li><a class="sub-slide-item" href="clients.html">Clients</a></li>
                             <li><a class="sub-slide-item" href="client-create.html">Add Client</a></li>
@@ -339,7 +347,8 @@
                     </li>
                     <li class="sub-slide">
                         <a class="sub-side-menu__item" data-bs-toggle="sub-slide" href="#"><span
-                                class="sub-side-menu__label">Error Pages</span><i class="sub-angle fa fa-angle-right"></i></a>
+                                class="sub-side-menu__label">Error Pages</span><i
+                                class="sub-angle fa fa-angle-right"></i></a>
                         <ul class="sub-slide-menu">
                             <li><a class="sub-slide-item" href="404.html">404 Error</a></li>
                             <li><a class="sub-slide-item" href="500.html">500 Error</a></li>
@@ -389,6 +398,6 @@
                 </ul>
             </li> --}}
         </ul>
-    {{-- </div>
+        {{--
+    </div>
 </div> --}}
-
