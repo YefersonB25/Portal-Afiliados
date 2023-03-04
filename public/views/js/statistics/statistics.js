@@ -170,7 +170,6 @@ $('#filter').submit(function (e) {
         success: function (response) {
 
             let datos = response.data
-            console.log(datos);
             chartFilter(datos)
 
         },

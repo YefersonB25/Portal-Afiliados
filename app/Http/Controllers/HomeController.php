@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\MyEvent;
 use App\Http\Helpers\CommonUtils;
 use App\Http\Helpers\OracleRestErp;
+use App\Http\Helpers\RequestNit;
 use App\Http\Helpers\SendEmailRequestNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -51,8 +52,11 @@ class HomeController extends Controller
                 ->first();
 
             $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
+
+            $document = (Auth::user()->document_type == "NIT") ? RequestNit::getNit($number_id) : $number_id;
+
             $params = [
-                'q'        => "(TaxpayerId = '{$number_id}')",
+                'q'        => "(TaxpayerId = '{$document}')",
                 'limit'    => '200',
                 'fields'   => 'SupplierNumber',
                 'onlyData' => 'true'

@@ -491,7 +491,7 @@
                                                         <div class="col-lg-12">
                                                             <h5
                                                                 class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
-                                                                Descripción </h5>
+                                                                Detalle </h5>
 
                                                             <div class="table-responsive project-invoice">
                                                                 <table class="table table-bordered mb-0">
@@ -568,7 +568,7 @@
                                                 <!--end card-body-->
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" id="closet-modal" class="btn btn-secondary"
+                                                <button type="button" id="closet-modal" class="btn btn-danger"
                                                     data-bs-dismiss="modal">Cerrar</button>
                                             </div>
                                         </div>
@@ -599,21 +599,23 @@
                                                 </div>
                                                 <!--end card-body-->
                                                 <div class="card-body" id="body">
-                                                    <div class="row" id="row1_1">
-                                                    </div>
-                                                    <!--end row-->
-                                                    {{-- <div class="row">
-                                                        <div class="col-lg-12">
+                                                    <div class="row p-2">
+                                                        <div class="col-lg-6">
+                                                            {{-- <h5 class="btn btn-outline-primary"
+                                                                for="btn-check-outlined"> Detalles </h5> --}}
+                                                            <h5
+                                                                class="bg-primary col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
+                                                                Propietario</h5>
                                                             <div class="table-responsive project-invoice">
                                                                 <table class="table table-bordered mb-0">
                                                                     <thead class="thead-light">
                                                                         <tr>
-                                                                            <th>@lang('locale.Description')</th>
-                                                                            <th>@lang('locale.Amount')</th>
+                                                                            <th>Documento</th>
+                                                                            <th>Nombre</th>
                                                                         </tr>
                                                                         <!--end tr-->
                                                                     </thead>
-                                                                    <tbody id="row2">
+                                                                    <tbody id="row1_1">
 
 
                                                                     </tbody>
@@ -622,9 +624,108 @@
                                                             </div>
                                                             <!--end /div-->
                                                         </div>
-                                                        <!--end col-->
-                                                    </div> --}}
-                                                    <!--end row-->
+                                                        <div class="col-lg-6">
+                                                            <h5
+                                                                class="bg-primary col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
+                                                                Conductor</h5>
+                                                            <div class="table-responsive project-invoice">
+                                                                <table class="table table-bordered mb-0">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th>Documento</th>
+                                                                            <th>Nombre</th>
+                                                                            <th>Telefono</th>
+                                                                        </tr>
+                                                                        <!--end tr-->
+                                                                    </thead>
+                                                                    <tbody id="row2_2">
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                                <!--end table-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row p-2">
+                                                        <div class="col-lg-12">
+                                                            <h5
+                                                                class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
+                                                                Resumen</h5>
+                                                            <div class="table-responsive project-invoice">
+                                                                <table class="table table-bordered mb-0">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th>Tipo de Operacion</th>
+                                                                            <th>Estado del Envío</th>
+                                                                            <th>Estado Anticipo</th>
+                                                                        </tr>
+                                                                        <!--end tr-->
+                                                                    </thead>
+                                                                    <tbody id="row3_3">
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                                <!--end table-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row p-2">
+                                                        <div class="col-lg-12">
+                                                            <h5
+                                                                class="bg-info col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
+                                                                Información Adicional</h5>
+                                                            <div class="table-responsive project-invoice">
+                                                                <table class="table table-bordered mb-0">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th>Ciudad Origen</th>
+                                                                            <th>Provincia</th>
+                                                                            <th>Direccion Origen</th>
+                                                                            <th>Ruta</th>
+                                                                            <th>Via</th>
+                                                                            <th>Ciudad Destino</th>
+                                                                            <th>Provincia</th>
+                                                                            <th>Direccion Destino</th>
+                                                                        </tr>
+                                                                        <!--end tr-->
+                                                                    </thead>
+                                                                    <tbody id="row4_4">
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                                <!--end table-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row p-2">
+                                                        <div class="col-lg-12">
+                                                            <h5
+                                                                class="bg-warning col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
+                                                                Información del Vehículo</h5>
+                                                            <div class="table-responsive project-invoice">
+                                                                <table class="table table-bordered mb-0">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th>Matrícula</th>
+                                                                            <th>Marca</th>
+                                                                            <th>Color</th>
+                                                                            <th>Modelo</th>
+                                                                            <th>Numero Trailer</th>
+                                                                        </tr>
+                                                                        <!--end tr-->
+                                                                    </thead>
+                                                                    <tbody id="row5_5">
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                                <!--end table-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
 
                                                     {{-- <div class="row justify-content-center">
@@ -649,7 +750,7 @@
                                                 <!--end card-body-->
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" id="closet-modal" class="btn btn-secondary"
+                                                <button type="button" id="closet-modal" class="btn btn-danger"
                                                     data-bs-dismiss="modal">Cerrar</button>
                                             </div>
 
@@ -993,7 +1094,7 @@
                                                         <div class="col-lg-12">
                                                             <h5
                                                                 class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
-                                                                Descripción </h5>
+                                                                Detalle </h5>
 
                                                             <div class="table-responsive project-invoice">
                                                                 <table class="table table-bordered mb-0">
@@ -1070,7 +1171,7 @@
                                                 <!--end card-body-->
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" id="closet-modal" class="btn btn-secondary"
+                                                <button type="button" id="closet-modal" class="btn btn-danger"
                                                     data-bs-dismiss="modal">Cerrar</button>
                                             </div>
                                         </div>
@@ -1132,6 +1233,7 @@
                 },
                 success: function(response) {
                     let data = response.data;
+
                     if (response.success == true) {
                         let = plantillaMtPorPagar = ''
                         let = plantillaTotalFt = ''
@@ -2013,7 +2115,7 @@
                                 $('#date').html('')
                                 plantillaDate = `
                                 <div class="col-md-4 align-self-center">
-                                    <img src="{{ asset('assets/images/logos-tractocar/negative-blue-small.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
+                                    <img src="{{ asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
                                     {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
                                     <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
                                 </div><!--end col-->
@@ -2143,6 +2245,11 @@
                     let invoice = table.row($(this).parents("tr")).data();
                     plantillaDate = '';
                     plantillarow1 = '';
+                    plantillarow2 = '';
+                    plantillarow3 = '';
+                    plantillarow4 = '';
+                    plantillarow5 = '';
+
                     $.ajax({
                         type: "POST",
                         url: "{{ route('falturas.transporte.detalle') }}",
@@ -2152,12 +2259,28 @@
                         },
                         success: function(response) {
                             let invoice = response.data
-                            // console.log(invoice);
+
+                            const traducciones ={
+                                'TCL.ENROUTE_COMPLETED': 'COMPLETADO',
+                                'TCL.ENROUTE_DELAYED': 'RETRASADO',
+                                'TCL.ENROUTE_DIVERTED': 'DESVIADO',
+                                'TCL.ENROUTE_ENROUTE': 'EN RUTA/EN TRÁNSITO',
+                                'TCL.ENROUTE_MERGED': 'COMBINADO',
+                                'TCL.ENROUTE_NOT STARTED': 'SIN SALIDA',
+                                'TCL.ENROUTE_PARTIAL': 'PARCIAL',
+                                'TCL.ENROUTE_UNLOADED - FULL': 'DESCARGADO LLENO',
+                                'TCL.ENROUTE_UNLOADED - PARTIAL': 'DESCARGADO PARCIAL',
+                            }
+
+                            function traducir(dato) {
+                                return traducciones[dato] || dato;
+                            }
+
                             if (response.success == true) {
                                 $('#date_1').html('')
                                 plantillaDate = `
                                 <div class="col-md-4 align-self-center">
-                                    <img src="{{ asset('assets/images/logos-tractocar/negative-blue-small.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
+                                    <img src="{{ asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
                                     {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
                                 </div><!--end col-->
                                 </div><!--end col-->
@@ -2176,70 +2299,60 @@
 
                                 $('#row1_1').html('')
                                 plantillarow1 = `
-                                <div class="col-md-4">
-                                    <div class="float-left">
-                                        <address class="font-13">
-                                            <strong class="font-14">Informacion del Propietario:</strong><br>
-                                            Nombre : ${ invoice.OWNER_NAME }<br>
-                                            ID : ${ invoice.OWNER_ID }<br>
-                                            Correo : ${ invoice.OWNER_EMAIL }<br>
-                                            Telefono : ${ invoice.OWNER_PHONE_NUMBER }<br>
-                                        </address>
-
-                                        <address class="font-13">
-                                            <strong class="font-14">Informacion del Conductor:</strong><br>
-                                            Nombre : ${ invoice.DRIVER_FIRSTNAME  +  invoice.DRIVER_LASTNAME }<br>
-                                            ID : ${ invoice.DRIVER_ID }<br>
-                                            Correo : ${ invoice.TRANSPORTER_EMAIL }<br>
-                                            Telefono : ${ invoice.DRIVER_MOBILE_NUMBER }<br>
-                                        </address>
-
-                                        <div class="float-left">
-                                            <h6><b>Tipo de Operacion :</b>
-                                                ${
-                                                    invoice.MANIFEST_OPERATION_TYPE
-                                                }
-                                            </h6>
-                                            <h6><b>Estado del Envío : </b>
-                                                ${
-                                                        invoice.SHIPMENT_STATUS
-                                                }
-                                            </h6>
-                                            <h6> <b>Estado Anticipo : </b>
-                                                MANIFIESTO_CUMPLIDO_NUEVO
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </div><!--end col-->
-                                <div class="col-md-2">
-
-                                </div><!--end col-->
-
-                                <div class="col-md-6">
-                                    <div class="text-left bg-light p-3 mb-3">
-                                        <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
-                                        <h6 class="font-13">Ciudad Origen : ${ invoice.ORIGIN_CITY }</h6>
-                                        <h6 class="font-13">Provincia : ${ invoice.ORIGIN_PROVINCE }</h6>
-                                        <h6 class="font-13">Direccion Origen : ${ invoice.ORIGIN_ADDRESS }</h6>
-                                        <h6 class="font-13">Ruta : ${ invoice.ROUTE_NAME }</h6>
-                                        <h6 class="font-13">Via : ${ invoice.ROUTE_VIA }</h6>
-                                        <h6 class="font-13">Ciudad Destino : ${ invoice.DESTINATION_CITY }</h6>
-                                        <h6 class="font-13">Provincia : ${ invoice.DESTINATION_PROVINCE }</h6>
-                                        <h6 class="font-13">Direccion Destino : ${ invoice.DESTINATION_ADDRESS }</h6>
-
-                                    </div>
-
-                                    <div class="text-left bg-light p-3 mb-3">
-                                        <h5 class="bg-success mt-0 p-2 text-white d-sm-inline-block">Información del Vehículo</h5>
-                                        <h6 class="font-13">Matrícula : ${ invoice.VEHICLE_LICENSE_PLATE }</h6>
-                                        <h6 class="font-13">Marca : ${  invoice.VEHICLE_MAKE }</h6>
-                                        <h6 class="font-13">Color : ${ invoice.VEHICLE_COLOR }</h6>
-                                        <h6 class="font-13">Modelo : ${ invoice.VEHICLE_MODEL }</h6>
-                                        <h6 class="font-13"> Numero Trailer : ${ invoice.VEHICLE_TRAILER_NUMBER }</h6>
-                                    </div>
-                                </div><!--end col-->
-                            `
+                                <tr>
+                                    <td>${ invoice.OWNER_ID }</td>
+                                    <td>${ invoice.OWNER_NAME }</td>
+                                </tr>
+                                `
                                 $('#row1_1').append(plantillarow1)
+
+                                $('#row2_2').html('')
+                                plantillarow2 = `
+                                <tr>
+                                    <td>${ invoice.DRIVER_FIRSTNAME + invoice.DRIVER_LASTNAME }</td>
+                                    <td>${ invoice.DRIVER_ID }</td>
+                                    <td>${ invoice.DRIVER_MOBILE_NUMBER }</td>
+                                </tr>
+                                `
+                                $('#row2_2').append(plantillarow2)
+
+                                $('#row3_3').html('')
+                                plantillarow3 = `
+                                <tr>
+                                    <td>${ invoice.MANIFEST_OPERATION_TYPE }</td>
+
+                                    <td>${traducir(invoice.SHIPMENT_STATUS)}</td>
+                                    <td> SIN ENTREGAR </td>
+                                </tr>
+                                `
+                                $('#row3_3').append(plantillarow3)
+
+                                $('#row4_4').html('')
+                                plantillarow4 = `
+                                <tr>
+                                    <td> ${ invoice.ORIGIN_CITY } </td>
+                                    <td> ${ invoice.ORIGIN_PROVINCE } </td>
+                                    <td> ${ invoice.ORIGIN_ADDRESS } </td>
+                                    <td> ${ invoice.ROUTE_NAME } </td>
+                                    <td> ${ invoice.ROUTE_VIA } </td>
+                                    <td> ${ invoice.DESTINATION_CITY } </td>
+                                    <td> ${ invoice.DESTINATION_PROVINCE } </td>
+                                    <td> ${ invoice.DESTINATION_ADDRESS } </td>
+                                </tr>
+                                `
+                                $('#row4_4').append(plantillarow4)
+
+                                $('#row5_5').html('')
+                                plantillarow5 = `
+                                <tr>
+                                    <td> ${ invoice.VEHICLE_LICENSE_PLATE } </td>
+                                    <td> ${  invoice.VEHICLE_MAKE } </td>
+                                    <td> ${ invoice.VEHICLE_COLOR } </td>
+                                    <td> ${ invoice.VEHICLE_MODEL } </td>
+                                    <td> ${ invoice.VEHICLE_TRAILER_NUMBER } </td>
+                                </tr>
+                                `
+                                $('#row5_5').append(plantillarow5)
 
                             }
                             swal.close();
@@ -2492,7 +2605,7 @@
                         let datos = response.data;
                         // var invoiceInstallments = datos[0].invoiceInstallments;
                         if (response.success == true) {
-                            // console.log(datos);
+
                             tblColectionData.clear().draw();
                             tblColectionData.rows.add(datos).draw();
                             // validacionButton(Card);
@@ -2652,7 +2765,7 @@
                             InvoiceNumber: invoice.InvoiceNumber
                         },
                         success: function(response) {
-                            // console.log(response.data.invoiceFechaPago);
+                            // console.log(response.data);
                             let invoice = response.data.invoiceData[0]
                             let lines = response.data.invoiceLines
                             let fPago = response.data.invoiceFechaPago[0]['PaymentDate']
@@ -2671,7 +2784,7 @@
                                 $('#date').html('')
                                 plantillaDate = `
                                         <div class="col-md-4 align-self-center">
-                                            <img src="{{ asset('assets/images/logos-tractocar/negative-blue-small.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
+                                            <img src="{{ asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
                                             {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
                                             <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
                                         </div><!--end col-->

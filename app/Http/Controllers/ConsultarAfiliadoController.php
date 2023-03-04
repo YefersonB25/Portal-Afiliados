@@ -254,8 +254,11 @@ class ConsultarAfiliadoController extends Controller
                 ->first();
 
             $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
+
+            $document = (Auth::user()->document_type == "NIT") ? RequestNit::getNit($number_id) : $number_id;
+
             $params = [
-                'q'        => "(TaxpayerId = '{$number_id}')",
+                'q'        => "(TaxpayerId = '{$document}')",
                 'limit'    => '200',
                 'fields'   => 'SupplierNumber',
                 'onlyData' => 'true'

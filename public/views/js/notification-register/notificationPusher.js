@@ -1,5 +1,5 @@
 
-Pusher.logToConsole = true;
+Pusher.logToConsole = false;
 var pusher = new Pusher('8be28df216f44b35f164', {
     cluster: 'us2',
 });
