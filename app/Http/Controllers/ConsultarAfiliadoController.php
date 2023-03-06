@@ -140,7 +140,7 @@ class ConsultarAfiliadoController extends Controller
     {
         $params      =  [
             'limit'    => $request->InvoiceLimit,
-            'fields'  => 'InvoiceNumber,InvoiceDate,PaidStatus,InvoiceAmount,CanceledFlag,AmountPaid;invoiceInstallments:UnpaidAmount,GrossAmount,DueDate',
+            'fields'  => 'InvoiceId,InvoiceNumber,InvoiceDate,PaidStatus,InvoiceAmount,CanceledFlag,AmountPaid;invoiceInstallments:UnpaidAmount,GrossAmount,DueDate',
             'onlyData' => 'true',
             'orderBy' => 'InvoiceDate:desc'
         ];
@@ -318,7 +318,7 @@ class ConsultarAfiliadoController extends Controller
                 'onlyData' => 'true',
             ];
 
-            $params['q'] = "(InvoiceNumber = '{$request->InvoiceNumber}')";
+            $params['q'] = "(InvoiceId = '{$request->InvoiceId}')";
             $invoice = OracleRestErp::getInvoiceSuppliers($params);
             $invoce =  $invoice->object()->items;
 

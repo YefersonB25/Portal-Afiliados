@@ -1309,7 +1309,6 @@
                 endDate, InvoiceLimit) {
                 // let start = performance.now();
                 tblColectionData = $(TableName).DataTable({
-
                     retrieve: true,
 
                     dom: 'Bfrtip',
@@ -1383,7 +1382,7 @@
                             data: null,
                             defaultContent: "<button type='button' class='ver btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"
                         },
-                        // {title: "ID Factura", data: "InvoiceId" },
+                        {title: "ID Factura", data: "InvoiceId" },
                         {
                             title: "Numero Factura",
                             data: "InvoiceNumber"
@@ -1500,6 +1499,8 @@
                     ],
 
                 });
+
+                tblColectionData.column(1).visible(false);
 
                 let validacionButton = function(Card) {
                     if (Card == "#oculto-por-pagar") {
@@ -2088,13 +2089,12 @@
                     plantillarow1 = '';
                     plantillarow2 = '';
                     plantillarow3 = '';
-
                     $.ajax({
                         type: "POST",
                         url: "{{ route('invoice.lines') }}",
                         data: {
                             "_token": "{{ csrf_token() }}",
-                            InvoiceNumber: invoice.InvoiceNumber
+                            InvoiceId: invoice.InvoiceId
                         },
                         success: function(response) {
                             let invoice = response.data.invoiceData[0]
@@ -2461,7 +2461,7 @@
                             data: null,
                             defaultContent: "<button type='button' class='verY btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"
                         },
-                        // {title: "ID Factura", data: "InvoiceId" },
+                        {title: "ID Factura", data: "InvoiceId" },
                         {
                             title: "Numero Factura",
                             data: "InvoiceNumber"
@@ -2593,7 +2593,7 @@
                     ],
 
                 });
-
+                tblColectionData.column(1).visible(false);
                 $.ajax({
                     type: $(form).attr('method'),
                     headers: {
@@ -2762,7 +2762,7 @@
                         url: "{{ route('invoice.lines') }}",
                         data: {
                             "_token": "{{ csrf_token() }}",
-                            InvoiceNumber: invoice.InvoiceNumber
+                            InvoiceId: invoice.InvoiceId
                         },
                         success: function(response) {
                             // console.log(response.data);
