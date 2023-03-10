@@ -178,6 +178,9 @@ class ConsultarAfiliadoController extends Controller
                 if (!empty($request->InvoiceType)) {
                     return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . trans('locale.' . $request->PaidStatus) . ' con el tipo de factura ' . trans('locale.' . $request->InvoiceType)]);
                 } else {
+                    if ($request->PaidStatus == 'Pagada parcialmente') {
+                        return response()->json(['success' => false, 'data' => 'No se encontraron facturas con novedades']);
+                    }
                     return response()->json(['success' => false, 'data' => 'No se encontraron facturas ' . $request->PaidStatus]);
                 }
             }
@@ -501,11 +504,13 @@ class ConsultarAfiliadoController extends Controller
             // $params = self::parametros();
             $params = [
                 'onlyData' => 'true',
+                'expand' => 'statuses',
                 'limit'    => $request->ShipmentsLimit,
                 'orderBy' => 'insertDate:desc'
             ];
-            $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.' . $request->number_id . '" and statuses.statusValueGid eq "TCL.MANIFIESTO_CUMPL_NUEVO"';
-            $params['fields'] = 'shipmentXid,shipmentName,totalActualCost,totalWeightedCost,numStops,attribute9,attribute10,attribute11,insertDate';
+            // $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.' . $request->number_id . '" and statuses.statusTypeGid eq "TCL.MANIFIESTO_CUMPLIDO"';
+            $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.' . $request->number_id . '" and totalActualCost ne 0  and statuses.statusTypeGid eq "TCL.MANIFIESTO_CUMPLIDO"';
+            $params['fields'] = 'shipmentXid,shipmentName,totalActualCost,totalWeightedCost,numStops,attribute9,attribute10,attribute11,insertDate,statuses.statusValueGid';
             $request = OracleRestOtm::getShipments($params);
 
             if ($request->status() == 401) {

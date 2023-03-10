@@ -282,7 +282,7 @@
                                                                             <option value="Impagado">Impagado
                                                                             </option>
                                                                             <option value="Pagada parcialmente">
-                                                                                parsialmente pagada</option>
+                                                                                parsialmente</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md">
@@ -929,7 +929,7 @@
                                                                                             Impagado</option>
                                                                                         <option
                                                                                             value="Pagada parcialmente">
-                                                                                            Parcialmente Pagada</option>
+                                                                                            Parcialmente</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-md">
@@ -1690,7 +1690,8 @@
 
                     },
 
-                    columns: [{
+                    columns: [
+                        {
                             title: "Accion",
                             data: null,
                             defaultContent: "<button type='button' class='verT btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"
@@ -1700,7 +1701,7 @@
                             data: "shipmentXid"
                         },
                         {
-                            title: "Numero identificacion proveedor",
+                            title: "Documento proveedor",
                             data: function(d) {
 
                                 if (typeof d.attribute9 != "undefined") {
@@ -1754,8 +1755,22 @@
                             }
                         },
                         {
-                            title: "Numero de paradas",
+                            title: "#N paradas",
                             data: "numStops"
+                        },
+                        {
+                            title: "Estado Manifiesto",
+                            data: function(d) {
+                                let status = d.statuses.items;
+                                let response = '';
+                                status.forEach(function(status) {
+                                    if(status.statusTypeGid == 'TCL.MANIFIESTO_CUMPLIDO'){
+                                        let statusValue = status.statusValueGid.split(".");
+                                        response = statusValue[1];
+                                    }
+                                });
+                                return response.replace('_',' ');
+                            }
                         },
 
                     ],
@@ -1866,7 +1881,6 @@
                     success: function(response) {
                         let datos = response.data;
                         if (response.success == true) {
-
                             tblColectionData.clear().draw();
                             tblColectionData.rows.add(datos).draw();
 
@@ -2560,8 +2574,6 @@
 
                         // {title: "Tipo de Factura", data: "InvoiceType" },
                         // {title: "Pago realizado", data: "AccountingDate" }
-
-
 
                     ],
 
