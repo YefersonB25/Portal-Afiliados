@@ -399,7 +399,7 @@
                                                 <div class="form-horizontal">
                                                     <div class="row mb-2">
                                                         <div class="col-md-12">
-                                                            <label for="" class="form-label"># Factoras que
+                                                            <label for="" class="form-label"># Facturas que
                                                                 desea visualizar</label>
                                                             <select type="text" name="ShipmentsLimit"
                                                                 id="ShipmentsLimit" class="form-control" tabindex="3"
