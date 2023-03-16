@@ -509,7 +509,7 @@ class ConsultarAfiliadoController extends Controller
                 'orderBy' => 'insertDate:desc'
             ];
             // $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.' . $request->number_id . '" and statuses.statusTypeGid eq "TCL.MANIFIESTO_CUMPLIDO"';
-            $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.' . $request->number_id . '" and totalActualCost ne 0  and statuses.statusTypeGid eq "TCL.MANIFIESTO_CUMPLIDO"';
+            $params['q'] = 'specialServices.specialServiceGid eq "' . 'TCL.' . $request->number_id . '" and statuses.statusTypeGid eq "TCL.MANIFIESTO_CUMPLIDO"';
             $params['fields'] = 'shipmentXid,shipmentName,totalActualCost,totalWeightedCost,numStops,attribute9,attribute10,attribute11,insertDate,statuses.statusValueGid';
             $request = OracleRestOtm::getShipments($params);
 
