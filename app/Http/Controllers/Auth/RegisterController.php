@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Pusher\Pusher;
 
 class RegisterController extends Controller
@@ -59,6 +60,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
+            Rule::unique('users', 'email')->where(function ($query) {
+                return $query->whereNull('deleted_at')->orWhereNotNull('deleted_at');
+            }),
             'number_id' => ['required', 'numeric', 'unique:users'],
             'phone' => ['required', 'numeric'],
             'document_type' => ['required'],
