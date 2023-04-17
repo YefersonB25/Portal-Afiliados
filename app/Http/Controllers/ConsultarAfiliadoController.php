@@ -206,7 +206,7 @@ class ConsultarAfiliadoController extends Controller
 
                 $params = [
                     'q'        => "(SupplierNumber = '{$request->SupplierNumber}') and (CanceledFlag = false) and (PaidStatus ='{$PaidStatus}')",
-                    'fields'   => 'InvoiceAmount',
+                    'fields'   => 'invoiceInstallments:UnpaidAmount',
                     'onlyData' => 'true',
                     'limit'    => '500'
 
@@ -216,7 +216,8 @@ class ConsultarAfiliadoController extends Controller
 
                 $total = 0;
                 foreach ($response->items as $amountTotal) {
-                    $total = $total + $amountTotal->InvoiceAmount;
+
+                    $total = $total + $amountTotal->invoiceInstallments[0]->UnpaidAmount;
                 }
                 $collection[$key] = [
                     $PaidStatus => $total,
@@ -224,7 +225,6 @@ class ConsultarAfiliadoController extends Controller
 
                 ];
             }
-
 
             return response()->json(['success' => true, 'data' => $collection]);
         } catch (\Throwable $th) {
