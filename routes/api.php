@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConsultarAfiliadoController;
+use App\Http\Controllers\Otm\NotificacionOtm;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\WebserviceOtmController;
@@ -76,6 +77,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 Route::post('webservice/orderReleases/create', [WebserviceOtmController::class, 'store'])
     ->middleware('auth.basic');
 
+Route::get('/sendmail/otm', [NotificacionOtm::class, 'Notification']);
 
 
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(RolController::class)->group( function () {

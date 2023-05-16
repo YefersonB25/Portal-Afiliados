@@ -284,5 +284,8 @@ return [
     "Yes"                              => "Si",
     "Your Excel input file"            => "Archivo de excel",
     "Your JSON input file"             => "Su archivo de entrada JSON",
-    "Invoices Pending Sending" => "Facturas pendientes de envío"
+    "Invoices Pending Sending" => "Facturas pendientes de envío",
+    "Please click the button below to verify your email address." => "Haga clic en el botón de abajo para verificar su dirección de correo electrónico.",
+    "If you did not create an account, no further action is required." => "Si no creó una cuenta, no se requiere ninguna otra acción.",
+    "Verify Email Address" => "Confirme su dirección de correo electrónico"
 ];
