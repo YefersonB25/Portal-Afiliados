@@ -77,7 +77,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 Route::post('webservice/orderReleases/create', [WebserviceOtmController::class, 'store'])
     ->middleware('auth.basic');
 
-Route::get('/sendmail/otm', [NotificacionOtm::class, 'Notification']);
+Route::post('/sendmail/otm', [NotificacionOtm::class, 'Notification'])->middleware('auth.basic');
 
 
 // Route::middleware(['auth:sanctum', 'abilities:check-status,place-orders'])->controller(RolController::class)->group( function () {

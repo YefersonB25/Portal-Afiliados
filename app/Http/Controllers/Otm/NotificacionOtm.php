@@ -16,17 +16,17 @@ class NotificacionOtm extends Controller
 
     public function Notification(Request $request)
     {
-        HelpersNotificationOtm::sendNotification(
-            'titulo',
-            'Cuerpo del mensaje',
+        // HelpersNotificationOtm::sendNotification(
+        //     'titulo',
+        //     'Cuerpo del mensaje',
 
-        );
+        // );
         
         return response()->json([
             'status' => '200',
             'message' => "Correo Enviado correctamente",
             'data' => [
-                'response' => $request
+                'response' => $request->getContent()
             ]
         ]);
 

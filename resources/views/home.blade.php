@@ -839,7 +839,7 @@
                                                                                                 Proveedor</label>
                                                                                             <div class="form-group">
                                                                                                 <input type="hidden"
-                                                                                                    class="form-control"
+                                                                                                    class="form-control"                                                                                      
                                                                                                     id="customer-code"
                                                                                                     name="SupplierNumber" />
                                                                                             </div>
@@ -2728,13 +2728,15 @@
                     dataType: 'json',
                     delay: 300,
                     data: function(term, page) {
+                        cadena = term.toUpperCase();
                         return {
-                            q: term
+                            q: cadena
                         };
                     },
                     results: function(data) {
+
                         return {
-                            results: $.map(data, function(item) {
+                            results: $.map(data , function(item) {
                                 return {
                                     text: item.Supplier,
                                     id: item.SupplierNumber
