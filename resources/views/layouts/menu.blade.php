@@ -30,6 +30,7 @@
 
                     <span class="side-menu__label"><i class="fa fa-users side-menu__icon"></i>Roles</span>
                 </a>
+
                 {{-- <ul class="slide-menu">
                     <li class="side-menu-label1"><a href="javascript:void(0)">Solicitudes</a></li>
                     <li><a href="{{route('usuario.index')}}" class="slide-item">ver</a></li> --}}

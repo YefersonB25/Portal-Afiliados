@@ -88,7 +88,8 @@
 
                             {{-- Card de valor/cantidad de facturas --}}
                             <div class="row">
-                                <div class="col-lg-6 col-sm-12 col-md-6 col-xl-6">
+
+                                <div class="col-lg-5 col-sm-12 col-md-5 col-xl-5">
                                     <div class="card overflow-hidden">
                                         <div class="card-body">
                                             <div class="row">
@@ -113,7 +114,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="" class="col-lg-6 col-sm-12 col-md-6 col-xl-6">
+
+                                <div class="col-lg-5 col-sm-12 col-md-5 col-xl-5">
                                     <div class="card overflow-hidden">
                                         <div class="card-body">
                                             <div class="row">
@@ -138,6 +140,20 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-2 col-sm-4 col-md-2 col-xl-2">
+                                    <div class="col col-auto top-icn dash">
+                                        <a id="drakma" class="card text-center btn btn-icon btn-info-light btn-outline-info me-2"
+                                            data-bs-toggle="tooltip" style="width: 9rem; height: 7rem;"
+                                            data-bs-original-title="Solicita tu Credito">
+                                            <div class="card-body">
+                                                <img class="card-img-top" src="{{ asset('assets/images/logos-drakma/LOGO.png') }}">
+
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
                             </div>
                             {{-- Fin --}}
 
@@ -772,6 +788,36 @@
                                 </div>
                             </div>
                             {{-- Fin --}}
+
+                            <!-- Modal Drakma -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title center-block" id="myModalLabel">Solicita tu Credito</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Seleccione una opción:</p>
+                                            <button class="btn btn-outline-info" onclick="window.open('https://drakma.co/solicitar-credito/', '_blank')">
+                                                <a class="nav-link icon nav-link-bg">
+                                                    <img src={{ asset('assets/images/logos-drakma/LOGO.png') }}
+                                                        class="header-brand-img desktop-logo" alt="logo">
+                                                    <h6>Solicitar Credito</h6>
+                                                </a>
+                                            </button>
+                                            <button class="btn btn-outline-info" onclick="window.open('https://drakma.co/solicitar-pronto-pago/', '_blank')">
+                                                <a class="nav-link icon nav-link-bg">
+                                                    <img src={{ asset('assets/images/logos-drakma/LOGO.png') }}
+                                                        class="header-brand-img desktop-logo" alt="logo">
+                                                    <h6>Solicitar Pronto Pago</h6>
+                                                </a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- Fin --}}
                         @endcan
 
                         @can('/facturasGeneral')
@@ -839,7 +885,7 @@
                                                                                                 Proveedor</label>
                                                                                             <div class="form-group">
                                                                                                 <input type="hidden"
-                                                                                                    class="form-control"                                                                                      
+                                                                                                    class="form-control"
                                                                                                     id="customer-code"
                                                                                                     name="SupplierNumber" />
                                                                                             </div>
@@ -2116,7 +2162,10 @@
                 obtener_dataTransporte("#TableEnTransporte tbody", tblColectionData);
             })
             // Fin
-
+            $('#drakma').click(function(e) {
+                e.preventDefault();
+                $('#myModal').modal('show');
+            })
             // Cerrar modal
             $("#closet-modal").click(function(e) {
                 $("#global-loader3").modal('hide'); //ocultamos el modal
@@ -2736,7 +2785,7 @@
                     results: function(data) {
 
                         return {
-                            results: $.map(data , function(item) {
+                            results: $.map(data, function(item) {
                                 return {
                                     text: item.Supplier,
                                     id: item.SupplierNumber
