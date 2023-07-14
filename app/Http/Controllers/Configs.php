@@ -76,7 +76,7 @@ class Configs extends Controller
     {
         $start_at = $request->startDate;
         $end_at = $request->endDate;
-        $action = 'INICIO SESSION';
+        $action = 'CONSULTO FACTURAS';
 
         $query = DB::table('user_tracking');
         $query->where('action', $action);
