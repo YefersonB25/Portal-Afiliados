@@ -76,16 +76,17 @@ class Configs extends Controller
     {
         $start_at = $request->startDate;
         $end_at = $request->endDate;
-        $action = 'CONSULTO FACTURAS';
 
         $query = DB::table('user_tracking');
-        $query->where('action', $action);
+
+        $query->where('action', 'CONSULTO FACTURAS');
+
         if ($start_at != null && $end_at != null) {
 
             $query->whereBetween('created_at', [$start_at, $end_at]);
         }
-        $getCountActionLogin = $query->count();
-        return response()->json(['success' => true, 'data' => $getCountActionLogin]);
+
+        return response()->json(['success' => true, 'data' => $query->count()]);
     }
 
     public function countActionHome(Request $request)

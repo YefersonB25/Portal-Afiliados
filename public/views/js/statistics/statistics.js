@@ -83,32 +83,32 @@ let ajaxCountLogin = function (url) {
     })
 };
 
-let ajaxMostConsultedActions = function (url) {
-    plantilla = ''
-    $.ajax({
-        type: 'GET',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: url,
-        success: function (response) {
+// let ajaxMostConsultedActions = function (url) {
+//     plantilla = ''
+//     $.ajax({
+//         type: 'GET',
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         url: url,
+//         success: function (response) {
 
-            let datos = response.data
-            if (response.success == true) {
-                chartMostConsultedActions(datos)
-            }
+//             let datos = response.data
+//             if (response.success == true) {
+//                 chartMostConsultedActions(datos)
+//             }
 
-        },
-        error: function (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Algo fallo con la respuesta!',
-            })
-            console.error(error);
-        }
-    })
-};
+//         },
+//         error: function (error) {
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Oops...',
+//                 text: 'Algo fallo con la respuesta!',
+//             })
+//             console.error(error);
+//         }
+//     })
+// };
 
 $('#filterCountLoginDay').submit(function (e) {
     e.preventDefault(); //detemos el formluario
@@ -122,7 +122,7 @@ $('#filterCountLoginDay').submit(function (e) {
         url: $(form).attr('action'),
         data: $(form).serialize(),
         success: function (response) {
-
+            console.log(response);
             let datos = response.data
             if (response.success == true) {
 
@@ -219,40 +219,40 @@ let chartFilter = function (data) {
 
 };
 
-let chartMostConsultedActions = function (data) {
+// let chartMostConsultedActions = function (data) {
 
 
-    anychart.onDocumentReady(function () {
+//     anychart.onDocumentReady(function () {
 
-        // set chart type
-        var chart = anychart.area();
+//         // set chart type
+//         var chart = anychart.area();
 
-        chart.title("Modulos de facturas mas consultadas");
+//         chart.title("Modulos de facturas mas consultadas");
 
-        // set data
-        var area = chart.splineArea(data);
+//         // set data
+//         var area = chart.splineArea(data);
 
-        // set container and draw chart
-        chart.container("containerActionHome").draw();
-    });
+//         // set container and draw chart
+//         chart.container("containerActionHome").draw();
+//     });
 
-    // function, if listener triggers
-    // function addPoint() {
-    //     // first index for new point
-    //     newIndex = (data.mapAs().getRowsCount()) + 1;
+//     // function, if listener triggers
+//     // function addPoint() {
+//     //     // first index for new point
+//     //     newIndex = (data.mapAs().getRowsCount()) + 1;
 
-    //     // append data
-    //     data.append({
+//     //     // append data
+//     //     data.append({
 
-    //         // x value
-    //         x: "new P" + newIndex,
+//     //         // x value
+//     //         x: "new P" + newIndex,
 
-    //         // random value from 1 to 100
-    //         value: Math.floor((Math.random() * 100) + 1)
-    //     });
-    // };
+//     //         // random value from 1 to 100
+//     //         value: Math.floor((Math.random() * 100) + 1)
+//     //     });
+//     // };
 
-}
+// }
 
 
 

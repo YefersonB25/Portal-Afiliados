@@ -33,9 +33,9 @@
                         <div class="card-body" id="count">
                         </div>
 
-                        <div class="card-body">
+                        {{-- <div class="card-body">
                             <div id="containerActionHome"></div>
-                        </div>
+                        </div> --}}
 
                         <div class="card-body">
                             <form class="form-horizontal" id="filter" action="{{ route('setting.statistics.filter') }}"
@@ -90,8 +90,8 @@
         let urlCountLogin = "{{ route('setting.statistics.countLogin') }}"
         ajaxCountLogin(urlCountLogin);
 
-        let urlConsultedActions = "{{ route('setting.statistics.actionHome') }}"
-        ajaxMostConsultedActions(urlConsultedActions);
+        // let urlConsultedActions = "{{ route('setting.statistics.actionHome') }}"
+        // ajaxMostConsultedActions(urlConsultedActions);
     </script>
 @endsection
 @endsection
