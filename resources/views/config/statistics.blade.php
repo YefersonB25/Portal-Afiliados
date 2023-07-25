@@ -34,6 +34,7 @@
                         </div>
 
                         <div class="card-body">
+                            <h4 class="heading" style="text-align: center;">Numero de inicio de sesion por mes</h4>
                             <div id="containerActionHome"></div>
                         </div>
 
@@ -77,6 +78,7 @@
                         </div>
 
                         <div class="card-body">
+                            <h4 class="heading" style="text-align: center;">Seguimiento por usuario</h4>
                             <div id="container"></div>
                         </div>
                     </div>

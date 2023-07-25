@@ -206,8 +206,6 @@ $('#filter').submit(function (e) {
 
             let login_per_day = response.login_per_day
 
-            console.log(login_per_day);
-
           if (login_per_day.length != 0) {
             chartFilter(response.login_per_day)
           }
@@ -234,7 +232,7 @@ let chartFilter = function (login_per_day) {
         const formattedData = login_per_day.map(item => [item.month, item.total]);
 
         var chartData = {
-            title: 'Seguimiento por usuario',
+            // title: 'Seguimiento por usuario',
             rows: formattedData
         };
 
@@ -255,7 +253,7 @@ let chartFilter = function (login_per_day) {
         chart
             .labels()
             .enabled(true)
-            .position('center-top')
+            .position('center')
             .anchor('center-bottom')
             .format('{%Value}{groupsSeparator: }');
         chart.hovered().labels(false);
@@ -291,7 +289,7 @@ let chartMostConsultedActions = function (login_per_day) {
         const formattedData = login_per_day.map(item => [item.month, item.total]);
 
         var chartData = {
-            title: 'Numero de inicio de sesion por mes',
+            // title: 'Numero de inicio de sesion por mes',
             rows: formattedData
           };
 
@@ -312,7 +310,7 @@ let chartMostConsultedActions = function (login_per_day) {
           chart
             .labels()
             .enabled(true)
-            .position('center-top')
+            .position('center')
             .anchor('center-bottom')
             .format('{%Value}{groupsSeparator: }');
           chart.hovered().labels(false);
