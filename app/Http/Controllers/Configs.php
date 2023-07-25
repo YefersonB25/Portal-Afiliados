@@ -77,6 +77,9 @@ class Configs extends Controller
         $start_at = $request->startDate;
         $end_at = $request->endDate;
 
+        $login_per_day = DB::table('user_tracking')
+        ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('COUNT(*) AS total'));
+
         $query = DB::table('user_tracking');
 
         $query->where('action', 'CONSULTO FACTURAS');
@@ -84,9 +87,14 @@ class Configs extends Controller
         if ($start_at != null && $end_at != null) {
 
             $query->whereBetween('created_at', [$start_at, $end_at]);
+            $login_per_day->whereBetween('created_at', [$start_at, $end_at]);
+
         }
 
-        return response()->json(['success' => true, 'data' => $query->count()]);
+        $login_per_day->groupBy('action', 'month');
+        $user_trackins = $login_per_day->get();
+
+        return response()->json(['success' => true, 'data' => $query->count(), 'login_per_day' => $user_trackins]);
     }
 
     public function countActionHome(Request $request)
@@ -114,32 +122,24 @@ class Configs extends Controller
         $number_id = $request->numberId;
         $start_at = $request->startDate;
         $end_at = $request->endDate;
-        $trackings = array();
-        $detail = "INICIO SESSION";
 
-        $query = DB::table('user_tracking')
-            ->select('detail', DB::raw('count(*) as total'));
         if ($number_id != null) {
-            $query->where('user_id', $number_id);
-        }
-        if ($start_at != null && $end_at != null) {
 
-            $query->whereBetween('created_at', [$start_at, $end_at]);
-        }
-        $query->groupBy('detail');
-        $user_trackins = $query->get();
+            $login_per_day = DB::table('user_tracking')
+            ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('COUNT(*) AS total'))
+            ->where('user_id', $number_id);
 
-        foreach ($user_trackins as $user_trackin) {
+            if ($start_at != null && $end_at != null) {
 
-            // if (!empty($user_trackin->detail)) {
-            //     $detail = $user_trackin->detail;
-            array_push($trackings, array(
-                'x' => is_null($user_trackin->detail) ? "INICIO SESSION" : $user_trackin->detail,
-                'value' => $user_trackin->total
-            ));
-            // }
+                $login_per_day->whereBetween('created_at', [$start_at, $end_at]);
+            }
+
+            $login_per_day->groupBy('action', 'month');
+            $user_trackins = $login_per_day->get();
+
+
         }
-        return response()->json(['success' => true, 'data' => $trackings]);
+        return response()->json(['success' => true, 'login_per_day' => $user_trackins] );
     }
 
     public function configSistem()

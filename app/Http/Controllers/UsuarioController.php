@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Studio\Totem\Events\Deleted;
 
+
 class UsuarioController extends Controller
 {
     use SoftDeletes;
@@ -39,11 +40,13 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // event(new MessageSentPrivate('Nuevo Usuario', 'Se ha resgistrado un nuevo usuario'));
         // $usuarios = self::filtros();
-        $usuarios = User::where('deleted_at', NULL)->orderBy('updated_at', 'desc')->paginate(20);
+
+        $usuarios = User::where('deleted_at', NULL)->orderBy('updated_at', 'desc')->paginate(50);
+
         return view('usuarios.index', ['usuarios' => $usuarios]);
         //? al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $usuarios->links() !!}
     }
@@ -150,8 +153,13 @@ class UsuarioController extends Controller
         if ($request->number_id != '') {
             $usuarios->where('number_id', $request->number_id);
         }
+        // dd(intval($request->limit) ? intval($request->limit) : "");
         // return response()->json(['success' => true, 'data' => $usuarios->paginate(20)]);
-        $users = $usuarios->paginate(20);
+        if ($request->limit != "") {
+            $users = $usuarios->paginate(intval($request->limit));
+        }else{
+            $users =  $usuarios->get();
+        }
         return view('usuarios.index', ['usuarios' => $users]);
 
         // return response()->json(['success' => true, 'data' => $user]);

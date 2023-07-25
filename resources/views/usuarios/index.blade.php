@@ -32,6 +32,18 @@
                                     <input type="text" name="number_id" id="number_id" class="form-control" tabindex="3"
                                         value="{{ old('number_id') }}" autofocus>
                                 </div>
+                                <div class="col-md">
+                                    <label for="limit" class="form-label">Limite de Usuarios</label>
+                                    {{-- <input type="text" name="limit" id="limit" class="form-control" tabindex="3"
+                                        value="{{ old('limit') }}" autofocus> --}}
+                                        <select name="limit" id="limit-input" class="form-control" tabindex="3"
+                                        value="{{ old('limit') }}" autofocus>
+                                            <option value="50" selected >50</option>
+                                            <option value="100">100</option>
+                                            <option value="200">200</option>
+                                            <option value="">Todos</option>
+                                          </select>
+                                </div>
                             </div>
                             <button type="submit" id="btnFilter" class="btn btn-primary">Filtrar</button>
                         </form>
@@ -159,7 +171,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{ $usuarios->links() }}
+                                {{-- {{ $usuarios->links() }} --}}
                             </div>
                         </div>
                     </div>
@@ -245,6 +257,7 @@
     window.onload = function () {
         swal.close();
     }
+
 
     // load
         let Loader = function(){
@@ -429,22 +442,6 @@
             });
         });
 
-        // $(document).on("submit","#filter",function(e){
-        //     e.preventDefault();//detemos el formluario
-        //         $.ajax({
-        //             type: $('#filter').attr('method'),
-        //             headers: {
-        //                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //                 },
-        //             url: $('#filter').attr('action'),
-        //             data: $('#filter').serialize(),
-        //             success: function (res) {
-        //                 console.log(res.data);
-        //             }
-        //         });
-
-        //         // })
-        // });
 
         $(document).on('click', "#consultAfiliado", function (e) {
             Loader();

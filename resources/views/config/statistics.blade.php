@@ -16,13 +16,13 @@
                                         <label for="title" class="form-label">Fecha Inicio y
                                             Fecha Fin</label>
                                         <div class="input-group">
-                                            <input name="startDate" id="startDate" class="form-control"
+                                            <input name="startDate" id="startDate1" class="form-control"
                                                 placeholder="YYYY-MM-DD" data-mask="yyyy-mm-dd" tabindex="3"
                                                 value="{{ old('startDate') }}"
-                                                onKeyUp="ValidarFecha('startDate','btnPrFiltr');" autofocus>
-                                            <input name="endDate" id="endDate" placeholder="YYYY-MM-DD"
+                                                onKeyUp="ValidarFecha('startDate1','btnPr');" autofocus>
+                                            <input name="endDate" id="endDate1" placeholder="YYYY-MM-DD"
                                                 data-mask="yyyy-mm-dd" class="form-control" tabindex="3"
-                                                onKeyUp="ValidarFecha('endDate','btnPrFiltr');" value="{{ old('endDate') }}"
+                                                onKeyUp="ValidarFecha('endDate1','btnPr');" value="{{ old('endDate') }}"
                                                 autofocus>
                                         </div>
                                     </div>
@@ -33,17 +33,26 @@
                         <div class="card-body" id="count">
                         </div>
 
-                        {{-- <div class="card-body">
+                        <div class="card-body">
                             <div id="containerActionHome"></div>
-                        </div> --}}
+                        </div>
 
                         <div class="card-body">
-                            <form class="form-horizontal" id="filter" action="{{ route('setting.statistics.filter') }}"
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form name="filtroAfiliado" class="form-horizontal" id="filter" action="{{ route('setting.statistics.filter') }}"
                                 method="GET" novalidate>
                                 @csrf
                                 <div class="row mb-2">
                                     <div class="col-md-6">
-                                        <label for="numberId" class="form-label">Nombre Proveedor</label>
+                                        <label for="numberId" class="form-label">Nombre Afiliado</label>
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" id="customer-code" name="numberId" />
                                         </div>
@@ -84,6 +93,7 @@
     <script src={{ asset('views/js/statistics/statistics.js') }}></script>
 
     <script>
+
         let url = "{{ route('setting.affiliate') }}"
         listAffiliate(url);
 

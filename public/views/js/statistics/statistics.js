@@ -1,8 +1,13 @@
+
+
 function ValidarFecha(id, btn) {
     // Almacenamos el valor digitado en TxtFecha
     var Fecha = document.getElementById(id).value;
     const button = document.getElementById(btn)
+    if (id === 'startDate1' && id === 'endDate1') {
 
+        console.log(id);
+    }
     // Si la fecha está completa comenzamos la validación
     if (Fecha.length != 10)
         button.disabled = true
@@ -12,6 +17,24 @@ function ValidarFecha(id, btn) {
         button.disabled = false
 };
 
+window.onload = function() {
+    // Obtener el elemento del input
+    var inputElement1 = document.getElementById("startDate");
+    var inputElement2 = document.getElementById("endDate");
+    var inputElement3 = document.getElementById("startDate1");
+    var inputElement4 = document.getElementById("endDate1");
+    var inputElement5 = document.getElementById("customer-code");
+
+    // Limpiar el valor del input
+    inputElement1.value = "";
+    inputElement2.value = "";
+    inputElement3.value = "";
+    inputElement4.value = "";
+    inputElement5.value = "";
+
+}
+
+// cunsulta de usuarios select2
 let listAffiliate = function (url) {
     $('#customer-code').select2({
         placeholder: "Buscar un afiliado",
@@ -22,7 +45,7 @@ let listAffiliate = function (url) {
             delay: 300,
             data: function (term, page) {
                 return {
-                    q: term
+                    q:  encodeURIComponent(term)
                 };
             },
             results: function (data) {
@@ -35,11 +58,17 @@ let listAffiliate = function (url) {
                     })
                 };
             },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error en la consulta AJAX: ' + errorThrown);
+                // Mostrar un mensaje de error al usuario, por ejemplo, en un div de error
+                $('#error-message').text('Error en la consulta. Intente nuevamente más tarde.');
+            },
             cache: false
         }
     });
 };
 
+// cantidad de usuarios registrado
 let ajaxCountLogin = function (url) {
     plantilla = ''
     $.ajax({
@@ -70,6 +99,34 @@ let ajaxCountLogin = function (url) {
                                 `
                 $('#count').append(plantilla)
             }
+            chartMostConsultedActions(response.login_per_day)
+        },
+        error: function (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Algo fallo con la respuesta!',
+            })
+            console.error(error);
+        }
+    })
+};
+
+// filtro de cantidad de inicio de session por usuario
+let ajaxMostConsultedActions = function (url) {
+    plantilla = ''
+    $.ajax({
+        type: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url,
+        success: function (response) {
+
+            let datos = response.data
+            if (response.success == true) {
+                chartMostConsultedActions(datos)
+            }
 
         },
         error: function (error) {
@@ -83,33 +140,7 @@ let ajaxCountLogin = function (url) {
     })
 };
 
-// let ajaxMostConsultedActions = function (url) {
-//     plantilla = ''
-//     $.ajax({
-//         type: 'GET',
-//         headers: {
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         },
-//         url: url,
-//         success: function (response) {
-
-//             let datos = response.data
-//             if (response.success == true) {
-//                 chartMostConsultedActions(datos)
-//             }
-
-//         },
-//         error: function (error) {
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Oops...',
-//                 text: 'Algo fallo con la respuesta!',
-//             })
-//             console.error(error);
-//         }
-//     })
-// };
-
+// filtro de cantidia de usuarios registrado por fecha
 $('#filterCountLoginDay').submit(function (e) {
     e.preventDefault(); //detemos el formluario
     let form = $(this);
@@ -122,8 +153,9 @@ $('#filterCountLoginDay').submit(function (e) {
         url: $(form).attr('action'),
         data: $(form).serialize(),
         success: function (response) {
-            console.log(response);
+
             let datos = response.data
+
             if (response.success == true) {
 
                 $('#count').html('')
@@ -143,6 +175,8 @@ $('#filterCountLoginDay').submit(function (e) {
                                 `
                 $('#count').append(plantilla)
             }
+            chartMostConsultedActions(response.login_per_day)
+
         },
         error: function (error) {
             Swal.fire({
@@ -155,11 +189,12 @@ $('#filterCountLoginDay').submit(function (e) {
     })
 });
 
+// accion filtro de cantidad de inicio de sesion por usuario y por fecha
 $('#filter').submit(function (e) {
     e.preventDefault(); //detemos el formluario
 
     let form = $(this);
-
+    // console.log(form[0][2]);
     $.ajax({
         type: $(form).attr('method'),
         headers: {
@@ -169,8 +204,13 @@ $('#filter').submit(function (e) {
         data: $(form).serialize(),
         success: function (response) {
 
-            let datos = response.data
-            chartFilter(datos)
+            let login_per_day = response.login_per_day
+
+            console.log(login_per_day);
+
+          if (login_per_day.length != 0) {
+            chartFilter(response.login_per_day)
+          }
 
         },
         error: function (error) {
@@ -179,80 +219,125 @@ $('#filter').submit(function (e) {
                 title: 'Oops...',
                 text: 'Algo fallo con la respuesta!',
             })
-            console.error(error);
+            // console.error(error);
         }
     })
 });
 
-let chartFilter = function (data) {
+// filtro de cantidad de inicio de session por usuario y por fecha
+let chartFilter = function (login_per_day) {
 
-    // create an object with csv settings
-    csvSettings = {
-        ignoreFirstRow: true,
-        columnsSeparator: ";",
-        rowsSeparator: "*"
-    };
+    anychart.onDocumentReady(function () {
+        // create data set on our data
+        document.getElementById('container').innerHTML = '';
 
-    // create a data set
-    var dataSet = anychart.data.set(data, csvSettings);
+        const formattedData = login_per_day.map(item => [item.month, item.total]);
 
-    // map the data
-    var mapping = dataSet.mapAs({
-        x: 0,
-        value: 1
+        var chartData = {
+            title: 'Seguimiento por usuario',
+            rows: formattedData
+        };
+
+        // create column chart
+        var chart = anychart.column();
+
+        // set chart data
+        chart.data(chartData);
+
+        // turn on chart animation
+        chart.animation(true);
+
+        chart.yAxis().labels().format('{%Value}{groupsSeparator: }');
+
+        // set titles for Y-axis
+        chart.yAxis().title('Revenue');
+
+        chart
+            .labels()
+            .enabled(true)
+            .position('center-top')
+            .anchor('center-bottom')
+            .format('{%Value}{groupsSeparator: }');
+        chart.hovered().labels(false);
+
+
+        // interactivity settings and tooltip position
+        chart.interactivity().hoverMode('single');
+
+        chart
+            .tooltip()
+            .positionMode('point')
+            .position('center-top')
+            .anchor('center-bottom')
+            .offsetX(0)
+            .offsetY(5)
+            .titleFormat('{%X}')
+            .format('{%SeriesName} : {%Value}{groupsSeparator: }');
+
+        // set container id for the chart
+        chart.container('container');
+
+        // initiate chart drawing
+        chart.draw();
     });
-
-    // create a chart
-    var chart = anychart.column();
-
-    // create a series and set the data
-    var series = chart.column(mapping);
-
-    // set the chart title
-    chart.title("Seguimiento por usuario");
-
-    // set the container id
-    chart.container("container");
-
-    // initiate drawing the chart
-    chart.draw();
 
 };
 
-// let chartMostConsultedActions = function (data) {
+let chartMostConsultedActions = function (login_per_day) {
+    anychart.onDocumentReady(function() {
 
+        document.getElementById('containerActionHome').innerHTML = '';
 
-//     anychart.onDocumentReady(function () {
+        const formattedData = login_per_day.map(item => [item.month, item.total]);
 
-//         // set chart type
-//         var chart = anychart.area();
+        var chartData = {
+            title: 'Numero de inicio de sesion por mes',
+            rows: formattedData
+          };
 
-//         chart.title("Modulos de facturas mas consultadas");
+          // create column chart
+          var chart = anychart.column();
 
-//         // set data
-//         var area = chart.splineArea(data);
+          // set chart data
+          chart.data(chartData);
 
-//         // set container and draw chart
-//         chart.container("containerActionHome").draw();
-//     });
+          // turn on chart animation
+          chart.animation(true);
 
-//     // function, if listener triggers
-//     // function addPoint() {
-//     //     // first index for new point
-//     //     newIndex = (data.mapAs().getRowsCount()) + 1;
+          chart.yAxis().labels().format('{%Value}{groupsSeparator: }');
 
-//     //     // append data
-//     //     data.append({
+          // set titles for Y-axis
+          chart.yAxis().title('Revenue');
 
-//     //         // x value
-//     //         x: "new P" + newIndex,
+          chart
+            .labels()
+            .enabled(true)
+            .position('center-top')
+            .anchor('center-bottom')
+            .format('{%Value}{groupsSeparator: }');
+          chart.hovered().labels(false);
 
-//     //         // random value from 1 to 100
-//     //         value: Math.floor((Math.random() * 100) + 1)
-//     //     });
-//     // };
+          // interactivity settings and tooltip position
+          chart.interactivity().hoverMode('single');
 
-// }
+          chart
+            .tooltip()
+            .positionMode('point')
+            .position('center-top')
+            .anchor('center-bottom')
+            .offsetX(0)
+            .offsetY(5)
+            .titleFormat('{%X}')
+            .format('{%SeriesName} : {%Value}{groupsSeparator: }');
+
+          // set container id for the chart
+          chart.container('containerActionHome');
+
+          // initiate chart drawing
+          chart.draw();
+
+      });
+}
 
 
 
