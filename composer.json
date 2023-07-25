@@ -22,6 +22,7 @@
         "mews/captcha": "^3.2",
         "mpociot/documentarian": "dev-master as 0.4.0",
         "mpociot/laravel-apidoc-generator": "dev-master",
+        "nesbot/carbon": "^2.68",
         "propaganistas/laravel-disposable-email": "^2.1",
         "pusher/pusher-php-server": "^7.2",
         "rap2hpoutre/laravel-log-viewer": "^2.2",

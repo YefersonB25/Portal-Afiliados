@@ -24,8 +24,12 @@
                                                 data-mask="yyyy-mm-dd" class="form-control" tabindex="3"
                                                 onKeyUp="ValidarFecha('endDate1','btnPr');" value="{{ old('endDate') }}"
                                                 autofocus>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="col-md-3">
+                                            <label for="numberId" class="form-label">Año</label>
+                                            <select class="form-control" name="year" id="year-select"></select>
+                                        </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="btnPr">Filtrar</button>
                             </form>

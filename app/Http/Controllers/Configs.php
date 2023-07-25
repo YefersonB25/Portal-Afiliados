@@ -10,14 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 
 class Configs extends Controller
 {
-    public function index()
+    public function statistics(Request $request)
     {
-        $setting = DB::table('portal_settings')->get();
-        return view('config.config', ['setting' => $setting]);
+        return view('config.statistics');
     }
 
     public function getDecryptedData(Request $request)
@@ -58,11 +57,6 @@ class Configs extends Controller
         return redirect()->route('setting');
     }
 
-    public function statistics(Request $request)
-    {
-        return view('config.statistics');
-    }
-
     public function listarAfiliados(Request $request)
     {
         $test =  DB::table('users')
@@ -76,6 +70,7 @@ class Configs extends Controller
     {
         $start_at = $request->startDate;
         $end_at = $request->endDate;
+        $year = $request->year;
 
         $login_per_day = DB::table('user_tracking')
         ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('COUNT(*) AS total'));
@@ -88,7 +83,19 @@ class Configs extends Controller
 
             $query->whereBetween('created_at', [$start_at, $end_at]);
             $login_per_day->whereBetween('created_at', [$start_at, $end_at]);
+        }else{
+            if ($year != null) {
+            //     // Obtener la fecha actual con Carbon
+            //     $fechaActual = Carbon::now();
 
+            //     // Obtener el año actual
+            //     $anoActual = $fechaActual->year;
+            //     $login_per_day->whereYear('created_at', $anoActual);
+            // }else {
+                $login_per_day->whereYear('created_at', $year);
+                $query->whereYear('created_at', $year);
+
+            }
         }
 
         $login_per_day->groupBy('action', 'month');
