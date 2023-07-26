@@ -19,21 +19,21 @@ function ValidarFecha(id, btn) {
 
 window.onload = function() {
     // Obtener el elemento del input
-    var inputElement1 = document.getElementById("startDate");
-    var inputElement2 = document.getElementById("endDate");
-    var inputElement3 = document.getElementById("startDate1");
-    var inputElement4 = document.getElementById("endDate1");
-    var inputElement5 = document.getElementById("customer-code");
+    let startDate = document.getElementById("startDate");
+    let endDate = document.getElementById("endDate");
+    let startDate1 = document.getElementById("startDate1");
+    let endDate1 = document.getElementById("endDate1");
+    let customerCode = document.getElementById("customerCode");
 
     // Limpiar el valor del input
-    inputElement1.value = "";
-    inputElement2.value = "";
-    inputElement3.value = "";
-    inputElement4.value = "";
-    inputElement5.value = "";
+    startDate.value = "";
+    endDate.value = "";
+    startDate1.value = "";
+    endDate1.value = "";
+    customerCode.value = "";
 
 }
-const select = document.getElementById('year-select');
+const select = document.getElementById('yearSelect');
 const currentYear = new Date().getFullYear();
 
 for (let year = 2023; year <= currentYear; year++) {
@@ -48,7 +48,7 @@ for (let year = 2023; year <= currentYear; year++) {
 
 // cunsulta de usuarios select2
 let listAffiliate = function (url) {
-    $('#customer-code').select2({
+    $('#customerCode').select2({
         placeholder: "Buscar un afiliado",
         minimumInputLength: 3,
         ajax: {
@@ -317,7 +317,7 @@ let chartMostConsultedActions = function (login_per_day) {
           chart.yAxis().labels().format('{%Value}{groupsSeparator: }');
 
           // set titles for Y-axis
-          chart.yAxis().title('Revenue');
+        //   chart.yAxis().title('Revenue');
 
           chart
             .labels()

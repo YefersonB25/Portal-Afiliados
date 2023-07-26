@@ -72,8 +72,11 @@ class Configs extends Controller
         $end_at = $request->endDate;
         $year = $request->year;
 
+        // Establecer el idioma de los nombres de los meses en español
+        DB::statement("SET lc_time_names = 'es_ES';");
+
         $login_per_day = DB::table('user_tracking')
-        ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('COUNT(*) AS total'));
+        ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('MONTH(created_at) AS month_number'), DB::raw('COUNT(*) AS total'));
 
         $query = DB::table('user_tracking');
 
@@ -98,7 +101,8 @@ class Configs extends Controller
             }
         }
 
-        $login_per_day->groupBy('action', 'month');
+        $login_per_day->groupBy('action', 'month', DB::raw('MONTH(created_at)'));
+        $login_per_day->orderBy(DB::raw('MONTH(created_at)'));
         $user_trackins = $login_per_day->get();
 
         return response()->json(['success' => true, 'data' => $query->count(), 'login_per_day' => $user_trackins]);
@@ -132,8 +136,10 @@ class Configs extends Controller
 
         if ($number_id != null) {
 
+            DB::statement("SET lc_time_names = 'es_ES';");
+
             $login_per_day = DB::table('user_tracking')
-            ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('COUNT(*) AS total'))
+            ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('MONTH(created_at) AS month_number'), DB::raw('COUNT(*) AS total'))
             ->where('user_id', $number_id);
 
             if ($start_at != null && $end_at != null) {
@@ -141,7 +147,8 @@ class Configs extends Controller
                 $login_per_day->whereBetween('created_at', [$start_at, $end_at]);
             }
 
-            $login_per_day->groupBy('action', 'month');
+            $login_per_day->groupBy('action', 'month', DB::raw('MONTH(created_at)'));
+            $login_per_day->orderBy(DB::raw('MONTH(created_at)'));
             $user_trackins = $login_per_day->get();
 
 

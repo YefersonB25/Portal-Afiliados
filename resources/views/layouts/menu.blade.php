@@ -1,85 +1,101 @@
 {{-- <div class="sticky">
     <div class="main-sidemenu"> --}}
-        <ul class="side-menu  {{ Request::is('*') ? 'active' : '' }}">
-            <li>
-                <h3>Menu</h3>
-            </li>
+<ul class="side-menu  {{ Request::is('*') ? 'active' : '' }}">
+    <li>
+        <h3>Menu</h3>
+    </li>
 
-            <li class="slide">
-                <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{asset('home')}}">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M19.9794922,7.9521484l-6-5.2666016c-1.1339111-0.9902344-2.8250732-0.9902344-3.9589844,0l-6,5.2666016C3.3717041,8.5219116,2.9998169,9.3435669,3,10.2069702V19c0.0018311,1.6561279,1.3438721,2.9981689,3,3h2.5h7c0.0001831,0,0.0003662,0,0.0006104,0H18c1.6561279-0.0018311,2.9981689-1.3438721,3-3v-8.7930298C21.0001831,9.3435669,20.6282959,8.5219116,19.9794922,7.9521484z M15,21H9v-6c0.0014038-1.1040039,0.8959961-1.9985962,2-2h2c1.1040039,0.0014038,1.9985962,0.8959961,2,2V21z M20,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2h-2v-6c-0.0018311-1.6561279-1.3438721-2.9981689-3-3h-2c-1.6561279,0.0018311-2.9981689,1.3438721-3,3v6H6c-1.1040039-0.0014038-1.9985962-0.8959961-2-2v-8.7930298C3.9997559,9.6313477,4.2478027,9.0836182,4.6806641,8.7041016l6-5.2666016C11.0455933,3.1174927,11.5146484,2.9414673,12,2.9423828c0.4853516-0.0009155,0.9544067,0.1751099,1.3193359,0.4951172l6,5.2665405C19.7521973,9.0835571,20.0002441,9.6313477,20,10.2069702V19z" />
-                    </svg>
-                    <span class="side-menu__label">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <h3>Components</h3>
-            </li>
-            @can('/usuario.index')
-            <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide" href="{{route('usuario.index')}}">
-                    <span class="side-menu__label"> <i class="fa fa-user side-menu__icon"></i>Usuarios</span>
-                </a>
-                <a class="side-menu__item" data-bs-toggle="slide" href="{{url('portal/usuarios/create')}}">
-                    <span class="side-menu__label"> <i class="fa fa-user-plus side-menu__icon"></i>Crear usuario</span>
-                </a>
-                <a class="side-menu__item" data-bs-toggle="slide" href="/portal/roles">
+    <li class="slide">
+        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ asset('home') }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
+                viewBox="0 0 24 24">
+                <path
+                    d="M19.9794922,7.9521484l-6-5.2666016c-1.1339111-0.9902344-2.8250732-0.9902344-3.9589844,0l-6,5.2666016C3.3717041,8.5219116,2.9998169,9.3435669,3,10.2069702V19c0.0018311,1.6561279,1.3438721,2.9981689,3,3h2.5h7c0.0001831,0,0.0003662,0,0.0006104,0H18c1.6561279-0.0018311,2.9981689-1.3438721,3-3v-8.7930298C21.0001831,9.3435669,20.6282959,8.5219116,19.9794922,7.9521484z M15,21H9v-6c0.0014038-1.1040039,0.8959961-1.9985962,2-2h2c1.1040039,0.0014038,1.9985962,0.8959961,2,2V21z M20,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2h-2v-6c-0.0018311-1.6561279-1.3438721-2.9981689-3-3h-2c-1.6561279,0.0018311-2.9981689,1.3438721-3,3v6H6c-1.1040039-0.0014038-1.9985962-0.8959961-2-2v-8.7930298C3.9997559,9.6313477,4.2478027,9.0836182,4.6806641,8.7041016l6-5.2666016C11.0455933,3.1174927,11.5146484,2.9414673,12,2.9423828c0.4853516-0.0009155,0.9544067,0.1751099,1.3193359,0.4951172l6,5.2665405C19.7521973,9.0835571,20.0002441,9.6313477,20,10.2069702V19z" />
+            </svg>
+            <span class="side-menu__label">Dashboard</span>
+        </a>
+    </li>
+    <li>
+        <h3>Components</h3>
+    </li>
+    @can('/usuario.index')
+        <li class="slide">
+            <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('usuario.index') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M12 6c1.654 0 3 1.346 3 3s-1.346 3-3 3s-3-1.346-3-3s1.346-3 3-3m0-2C9.236 4 7 6.238 7 9s2.236 5 5 5s5-2.238 5-5s-2.236-5-5-5zm0 13c2.021 0 3.301.771 3.783 1.445c-.683.26-1.969.555-3.783.555c-1.984 0-3.206-.305-3.818-.542C8.641 17.743 9.959 17 12 17m0-2c-3.75 0-6 2-6 4c0 1 2.25 2 6 2c3.518 0 6-1 6-2c0-2-2.354-4-6-4z" />
+                </svg>
+                <span class="side-menu__label">Usuarios</span>
+            </a>
+            <a class="side-menu__item" data-bs-toggle="slide" href="{{ url('portal/usuarios/create') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
+                viewBox="0 0 24 24">
+                    <path
+                        d="M21 14h-6a1 1 0 1 1 0-2h6a1 1 0 1 1 0 2zm-3 3a1 1 0 0 1-1-1v-6a1 1 0 1 1 2 0v6a1 1 0 0 1-1 1zM9 6c1.654 0 3 1.346 3 3s-1.346 3-3 3s-3-1.346-3-3s1.346-3 3-3m0-2C6.236 4 4 6.238 4 9s2.236 5 5 5s5-2.238 5-5s-2.236-5-5-5zm0 13c2.021 0 3.301.771 3.783 1.445C12.1 18.705 10.814 19 9 19c-1.984 0-3.206-.305-3.818-.542C5.641 17.743 6.959 17 9 17m0-2c-3.75 0-6 2-6 4c0 1 2.25 2 6 2c3.518 0 6-1 6-2c0-2-2.354-4-6-4z" />
+                </svg>
+                <span class="side-menu__label">Crear usuario</span>
+            </a>
+            <a class="side-menu__item" data-bs-toggle="slide" href="/portal/roles">
+                <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
+                viewBox="0 0 24 24">
+                    <path
+                        d="M12 14c2.764 0 5-2.238 5-5s-2.236-5-5-5s-5 2.238-5 5s2.236 5 5 5zm0-8c1.654 0 3 1.346 3 3s-1.346 3-3 3s-3-1.346-3-3s1.346-3 3-3zm8 9a2.5 2.5 0 1 0 0-5a2.5 2.5 0 0 0 0 5zm0-4c.827 0 1.5.673 1.5 1.5S20.827 14 20 14s-1.5-.673-1.5-1.5s.673-1.5 1.5-1.5zm0 4.59c-1.331 0-2.332.406-2.917.969C15.968 15.641 14.205 15 12 15c-2.266 0-3.995.648-5.092 1.564c-.596-.565-1.608-.975-2.908-.975c-2.188 0-3.5 1.091-3.5 2.183c0 .545 1.312 1.092 3.5 1.092c.604 0 1.146-.051 1.623-.133l-.04.27c0 1 2.405 2 6.417 2c3.762 0 6.417-1 6.417-2l-.021-.255c.463.073.996.118 1.604.118c2.051 0 3.5-.547 3.5-1.092c0-1.092-1.373-2.182-3.5-2.182zM4 17.863c-1.309 0-2.068-.207-2.417-.354c.239-.405 1.003-.92 2.417-.92c1.107 0 1.837.351 2.208.706l-.235.344c-.452.119-1.108.224-1.973.224zM12 19c-2.163 0-3.501-.312-4.184-.561C8.337 17.761 9.734 17 12 17c2.169 0 3.59.761 4.148 1.425c-.755.27-2.162.575-4.148.575zm8-1.137c-.914 0-1.546-.103-1.973-.213a3.42 3.42 0 0 0-.248-.375c.356-.345 1.071-.685 2.221-.685c1.324 0 2.141.501 2.404.911c-.39.163-1.205.362-2.404.362zM4 15a2.5 2.5 0 1 0 0-5a2.5 2.5 0 0 0 0 5zm0-4c.827 0 1.5.673 1.5 1.5S4.827 14 4 14s-1.5-.673-1.5-1.5S3.173 11 4 11z" />
+                </svg>
+                <span class="side-menu__label">Roles</span>
+            </a>
 
-                    <span class="side-menu__label"><i class="fa fa-users side-menu__icon"></i>Roles</span>
-                </a>
-
-                {{-- <ul class="slide-menu">
+            {{-- <ul class="slide-menu">
                     <li class="side-menu-label1"><a href="javascript:void(0)">Solicitudes</a></li>
                     <li><a href="{{route('usuario.index')}}" class="slide-item">ver</a></li> --}}
-                    {{-- <li><a href="{{route('consultar')}}" class="slide-item">Consultar Afiliados</a></li> --}}
+            {{-- <li><a href="{{route('consultar')}}" class="slide-item">Consultar Afiliados</a></li> --}}
 
-                    {{-- <li><a href="form-validation.html" class="slide-item">Form Validation</a></li>
+            {{-- <li><a href="form-validation.html" class="slide-item">Form Validation</a></li>
                     <li><a href="form-advanced.html" class="slide-item">Form Advanced</a></li>
                     <li><a href="wysiwyag.html" class="slide-item">Form Editors</a></li>
                     <li><a href="form-editable.html" class="slide-item">Form editable</a></li>
                     <li><a href="form-wizard.html" class="slide-item">Form Wizard</a></li> --}}
-                    {{--
+            {{--
                 </ul> --}}
-            </li>
+        </li>
 
-            <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide" href="#">
-                    <span class="side-menu__label"><i class="fa fa-gear side-menu__icon"></i> Configuracion</span>
-                    <i class="angle fa fa-angle-right"></i></a>
-                <ul class="slide-menu">
-                    <li class="side-menu-label1"><a href="javascript:void(0)">Sub-menus</a></li>
-                    <li><a href="{{route('setting.sistem')}}" class="slide-item">Sistema</a></li>
-                    <li><a href="{{route('setting')}}" class="slide-item">Variables de Entorno</a></li>
-                    <li><a href="{{route('setting.logs')}}" class="slide-item">Logs</a></li>
-                    <li><a href="{{route('setting.statistics')}}" class="slide-item">Estadisticas</a></li>
+        <li class="slide">
+            <a class="side-menu__item" data-bs-toggle="slide" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
+                viewBox="0 0 24 24"><path d="m13 5l.855 3.42l3.389-.971l1.501 2.6l-2.535 2.449l2.535 2.451l-1.5 2.6l-3.39-.971L13 20h-3l-.855-3.422l-3.39.971l-1.501-2.6l2.535-2.451l-2.534-2.449l1.5-2.6l3.39.971L10 5h3m0-2h-3c-.918 0-1.718.625-1.939 1.516l-.354 1.412l-1.4-.4a2 2 0 0 0-2.283.922l-1.5 2.6a2 2 0 0 0 .342 2.438l1.047 1.011l-1.048 1.015a2 2 0 0 0-.343 2.438l1.502 2.6a1.997 1.997 0 0 0 2.283.924l1.399-.401l.354 1.415A2 2 0 0 0 10 22h3c.918 0 1.718-.625 1.939-1.516l.354-1.414l1.399.4a2 2 0 0 0 2.283-.923l1.5-2.6c.459-.796.317-1.8-.342-2.438l-1.047-1.013l1.047-1.013a2 2 0 0 0 .342-2.438l-1.5-2.6a2 2 0 0 0-2.283-.924l-1.4.401l-.354-1.413A1.997 1.997 0 0 0 13 3zm-1.5 7.5a2 2 0 1 1 0 4a2 2 0 0 1 0-4m0-1c-1.654 0-3 1.346-3 3s1.346 3 3 3s3-1.346 3-3s-1.346-3-3-3z"/></svg>
+                <span class="side-menu__label">Configuracion</span>
+                <i class="angle fa fa-angle-right"></i></a>
+            <ul class="slide-menu">
+                <li class="side-menu-label1"><a href="javascript:void(0)">Sub-menus</a></li>
+                <li><a href="{{ route('setting.sistem') }}" class="slide-item">Sistema</a></li>
+                <li><a href="{{ route('setting') }}" class="slide-item">Variables de Entorno</a></li>
+                <li><a href="{{ route('setting.logs') }}" class="slide-item">Logs</a></li>
+                <li><a href="{{ route('setting.statistics') }}" class="slide-item">Estadisticas</a></li>
 
-                </ul>
-            </li>
-            @endcan
-            @can('/facturas')
-            <li class="slide">
-                <a class="side-menu__item" data-bs-toggle="slide" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M19,2H9C7.3438721,2.0018311,6.0018311,3.3438721,6,5v1H5C3.3438721,6.0018311,2.0018311,7.3438721,2,9v10c0.0018311,1.6561279,1.3438721,2.9981689,3,3h10c1.6561279-0.0018311,2.9981689-1.3438721,3-3v-1h1c1.6561279-0.0018311,2.9981689-1.3438721,3-3V5C21.9981689,3.3438721,20.6561279,2.0018311,19,2z M17,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2H5c-1.1040039-0.0014038-1.9985962-0.8959961-2-2v-8h14V19z M17,10H3V9c0.0014038-1.1040039,0.8959961-1.9985962,2-2h10c1.1040039,0.0014038,1.9985962,0.8959961,2,2V10z M21,15c-0.0014038,1.1040039-0.8959961,1.9985962-2,2h-1V9c-0.0008545-0.7719116-0.3010864-1.4684448-0.7803345-2H21V15z M21,6H7V5c0.0014038-1.1040039,0.8959961-1.9985962,2-2h10c1.1040039,0.0014038,1.9985962,0.8959961,2,2V6z" />
-                    </svg>
-                    <span class="side-menu__label">Facturas</span><i class="angle fa fa-angle-right"></i></a>
-                <ul class="slide-menu">
-                    <li class="side-menu-label1"><a href="javascript:void(0)">Facturas</a></li>
-                    <li><a href="{{route('blogs.index')}}" class="slide-item">Consultar Facturas</a></li>
-                    {{-- <li><a href="form-validation.html" class="slide-item">Form Validation</a></li>
+            </ul>
+        </li>
+    @endcan
+    @can('/facturas')
+        <li class="slide">
+            <a class="side-menu__item" data-bs-toggle="slide" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M19,2H9C7.3438721,2.0018311,6.0018311,3.3438721,6,5v1H5C3.3438721,6.0018311,2.0018311,7.3438721,2,9v10c0.0018311,1.6561279,1.3438721,2.9981689,3,3h10c1.6561279-0.0018311,2.9981689-1.3438721,3-3v-1h1c1.6561279-0.0018311,2.9981689-1.3438721,3-3V5C21.9981689,3.3438721,20.6561279,2.0018311,19,2z M17,19c-0.0014038,1.1040039-0.8959961,1.9985962-2,2H5c-1.1040039-0.0014038-1.9985962-0.8959961-2-2v-8h14V19z M17,10H3V9c0.0014038-1.1040039,0.8959961-1.9985962,2-2h10c1.1040039,0.0014038,1.9985962,0.8959961,2,2V10z M21,15c-0.0014038,1.1040039-0.8959961,1.9985962-2,2h-1V9c-0.0008545-0.7719116-0.3010864-1.4684448-0.7803345-2H21V15z M21,6H7V5c0.0014038-1.1040039,0.8959961-1.9985962,2-2h10c1.1040039,0.0014038,1.9985962,0.8959961,2,2V6z" />
+                </svg>
+                <span class="side-menu__label">Facturas</span><i class="angle fa fa-angle-right"></i></a>
+            <ul class="slide-menu">
+                <li class="side-menu-label1"><a href="javascript:void(0)">Facturas</a></li>
+                <li><a href="{{ route('blogs.index') }}" class="slide-item">Consultar Facturas</a></li>
+                {{-- <li><a href="form-validation.html" class="slide-item">Form Validation</a></li>
                     <li><a href="form-advanced.html" class="slide-item">Form Advanced</a></li>
                     <li><a href="wysiwyag.html" class="slide-item">Form Editors</a></li>
                     <li><a href="form-editable.html" class="slide-item">Form editable</a></li>
                     <li><a href="form-wizard.html" class="slide-item">Form Wizard</a></li> --}}
-                </ul>
-            </li>
-            @endcan
-            {{-- <li class="slide">
+            </ul>
+        </li>
+    @endcan
+    {{-- <li class="slide">
                 <a class="side-menu__item" data-bs-toggle="slide" href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
                         viewBox="0 0 24 24">
@@ -398,7 +414,7 @@
                     <li><a href="empty.html" class="slide-item">Empty Page</a></li>
                 </ul>
             </li> --}}
-        </ul>
-        {{--
+</ul>
+{{--
     </div>
 </div> --}}

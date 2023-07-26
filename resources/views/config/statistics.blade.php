@@ -28,7 +28,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label for="numberId" class="form-label">Año</label>
-                                            <select class="form-control" name="year" id="year-select"></select>
+                                            <select class="form-control" name="year" id="yearSelect"></select>
                                         </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="btnPr">Filtrar</button>
@@ -59,7 +59,7 @@
                                     <div class="col-md-6">
                                         <label for="numberId" class="form-label">Nombre Afiliado</label>
                                         <div class="form-group">
-                                            <input type="hidden" class="form-control" id="customer-code" name="numberId" />
+                                            <input type="hidden" class="form-control" id="customerCode" name="numberId" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
