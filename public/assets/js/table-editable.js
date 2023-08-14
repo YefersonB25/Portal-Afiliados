@@ -64,7 +64,7 @@ $(function (e) {
 		table.row('.selected').remove().draw(false);
 	});
 
-	// Select2 
+	// Select2
 	$('.select2').select2({
 		minimumResultsForSearch: Infinity
 	});

@@ -13,6 +13,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PerfilController extends Controller
 {
@@ -128,6 +129,7 @@ class PerfilController extends Controller
             'phone' => $phone,
         ]);
 
+
         // $infuUser->email           = $request->get('pfEmail');
         // $infuUser->phone = $request->get('pfTelefono');
 
@@ -147,6 +149,37 @@ class PerfilController extends Controller
         // $user->assignRole($request->input('roles'));
 
         return redirect()->back()->with('mensaje', 'ok');
+    }
+
+    public function photoUpdate(Request $request)
+    {
+        $request->validate([
+            'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Ajusta las validaciones según tus necesidades
+        ]);
+
+
+        if ($request->hasFile('profile_image')) {
+
+            $user = Auth::user();
+
+            // Renombrar el archivo con el número de identificación del usuario
+            $profileImage = $request->file('profile_image');
+            $newFileName = $user->number_id . '.' . $profileImage->getClientOriginalExtension();
+
+            // Elimina la imagen anterior si existe
+            Storage::delete($user->photo);
+
+            // Almacena la nueva imagen y actualiza el campo en la base de datos
+            $profileImagePath = $profileImage->storeAs('profile_images', $newFileName, 'public');
+
+            // $profileImage = $request->file('profile_image')->store('profile_images', 'public');
+
+            User::whereId($user->id)->update(['photo' => $profileImagePath]);
+
+
+            return response()->json(['profile_image_url' => asset('storage/' . $profileImagePath)]);
+        }
+        return response()->json(['error' => 'No se proporcionó una imagen válida.'], 422);
     }
 
     /**

@@ -46,6 +46,21 @@ for (let year = 2023; year <= currentYear; year++) {
     select.appendChild(option);
 }
 
+const btnInformacionGeneral = document.getElementById("btnInformacionGeneral");
+const btnSeguimientoUsuario = document.getElementById("btnSeguimientoUsuario");
+const informacionGeneral = document.getElementById("informacionGeneral");
+const seguimientoUsuario = document.getElementById("seguimientoUsuario");
+
+btnInformacionGeneral.addEventListener("click", function () {
+    informacionGeneral.style.display = "block";
+    seguimientoUsuario.style.display = "none";
+});
+
+btnSeguimientoUsuario.addEventListener("click", function () {
+    informacionGeneral.style.display = "none";
+    seguimientoUsuario.style.display = "block";
+});
+
 // cunsulta de usuarios select2
 let listAffiliate = function (url) {
     $('#customerCode').select2({

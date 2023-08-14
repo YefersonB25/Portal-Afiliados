@@ -17,7 +17,7 @@
                     </div>
                     <div class="ms-auto pageheader-btn">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0);">Pages</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('home')}}">home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Settings</li>
                         </ol>
                     </div>
@@ -302,11 +302,11 @@
 @endsection
 
 @section('scripts')
-<script src={{ asset('views/js/config/sistem/notifications.js') }}></script>
+<script src={{ asset('views/js/config/system/notifications.js') }}></script>
 <script>
     actionCheck('{{$notifications}}');
 
-    let url = "{{ route('setting.sistem.modific') }}"
+    let url = "{{ route('setting.system.modific') }}"
 
     $('#Pusher').click(function(e){
         var myclassEmail = document.getElementById("Email").className

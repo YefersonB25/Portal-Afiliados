@@ -6,6 +6,17 @@
     <div class="app-content main-content mt-0">
         <div class="side-app">
             <div class="main-container container-fluid">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Retoques</h1>
+                    </div>
+                    <div class="ms-auto pageheader-btn">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{route('home')}}">home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Variables de Entorno</li>
+                        </ol>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -26,7 +27,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //agregamos el usuario Super Admin
-        // Otorga implícitamente todos los permisos a la función "Superadministrador"       
+        // Otorga implícitamente todos los permisos a la función "Superadministrador"
+
+        // Gate::define('viewLogViewer', function (?User $user) {
+        //     dd($user);
+        //  });     // return true if the user is allowed access to the Log Viewer    });}
+
+
         Gate::before(function ($user, $ability) {
             return $user->email == 'admin@gmail.com' ?? null;
         });

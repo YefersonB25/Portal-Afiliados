@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MessageSentPrivate;
-use App\Events\MyEvent;
 use Illuminate\Http\Request;
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\GetClientIp;
 use App\Http\Helpers\SendEmailRequest;
 use App\Http\Helpers\UserTracking;
-use App\Jobs\SendRequestEmailJob;
 use App\Models\Relationship;
 use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,9 +19,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Studio\Totem\Events\Deleted;
+
 
 
 class UsuarioController extends Controller
@@ -294,4 +290,32 @@ class UsuarioController extends Controller
     {
         return view('vendor.invoices.templates.default');
     }
+
+    public function changePassword(Request $request): JsonResponse
+    {
+        try {
+            # Validation
+            $request->validate([
+               'old_password' => 'required',
+               'new_password' => 'required|confirmed',
+           ]);
+
+           #Match The Old Password
+           if(!Hash::check( $request->old_password, auth()->user()->password)){
+               return response()->json(['error' => 'La contraseña anterior no coincide!']);
+           }
+
+
+           #Update the new Password
+           User::whereId(auth()->user()->id)->update([
+               'password' => Hash::make($request->new_password)
+           ]);
+
+           return response()->json(['status', 'Contraseña cambiada con éxito!']);
+        } catch (\Throwable $th) {
+             Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
+        }
+    }
+
+
 }

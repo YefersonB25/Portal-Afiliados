@@ -46,6 +46,42 @@
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
     {{--
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+    <style>
+    .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Coloca la imagen detrás del contenido */
+        opacity: 0.7; /* Ajusta la opacidad de la imagen según sea necesario */
+    }
+
+        .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('ruta-de-tu-imagen.jpg');
+        z-index: -1;
+    }
+
+    .opacity-animation {
+        animation-name: opacityAnimation;
+        animation-duration: 3s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes opacityAnimation {
+        0% { opacity: 0.5; }
+        50% { opacity: 0.3; }
+        100% { opacity: 0.5; }
+    }
+
+
+    </style>
 </head>
 
 <body>
@@ -156,11 +192,22 @@
 
 <!-- COLOR THEME JS -->
 <script src={{ asset('assets/js/themeColors.js') }}></script>
+@can('/usuario.index')
 
 <script>
     let response = `{{Auth::User()->rol->role_id}}`
     creationChannel(response);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtener el elemento del enlace
+        const enlace = document.getElementById('menu');
+
+        // Simular el clic en el enlace
+        enlace.click();
+    });
+
 </script>
+@endcan
 
 @yield('scripts')
 

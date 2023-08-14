@@ -2,86 +2,97 @@
 
 @section('content')
 
-<body class="ltr app sidebar-mini light-mode">
-    <div class="app-content main-content mt-0">
-        <div class="side-app">
-            <div class="main-container container-fluid">
-                <div class="card">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
+    <body class="ltr app sidebar-mini light-mode">
+        <div class="app-content main-content mt-0">
+            <div class="side-app">
+                <div class="main-container container-fluid">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Usuarios</h1>
+                        </div>
+                        <div class="ms-auto pageheader-btn">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('usuario.index') }}">Usuario</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Crear</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
 
                                     @if ($errors->any())
-                                    <div class="alert alert-dark alert-dismissible fade show" role="alert">
-                                        <strong>¡Revise los campos!</strong>
-                                        @foreach ($errors->all() as $error)
-                                        <span class="badge badge-danger">{{ $error }}</span>
-                                        @endforeach
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
+                                        <div class="alert alert-dark alert-dismissible fade show" role="alert">
+                                            <strong>¡Revise los campos!</strong>
+                                            @foreach ($errors->all() as $error)
+                                                <span class="badge badge-danger">{{ $error }}</span>
+                                            @endforeach
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
                                     @endif
 
-                                    {!! Form::open(array('route' => 'usuarios.store','method'=>'POST')) !!}
+                                    {!! Form::open(['route' => 'usuarios.store', 'method' => 'POST']) !!}
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="name">Nombre</label>
-                                                {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                                                {!! Form::text('name', null, ['class' => 'form-control']) !!}
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="email">E-mail</label>
-                                                {!! Form::text('email', null, array('class' => 'form-control')) !!}
+                                                {!! Form::text('email', null, ['class' => 'form-control']) !!}
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="phone">Phone</label>
-                                                {!! Form::text('phone', null, array('class' => 'form-control')) !!}
+                                                {!! Form::text('phone', null, ['class' => 'form-control']) !!}
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="document_type">Seleccione tipo Documento</label>
-                                                {!! Form::select('document_type', [''=>'', 'CC'=>'Cedula de Ciudadania',
-                                                'NIT'=>'NIT'], [], array('class' => 'form-control'))
-                                                !!}
+                                                {!! Form::select(
+                                                    'document_type',
+                                                    ['' => '', 'CC' => 'Cedula de Ciudadania', 'NIT' => 'NIT'],
+                                                    [],
+                                                    ['class' => 'form-control'],
+                                                ) !!}
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="number_id">Numero Identificacion</label>
-                                                {!! Form::text('number_id', null, array('class' => 'form-control')) !!}
+                                                {!! Form::text('number_id', null, ['class' => 'form-control']) !!}
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <div class="form-group">
-                                                <label for="password">Password</label>
-                                                {!! Form::password('password', array('class' => 'form-control')) !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <div class="form-group">
-                                                <label for="confirm-password">Confirmar Password</label>
-                                                {!! Form::password('confirm-password', array('class' => 'form-control'))
-                                                !!}
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="col-xs-12 col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="">Roles</label>
-                                                {!! Form::select('roles[]', $roles,[], array('class' => 'form-control'))
-                                                !!}
+                                                {!! Form::select('roles[]', $roles, [], ['class' => 'form-control']) !!}
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12" style = "visibility:hidden">
+                                        <div class="col-xs-12 col-sm-12 col-md-6">
                                             <div class="form-group">
-                                                <label for="status" >Estado</label>
-                                                {!! Form::text('status', null, array('class' => 'form-control')) !!}
+                                                <label for="password">Password</label>
+                                                {!! Form::password('password', ['class' => 'form-control']) !!}
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6">
+                                            <div class="form-group">
+                                                <label for="confirm-password">Confirmar Password</label>
+                                                {!! Form::password('confirm-password', ['class' => 'form-control']) !!}
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12" style="visibility:hidden">
+                                            <div class="form-group">
+                                                <label for="status">Estado</label>
+                                                {!! Form::text('status', null, ['class' => 'form-control']) !!}
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -96,6 +107,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 @endsection

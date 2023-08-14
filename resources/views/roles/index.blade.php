@@ -8,47 +8,65 @@
             <div class="app-content main-content mt-0">
                 <div class="side-app">
                     <div class="main-container container-fluid">
+                        <div class="page-header">
+                            <div>
+                                <h1 class="page-title">Roles</h1>
+                            </div>
+                            <div class="ms-auto pageheader-btn">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Roles</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <a href="{{ route('roles.create') }}" class="btn btn-primary">
+                                        Crear rol
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row row-sm">
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <a class="btn btn-warning" href="{{ route('roles.create') }}">Nuevo</a>
                                         {{-- @endcan --}}
-                                        <table class="table table-striped mt-2">
-                                            <thead style="background-color:#6777ef">
-                                                <th style="color:#fff;">Rol</th>
-                                                <th style="color:#fff;">Acciones</th>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($roles as $role)
-                                                <tr>
-                                                    <td>{{ $role->name }}</td>
-                                                    <td>
-                                                        {{-- @can('editar-rol') --}}
-                                                        <a class="btn btn-primary"
-                                                            href="{{ route('roles.edit',$role->id) }}">Editar</a>
-                                                        {{-- @endcan --}}
+                                        <table id="file-datatable"
+                                        class="table table-bordered text-nowrap key-buttons border-bottom w-100 tt">
+                                        <thead>
+                                            <th>Rol</th>
+                                            <th>Acciones</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($roles as $role)
+                                            <tr>
+                                                <td>{{ $role->name }}</td>
+                                                <td>
+                                                    {{-- @can('editar-rol') --}}
+                                                    <a class="btn btn-icon btn-warning-light" data-bs-toggle="tooltip" data-bs-original-title="Editar"
+                                                        href="{{ route('roles.edit',$role->id) }}">
+                                                        <i class="fa fa-pencil-square"></i>
+                                                    </a>
+                                                    {{-- @endcan --}}
 
-                                                        {{-- @can('borrar-rol') --}}
-                                                        <a href="" id="{{$role->id}}" class="deletedRol btn btn-danger">
-                                                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                                                <path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-                                                            </svg>
-                                                        </a>
-                                                        {{-- {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy',
-                                                        $role->id],'style'=>'display:inline']) !!}
-                                                        {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
-                                                        {!! Form::close() !!} --}}
-                                                        {{-- @endcan --}}
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
+                                                    {{-- @can('borrar-rol') --}}
+                                                    <a href="" id="{{$role->id}}" class="deletedRol btn btn-icon btn-danger-light" data-bs-toggle="tooltip" data-bs-original-title="Eliminar">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                    {{-- {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy',
+                                                    $role->id],'style'=>'display:inline']) !!}
+                                                    {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                                                    {!! Form::close() !!} --}}
+                                                    {{-- @endcan --}}
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
                                         </table>
-                                        <!-- Centramos la paginacion a la derecha -->
-                                        <div class="pagination justify-content-end">
-                                            {!! $roles->links() !!}
-                                        </div>
                                     </div>
                                 </div>
                             </div>

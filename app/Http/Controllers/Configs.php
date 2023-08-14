@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-require('../vendor/autoload.php');
+// require('../vendor/autoload.php');
 
 use App\Http\Helpers\CommonUtils;
 use App\Models\PortalSetting;
@@ -14,6 +14,12 @@ use Carbon\Carbon;
 
 class Configs extends Controller
 {
+    public function index()
+    {
+        $setting = DB::table('portal_settings')->get();
+        return view('config.config', ['setting' => $setting]);
+    }
+
     public function statistics(Request $request)
     {
         return view('config.statistics');

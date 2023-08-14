@@ -7,25 +7,8 @@
             <div class="page-main">
                 <div class="side-app">
                     <div class="main-container container-fluid">
-                        <div class="page-header">
-                            @can('/facturasGeneral')
-                                <div>
-                                    <h1 class="page-title">Consultar Facturas</h1>
-                                </div>
-                            @endcan
-                            @can('/facturas')
-                                <div>
-                                    <h1 class="page-title">Consultar Facturas</h1>
-                                </div>
-                            @endcan
-                            @can('/usuario.index')
-                                <div>
-                                    <h1 class="page-title">Home</h1>
-                                </div>
-                            @endcan
-                        </div>
-
                         @can('/usuario.index')
+                        <img src="{{asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png')}}" class="background-image background-image opacity-animation" alt="">
                             <div class="app-content main-content mt-0">
                                 <div class="row">
                                     @php
@@ -60,23 +43,42 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                    <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
-                                        <div class="card overflow-hidden">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <h3 class="mb-2 fw-semibold">{{ $counter }}</h3>
-                                                        <p class="text-muted fs-13 mb-0">TOTAL AFILIADOS</p>
-                                                    </div>
-                                                    <div class="col col-auto top-icn dash">
-                                                        <div class="counter-icon bg-gray dash ms-auto box-shadow-primary">
 
+                                    {{-- <div class="col-lg-12 col-sm-12 col-md-12 col-xl-3"> --}}
+                                    <div class="card overflow-hidden" style="background-color: rgba(255, 255, 255, 0.6);">
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3">
+                                                    <div class="col">
+                                                        <div id="count">
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-lg-6 col-sm-12 col-md-6 col-xl-3 top-0 start-50">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h3 class="mb-2 fw-semibold">{{ $counter }}</h3>
+                                                            <p class="text-muted fs-13 mb-0">TOTAL AFILIADOS</p>
+                                                        </div>
+                                                        <div class="col col-auto top-icn dash">
+                                                            <div
+                                                                class="counter-icon bg-gray dash ms-auto box-shadow-primary">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h4 class="heading" style="text-align: center;">Numero de inicio de sesion
+                                                        por mes</h4>
+                                                    <div id="containerActionHome"></div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- </div> --}}
                                 </div>
                             </div>
                         @endcan
@@ -143,11 +145,13 @@
 
                                 <div class="col-lg-2 col-sm-4 col-md-2 col-xl-2">
                                     <div class="col col-auto top-icn dash">
-                                        <a id="drakma" class="card text-center btn btn-icon btn-info-light btn-outline-info me-2"
+                                        <a id="drakma"
+                                            class="card text-center btn btn-icon btn-white-light btn-outline-white me-2"
                                             data-bs-toggle="tooltip" style="width: 9rem; height: 7rem;"
                                             data-bs-original-title="Solicita tu Credito">
                                             <div class="card-body">
-                                                <img class="card-img-top" src="{{ asset('assets/images/logos-drakma/LOGO.png') }}">
+                                                <img class="card-img-top"
+                                                    src="{{ asset('assets/images/logos-drakma/LOGO.png') }}">
 
                                             </div>
                                         </a>
@@ -158,53 +162,62 @@
                             {{-- Fin --}}
 
                             {{-- Botones facturas --}}
-                            <div class="card overflow-hidden">
+                            <div class="card">
+                                <div class="row">
+                                    <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                        Botones
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="card overflow-hidden" id="collapseExample">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
                                             <a id="por-pagar" class="card text-center btn btn-icon btn-primary-light me-2"
-                                                data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                                data-bs-toggle="tooltip" style="width: 10rem; height: 12rem;"
                                                 data-bs-original-title="Facturas por pagar">
                                                 <div class="card-body">
                                                     <img class="card-img-top"
                                                         src="{{ asset('assets/images/invoiceIcon/factura-proceso-pago-modulo-1.png') }}">
                                                 </div>
-                                                <h5 class="card-title">Facturas por pagar</h5>
+                                                Facturas por pagar
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a id="en-transporte" class="card text-center btn btn-icon btn-primary-light me-2"
-                                                data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                                data-bs-toggle="tooltip" style="width: 10rem; height: 12rem;"
                                                 data-bs-original-title="Facturas en transporte">
                                                 <div class="card-body">
                                                     <img class="card-img-top"
                                                         src="{{ asset('assets/images/invoiceIcon/factura-en-viaje-modulo-2.png') }}">
                                                 </div>
-                                                <h5 class="card-title">Facturas en transporte</h5>
+                                                Facturas en transporte
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a id="pagadas-con-novedad"
                                                 class="card text-center btn btn-icon btn-primary-light me-2"
-                                                data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                                data-bs-toggle="tooltip" style="width: 10rem; height: 12rem;"
                                                 data-bs-original-title="Facturas con novedad">
                                                 <div class="card-body">
                                                     <img class="card-img-top"
                                                         src="{{ asset('assets/images/invoiceIcon/facturas-bloqueadas-modulo-3.png') }}">
                                                 </div>
-                                                <h5 class="card-title">Facturas con novedad</h5>
+                                                Facturas con novedad
                                             </a>
                                         </div>
                                         <div class="col">
                                             <a id="Fullfacturas-all"
                                                 class="card text-center btn btn-icon btn-primary-light me-2"
-                                                data-bs-toggle="tooltip" style="width: 16rem; height: 18rem;"
+                                                data-bs-toggle="tooltip" style="width: 10rem; height: 12rem;"
                                                 data-bs-original-title="Todas las facturas">
                                                 <div class="card-body">
                                                     <img class="card-img-top"
                                                         src="{{ asset('assets/images/invoiceIcon/factura.png') }}">
                                                 </div>
-                                                <h5 class="card-title">Todas las facturas</h5>
+                                                Todas las facturas
                                             </a>
                                         </div>
                                     </div>
@@ -226,7 +239,15 @@
                                                             <h3 class="text-center" style="text-decoration: underline">
                                                                 FACTURAS
                                                             </h3>
-                                                            <div class="card-header border-bottom">
+                                                            <div class="card">
+                                                                <div class="row">
+                                                                    <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="collapse"
+                                                                        data-bs-target="#collapseExampleFilter1" aria-expanded="false" aria-controls="collapseExampleFilter1">
+                                                                        Filtros
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-header border-bottom" id="collapseExampleFilter1">
                                                                 <div class="row g-2">
                                                                     <h3 class="card-title">Fitros</h3>
                                                                     <div class="form-horizontal">
@@ -414,9 +435,16 @@
                                     <div class="row row-sm">
                                         <div class="col-lg-12">
                                             <div class="card">
-                                                <div class="card-header border-bottom">
+                                                <div class="card">
+                                                    <div class="row">
+                                                        <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="collapse"
+                                                            data-bs-target="#collapseExampleFilter" aria-expanded="false" aria-controls="collapseExampleFilter">
+                                                            Filtros
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="card-header border-bottom" id="collapseExampleFilter">
                                                     <div class="row g-2">
-                                                        <h3 class="card-title">Fitros</h3>
                                                         <div class="form-horizontal">
                                                             <div class="row mb-2">
                                                                 <div class="col-md-12">
@@ -513,7 +541,7 @@
                                                             <div class="row p-2">
                                                                 <div class="col-lg-12">
                                                                     <h5
-                                                                        class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
+                                                                        class="bg-info col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
                                                                         Detalle </h5>
 
                                                                     <div class="table-responsive project-invoice">
@@ -538,7 +566,7 @@
 
                                                             </div>
                                                             <!--end row-->
-                                                            <div class="row p-2">
+                                                            <div class="row p-2" id="Bloqueos" style="display:none;">
                                                                 <div class="col-lg-12">
                                                                     <h5
                                                                         class="bg-danger col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
@@ -674,7 +702,7 @@
                                                             <div class="row p-2">
                                                                 <div class="col-lg-12">
                                                                     <h5
-                                                                        class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
+                                                                        class="bg-info col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
                                                                         Resumen</h5>
                                                                     <div class="table-responsive project-invoice">
                                                                         <table class="table table-bordered mb-0">
@@ -727,7 +755,7 @@
                                                             <div class="row p-2">
                                                                 <div class="col-lg-12">
                                                                     <h5
-                                                                        class="bg-warning col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
+                                                                        class="bg-success col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
                                                                         Información del Vehículo</h5>
                                                                     <div class="table-responsive project-invoice">
                                                                         <table class="table table-bordered mb-0">
@@ -799,14 +827,16 @@
                                         </div>
                                         <div class="modal-body">
                                             <p>Seleccione una opción:</p>
-                                            <button class="btn btn-outline-info" onclick="window.open('https://drakma.co/solicitar-credito/', '_blank')">
+                                            <button class="btn btn-outline-info"
+                                                onclick="window.open('https://drakma.co/solicitar-credito/', '_blank')">
                                                 <a class="nav-link icon nav-link-bg">
                                                     <img src={{ asset('assets/images/logos-drakma/LOGO.png') }}
                                                         class="header-brand-img desktop-logo" alt="logo">
                                                     <h6>Solicitar Credito</h6>
                                                 </a>
                                             </button>
-                                            <button class="btn btn-outline-info" onclick="window.open('https://drakma.co/solicitar-pronto-pago/', '_blank')">
+                                            <button class="btn btn-outline-info"
+                                                onclick="window.open('https://drakma.co/solicitar-pronto-pago/', '_blank')">
                                                 <a class="nav-link icon nav-link-bg">
                                                     <img src={{ asset('assets/images/logos-drakma/LOGO.png') }}
                                                         class="header-brand-img desktop-logo" alt="logo">
@@ -1250,6 +1280,7 @@
                             </div>
                             {{-- Fin --}}
                         @endcan
+
                     </div>
                 </div>
             </div>
@@ -1258,6 +1289,12 @@
 @endsection
 @section('scripts')
     <script src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script src={{ asset('anychart-package-8.11.0/js/anychart-bundle.min.js') }}></script>
+    <script src={{ asset('anychart-package-8.11.0/js/anychart-base.min.js') }}></script>
+    <script src={{ asset('anychart-package-8.11.0/js/anychart-exports.min.js') }}></script>
+    <script src={{ asset('anychart-package-8.11.0/js/anychart-ui.min.js') }}></script>
+    <script src={{ asset('views/js/statistics/statisticsHome.js') }}></script>
+
     @if (Session::has('message'))
         <script>
             Swal.fire({
@@ -1379,8 +1416,27 @@
                 button.disabled = false
 
         }
-    </script>
+    //     const image = document.querySelector('.background-image');
+    // let opacity = 0.5; // Opacidad inicial
+    // const intervalDuration = 500; // Duración del intervalo en milisegundos
+    // const opacityStep = 0.01; // Paso de cambio de opacidad
 
+    // function updateOpacity() {
+    //     opacity += opacityStep;
+    //     if (opacity > 1) {
+    //         opacity = 0.5; // Reiniciar la opacidad después de llegar a 1
+    //     }
+    //     image.style.opacity = opacity;
+    // }
+
+    setInterval(updateOpacity, intervalDuration);
+    </script>
+    @can('/usuario.index')
+        <script>
+            let urlCountLogin = "{{ route('setting.statistics.countLogin') }}"
+            ajaxCountLoginHome(urlCountLogin);
+        </script>
+    @endcan
     {{-- Cliente --}}
     @can('/facturas')
         <script>
@@ -2161,11 +2217,13 @@
                 LoadDataShipment("#TableEnTransporte", "#facturas-en-transporte", 20);
                 obtener_dataTransporte("#TableEnTransporte tbody", tblColectionData);
             })
+
             // Fin
             $('#drakma').click(function(e) {
                 e.preventDefault();
                 $('#myModal').modal('show');
             })
+
             // Cerrar modal
             $("#closet-modal").click(function(e) {
                 $("#global-loader3").modal('hide'); //ocultamos el modal
@@ -2200,6 +2258,7 @@
                             let lines = response.data.invoiceLines
                             let fPago = response.data.invoiceFechaPago[0].PaymentDate
                             let holds = response.data.holds[0]
+                            let div = document.getElementById('Bloqueos');
 
                             const formatterDolar = new Intl.NumberFormat('en-US', {
                                 style: 'currency',
@@ -2212,12 +2271,14 @@
 
                             if (response.success == true) {
                                 $('#date').html('')
+
                                 plantillaDate = `
                                 <div class="col-md-4 align-self-center">
                                     <img src="{{ asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
                                     {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
                                     <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
                                 </div><!--end col-->
+
                                 <div class="col-md-4 ms-auto">
                                     <ul class="list-inline mb-0 contact-detail float-right">
                                         <li class="list-inline-item">
@@ -2298,6 +2359,16 @@
                                             <td> ${ LineAmount }</td>
                                         </tr><!--end tr-->
                                     `
+                                    if (line.Description == null) {
+                                        plantillarow2 = `
+                                        <tr>
+                                            <td >
+                                                <h5 class="mt-0 mb-1">${ line.LineType }</h5>
+                                            </td>
+                                            <td> ${ LineAmount }</td>
+                                        </tr><!--end tr-->
+                                    `
+                                    }
                                         $('#row2').append(plantillarow2)
                                     }
                                 });
@@ -2314,6 +2385,7 @@
                                         <td> ${ date }</td>
                                     </tr><!--end tr-->
                                 `
+                                    div.style.display = ''
                                     $('#row3').append(plantillarow3)
                                 });
 

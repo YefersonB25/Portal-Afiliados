@@ -5,6 +5,17 @@
     <div class="app-content main-content mt-0">
         <div class="side-app">
             <div class="main-container container-fluid">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Roles</h1>
+                    </div>
+                    <div class="ms-auto pageheader-btn">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ url('/portal/roles') }}">Roles</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+                        </ol>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="row">
                         <div class="col-lg-12">
