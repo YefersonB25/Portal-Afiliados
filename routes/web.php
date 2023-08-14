@@ -119,5 +119,5 @@ Route::prefix('error')->controller(ErrorController::class)->middleware('auth')->
 Route::post('/enviar-contrasena', [PasswordController::class, 'enviarContrasenaPorCorreo'])->name('enviar-contrasena');
 
 // $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer', 'can:/usuario.index'], function () use ($router) {
-//     $router->get('portal/setting/logs', 'LogViewerController@index')->name('setting.logs');
+//     $router->get('portal/setting/log-viewer', 'IndexController@index')->name('setting.logs');
 // });

@@ -35,12 +35,5 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
 
-        LogViewer::auth(function ($request) {
-            return $request->user()
-                && in_array($request->user()->email, [
-                    'info@tractocar.com',
-                    'ybolanos@tractocar.com',
-                ]);
-        });
     }
 }
