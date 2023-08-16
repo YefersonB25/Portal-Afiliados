@@ -6,7 +6,7 @@
     </li>
 
     <li class="slide">
-        <a class="side-menu__item has-link" data-bs-toggle="slide" href="#">
+        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{route('home')}}">
             <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
                 viewBox="0 0 24 24">
                 <path
@@ -75,7 +75,7 @@
                 <li class="side-menu-label1"><a href="javascript:void(0)">Sub-menus</a></li>
                 <li><a href="{{ route('setting.system') }}" class="slide-item">Sistema</a></li>
                 <li><a href="{{ route('setting') }}" class="slide-item">Variables de Entorno</a></li>
-                {{-- <li><a href="{{ route('setting.logs') }}" class="slide-item">Logs</a></li> --}}
+                <li><a href="{{ route('setting.logs') }}" class="slide-item">Logs</a></li>
 
             </ul>
         </li>

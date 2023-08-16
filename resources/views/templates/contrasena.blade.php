@@ -310,7 +310,8 @@
     </style>
 </head>
 
-<body style="width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
+<body
+    style="width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0">
     <div class="es-wrapper-color" style="background-color:#07023C"><!--[if gte mso 9]>
         <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
         <v:fill type="tile" color="#07023c"></v:fill>
@@ -370,10 +371,26 @@
                                                             <tr>
                                                                 <td align="center" style="padding:0;Margin:0">
                                                                     <h1
-                                                                        style="Margin:0;line-height:44px;mso-line-height-rule:exactly;font-family:Orbitron, sans-serif;font-size:44px;font-style:normal;font-weight:bold;color:#10054D">
-                                                                        &nbsp;<span style="font-size:32px">Recibimos una
-                                                                            solicitud para restablecer su
-                                                                            contraseña</span><br type="_moz"></h1>
+                                                                        style="Margin:0;line-height:40px;mso-line-height-rule:exactly;font-family:Orbitron, sans-serif;font-size:40px;font-style:normal;font-weight:bold;color:#10054D">
+                                                                        &nbsp;<span style="font-size:30px">Información
+                                                                            de Restablecimiento de Contraseña
+                                                                        </span><br type="_moz"></h1>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center"
+                                                                    style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+                                                                        Espero que este correo te encuentre bien. Hemos
+                                                                        recibido tu solicitud de restablecimiento de
+                                                                        contraseña, ya que parece que has olvidado tus
+                                                                        credenciales de acceso. Para garantizar la
+                                                                        seguridad de tu cuenta, hemos generado una
+                                                                        contraseña temporal que podrás utilizar para
+                                                                        acceder a tu cuenta. Sin embargo, es crucial que
+                                                                        cambies esta contraseña temporal por una nueva y
+                                                                        segura lo antes posible.</p>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -385,7 +402,7 @@
                                                                             src="https://zgekuy.stripocdn.email/content/guids/CABINET_dee64413d6f071746857ca8c0f13d696/images/852converted_1x3.png"
                                                                             alt
                                                                             style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"
-                                                                            height="300" width="276"></a>
+                                                                            height="100" width="76"></a>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -393,29 +410,132 @@
                                                                     style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        &nbsp;Tu nueva contraseña es</p>
+                                                                        &nbsp;A continuación, te proporcionamos la
+                                                                        información necesaria para acceder a tu cuenta
+                                                                    </p>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td align="center"
-                                                                    style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px"><!--[if mso]><a href="https://viewstripo.email" target="_blank" hidden>
-                                                                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://viewstripo.email"
-                                                                            style="height:44px; v-text-anchor:middle; width:273px" arcsize="23%" strokecolor="#26c6da" strokeweight="4px" fillcolor="#26c6da">
-                                                                            <w:anchorlock></w:anchorlock>
-                                                                            <center style='color:#ffffff; font-family:arial, "helvetica neue", helvetica, sans-serif; font-size:18px; font-weight:400; line-height:18px; mso-text-raise:1px'>Reset Your Password</center>
-                                                                            </v:roundrect></a>
-                                                                            <![endif]--><!--[if !mso]><!-- --><span class="msohide es-button-border"
-                                                                        style="border-style:solid;border-color:#26C6DA;background:#26C6DA;border-width:4px;display:inline-block;border-radius:10px;width:auto;mso-hide:all"><a
-                                                                            class="es-button" target="_blank"
+                                                                    style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
+                                                                    <span
+                                                                        class="msohide es-button-border"
+                                                                        style="border-style:solid;border-color:#26C6DA;background:#26C6DA;border-width:4px;display:inline-block;border-radius:10px;width:auto;mso-hide:all">
+                                                                        <a class="es-button" target="_blank"
                                                                             style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;padding:10px 25px 10px 30px;display:inline-block;background:#26C6DA;border-radius:10px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;mso-padding-alt:0;mso-border-alt:10px solid #26C6DA">
-                                                                            {{ $request }}</a></span><!--<![endif]--></td>
+                                                                            Usuario: {{ $email }}
+                                                                        </a>
+                                                                        <a class="es-button" target="_blank"
+                                                                            style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;padding:10px 25px 10px 30px;display:inline-block;background:#26C6DA;border-radius:10px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;mso-padding-alt:0;mso-border-alt:10px solid #26C6DA">
+                                                                            Contraseña Temporal: {{ $request }}
+                                                                        </a>
+
+                                                                    </span><!--<![endif]-->
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
                                                                     <p
                                                                         style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
-                                                                        Por favor, cámbiala después de iniciar sesión por razones de seguridad.</p>
+                                                                        Por favor, sigue estos pasos para acceder a tu
+                                                                        cuenta:
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center"
+                                                                    style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+                                                                        1. Dirígete a  <a class="es-button" target="_blank" href="https://proveedores.tractocar.com/"
+                                                                        style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;padding:10px 25px 10px 30px;display:inline-block;background:#10ac37;border-radius:10px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;mso-padding-alt:0;mso-border-alt:10px solid #10ac37">
+                                                                        Portal de Afiliados
+                                                                    </a>
+
+                                                                    </p>
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+
+                                                                        2. Ingresa tu nombre de usuario y la contraseña
+                                                                        temporal proporcionada arriba.
+
+                                                                    </p>
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+
+                                                                        3. Una vez que hayas iniciado sesión con éxito,
+                                                                        dírijase a su perfil.
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center"
+                                                                    style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+                                                                        Es de suma importancia que sigas estos pasos y
+                                                                        cambies tu contraseña temporal lo antes posible.
+                                                                        Para garantizar la seguridad de tu cuenta y
+                                                                        proteger tu información personal, te
+                                                                        recomendamos encarecidamente que elijas una
+                                                                        contraseña segura y única. Asegúrate de que tu
+                                                                        nueva contraseña cumpla con los siguientes
+                                                                        criterios:
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center"
+                                                                    style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+                                                                        Al menos 8 caracteres de longitud.
+                                                                        Combinación de letras (mayúsculas y minúsculas),
+                                                                        números y caracteres especiales.
+                                                                        Evita el uso de información personal obvia, como
+                                                                        tu nombre, fecha de nacimiento o palabras
+                                                                        comunes.
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center"
+                                                                    style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+
+                                                                        Una vez que hayas cambiado tu contraseña, te
+                                                                        recordamos que debes mantenerla en secreto y no
+                                                                        compartirla con nadie. Si tienes algún problema
+                                                                        o pregunta adicional, no dudes en contactarnos a
+                                                                        través de &nbsp;<strong><a href="#" target="_blank">soporteti@tractocar.com</a></strong>&nbsp; y
+                                                                        estaremos encantados de ayudarte.
+
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center"
+                                                                    style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+
+                                                                        Gracias por tu comprensión y colaboración en
+                                                                        este asunto de seguridad. Esperamos seguir
+                                                                        brindándote un servicio excepcional.
+
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center"
+                                                                    style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px">
+                                                                    <p
+                                                                        style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">
+
+                                                                        Saludos cordiales,
+                                                                    </p>
                                                                 </td>
                                                             </tr>
                                                         </table>

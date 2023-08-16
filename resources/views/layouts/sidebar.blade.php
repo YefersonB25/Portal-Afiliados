@@ -3,7 +3,7 @@
     {{-- <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div> --}}
     <div class="app-sidebar">
         <div class="side-header">
-            <a class="header-brand1" href="{{route('home')}}">
+            <a class="header-brand1" href="#">
                 <img src={{asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png')}}
                     class="header-brand-img desktop-logo" alt="logo">
                 <img src={{asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png')}}
