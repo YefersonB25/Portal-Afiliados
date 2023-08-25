@@ -75,7 +75,7 @@
                 <li class="side-menu-label1"><a href="javascript:void(0)">Sub-menus</a></li>
                 <li><a href="{{ route('setting.system') }}" class="slide-item">Sistema</a></li>
                 <li><a href="{{ route('setting') }}" class="slide-item">Variables de Entorno</a></li>
-                <li><a href="{{ route('setting.logs') }}" class="slide-item">Logs</a></li>
+                {{-- <li><a href="{{ route('setting.logs') }}" class="slide-item">Logs</a></li> --}}
 
             </ul>
         </li>
