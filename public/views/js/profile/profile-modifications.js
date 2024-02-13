@@ -75,9 +75,13 @@ let updatePhoto = function (url) {
             contentType: false,
             success: function(response) {
                 // Procesar la respuesta de éxito aquí (puede ser un mensaje de éxito)
-                console.log(response);
-                // Actualizar la imagen de perfil mostrada en la página
-                $('#profile-image').attr('src', response.profile_image_url);
+                 // Actualizar la imagen de perfil mostrada en la página
+                //  var profileImage = '{{ asset('storage') }}' + '/' + response.profile_image_url
+                //  $('#profile-image').attr('src', profileImage);
+
+                location.reload();
+
+
             },
             error: function(xhr) {
                 // Procesar el error aquí (puede ser un mensaje de error de validación)

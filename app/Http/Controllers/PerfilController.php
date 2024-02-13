@@ -124,11 +124,21 @@ class PerfilController extends Controller
      */
     public function update(Request $request)
     {
+
         $phone = $request->pfTelefono;
+        $document_id = $request->photo_id;
+
+        if (!empty($request->photo_id)) {
+            $pdfPath = $this->storeFile($document_id, 'documet/pdf', Auth::user()->number_id);
+
+            User::find(Auth::user()->id)->update([
+                'photo_id' => $pdfPath
+            ]);
+        }
+
         $user = User::find(Auth::user()->id)->update([
             'phone' => $phone,
         ]);
-
 
         // $infuUser->email           = $request->get('pfEmail');
         // $infuUser->phone = $request->get('pfTelefono');
@@ -157,31 +167,60 @@ class PerfilController extends Controller
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Ajusta las validaciones según tus necesidades
         ]);
 
-
         if ($request->hasFile('profile_image')) {
 
-            $user = Auth::user();
-
-            // Renombrar el archivo con el número de identificación del usuario
             $profileImage = $request->file('profile_image');
-            $newFileName = $user->number_id . '.' . $profileImage->getClientOriginalExtension();
+            $user = Auth::user();
+            $imagePath = $this->storeFile($profileImage, 'profile/image', $user->number_id);
 
-            // Elimina la imagen anterior si existe
-            Storage::delete($user->photo);
+            User::whereId($user->id)->update(['photo' => $imagePath]);
 
-            // Almacena la nueva imagen y actualiza el campo en la base de datos
-            $profileImagePath = $profileImage->storeAs('profile_images', $newFileName, 'public');
-
-            // $profileImage = $request->file('profile_image')->store('profile_images', 'public');
-
-            User::whereId($user->id)->update(['photo' => $profileImagePath]);
-
-
-            return response()->json(['profile_image_url' => asset('storage/' . $profileImagePath)]);
+            return response()->json(['profile_image_url' => $imagePath]);
         }
+
+        // if ($request->hasFile('profile_image')) {
+
+        //     $user = Auth::user();
+
+        //     // Renombrar el archivo con el número de identificación del usuario
+        //     $profileImage = $request->file('profile_image');
+        //     $newFileName = $user->number_id . '.' . $profileImage->getClientOriginalExtension();
+
+        //     // Elimina la imagen anterior si existe
+        //     Storage::delete($user->photo);
+
+        //     // Almacena la nueva imagen y actualiza el campo en la base de datos
+        //     $profileImagePath = $profileImage->storeAs('profile_images', $newFileName, 'public');
+
+        //     // $profileImage = $request->file('profile_image')->store('profile_images', 'public');
+
+        //     User::whereId($user->id)->update(['photo' => $profileImagePath]);
+
+
+        //     return response()->json(['profile_image_url' => asset('storage/' . $profileImagePath)]);
+        // }
         return response()->json(['error' => 'No se proporcionó una imagen válida.'], 422);
     }
 
+    private function storeFile($file, $folder, $userId)
+    {
+        if (!empty($file)) {
+            $folderPath = "public/$folder";
+            $extension = $file->getClientOriginalExtension();
+            $randomFileName = $userId . '.' . $extension;
+            $filePath = "$folder/$randomFileName";
+
+            if (!Storage::exists($folderPath)) {
+                Storage::makeDirectory($folderPath);
+            }
+
+            Storage::putFileAs($folderPath, $file, $randomFileName);
+
+            return $filePath;
+        }
+
+        return null;
+    }
     /**
      * Remove the specified resource from storage.
      *

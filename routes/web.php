@@ -61,7 +61,7 @@ Route::prefix('profile')->controller(PerfilController::class)->middleware('auth'
     Route::get('/', 'index')->name('profile');
     Route::get('userAsociado/{id}', 'eliminarUserAsociado')->name('userAsociado.delete');
     Route::get('userAsociadoRestore/{id}', 'reasignarUserAsociado')->name('userAsociado.restore');
-    Route::put('{id}', 'update')->name('profile.update');
+    Route::put('/update', 'update')->name('profile.update');
     Route::post('/photoUpdate', 'photoUpdate')->name('photo-profile.updatePhoto');
 
 });

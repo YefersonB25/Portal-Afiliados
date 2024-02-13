@@ -11,7 +11,9 @@ use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -83,78 +85,173 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
+    // protected function create(array $data)
+    // {
+
+    //     $roles = Role::get();
+
+    //     $id = User::insertGetId([
+    //         'name'                  => $data['name'],
+    //         'email'                 => $data['email'],
+    //         'number_id'        => $data['number_id'],
+    //         'document_type'          => $data['document_type'],
+    //         'phone'              => $data['phone'],
+    //         'status'                => 'NUEVO',
+    //         'password'              => Hash::make($data['password']),
+    //         'created_at' => Carbon::now(),
+    //         'updated_at' => Carbon::now(),
+
+    //     ]);
+
+    //     //? le asignamos el rol
+    //     $usuario = User::findOrFail($id);
+    //     $usuario->roles()->sync($roles[1]->id);
+
+    //     //? Guardamos los archivos cargados y capturamos la ruta
+    //     if (!empty($data['photo'])) {
+
+    //         $profileImage = $data['photo'];
+    //         // $user = Auth::user();
+
+    //         $folderPath = 'public/profile/image';
+    //         $randomFileName = $data['number_id'] . '.' . $profileImage->getClientOriginalExtension();
+    //         $imagePath = 'profile/image/' . $randomFileName;
+
+    //         // Validar y crear directorio si no existe
+    //         if (!Storage::exists($folderPath)) {
+    //             Storage::makeDirectory($folderPath);
+    //         }
+
+    //         // Storage::put($imagePath, $profileImage);
+    //         Storage::putFileAs($folderPath, $profileImage, $randomFileName);
+
+    //         // $carpetaphoto = "proveedores/$id/perfil";
+    //         // Storage::putFileAs("public/$carpetaphoto", $data['photo'], 'photo_perfil.' . $extensionPerfil);
+    //     }
+
+    //     if (!empty($data['photo_id'])) {
+
+    //         $profilepdf = $data['photo_id'];
+
+    //         $folderPath = 'public/documet/pdf';
+    //         $randomFileName = $data['number_id'] . '.' . $profilepdf->getClientOriginalExtension();
+    //         $pdfPath = 'profile/image/' . $randomFileName;
+
+    //          // Validar y crear directorio si no existe
+    //          if (!Storage::exists($folderPath)) {
+    //             Storage::makeDirectory($folderPath);
+    //         }
+
+    //         // Storage::put($imagePath, $profileImage);
+    //         Storage::putFileAs($folderPath, $profilepdf, $randomFileName);
+
+    //         // $carpetaidentif = "proveedores/$id/identificacion";
+    //         // Storage::putFileAs("public/$carpetaidentif", $data['photo_id'], 'photo_documento.' . $extensionIdentif);
+    //     }
+
+    //     //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
+    //     if (!empty($data['photo']) && !empty($data['photo_id'])) {
+    //         User::where('id', $id)
+    //             ->update([
+    //                 'photo'                 => "$imagePath",
+    //                 'photo_id'   => "$pdfPath",
+    //             ]);
+    //     }
+
+    //     if (!empty($data['photo'])) {
+
+    //         User::where('id', $id)
+    //             ->update([
+    //                 'photo'   => "$imagePath",
+    //             ]);
+    //     }
+
+    //     if (!empty($data['photo_id'])) {
+
+    //         User::where('id', $id)
+    //             ->update([
+    //                 'photo_id'   => "$pdfPath",
+    //             ]);
+    //     }
+    // }
     protected function create(array $data)
     {
+        DB::beginTransaction();
 
-        $roles = Role::get();
+        try {
+            $user = User::create([
+                'name'           => $data['name'],
+                'email'          => $data['email'],
+                'number_id'      => $data['number_id'],
+                'document_type'  => $data['document_type'],
+                'phone'          => $data['phone'],
+                'status'         => 'NUEVO',
+                'password'       => Hash::make($data['password']),
+                'created_at'     => Carbon::now(),
+                'updated_at'     => Carbon::now(),
+            ]);
 
-        //? Capturamos la extencion de los archivos
-        if (!empty($data['photo'])) {
-            $extensionPerfil = $data['photo']->getClientOriginalExtension();
-        }
-        if (!empty($data['photo_id'])) {
-            $extensionIdentif = $data['photo_id']->getClientOriginalExtension();
-        }
-        $id = User::insertGetId([
-            'name'                  => $data['name'],
-            'email'                 => $data['email'],
-            'number_id'        => $data['number_id'],
-            'document_type'          => $data['document_type'],
-            'phone'              => $data['phone'],
-            'status'                => 'NUEVO',
-            'password'              => Hash::make($data['password']),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            $roles = Role::get();
+            $user->roles()->sync([$roles[1]->id]);
 
-        ]);
+            $imagePath = $this->storeFile($data['photo'], 'profile/image', $user->number_id);
+            $pdfPath = $this->storeFile($data['photo_id'], 'documet/pdf', $user->number_id);
 
-        //? le asignamos el rol
-        $usuario = User::findOrFail($id);
-        $usuario->roles()->sync($roles[1]->id);
+            $user->update([
+                'photo_id' => $pdfPath,
+                'photo'    => $imagePath
+            ]);
 
-        //? Guardamos los archivos cargados y capturamos la ruta
-        if (!empty($data['photo'])) {
-            $carpetaphoto = "proveedores/$id/perfil";
-            Storage::putFileAs("public/$carpetaphoto", $data['photo'], 'photo_perfil.' . $extensionPerfil);
-        }
-        if (!empty($data['photo_id'])) {
-            $carpetaidentif = "proveedores/$id/identificacion";
-            Storage::putFileAs("public/$carpetaidentif", $data['photo_id'], 'photo_documento.' . $extensionIdentif);
-        }
+            DB::commit();
 
-        //? Actualizamos el usuario para agregarle la ruta de los archivos en los campos asignados
-        if (!empty($data['photo']) && !empty($data['photo_id'])) {
-            User::where('id', $id)
-                ->update([
-                    'photo'                 => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                    'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
-                ]);
-        }
-        if (!empty($data['photo'])) {
+            // Redirigir al usuario al formulario de inicio de sesión
+            return redirect()->route('login')->with([
+                'autoLoginData' => [
+                    'email'    => $user->email,
+                    'password' => $data['password'],
+                ]
+            ]);
 
-            User::where('id', $id)
-                ->update([
-                    'photo'   => "storage/$carpetaphoto/photo_perfil.$extensionPerfil",
-                ]);
-        }
-        if (!empty($data['photo_id'])) {
+            // return $user;
+        } catch (\Exception $e) {
+            // DB::rollback();
+            Log::error("Error en la importación: " . $e->getMessage());
 
-            User::where('id', $id)
-                ->update([
-                    'photo_id'   => "storage/$carpetaidentif/photo_documento.$extensionIdentif",
-                ]);
+            // Manejar la excepción, por ejemplo, registrando un error.
+            // return null;
         }
     }
+
+    private function storeFile($file, $folder, $userId)
+    {
+        if (!empty($file)) {
+            $folderPath = "public/$folder";
+            $extension = $file->getClientOriginalExtension();
+            $randomFileName = $userId . '.' . $extension;
+            $filePath = "$folder/$randomFileName";
+
+            if (!Storage::exists($folderPath)) {
+                Storage::makeDirectory($folderPath);
+            }
+
+            Storage::putFileAs($folderPath, $file, $randomFileName);
+
+            return $filePath;
+        }
+
+        return null;
+    }
+
 
     public function register(Request $request)
     {
 
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        event(new Registered($this->create($request->all())));
 
-        self::notificationActionPusher();
-        SendEmailRequestNotification::sendEmail($request->name);
+        // self::notificationActionPusher();
+        // SendEmailRequestNotification::sendEmail($request->name);
 
         return redirect()->route('login')->with('error', 'Los datos de la cuenta aun no han sido validados.');
     }

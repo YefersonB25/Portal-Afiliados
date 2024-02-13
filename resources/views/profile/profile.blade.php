@@ -137,7 +137,7 @@
                                                 <div class="card-header">{{ __('Informacion General') }}</div>
 
                                                 <form class="form-horizontal" method="post"
-                                                    action="{{ route('profile.update', $user->id) }}" novalidate>
+                                                    action="{{ route('profile.update') }}" novalidate>
                                                     @csrf
                                                     <div class="card-body">
                                                         {{ method_field('PUT') }}
@@ -157,6 +157,18 @@
                                                                     <input type="text" name="pfTelefono" id="pfTelefono"
                                                                         class="form-control" tabindex="3"
                                                                         value="{{ $user->phone }}" onInput="validarInput()">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 col-lg-12 col-xl-6">
+                                                                <div class="wrap-input100 validate-input">
+                                                                    <label for="formFile" class="form-label">Copia del documento de identidad extension requerida(.PDF)</label>
+                                                                    <input id="photo_id"
+                                                                        accept=".pdf"
+                                                                        type="file"
+                                                                        class="form-control"
+                                                                        name="photo_id"
+                                                                        tabindex="1" placeholder="Enter Identification" value="{{ old('photo_id') }}"
+                                                                        autofocus>
                                                                 </div>
                                                             </div>
                                                         </div>

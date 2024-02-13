@@ -8,6 +8,6 @@ class FormController extends Controller
 {
     public function refreshCaptcha()
     {
-        return response()->json(['captcha'=> captcha_img()]);
+        return response()->json(['captcha'=> captcha_img('flat')]);
     }
 }
