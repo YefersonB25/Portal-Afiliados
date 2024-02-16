@@ -114,10 +114,15 @@
                                             @foreach ($usuarios as $usuario)
                                                 <tr>
                                                     <td class="text-center">
-                                                        <div
-                                                            class="avatar avatar-md bg-{{ $usuario->otherColors(rand(2, 9)) }} text-white rounded-circle">
-                                                            {{ substr($usuario->email, 0, 2) }}
+                                                        @if ($usuario->photo == '')
+                                                            <div class="avatar avatar-md bg-{{ $usuario->otherColors(rand(2, 9)) }} text-white rounded-circle">
+                                                                {{ substr($usuario->email, 0, 2) }}
+                                                            </div>
+                                                        @else
+                                                        <div class="avatar avatar-md text-white rounded-circle" style="overflow: hidden;">
+                                                            <img src="{{ asset('storage/' . $usuario->photo) }}" alt="" style="width: 100%; height: auto;"/>
                                                         </div>
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <p class="tx-14 font-weight-semibold text-dark mb-1">
@@ -138,7 +143,7 @@
                                                             <span>
                                                                 <a href="" data-bs-toggle="modal"
                                                                     data-bs-target="#exampleModalPdf" class="aPdf">
-                                                                    <i src="{{ asset(" $usuario->photo_id") }}"></i>
+                                                                    <i src="{{ asset('storage/' . $usuario->photo_id) }}"></i>
                                                                     <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                                                                         <path fill="currentColor"
                                                                             d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />

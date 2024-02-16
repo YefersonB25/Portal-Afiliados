@@ -10,7 +10,7 @@ class EnviarContrasena
     public static function sendEmail($user, $contrasena, $allEmail = null)
     {
         try {
-            Mail::send('templates.contrasena', array('request' => $contrasena), function ($message) use ($user, $allEmail) {
+            Mail::send('templates.contrasena', array('request' => $contrasena, 'email' => $user->email), function ($message) use ($user, $allEmail) {
                 $message->from('info@tractocar.com', 'InfoTracto');
                 $message->to($allEmail == null ? $user->email : $allEmail)->subject('Nueva Contraseña Temporal');
             });

@@ -6,7 +6,7 @@
     </li>
 
     <li class="slide">
-        <a class="side-menu__item has-link" data-bs-toggle="slide" href="#">
+        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{route('home')}}">
             <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24"
                 viewBox="0 0 24 24">
                 <path

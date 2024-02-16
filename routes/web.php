@@ -62,7 +62,7 @@ Route::prefix('profile')->controller(PerfilController::class)->middleware('auth'
     Route::get('/', 'index')->name('profile');
     Route::get('userAsociado/{id}', 'eliminarUserAsociado')->name('userAsociado.delete');
     Route::get('userAsociadoRestore/{id}', 'reasignarUserAsociado')->name('userAsociado.restore');
-    Route::put('{id}', 'update')->name('profile.update');
+    Route::put('/update', 'update')->name('profile.update');
     Route::post('/photoUpdate', 'photoUpdate')->name('photo-profile.updatePhoto');
 
 });
@@ -119,9 +119,14 @@ Route::prefix('error')->controller(ErrorController::class)->middleware('auth')->
 
 Route::post('/enviar-contrasena', [PasswordController::class, 'enviarContrasenaPorCorreo'])->name('enviar-contrasena');
 
+<<<<<<< HEAD
 // Route::get('logview', '\Arcanedev\LogViewer\Http\Controllers\IndexController@index');
 // $router->group(['namespace' => '\Opcodes\LogViewer\Http\Controllers', 'can:/usuario.index'], function () use ($router) {
 //     $router->get('portal/setting/log-viewer', 'IndexController@index')->name('setting.logs');
+=======
+// $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer', 'can:/usuario.index'], function () use ($router) {
+//     $router->get('portal/setting/log-viewer', 'LogViewerController@index')->name('setting.logs');
+>>>>>>> 85838677d120abd8e6b649440e431d8e6beb95b1
 // });
 
 // $router->group(['namespace' => '\Opcodes\LogViewer\Http\Controllers'], function () use ($router) {
