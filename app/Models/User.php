@@ -96,4 +96,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(ModelsHasRoles::class, 'id', 'model_id');
     }
+
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
+
 }

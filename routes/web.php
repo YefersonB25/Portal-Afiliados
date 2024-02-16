@@ -13,6 +13,7 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PerfilController;
 use Illuminate\Support\Facades\Auth;
+use Opcodes\LogViewer\Http\Controllers\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -118,6 +119,13 @@ Route::prefix('error')->controller(ErrorController::class)->middleware('auth')->
 
 Route::post('/enviar-contrasena', [PasswordController::class, 'enviarContrasenaPorCorreo'])->name('enviar-contrasena');
 
-// $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer', 'can:/usuario.index'], function () use ($router) {
-//     $router->get('portal/setting/logs', 'LogViewerController@index')->name('setting.logs');
+// Route::get('logview', '\Arcanedev\LogViewer\Http\Controllers\IndexController@index');
+// $router->group(['namespace' => '\Opcodes\LogViewer\Http\Controllers', 'can:/usuario.index'], function () use ($router) {
+//     $router->get('portal/setting/log-viewer', 'IndexController@index')->name('setting.logs');
 // });
+
+// $router->group(['namespace' => '\Opcodes\LogViewer\Http\Controllers'], function () use ($router) {
+//     $router->get('portal/setting/log-viewer', 'IndexController')->name('setting.logs');
+// });
+
+// $router->get('portal/setting/log-viewer', [IndexController::class, 'index'])->name('setting.logs');
