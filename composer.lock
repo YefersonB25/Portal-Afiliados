@@ -5321,7 +5321,6 @@
             "time": "2023-11-13T09:31:12+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "opcodesio/log-viewer",
             "version": "v3.4.0",
             "source": {
@@ -5463,8 +5462,6 @@
             "time": "2023-11-19T08:47:43+00:00"
         },
         {
-=======
->>>>>>> 85838677d120abd8e6b649440e431d8e6beb95b1
             "name": "opis/closure",
             "version": "3.6.3",
             "source": {
