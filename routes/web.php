@@ -50,6 +50,9 @@ Route::prefix('portal/users')->controller(UsuarioController::class)->middleware(
     Route::get('/confimacion', 'confirmarUser')->name('consultar.proveedorLocal');
     Route::post('/change-password', 'changePassword')->name('change-password.update');
     Route::get('/testinvoice', 'test')->name('consultar.invoicetest');
+    Route::get('/deleted/get', 'getdeletedUsers')->name('get.users.deleted');
+    Route::post('/reactivate', 'reactivateUser')->name('users.reactivate');
+
 });
 Route::resource('portal/usuarios', UsuarioController::class);
 

@@ -83,6 +83,9 @@
                                         </div>
                                         <br>
                                         <button type="submit" id="btnFilter" class="btn btn-primary">Filtrar</button>
+                                        <div class="text-end">
+                                            <button type="button" id="btnGetUserEliminated" class="btn btn-primary">Lista de Usuarios Eliminados</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -306,6 +309,25 @@
                     </div>
                 </div>
 
+                <div class="modal fade" id="deletedUsersModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Usuarios Eliminados</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Aquí se agregará la tabla de usuarios eliminados -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </body>
@@ -398,6 +420,75 @@
                 document.getElementById('pdfdoc').attributes[1].nodeValue = url
             })
         }
+
+        $(document).on('click', "#btnGetUserEliminated", function(e) {
+            e.preventDefault();
+            // Hacer la solicitud AJAX
+            $.ajax({
+                url: "{{ route('get.users.deleted') }}",
+                type: "GET",
+                success: function(data) {
+                    // Construir la tabla
+                    console.log(data);
+                    var tableHtml = '<table id="file-datatable" class="table table-bordered text-nowrap key-buttons border-bottom w-100 tt">';
+                    tableHtml += '<thead><tr><th>ID</th><th>Email</th><th>Nombre</th><th>Fecha eliminación</th></tr></thead>';
+                    tableHtml += '<tbody>';
+                    data.forEach(function(user) {
+                        tableHtml += '<tr>';
+                        tableHtml += '<td>' + user.id + '</td>';
+                        tableHtml += '<td>' + user.email + '</td>';
+                        tableHtml += '<td>' + user.name + '</td>';
+                        tableHtml += '<td>' + user.deleted_at + '</td>';
+                        tableHtml += '<td><button class="btn btn-primary btn-reactivate" data-user-id="' + user.id + '">Restaurar</button></td>';
+                        tableHtml += '</tr>';
+                    });
+                    tableHtml += '</tbody></table>';
+                    // Insertar la tabla dentro del modal
+                    $('#deletedUsersModal .modal-body').html(tableHtml);
+                    // Mostrar el modal
+                    $('#deletedUsersModal').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
+        // Manejar el clic en el botón Reactivar dentro de la tabla
+        $(document).on('click', '.btn-reactivate', function() {
+            var userId = $(this).data('user-id');
+            // var encryptedUserId = btoa(userId);
+            // Hacer la solicitud AJAX para reactivar el usuario
+            $.ajax({
+                url: "{{ route('users.reactivate') }}",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "userId": userId
+                },
+                // headers: {
+                //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // },
+                success: function(response) {
+                    console.log(response);
+                    if (response.success == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Restaurado',
+                            text: 'Usuario restaurado correctament',
+                        })
+
+                        window.location.reload();
+                    } else {
+                        alert('Error al reactivar el usuario');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert('Error al reactivar el usuario');
+                }
+            });
+        });
 
         $(document).on("click", ".deletedUser", function(e) {
             e.preventDefault()
@@ -553,7 +644,6 @@
 
             });
         });
-
 
         $(document).on('click', "#consultAfiliado", function(e) {
             Loader();

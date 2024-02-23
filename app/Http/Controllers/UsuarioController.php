@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -316,6 +317,22 @@ class UsuarioController extends Controller
              Log::error(__METHOD__ . '. General error: ' . $th->getMessage());
         }
     }
+
+    public function getdeletedUsers()
+    {
+        $deletedUsers = User::onlyTrashed()->get();
+        return response()->json($deletedUsers);
+    }
+
+    public function reactivateUser(Request $request)
+    {
+        // Recuperar el usuario eliminado
+        $user = User::withTrashed()->findOrFail($request->userId);
+        // Reactivar el usuario
+        $user->restore();
+        return response()->json(['success' => true]);
+    }
+
 
 
 }
