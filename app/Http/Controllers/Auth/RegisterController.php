@@ -103,7 +103,6 @@ class RegisterController extends Controller
 
     //     ]);
 
-    //     //? le asignamos el rol
     //     $usuario = User::findOrFail($id);
     //     $usuario->roles()->sync($roles[1]->id);
 
@@ -174,10 +173,10 @@ class RegisterController extends Controller
     //             ]);
     //     }
     // }
+
     protected function create(array $data)
     {
         DB::beginTransaction();
-
         try {
             $user = User::create([
                 'name'           => $data['name'],
@@ -194,13 +193,14 @@ class RegisterController extends Controller
             $roles = Role::get();
             $user->roles()->sync([$roles[1]->id]);
 
-            $imagePath = $this->storeFile($data['photo'], 'profile/image', $user->number_id);
-            $pdfPath = $this->storeFile($data['photo_id'], 'documet/pdf', $user->number_id);
+            $imagePath = $this->storeFile(isset($data['photo']) ? $data['photo'] : '', 'profile/image', $user->number_id);
+            $pdfPath = $this->storeFile(isset($data['photo_id']) ? $data['photo_id'] : '', 'documet/pdf', $user->number_id);
 
             $user->update([
                 'photo_id' => $pdfPath,
                 'photo'    => $imagePath
             ]);
+
 
             DB::commit();
 
