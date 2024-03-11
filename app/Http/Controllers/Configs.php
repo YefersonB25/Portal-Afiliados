@@ -81,37 +81,41 @@ class Configs extends Controller
         // Establecer el idioma de los nombres de los meses en español
         DB::statement("SET lc_time_names = 'es_ES';");
 
-        $login_per_day = DB::table('user_tracking')
-        ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('MONTH(created_at) AS month_number'), DB::raw('COUNT(*) AS total'));
-
         $query = DB::table('user_tracking');
 
         $query->where('action', 'CONSULTO FACTURAS');
 
-        if ($start_at != null && $end_at != null) {
-
+        if ($start_at && $end_at) {
             $query->whereBetween('created_at', [$start_at, $end_at]);
-            $login_per_day->whereBetween('created_at', [$start_at, $end_at]);
-        }else{
-            if ($year != null) {
-            //     // Obtener la fecha actual con Carbon
-            //     $fechaActual = Carbon::now();
+        } elseif ($year) {
+            $query->whereYear('created_at', $year);
+        } else {
+            // Obtener la fecha actual con Carbon
+            $fechaActual = Carbon::now();
 
-            //     // Obtener el año actual
-            //     $anoActual = $fechaActual->year;
-            //     $login_per_day->whereYear('created_at', $anoActual);
-            // }else {
-                $login_per_day->whereYear('created_at', $year);
-                $query->whereYear('created_at', $year);
-
-            }
+            // Obtener el año actual
+            $anoActual = $fechaActual->year;
+            $query->whereYear('created_at', $anoActual);
         }
 
-        $login_per_day->groupBy('action', 'month', DB::raw('MONTH(created_at)'));
-        $login_per_day->orderBy(DB::raw('MONTH(created_at)'));
-        $user_trackins = $login_per_day->get();
+        $login_count = $query->count();
 
-        return response()->json(['success' => true, 'data' => $query->count(), 'login_per_day' => $user_trackins]);
+        $login_per_day = DB::table('user_tracking')
+            ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('MONTH(created_at) AS month_number'), DB::raw('COUNT(*) AS total'))
+            ->where('action', 'CONSULTO FACTURAS');
+            if ($start_at && $end_at) {
+
+                $login_per_day->whereBetween('created_at', [$start_at ?? Carbon::now()->startOfYear(), $end_at ?? Carbon::now()]);
+
+            } elseif ($year) {
+                $query->whereYear('created_at', $year);
+            }
+            $login_per_day->whereYear('created_at', $year ?? Carbon::now()->year);
+            $login_per_day->groupBy('action', 'month', DB::raw('MONTH(created_at)'));
+            $login_per_day->orderBy(DB::raw('MONTH(created_at)'));
+            $user_trackins = $login_per_day->get();
+
+        return response()->json(['success' => true, 'data' => $login_count, 'login_per_day' => $user_trackins]);
     }
 
     public function countActionHome(Request $request)
