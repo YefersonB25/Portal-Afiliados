@@ -1870,12 +1870,24 @@
                             title: "Placa Trailer",
                             data: function(d) {
                                 // console.log(typeof d.attribute11);
-                                if (typeof d.attribute11 != "undefined") {
+                                // if (typeof d.attribute11 != "undefined") {
+                                //     let pieces = d.attribute11.split(".");
+                                //     return pieces[1];
+                                // } else {
+                                //     return 'Placa de trailer no definida';
+                                // }
+
+                                if (typeof d.attribute11 !== "undefined") {
                                     let pieces = d.attribute11.split(".");
-                                    return pieces[1];
+                                    if (pieces.length > 1) {
+                                        return pieces[1];
+                                    } else {
+                                        return d.attribute11;
+                                    }
                                 } else {
                                     return 'Placa de trailer no definida';
                                 }
+
                             }
                         },
                         {
@@ -1911,32 +1923,35 @@
                             }
                         },
 
+                        {
+                            title: "Fecha de Inserción",
+                            data: function(d) {
+                                var insertDate = new Date(d.insertDate.value);
+                                var formattedDate = insertDate.toLocaleString('es-ES', {
+                                    weekday: 'short',
+                                    day: 'numeric',
+                                    month: 'short',
+                                    year: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    second: 'numeric'
+                                });
+                                return formattedDate;
+                            }
+                        }
+
                     ],
 
-                    columnDefs: [{
-                            responsivePriority: 1,
-                            targets: 0
-                        },
-                        {
-                            responsivePriority: 1,
-                            targets: 1
-                        },
-                        {
-                            responsivePriority: 1,
-                            targets: 2
-                        },
-                        {
-                            responsivePriority: 1,
-                            targets: 3
-                        },
-                        {
-                            responsivePriority: 1,
-                            targets: 4
-                        },
-                        {
-                            responsivePriority: 1,
-                            targets: 5
-                        },
+                    columnDefs: [
+                        { responsivePriority: 1, targets: 0 },
+                        { responsivePriority: 1, targets: 1 },
+                        { responsivePriority: 1, targets: 2 },
+                        { responsivePriority: 1, targets: 3 },
+                        { responsivePriority: 1, targets: 4 },
+                        { responsivePriority: 1, targets: 5 },
+                        { responsivePriority: 1, targets: 6 },
+                        { responsivePriority: 1, targets: 7 },
+
                     ],
 
                 });
