@@ -15,8 +15,8 @@ class ReporteRestOtm
         try {
             return [
                 'server'       => CommonUtils::getSetting('oracle_otm_soat_report_server_test'),
-                'username'     => CommonUtils::getSetting('user_ws_test'),
-                'password'     => CommonUtils::getSetting('test_ws_password')
+                'username'     => CommonUtils::getSetting('oracle_otm_user_soap'),
+                'password'     => CommonUtils::getSetting('oracle_otm_password_soap')
             ];
         } catch (Exception $e) {
             return ['message' => 'Check oracle.php file configuration'];
