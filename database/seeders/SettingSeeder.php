@@ -66,7 +66,7 @@ class SettingSeeder extends Seeder
             DB::table('portal_settings')->insert([
                 [
                     'name'       => 'oracle_otm_user',
-                    'val'        => 'TCL.ELKINMREST',
+                    'val'        => 'TCL.OCTOPUS',
                     'isEncrypt'  => '0',
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
@@ -80,7 +80,7 @@ class SettingSeeder extends Seeder
             DB::table('portal_settings')->insert([
                 [
                     'name'       => 'oracle_otm_password',
-                    'val'        => Crypt::encryptString('zG9g8JLzR65EQfUT'),
+                    'val'        => Crypt::encryptString('Tracto2021'),
                     'isEncrypt'  => '1',
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
@@ -94,7 +94,7 @@ class SettingSeeder extends Seeder
             DB::table('portal_settings')->insert([
                 [
                     'name'       => 'oracle_otm_server',
-                    'val'        => 'https://otmgtm-test-ekhk.otm.us2.oraclecloud.com',
+                    'val'        => 'https://otmgtm-test-ekhk.otmgtm.us-phoenix-1.ocs.oraclecloud.com',
                     'isEncrypt'  => '0',
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
@@ -178,7 +178,7 @@ class SettingSeeder extends Seeder
             DB::table('portal_settings')->insert([
                 [
                     'name'      => 'oracle_otm_soat_report_server_test',
-                    'val'       => 'https://otmgtm-ekhk.otm.us2.oraclecloud.com/xmlpserver/services/v2/ReportService?WSDL',
+                    'val'       => 'https://otmgtm-ekhk.otmgtm.us-phoenix-1.ocs.oraclecloud.com/xmlpserver/services/v2/ReportService?WSDL',
                     'isEncrypt' => '0',
                     'created_at'            => \Carbon\Carbon::now(),
                     'updated_at'            => \Carbon\Carbon::now()
