@@ -52,7 +52,7 @@ class SettingSeeder extends Seeder
             DB::table('portal_settings')->insert([
                 [
                     'name'       => 'oracle_erp_server',
-                    'val'        => 'https://ekhk-test.fa.us2.oraclecloud.com',
+                    'val'        => 'https://ekhk.fa.us2.oraclecloud.com',
                     'isEncrypt'  => '0',
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
@@ -94,7 +94,7 @@ class SettingSeeder extends Seeder
             DB::table('portal_settings')->insert([
                 [
                     'name'       => 'oracle_otm_server',
-                    'val'        => 'https://otmgtm-test-ekhk.otmgtm.us-phoenix-1.ocs.oraclecloud.com',
+                    'val'        => 'https://otmgtm-ekhk.otmgtm.us-phoenix-1.ocs.oraclecloud.com',
                     'isEncrypt'  => '0',
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
