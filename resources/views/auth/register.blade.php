@@ -88,8 +88,8 @@
                                                     <div class="wrap-input100 validate-input">
                                                         <select class="form-select input100" name="document_type" aria-label=".form-select-sm example" autofocus value="{{ old('document_type') }}" required>
                                                             <option selected value="">Seleccione tipo Documento</option>
-                                                            <option value="NIT">NIT</option>
-                                                            <option value="CC">Cedula de Ciudadania</option>
+                                                            <option value="NIT" {{ old('document_type') == 'NIT' ? 'selected' : '' }}>NIT</option>
+                                                            <option value="CC" {{ old('document_type') == 'CC' ? 'selected' : '' }}>Cedula de Ciudadania</option>
                                                             </select>
                                                             <div class="invalid-feedback">
                                                             {{ $errors->first('document_type') }}
@@ -176,7 +176,7 @@
                                             <div class="form-group">
                                                 <div class="captcha">
                                                     <span>{!! captcha_img('flat') !!}</span>
-                                                    <button type="button" class="btn btn-danger" class="refresh-captcha" id="refresh-captcha">
+                                                    <button type="button" class="btn btn-danger refresh-captcha" id="refresh-captcha">
                                                         &#x21bb;
                                                     </button>
                                                 </div>
@@ -220,15 +220,29 @@
 @section('scripts')
 <script>
 
-    $('#refresh-captcha').click(function () {
+    $(document).ready(function () {
+        refreshCaptcha(); // Refresca el captcha al cargar la vista
+
+        $('#refresh-captcha').click(function () {
+            refreshCaptcha(); // Refresca el captcha al hacer clic
+        });
+
+        setInterval(refreshCaptcha, 120000);
+
+    function refreshCaptcha() {
         $.ajax({
             type: 'GET',
-            url: "{{route('refresh.captcha')}}",
+            url: "{{ route('refresh.captcha') }}",
             success: function (data) {
                 $(".captcha span").html(data.captcha);
+            },
+            error: function () {
+                alert('Error al refrescar el captcha.');
             }
         });
-    });
+    }
+});
+
 
 </script>
 @endsection
