@@ -418,7 +418,7 @@ class ConsultarAfiliadoController extends Controller
                     'phone'        => isset($result_contacts->phone1) ? $result_contacts->phone1 : null,
                 ];
             } else {
-                Log::error(__METHOD__ . '. General error: ' . $response->body());
+                Log::error(__METHOD__ . '. General error: ' . $response->body(). ' - ' . $response->object());
                 $arrayResultOtm =
                     [
                         'locationXid'  => null,
