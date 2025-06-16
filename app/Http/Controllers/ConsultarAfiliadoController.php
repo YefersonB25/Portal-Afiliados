@@ -409,13 +409,18 @@ class ConsultarAfiliadoController extends Controller
             $response = OracleRestOtm::getLocationsCustomers($document, $params);
             if ($response->successful()) {
                 $result          = $response->object();
-                $result_contacts = $response->object()->contacts->items[0];
+                
+                $result_contacts = null;
+                if (isset($result->contacts->items) && is_array($result->contacts->items) && count($result->contacts->items) > 0) {
+                    $result_contacts = $result->contacts->items[0];
+                }
+
                 $arrayResultOtm = [
-                    'locationXid'  => $result->locationXid,
-                    'fullName'     => $result->locationName,
-                    'isActive'     => $result->isActive,
-                    'emailAddress' => isset($result_contacts->emailAddress) ? $result_contacts->emailAddress : null,
-                    'phone'        => isset($result_contacts->phone1) ? $result_contacts->phone1 : null,
+                    'locationXid'  => $result->locationXid ?? null,
+                    'fullName'     => $result->locationName ?? null,
+                    'isActive'     => $result->isActive ?? null,
+                    'emailAddress' => $result_contacts->emailAddress ?? null,
+                    'phone'        => $result_contacts->phone1 ?? null,
                 ];
             } else {
                 Log::error(__METHOD__ . '. General error: ' . $response->body(). ' - ' . $response->object());
