@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 //agregamos lo siguiente
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\GetClientIp;
-use App\Http\Helpers\SendEmailRequest;
+use App\Http\Helpers\sendEmailRequest;
 use App\Http\Helpers\UserTracking;
 use App\Models\Relationship;
 use App\Models\User;
@@ -189,7 +189,7 @@ class UsuarioController extends Controller
                 break;
         }
 
-        SendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
+        sendEmailRequest::sendEmail($usuario->id, $estado, $usuario->email);
 
         return redirect('/portal/users');
         // return back();
