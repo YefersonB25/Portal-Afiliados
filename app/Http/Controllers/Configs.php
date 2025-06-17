@@ -72,7 +72,7 @@ class Configs extends Controller
         return response()->json($test);
     }
 
-    public function countLogin(Request $request)
+    /* public function countLogin(Request $request)
     {
         $start_at = $request->startDate;
         $end_at = $request->endDate;
@@ -116,7 +116,52 @@ class Configs extends Controller
             $user_trackins = $login_per_day->get();
 
         return response()->json(['success' => true, 'data' => $login_count, 'login_per_day' => $user_trackins]);
+    } */
+
+    public function countLogin(Request $request)
+    {
+        $start_at = $request->startDate;
+        $end_at = $request->endDate;
+        $year = $request->year;
+
+        // Establecer nombres de meses en español
+        DB::statement("SET lc_time_names = 'es_ES';");
+
+        // Base query
+        $baseQuery = DB::table('user_tracking')
+            ->where('action', 'INICIO SESSION');
+
+        // Aplicar filtros
+        if ($start_at && $end_at) {
+            $baseQuery->whereBetween('created_at', [$start_at, $end_at]);
+        } elseif ($year) {
+            $baseQuery->whereYear('created_at', $year);
+        } else {
+            $baseQuery->whereYear('created_at', Carbon::now()->year);
+        }
+        
+        // Conteo total
+        $login_count = (clone $baseQuery)->count();
+        
+        // Conteo por mes
+        $login_per_day = (clone $baseQuery)
+            ->select(
+                'action',
+                DB::raw('MONTHNAME(created_at) AS month'),
+                DB::raw('MONTH(created_at) AS month_number'),
+                DB::raw('COUNT(*) AS total')
+            )
+            ->groupBy('action', DB::raw('MONTH(created_at)'), DB::raw('MONTHNAME(created_at)'))
+            ->orderBy(DB::raw('MONTH(created_at)'))
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $login_count,
+            'login_per_day' => $login_per_day,
+        ]);
     }
+
 
     public function countActionHome(Request $request)
     {

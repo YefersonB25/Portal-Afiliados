@@ -322,7 +322,7 @@
                                                                                     <option value="Impagado">Impagado
                                                                                     </option>
                                                                                     <option value="Pagada parcialmente">
-                                                                                        parsialmente</option>
+                                                                                        parcialmente</option>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="col-md">
@@ -1726,6 +1726,7 @@
                     },
                     success: function(response) {
                         let datos = response.data;
+                        console.log(datos);
                         if (response.success == true) {
 
                             tblColectionData.clear().draw();

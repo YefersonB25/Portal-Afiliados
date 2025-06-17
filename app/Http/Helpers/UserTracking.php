@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class UserTracking
 {
-    public static function createTracking($action, $detail, $ip, $resulQuery)
+    /* public static function createTracking($action, $detail, $ip, $resulQuery)
     {
         try {
             $json = array(); //creamos un array
@@ -30,7 +30,27 @@ class UserTracking
         } catch (\Throwable $th) {
             Log::error(__METHOD__ . ' - ' . auth()->user()->id  . ' - ' . $th->getMessage());
         }
+    } */
+
+    public static function createTracking($action, $detail = null, $ip = null, $resulQuery = null)
+    {
+        try {
+            $data = [
+                'user_id'    => auth()->check() ? auth()->id() : null,
+                'action'     => $action,
+                'detail'     => $detail,
+                'description'=> json_encode(['filtros' => $resulQuery]),
+                'ip'         => $ip ?? request()->ip(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            DB::table('user_tracking')->insert($data);
+        } catch (\Throwable $th) {
+            Log::error(__METHOD__ . ' - ' . ($data['user_id'] ?? 'guest') . ' - ' . $th->getMessage());
+        }
     }
+
 
     public static function actionsTracking($action)
     {
@@ -46,9 +66,9 @@ class UserTracking
 
         ];
 
-        if ($action != $map) {
-            return 'CONSULTO FACTURAS';
-        }
+        //if ($action != $map) {
+        //    return 'CONSULTO FACTURAS';
+        //}
 
         return $map[$action] ?? '';
     }
@@ -61,10 +81,6 @@ class UserTracking
             'Pagada parcialmente' => 'CONSULTO FACTURAS CON NOVEDADES',
             '' => 'CONSULTA TODAS FACTURAS',
         ];
-
-        if ($detail != $map) {
-            return 'CONSULTA TODAS FACTURAS';
-        }
 
         return $map[$detail] ?? '';
     }

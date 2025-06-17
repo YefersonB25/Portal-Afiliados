@@ -96,7 +96,8 @@ class LoginController extends Controller
 
         $actions = UserTracking::actionsTracking('LOGIN');
         $ip = GetClientIp::getUserIpAddress();
-        UserTracking::createTracking($actions, null, $ip, '');
+        
+        UserTracking::createTracking($actions, 'Inicio de sesión exitoso', $ip, null);
 
         return $request->wantsJson()
             ? new JsonResponse([], 204)
