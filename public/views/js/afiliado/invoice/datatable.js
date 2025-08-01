@@ -146,7 +146,7 @@ let LoadData = function (TableName) {
                 var dateDefined = date1 - date2;
                 var dias = dateDefined / (1000 * 60 * 60 * 24);
                 if (dias <= 0 && d.PaidStatus != 'Pagadas') {
-                    return 'dentro de la programacion de pago';
+                    return 'Pendiente de pago';
                 }
                 if (d.PaidStatus == 'Pagadas') {
                     return 'Pagada';
