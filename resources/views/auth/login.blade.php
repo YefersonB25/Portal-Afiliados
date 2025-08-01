@@ -67,7 +67,7 @@
     </body>
 @endsection
 @section('scripts')
- @if(session("error"))
+ @if(session("alerta-register"))
     <script>
         Swal.fire('Espere a que se verifique su información, esto podría tardar unos minutos, al correo registrado le estará llegando la confirmación.')
     </script>

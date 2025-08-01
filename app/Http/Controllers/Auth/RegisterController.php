@@ -174,7 +174,7 @@ class RegisterController extends Controller
     //     }
     // }
 
-    protected function create(array $data)
+    /* protected function create(array $data)
     {
         DB::beginTransaction();
         try {
@@ -234,7 +234,65 @@ class RegisterController extends Controller
                     'photo_id'   => "storage/{$documentConfig['folder']}/photo_documento.{$documentConfig['ext']}",
                 ]);
         }
+        DB::commit();
+        return $user;
+    } */
+
+    protected function create(array $data)
+    {
+        DB::beginTransaction();
+        
+        try {
+            $user = User::create([
+                'name'          => $data['name'],
+                'email'         => $data['email'],
+                'number_id'     => $data['number_id'],
+                'document_type' => $data['document_type'],
+                'phone'         => $data['phone'],
+                'status'        => 'NUEVO',
+                'password'      => Hash::make($data['password']),
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ]);
+
+            // Asignar rol por defecto
+            $roles = Role::get();
+            if ($roles->count() > 1) {
+                $user->roles()->sync([$roles[1]->id]);
+            }
+
+            // Guardar foto de perfil
+            if (!empty($data['photo'])) {
+                $photoPath = $this->storeFile(
+                    $data['photo'],
+                    "proveedores/{$user->id}/perfil",
+                    $user->id
+                );
+
+                $user->update(['photo' => "storage/{$photoPath}"]);
+            }
+
+            // Guardar documento de identificación
+            if (!empty($data['photo_id'])) {
+                $docPath = $this->storeFile(
+                    $data['photo_id'],
+                    "proveedores/{$user->id}/identificacion",
+                    $user->id
+                );
+
+                $user->update(['photo_id' => "storage/{$docPath}"]);
+            }
+
+            DB::commit();
+            return $user;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Error al crear usuario: " . $e->getMessage());
+            throw $e;
+        }
     }
+
+
 
     private function storeFile($file, $folder, $userId)
     {
@@ -268,7 +326,9 @@ class RegisterController extends Controller
 
         $name = $request->input('name');
 
-        return view('emails.register-success', compact('name'));
+        //return view('emails.register-success', compact('name'));
+        return redirect()->route('login')->with('alerta-register', 'Espere a que se verifique su información, esto podría tardar unos minutos, al correo registrado le estará llegando la confirmación.');
+
     }
 
     function notificationActionPusher()
