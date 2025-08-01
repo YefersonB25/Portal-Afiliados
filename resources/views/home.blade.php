@@ -2734,7 +2734,7 @@
                                     return 'Cancelada'
                                 }
                                 if (dias <= 0 && d.PaidStatus != 'Pagadas') {
-                                    return 'dentro de la programación de pago';
+                                    return 'Pendiente de pago';
                                 }
                                 if (d.PaidStatus == 'Pagadas') {
                                     return 'Pagada';
