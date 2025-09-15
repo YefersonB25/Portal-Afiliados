@@ -70,14 +70,15 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
     Route::post('/logout', 'logout');
-    Route::get('/health', function () {
+    
+});
+
+Route::get('/health', function () {
         return response()->json([
             'status' => 'ok',
         ]);
-    });
-});
-
-
+    })->middleware('auth.basic');
+    
 // Prueba Api OrderReleases OTM
 Route::post('webservice/orderReleases/create', [WebserviceOtmController::class, 'store'])
     ->middleware('auth.basic');
