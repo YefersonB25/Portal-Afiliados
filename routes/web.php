@@ -26,9 +26,14 @@ use Opcodes\LogViewer\Http\Controllers\IndexController;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('auth/login');
-})->name('auth.login');
+})->name('auth.login'); */
+
+Route::get('/', function () {
+    return view('auth.login');
+})->name('login');
+
 
 // Route::get('/{view?}', 'IndexController@index')
 //     ->where('view', '(.*)')
