@@ -65,11 +65,27 @@ class Configs extends Controller
 
     public function listarAfiliados(Request $request)
     {
-        $test =  DB::table('users')
-            ->where('name', 'like', '%' . $request->q . '%')
-            ->orWhere('number_id', 'like', '%' . $request->q . '%')
-            ->get();
-        return response()->json($test);
+        $search = $request->input('q', '');
+        
+        // Si no hay término de búsqueda, devolver algunos usuarios iniciales
+        if (empty($search) || strlen($search) < 2) {
+            $users = DB::table('users')
+                ->select('id', 'name', 'number_id')
+                ->limit(10)
+                ->get();
+        } else {
+            // Buscar usuarios por nombre o número de identificación
+            $users = DB::table('users')
+                ->select('id', 'name', 'number_id')
+                ->where(function($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%')
+                          ->orWhere('number_id', 'like', '%' . $search . '%');
+                })
+                ->limit(50)
+                ->get();
+        }
+        
+        return response()->json($users);
     }
 
 
@@ -269,33 +285,38 @@ class Configs extends Controller
     public function filter(Request $request)
     {
         $request->validate([
-            'userId' => 'required|integer|exists:users,id',
+            'numberId' => 'required|integer|exists:users,id',
             'dateRange' => 'nullable|string'
         ]);
 
+        $userId = $request->numberId;
+
         // Procesar rango de fechas
-        $dates = explode(' - ', $request->dateRange);
-        $startDate = isset($dates[0]) ? Carbon::parse($dates[0])->startOfDay() : null;
-        $endDate = isset($dates[1]) ? Carbon::parse($dates[1])->endOfDay() : null;
+        if ($request->dateRange) {
+            $dates = explode(' - ', $request->dateRange);
+            $startDate = isset($dates[0]) ? Carbon::parse($dates[0])->startOfDay() : Carbon::now()->startOfMonth();
+            $endDate = isset($dates[1]) ? Carbon::parse($dates[1])->endOfDay() : Carbon::now()->endOfDay();
+        } else {
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfDay();
+        }
 
         // Obtener estadísticas de actividad
-        $activityStats = $this->getUserActivityStats($request->userId, $startDate, $endDate);
+        $activityStats = $this->getUserActivityStats($userId, $startDate, $endDate);
 
         // Obtener acciones recientes
         $recentActions = DB::table('user_tracking')
-            ->where('user_id', $request->userId)
-            ->when($startDate && $endDate, function($query) use ($startDate, $endDate) {
-                return $query->whereBetween('created_at', [$startDate, $endDate]);
-            })
+            ->where('user_id', $userId)
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', 'desc')
-            ->limit(10)
+            ->limit(50)
             ->get()
             ->map(function($item) {
                 return [
-                    'date' => Carbon::parse($item->created_at)->format('Y-m-d H:i:s'),
+                    'date' => Carbon::parse($item->created_at)->format('d/m/Y H:i:s'),
                     'type' => $item->action,
-                    'detail' => $item->detail,
-                    'ip' => $item->ip
+                    'detail' => $item->detail ?? '-',
+                    'ip' => $item->ip ?? '-'
                 ];
             });
 

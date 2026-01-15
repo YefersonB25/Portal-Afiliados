@@ -22,9 +22,7 @@
     <!-- STYLE CSS -->
     <link href={{asset('assets/css/style.css')}} rel="stylesheet" />
     <link href={{asset('assets/css/skin-modes.css')}} rel="stylesheet" />
-    {{--
-    <link href={{asset('assets/plugins/select2/select2.min.css')}} rel="stylesheet" /> --}}
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href={{asset('assets/css/select2.min.css')}} rel="stylesheet" />
 
     <link rel="stylesheet" href={{asset(('assets/thema/plugins/bower_components/custom-select/custom-select.css'))}}>
     <link rel="stylesheet"
@@ -32,6 +30,8 @@
     <link rel="stylesheet" href={{asset(('assets/thema/plugins/bower_components/multiselect/css/multi-select.css'))}}>
 
     <link rel="stylesheet" href="https://bossanova.uk/jsuites/v2/jsuites.css" type="text/css" />
+
+    @yield('styles')
 
     <!-- DATA TABLE CSS-->
     {{--
@@ -137,9 +137,11 @@
 <script src="{{ asset('assets/js/apexcharts.js') }}"></script>
 
 <!-- INTERNAL SELECT2 JS -->
-{{-- <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script> --}}
+<script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
+@unless(View::hasSection('disableSelectPlugins'))
 <script src="{{ asset('assets/thema/plugins/bower_components/custom-select/custom-select.min.js') }}"></script>
 <script src="{{ asset('assets/thema/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}"></script>
+@endunless
 
 {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 

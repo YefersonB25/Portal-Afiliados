@@ -1,151 +1,135 @@
-{{-- @extends('layouts.app')
-
-@section('content')
-
-    <body class="ltr app sidebar-mini light-mode">
-        <div class="app-content main-content mt-0">
-            <div class="side-app">
-                <div class="main-container container-fluid">
-                    <div class="page-header">
-                        <div>
-                            <h1 class="page-title">Estadisticas</h1>
-                        </div>
-                        <div class="ms-auto pageheader-btn">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{route('home')}}">home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Estadisticas</li>
-                            </ol>
-                        </div>
-                    </div>
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary" id="btnInformacionGeneral">Información General</button>
-                        <button type="button" class="btn btn-secondary" id="btnSeguimientoUsuario">Seguimiento por Usuario</button>
-                    </div>
-                    <div class="card">
-                        <div class="card-body" id="informacionGeneral">
-                            <!-- Contenido de la sección "Información General" -->
-                            <div class="card-body">
-                                <form class="form-horizontal" id="filterCountLoginDay"
-                                    action="{{ route('setting.statistics.countLogin') }}" method="GET" novalidate>
-                                    @csrf
-                                    <div class="row mb-2">
-                                        <div class="col-md-6">
-                                            <label for="title" class="form-label">Fecha Inicio y
-                                                Fecha Fin</label>
-                                            <div class="input-group">
-                                                <input name="startDate" id="startDate1" class="form-control"
-                                                    placeholder="YYYY-MM-DD" data-mask="yyyy-mm-dd" tabindex="3"
-                                                    value="{{ old('startDate') }}"
-                                                    onKeyUp="ValidarFecha('startDate1','btnPr');" autofocus>
-                                                <input name="endDate" id="endDate1" placeholder="YYYY-MM-DD"
-                                                    data-mask="yyyy-mm-dd" class="form-control" tabindex="3"
-                                                    onKeyUp="ValidarFecha('endDate1','btnPr');" value="{{ old('endDate') }}"
-                                                    autofocus>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="numberId" class="form-label">Año</label>
-                                                <select class="form-control" name="year" id="yearSelect"></select>
-                                            </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary" id="btnPr">Filtrar</button>
-                                </form>
-                            </div>
-
-                            <div class="card-body" id="count">
-                            </div>
-
-                            <div class="card-body">
-                                <h4 class="heading" style="text-align: center;">Numero de inicio de sesion por mes</h4>
-                                <div id="containerActionHome"></div>
-                            </div>
-                        </div>
-
-                        <div class="card-body" id="seguimientoUsuario" style="display: none;">
-                            <!-- Contenido de la sección "Seguimiento por Usuario" -->
-                            <div class="card-body">
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-                                <form name="filtroAfiliado" class="form-horizontal" id="filter" action="{{ route('setting.statistics.filter') }}"
-                                    method="GET" novalidate>
-                                    @csrf
-                                    <div class="row mb-2">
-                                        <div class="col-md-6">
-                                            <label for="numberId" class="form-label">Nombre Afiliado</label>
-                                            <div class="form-group">
-                                                <input type="hidden" class="form-control" id="customerCode" name="numberId" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="title" class="form-label">Fecha Inicio y
-                                                Fecha Fin</label>
-                                            <div class="input-group">
-                                                <input name="startDate" id="startDate" class="form-control"
-                                                    placeholder="YYYY-MM-DD" data-mask="yyyy-mm-dd" tabindex="3"
-                                                    value="{{ old('startDate') }}"
-                                                    onKeyUp="ValidarFecha('startDate','btnPrFiltr');" autofocus>
-                                                <input name="endDate" id="endDate" placeholder="YYYY-MM-DD"
-                                                    data-mask="yyyy-mm-dd" class="form-control" tabindex="3"
-                                                    onKeyUp="ValidarFecha('endDate','btnPrFiltr');" value="{{ old('endDate') }}"
-                                                    autofocus>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary" id="btnPrFiltr">Filtrar</button>
-                                </form>
-                            </div>
-
-                            <div class="card-body">
-                                <h4 class="heading" style="text-align: center;">Seguimiento por usuario</h4>
-                                <div id="container"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </body>
-@section('scripts')
-    <script src={{ asset('anychart-package-8.11.0/js/anychart-bundle.min.js') }}></script>
-    <script src={{ asset('anychart-package-8.11.0/js/anychart-base.min.js') }}></script>
-    <script src={{ asset('anychart-package-8.11.0/js/anychart-exports.min.js') }}></script>
-    <script src={{ asset('anychart-package-8.11.0/js/anychart-ui.min.js') }}></script>
-    <script src={{ asset('views/js/statistics/statistics.js') }}></script>
-
-    <script>
-
-        let url = "{{ route('setting.affiliate') }}"
-        listAffiliate(url);
-
-        let urlCountLogin = "{{ route('setting.statistics.countLogin') }}"
-        ajaxCountLogin(urlCountLogin);
-
-        // let urlConsultedActions = "{{ route('setting.statistics.actionHome') }}"
-        // ajaxMostConsultedActions(urlConsultedActions);
-    </script>
-@endsection
-@endsection --}}
-
-
 @extends('layouts.app')
 
+@section('styles')
+<style>
+    .stats-header {
+        background: linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%);
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 16px;
+        border: 1px solid #edf0f7;
+    }
+
+    .stats-card {
+        border: 1px solid #edf0f7;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(31, 45, 61, 0.06);
+    }
+
+    .stats-card .card-header {
+        border-bottom: 1px solid #edf0f7;
+        background-color: #fff;
+    }
+
+    .stats-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #3b5bdb;
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    .stats-summary-card {
+        border-radius: 14px;
+        padding: 16px 18px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stats-summary-card::after {
+        content: '';
+        position: absolute;
+        right: -30px;
+        bottom: -30px;
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+    }
+
+    .stats-summary-card h3 {
+        font-size: 26px;
+        margin-bottom: 4px;
+    }
+
+    .stats-summary-card p {
+        margin-bottom: 0;
+        opacity: 0.9;
+    }
+
+    .stats-toolbar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .stats-table thead th {
+        font-weight: 600;
+        color: #475467;
+        background: #f8fafc;
+        border-bottom: none;
+    }
+
+    .stats-table tbody tr:hover {
+        background: #f5f7ff;
+    }
+
+    .stats-chart-box {
+        background: #fff;
+        border-radius: 12px;
+        border: 1px dashed #e5e7eb;
+        padding: 12px;
+    }
+    /* Estilos para Select2 */
+    .select2-container .select2-selection--single {
+        height: 38px !important;
+        border: 1px solid #e1e5ef !important;
+        border-radius: 5px !important;
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 36px !important;
+        color: #5b6e88 !important;
+    }
+    
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 36px !important;
+    }
+    
+    .select2-dropdown {
+        border: 1px solid #e1e5ef !important;
+        border-radius: 5px !important;
+    }
+    
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #467fcf !important;
+    }
+    
+    .select2-container--default .select2-search--dropdown .select2-search__field {
+        border: 1px solid #e1e5ef !important;
+        border-radius: 5px !important;
+    }
+</style>
+@endsection
+
+@section('disableSelectPlugins', true)
+
 @section('content')
     <body class="ltr app sidebar-mini light-mode">
         <div class="app-content main-content mt-0">
             <div class="side-app">
                 <div class="main-container container-fluid">
-                    <div class="page-header">
+                    <div class="page-header stats-header">
                         <div>
-                            <h1 class="page-title">Estadísticas</h1>
-                            <p class="text-muted">Visualización de datos de uso del sistema</p>
+                            <div class="stats-chip"><i class="fe fe-activity"></i> Panel de uso</div>
+                            <h1 class="page-title mt-2 mb-1">Estadísticas</h1>
+                            <p class="text-muted mb-0">Visualización de datos de uso del sistema</p>
                         </div>
                         <div class="ms-auto pageheader-btn">
                             <ol class="breadcrumb">
@@ -156,7 +140,7 @@
                     </div>
                     
                     <!-- Pestañas de navegación -->
-                    <div class="card">
+                    <div class="card stats-card">
                         <div class="card-header">
                             <ul class="nav nav-tabs card-header-tabs" id="statsTabs" role="tablist">
                                 <li class="nav-item">
@@ -176,16 +160,16 @@
                                         <div class="col-md-12">
                                             <form class="form-horizontal" id="filterCountLoginDay" method="GET" novalidate>
                                                 @csrf
-                                                <div class="row g-3 align-items-end">
+                                                <div class="row g-3 align-items-end stats-toolbar">
                                                     <div class="col-md-4">
                                                         <label class="form-label">Fecha Inicio</label>
-                                                        <input name="startDate" id="startDate1" class="form-control datepicker" 
-                                                            placeholder="YYYY-MM-DD" autocomplete="off">
+                                                        <input name="startDate" id="startDate1" class="form-control js-date" 
+                                                            placeholder="YYYY-MM-DD" autocomplete="off" readonly>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label class="form-label">Fecha Fin</label>
-                                                        <input name="endDate" id="endDate1" class="form-control datepicker" 
-                                                            placeholder="YYYY-MM-DD" autocomplete="off">
+                                                        <input name="endDate" id="endDate1" class="form-control js-date" 
+                                                            placeholder="YYYY-MM-DD" autocomplete="off" readonly>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label class="form-label">Año</label>
@@ -204,7 +188,7 @@
                                     <!-- Tarjetas resumen -->
                                     <div class="row mb-4">
                                         <div class="col-md-4">
-                                            <div class="card card-body bg-primary text-white">
+                                            <div class="stats-summary-card bg-primary">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <h3 class="mb-1 fw-semibold" id="totalLogins">0</h3>
@@ -215,7 +199,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="card card-body bg-info text-white">
+                                            <div class="stats-summary-card bg-info">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <h3 class="mb-1 fw-semibold" id="activeUsers">0</h3>
@@ -226,7 +210,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="card card-body bg-success text-white">
+                                            <div class="stats-summary-card bg-success">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <h3 class="mb-1 fw-semibold" id="invoiceConsultations">0</h3>
@@ -241,12 +225,14 @@
                                     <!-- Gráficos -->
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="card">
+                                            <div class="card stats-card">
                                                 <div class="card-header">
                                                     <h4 class="card-title">Inicios de Sesión por Mes</h4>
                                                 </div>
                                                 <div class="card-body">
-                                                    <div id="loginChart" style="height: 400px;"></div>
+                                                    <div class="stats-chart-box">
+                                                        <div id="loginChart" style="height: 400px;"></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -259,16 +245,16 @@
                                         <div class="col-md-8">
                                             <form class="form-horizontal" id="userTrackingForm" method="GET" novalidate>
                                                 @csrf
-                                                <div class="row g-3 align-items-end">
+                                                <div class="row g-3 align-items-end stats-toolbar">
                                                     <div class="col-md-4">
                                                         <label class="form-label">Usuario</label>
                                                         {{-- <input type="hidden" class="form-control" id="customerCode" name="numberId"> --}}
-                                                                    <select id="customerCode" name="numberId" class="form-control" style="width: 100%;"></select>
+                                                                    <select id="customerCode" name="numberId" class="form-control select2" style="width: 100%;"></select>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label class="form-label">Rango de Fechas</label>
-                                                        <input type="text" class="form-control daterange" name="dateRange" 
-                                                            placeholder="Seleccione rango">
+                                                        <input type="text" class="form-control js-range" name="dateRange" 
+                                                            placeholder="Seleccione rango" readonly>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <button type="submit" class="btn btn-primary w-100">
@@ -282,12 +268,14 @@
                                     
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="card">
+                                            <div class="card stats-card">
                                                 <div class="card-header">
                                                     <h4 class="card-title">Actividad del Usuario</h4>
                                                 </div>
                                                 <div class="card-body">
-                                                    <div id="userActivityChart" style="height: 400px;"></div>
+                                                    <div class="stats-chart-box">
+                                                        <div id="userActivityChart" style="height: 400px;"></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -295,13 +283,13 @@
                                     
                                     <div class="row mt-4">
                                         <div class="col-md-12">
-                                            <div class="card">
+                                            <div class="card stats-card">
                                                 <div class="card-header">
                                                     <h4 class="card-title">Últimas Acciones</h4>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="table-responsive">
-                                                        <table class="table table-hover" id="userActionsTable">
+                                                        <table class="table table-hover stats-table" id="userActionsTable">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Fecha</th>
@@ -332,29 +320,29 @@
 @section('scripts')
     <!-- Librerías para gráficos -->
     {{-- <script src="{{ asset('assets/plugins/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/daterangepicker/daterangepicker.js') }}"></script> --}}
 
+    <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
     <script src={{ asset('anychart-package-8.11.0/js/anychart-bundle.min.js') }}></script>
     <script src={{ asset('anychart-package-8.11.0/js/anychart-base.min.js') }}></script>
     <script src={{ asset('anychart-package-8.11.0/js/anychart-exports.min.js') }}></script>
     <script src={{ asset('anychart-package-8.11.0/js/anychart-ui.min.js') }}></script>
-    <script src={{ asset('views/js/statistics/statistics.js') }}></script>
+    <script src="{{ asset('views/js/statistics/statistics.js') }}?v={{ time() }}"></script>
     <script>
         $(document).ready(function() {
-            // Inicializar controles
-            /* $('.select2').select2();
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true
-            });*/
+            // Verificar que Select2 esté disponible
+            let select2Available = typeof $.fn.select2 !== 'undefined';
+            if (!select2Available) {
+                console.error('Select2 no está cargado');
+            }
 
-            /*  $('.daterange').daterangepicker({
-                locale: {
-                    format: 'YYYY-MM-DD'
-                }
-            });  */
+            // Desactivar selectpicker si está activo en este select
+            if ($.fn.selectpicker && $('#customerCode').hasClass('selectpicker')) {
+                $('#customerCode').selectpicker('destroy');
+            }
 
+            // Inicializar año actual
             const select = document.getElementById('yearSelect');
             const currentYear = new Date().getFullYear();
 
@@ -370,13 +358,53 @@
             
             // Cargar datos iniciales
             loadGeneralStats();
-            loadUserList();
+            
+            // Variable para controlar si Select2 ya fue inicializado
+            let select2Initialized = false;
+
+            function initUserSelect() {
+                if (select2Initialized) {
+                    return;
+                }
+
+                if (select2Available) {
+                    console.log('Inicializando Select2 para #customerCode');
+                    setTimeout(function() {
+                        listAffiliate("{{ route('setting.affiliate') }}");
+                        select2Initialized = true;
+                        $('#customerCode').select2('open');
+                    }, 200);
+                } else {
+                    console.warn('Select2 no disponible, cargando opciones básicas');
+                    $.ajax({
+                        url: "{{ route('setting.affiliate') }}",
+                        type: "GET",
+                        success: function(response) {
+                            let options = '<option value="">Seleccione un usuario</option>';
+                            $.each(response, function(index, user) {
+                                options += '<option value="' + user.id + '">' + user.name + ' (' + user.number_id + ')</option>';
+                            });
+                            $('#customerCode').html(options);
+                        }
+                    });
+                }
+            }
             
             // Manejar cambio de pestañas
             $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
                 if (e.target.id === 'user-tab') {
-                    initUserActivityChart();
+                    // Limpiar datos anteriores
+                    $('#userActivityChart').html('<div class="text-center text-muted py-5">Seleccione un usuario para ver la actividad</div>');
+                    $('#userActionsTable tbody').html('<tr><td colspan="4" class="text-center text-muted">Seleccione un usuario para ver las acciones</td></tr>');
+                    
+                    // Inicializar Select2 solo una vez cuando se muestra la pestaña
+                    initUserSelect();
                 }
+            });
+
+            // Inicializar al enfocar el select si aún no se hizo
+            $('#customerCode').on('focus click', function() {
+                initUserSelect();
             });
             
             // Manejar envío de formularios
@@ -384,17 +412,88 @@
                 e.preventDefault();
                 loadGeneralStats();
             });
+
+            // Si cambia el año, limpiar fechas y recargar
+            $('#yearSelect').on('change', function() {
+                $('#startDate1').val('');
+                $('#endDate1').val('');
+                loadGeneralStats();
+            });
+
+            // Si se seleccionan fechas, limpiar año
+            $('#startDate1, #endDate1').on('change', function() {
+                if ($('#startDate1').val() || $('#endDate1').val()) {
+                    $('#yearSelect').val('');
+                }
+            });
             
             $('#userTrackingForm').submit(function(e) {
                 e.preventDefault();
                 loadUserActivity();
             });
-            listAffiliate("{{ route('setting.affiliate') }}");
+
+            if (window.jSuites) {
+                document.querySelectorAll('.js-date').forEach(function(el) {
+                    jSuites.calendar(el, {
+                        format: 'YYYY-MM-DD',
+                        time: false
+                    });
+                });
+
+                const rangeInput = document.querySelector('.js-range');
+                if (rangeInput) {
+                    jSuites.calendar(rangeInput, {
+                        format: 'YYYY-MM-DD',
+                        time: false,
+                        range: true,
+                        separator: ' - '
+                    });
+                }
+            }
+        });
+
+        // Forzar inicialización al cargar la página si no quedó activa
+        window.addEventListener('load', function() {
+            if (typeof $.fn.select2 !== 'undefined' && !$('#customerCode').hasClass('select2-hidden-accessible')) {
+                console.log('Forzando inicialización de Select2 en window.load');
+                listAffiliate("{{ route('setting.affiliate') }}");
+            }
         });
 
         
 
     function loadGeneralStats() {
+        const startDate = $('#startDate1').val();
+        const endDate = $('#endDate1').val();
+        const year = $('#yearSelect').val();
+
+        if ((startDate && !endDate) || (!startDate && endDate)) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atención',
+                text: 'Seleccione ambas fechas para filtrar por rango.',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                showConfirmButton: false
+            });
+            return;
+        }
+
+        if (startDate && endDate && year) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Filtro aplicado',
+                text: 'Se usará el año seleccionado y se ignorará el rango de fechas.',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                showConfirmButton: false
+            });
+            $('#startDate1').val('');
+            $('#endDate1').val('');
+        }
+
         $.ajax({
             url: "{{ route('setting.statistics.countLogin') }}",
             type: "GET",
@@ -414,21 +513,21 @@
         });
     }
 
-    function loadUserList() {
-        $.ajax({
-            url: "{{ route('setting.affiliate') }}",
-            type: "GET",
-            success: function(response) {
-                var options = '<option value="">Seleccione un usuario</option>';
-                $.each(response, function(index, user) {
-                    options += '<option value="'+user.id+'">'+user.name+'</option>';
-                });
-                $('#userSelect').html(options);
-            }
-        });
-    }
-
     function loadUserActivity() {
+        const userId = $('#customerCode').val();
+        
+        if (!userId) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Atención',
+                text: 'Por favor seleccione un usuario',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                showConfirmButton: false
+            });
+            return;
+        }
         
         $.ajax({
             url: "{{ route('setting.statistics.filter') }}",
@@ -439,38 +538,78 @@
                     updateUserActivityChart(response.data.activityStats);
                     updateUserActionsTable(response.data.recentActions);
                 }
+            },
+            error: function(xhr) {
+                console.error('Error al cargar actividad del usuario:', xhr);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo cargar la actividad del usuario',
+                    toast: true,
+                    position: 'top-end',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
             }
         });
     }
 
     function updateLoginChart(data) {
-        // Implementar gráfico con ApexCharts
-        var options = {
-            series: [{
-                name: 'Inicios de Sesión',
-                data: data.monthlyCounts
-            }],
-            chart: {
-                type: 'bar',
-                height: 350
-            },
-            plotOptions: {
-                bar: {
-                    borderRadius: 4,
-                    horizontal: false,
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            xaxis: {
-                categories: data.months,
-            },
-            colors: ['#467fcf']
-        };
-        
-        var chart = new ApexCharts(document.querySelector("#loginChart"), options);
-        chart.render();
+        if (!data || !data.months || !data.monthlyCounts) {
+            console.warn('No hay datos para mostrar en el gráfico');
+            return;
+        }
+
+        anychart.onDocumentReady(function() {
+            // Limpiar contenedor
+            document.getElementById('loginChart').innerHTML = '';
+
+            // Preparar datos
+            const chartData = data.months.map((month, index) => {
+                return [month, data.monthlyCounts[index]];
+            });
+
+            // Crear gráfico de columnas
+            var chart = anychart.column();
+            
+            // Configurar datos
+            chart.data(chartData);
+            
+            // Activar animación
+            chart.animation(true);
+            
+            // Configurar formato de labels
+            chart.yAxis().labels().format('{%Value}{groupsSeparator: }');
+            
+            // Configurar labels en las barras
+            chart.labels()
+                .enabled(true)
+                .position('center')
+                .anchor('center-bottom')
+                .format('{%Value}{groupsSeparator: }');
+            
+            // Configurar tooltip
+            chart.tooltip()
+                .positionMode('point')
+                .position('center-top')
+                .anchor('center-bottom')
+                .format('Inicios de sesión: {%Value}{groupsSeparator: }');
+            
+            // Configurar colores
+            chart.palette(['#467fcf', '#5eba00', '#f1c40f', '#e74c3c']);
+            
+            // Configurar interactividad
+            chart.interactivity().hoverMode('single');
+            
+            // Configurar título
+            chart.title(false);
+            
+            // Configurar contenedor
+            chart.container('loginChart');
+            
+            // Dibujar
+            chart.draw();
+        });
     }
 
     function initUserActivityChart() {
@@ -478,18 +617,70 @@
     }
 
     function updateUserActivityChart(data) {
-        // Actualizar gráfico de actividad de usuario
+        if (!data || !data.labels || !data.data) {
+            console.warn('No hay datos de actividad para mostrar');
+            $('#userActivityChart').html('<div class="text-center text-muted py-5">No hay datos disponibles para este rango</div>');
+            return;
+        }
+
+        anychart.onDocumentReady(function() {
+            // Limpiar contenedor
+            document.getElementById('userActivityChart').innerHTML = '';
+
+            // Preparar datos
+            const chartData = data.labels.map((label, index) => {
+                return {x: label, value: data.data[index]};
+            });
+
+            // Crear gráfico de pie
+            var chart = anychart.pie(chartData);
+            
+            // Activar animación
+            chart.animation(true);
+            
+            // Configurar título
+            chart.title(false);
+            
+            // Configurar labels
+            chart.labels()
+                .position('outside')
+                .format('{%x}: {%value}');
+            
+            // Configurar tooltip
+            chart.tooltip()
+                .format('Acciones: {%value}');
+            
+            // Configurar leyenda
+            chart.legend()
+                .enabled(true)
+                .position('right')
+                .itemsLayout('vertical');
+            
+            // Configurar colores
+            chart.palette(['#467fcf', '#5eba00', '#f1c40f', '#e74c3c', '#9b59b6', '#1abc9c']);
+            
+            // Configurar contenedor
+            chart.container('userActivityChart');
+            
+            // Dibujar
+            chart.draw();
+        });
     }
 
     function updateUserActionsTable(data) {
+        if (!data || data.length === 0) {
+            $('#userActionsTable tbody').html('<tr><td colspan="4" class="text-center text-muted">No hay acciones registradas</td></tr>');
+            return;
+        }
+        
         // Actualizar tabla de acciones recientes
         var rows = '';
         $.each(data, function(index, action) {
             rows += '<tr>'+
-                '<td>'+action.date+'</td>'+
-                '<td>'+action.type+'</td>'+
+                '<td><small>'+action.date+'</small></td>'+
+                '<td><span class="badge bg-primary">'+action.type+'</span></td>'+
                 '<td>'+action.detail+'</td>'+
-                '<td>'+action.ip+'</td>'+
+                '<td><code>'+action.ip+'</code></td>'+
             '</tr>';
         });
         $('#userActionsTable tbody').html(rows);
