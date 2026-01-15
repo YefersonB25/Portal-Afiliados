@@ -270,9 +270,14 @@
                                                                     <select id="customerCode" name="numberId" class="form-control select2" style="width: 100%;"></select>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label class="form-label">Rango de Fechas</label>
-                                                        <input type="text" class="form-control js-range" name="dateRange" 
-                                                            placeholder="Seleccione rango" readonly>
+                                                        <label class="form-label">Fecha Inicio</label>
+                                                        <input type="text" class="form-control js-date" name="startDateUser" 
+                                                            placeholder="YYYY-MM-DD" readonly>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Fecha Fin</label>
+                                                        <input type="text" class="form-control js-date" name="endDateUser" 
+                                                            placeholder="YYYY-MM-DD" readonly>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <button type="submit" class="btn btn-primary w-100">
@@ -447,6 +452,29 @@
             
             $('#userTrackingForm').submit(function(e) {
                 e.preventDefault();
+                const startUser = $('input[name="startDateUser"]').val();
+                const endUser = $('input[name="endDateUser"]').val();
+
+                if (!startUser || !endUser) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Atención',
+                        text: 'Seleccione fecha inicio y fecha fin.',
+                        toast: true,
+                        position: 'top-end',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                    return;
+                }
+
+                // Construir dateRange compatible con backend
+                const rangeValue = `${startUser} - ${endUser}`;
+                if ($('#userTrackingForm input[name="dateRange"]').length === 0) {
+                    $('#userTrackingForm').append('<input type="hidden" name="dateRange">');
+                }
+                $('#userTrackingForm input[name="dateRange"]').val(rangeValue);
+
                 loadUserActivity();
             });
 
@@ -458,15 +486,13 @@
                     });
                 });
 
-                const rangeInput = document.querySelector('.js-range');
-                if (rangeInput) {
-                    jSuites.calendar(rangeInput, {
+                // Calendarios para fecha inicio/fin usuario
+                document.querySelectorAll('input[name="startDateUser"], input[name="endDateUser"]').forEach(function(el) {
+                    jSuites.calendar(el, {
                         format: 'YYYY-MM-DD',
-                        time: false,
-                        range: true,
-                        separator: ' - '
+                        time: false
                     });
-                }
+                });
             }
         });
 
