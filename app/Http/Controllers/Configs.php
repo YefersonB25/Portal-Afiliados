@@ -72,53 +72,8 @@ class Configs extends Controller
         return response()->json($test);
     }
 
+
     /* public function countLogin(Request $request)
-    {
-        $start_at = $request->startDate;
-        $end_at = $request->endDate;
-        $year = $request->year;
-
-        // Establecer el idioma de los nombres de los meses en español
-        DB::statement("SET lc_time_names = 'es_ES';");
-
-        $query = DB::table('user_tracking');
-
-        $query->where('action', 'CONSULTO FACTURAS');
-
-        if ($start_at && $end_at) {
-            $query->whereBetween('created_at', [$start_at, $end_at]);
-        } elseif ($year) {
-            $query->whereYear('created_at', $year);
-        } else {
-            // Obtener la fecha actual con Carbon
-            $fechaActual = Carbon::now();
-
-            // Obtener el año actual
-            $anoActual = $fechaActual->year;
-            $query->whereYear('created_at', $anoActual);
-        }
-
-        $login_count = $query->count();
-
-        $login_per_day = DB::table('user_tracking')
-            ->select('action', DB::raw('MONTHNAME(created_at) AS month'), DB::raw('MONTH(created_at) AS month_number'), DB::raw('COUNT(*) AS total'))
-            ->where('action', 'CONSULTO FACTURAS');
-            if ($start_at && $end_at) {
-
-                $login_per_day->whereBetween('created_at', [$start_at ?? Carbon::now()->startOfYear(), $end_at ?? Carbon::now()]);
-
-            } elseif ($year) {
-                $query->whereYear('created_at', $year);
-            }
-            $login_per_day->whereYear('created_at', $year ?? Carbon::now()->year);
-            $login_per_day->groupBy('action', 'month', DB::raw('MONTH(created_at)'));
-            $login_per_day->orderBy(DB::raw('MONTH(created_at)'));
-            $user_trackins = $login_per_day->get();
-
-        return response()->json(['success' => true, 'data' => $login_count, 'login_per_day' => $user_trackins]);
-    } */
-
-    public function countLogin(Request $request)
     {
         $start_at = $request->startDate;
         $end_at = $request->endDate;
@@ -160,7 +115,7 @@ class Configs extends Controller
             'data' => $login_count,
             'login_per_day' => $login_per_day,
         ]);
-    }
+    } */
 
 
     public function countActionHome(Request $request)
@@ -182,7 +137,7 @@ class Configs extends Controller
         return response()->json(['success' => true, 'data' => $arrayActionInvoice]);
     }
 
-    public function filter(Request $request)
+    /* public function filter(Request $request)
     {
 
         $number_id = $request->numberId;
@@ -209,7 +164,7 @@ class Configs extends Controller
 
         }
         return response()->json(['success' => true, 'login_per_day' => $user_trackins] );
-    }
+    } */
 
     public function configSistem()
     {
@@ -221,5 +176,166 @@ class Configs extends Controller
     {
         $response =  DB::table('users')->where('id', Auth::User()->id)->update(['notifications' => $request->notification]);
         return response()->json(['success' => true, 'data' => $response]);
+    }
+
+    public function countLogin(Request $request)
+    {
+        // Validar entrada
+        $request->validate([
+            'startDate' => 'nullable|date',
+            'endDate' => 'nullable|date|after_or_equal:startDate',
+            'year' => 'nullable|integer|min:2020|max:'.(date('Y')+1)
+        ]);
+
+        // Determinar rango de fechas
+        if ($request->startDate && $request->endDate) {
+            $startDate = Carbon::parse($request->startDate)->startOfDay();
+            $endDate = Carbon::parse($request->endDate)->endOfDay();
+        } elseif ($request->year) {
+            $startDate = Carbon::create($request->year, 1, 1)->startOfYear();
+            $endDate = Carbon::create($request->year, 12, 31)->endOfYear();
+        } else {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfDay();
+        }
+
+        // Configurar nombres de meses en español
+        DB::statement("SET lc_time_names = 'es_ES';");
+
+        // Estadísticas de inicio de sesión
+        $loginStats = $this->getLoginStats($startDate, $endDate);
+
+        // Usuarios activos (han iniciado sesión en el período)
+        $activeUsers = DB::table('user_tracking')
+            ->where('action', 'INICIO SESSION')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->distinct('user_id')
+            ->count('user_id');
+
+        // Consultas de facturas
+        $invoiceConsultations = DB::table('user_tracking')
+            ->where('action', 'CONSULTO FACTURAS')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+        
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'totalLogins' => $loginStats['total'],
+                'activeUsers' => $activeUsers,
+                'invoiceConsultations' => $invoiceConsultations,
+                'loginStats' => $loginStats
+            ]
+        ]);
+    }
+
+    protected function getLoginStats($startDate, $endDate)
+    {
+        // Consulta para obtener total
+        $total = DB::table('user_tracking')
+            ->where('action', 'INICIO SESSION')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        // Consulta para obtener por mes
+        $monthlyData = DB::table('user_tracking')
+            ->select(
+                DB::raw('MONTHNAME(created_at) AS month'),
+                DB::raw('MONTH(created_at) AS month_number'),
+                DB::raw('COUNT(*) AS count')
+            )
+            ->where('action', 'INICIO SESSION')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('month', 'month_number')
+            ->orderBy('month_number')
+            ->get();
+
+        // Preparar datos para el gráfico
+        $months = [];
+        $counts = [];
+        
+        foreach ($monthlyData as $data) {
+            $months[] = ucfirst($data->month);
+            $counts[] = $data->count;
+        }
+
+        return [
+            'total' => $total,
+            'months' => $months,
+            'monthlyCounts' => $counts
+        ];
+    }
+
+    public function filter(Request $request)
+    {
+        $request->validate([
+            'userId' => 'required|integer|exists:users,id',
+            'dateRange' => 'nullable|string'
+        ]);
+
+        // Procesar rango de fechas
+        $dates = explode(' - ', $request->dateRange);
+        $startDate = isset($dates[0]) ? Carbon::parse($dates[0])->startOfDay() : null;
+        $endDate = isset($dates[1]) ? Carbon::parse($dates[1])->endOfDay() : null;
+
+        // Obtener estadísticas de actividad
+        $activityStats = $this->getUserActivityStats($request->userId, $startDate, $endDate);
+
+        // Obtener acciones recientes
+        $recentActions = DB::table('user_tracking')
+            ->where('user_id', $request->userId)
+            ->when($startDate && $endDate, function($query) use ($startDate, $endDate) {
+                return $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get()
+            ->map(function($item) {
+                return [
+                    'date' => Carbon::parse($item->created_at)->format('Y-m-d H:i:s'),
+                    'type' => $item->action,
+                    'detail' => $item->detail,
+                    'ip' => $item->ip
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'activityStats' => $activityStats,
+                'recentActions' => $recentActions
+            ]
+        ]);
+    }
+
+    protected function getUserActivityStats($userId, $startDate = null, $endDate = null)
+    {
+        $query = DB::table('user_tracking')
+            ->select(
+                'action',
+                DB::raw('COUNT(*) as count')
+            )
+            ->where('user_id', $userId)
+            ->when($startDate && $endDate, function($query) use ($startDate, $endDate) {
+                return $query->whereBetween('created_at', [$startDate, $endDate]);
+            })
+            ->groupBy('action')
+            ->orderBy('count', 'desc');
+
+        $actions = $query->get();
+
+        // Preparar datos para gráfico
+        $labels = [];
+        $data = [];
+        
+        foreach ($actions as $action) {
+            $labels[] = $action->action;
+            $data[] = $action->count;
+        }
+
+        return [
+            'labels' => $labels,
+            'data' => $data
+        ];
     }
 }

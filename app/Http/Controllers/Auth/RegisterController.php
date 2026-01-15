@@ -269,7 +269,7 @@ class RegisterController extends Controller
                     $user->id
                 );
 
-                $user->update(['photo' => "storage/{$photoPath}"]);
+                $user->update(['photo' => "$photoPath"]);
             }
 
             // Guardar documento de identificación

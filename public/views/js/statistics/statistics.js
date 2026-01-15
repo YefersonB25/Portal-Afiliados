@@ -1,6 +1,6 @@
 
 
-function ValidarFecha(id, btn) {
+/* function ValidarFecha(id, btn) {
     // Almacenamos el valor digitado en TxtFecha
     var Fecha = document.getElementById(id).value;
     const button = document.getElementById(btn)
@@ -362,8 +362,319 @@ let chartMostConsultedActions = function (login_per_day) {
           chart.draw();
 
       });
+} */
+
+
+
+// Reemplazar el archivo statistics.js con este código mejorado
+
+let listAffiliate = function (url) {
+    $('#customerCode').select2({
+        placeholder: "Buscar un afiliado",
+        minimumInputLength: 3,
+        ajax: {
+            url: url,
+            dataType: 'json',
+            delay: 300,
+            data: function (term, page) {
+                return {
+                    q:  encodeURIComponent(term)
+                };
+            },
+            results: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        }
+                    })
+                };
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error en la consulta AJAX: ' + errorThrown);
+                // Mostrar un mensaje de error al usuario, por ejemplo, en un div de error
+                $('#error-message').text('Error en la consulta. Intente nuevamente más tarde.');
+            },
+            cache: false
+        }
+    });
+};
+class StatisticsDashboard {
+    constructor() {
+        this.initDatePickers();
+        this.initCharts();
+        this.bindEvents();
+        this.loadInitialData();
+    }
+    
+    initDatePickers() {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+        
+        $('.daterange').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD',
+                applyLabel: 'Aplicar',
+                cancelLabel: 'Cancelar',
+                daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                firstDay: 1
+            },
+            opens: 'right',
+            autoUpdateInput: false
+        });
+        
+        $('.daterange').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+        });
+    }
+    
+    initCharts() {
+        this.loginChart = new ApexCharts(document.querySelector("#loginChart"), this.getLoginChartOptions());
+        this.loginChart.render();
+        
+        this.userActivityChart = new ApexCharts(document.querySelector("#userActivityChart"), this.getActivityChartOptions());
+        this.userActivityChart.render();
+    }
+    
+    getLoginChartOptions() {
+        return {
+            series: [{
+                name: 'Inicios de Sesión',
+                data: []
+            }],
+            chart: {
+                type: 'bar',
+                height: 350,
+                toolbar: {
+                    show: true,
+                    tools: {
+                        download: true,
+                        selection: true,
+                        zoom: true,
+                        zoomin: true,
+                        zoomout: true,
+                        pan: true,
+                        reset: true
+                    }
+                }
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: false,
+                    columnWidth: '55%',
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: [],
+                labels: {
+                    style: {
+                        fontSize: '12px'
+                    }
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Cantidad'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " inicios"
+                    }
+                }
+            },
+            colors: ['#467fcf']
+        };
+    }
+    
+    getActivityChartOptions() {
+        return {
+            series: [{
+                name: 'Acciones',
+                data: []
+            }],
+            chart: {
+                type: 'radar',
+                height: 350,
+                toolbar: {
+                    show: true
+                }
+            },
+            xaxis: {
+                categories: []
+            },
+            yaxis: {
+                show: false
+            },
+            markers: {
+                size: 5,
+                hover: {
+                    size: 7
+                }
+            },
+            tooltip: {
+                y: {
+                    formatter: function(val) {
+                        return val + " acciones";
+                    }
+                }
+            },
+            colors: ['#5eba00']
+        };
+    }
+    
+    bindEvents() {
+        // Filtrar estadísticas generales
+        $('#filterCountLoginDay').submit(e => {
+            e.preventDefault();
+            this.loadGeneralStatistics();
+        });
+        
+        // Filtrar actividad de usuario
+        $('#userTrackingForm').submit(e => {
+            e.preventDefault();
+            this.loadUserActivity();
+        });
+        
+        // Cambio de pestaña
+        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', e => {
+            if (e.target.id === 'user-tab') {
+                this.userActivityChart.updateOptions({
+                    series: [{
+                        data: []
+                    }],
+                    xaxis: {
+                        categories: []
+                    }
+                });
+            }
+        });
+    }
+    
+    loadInitialData() {
+        this.loadGeneralStatistics();
+    }
+    
+    loadGeneralStatistics() {
+        const formData = $('#filterCountLoginDay').serialize();
+        
+        $.ajax({
+            url: "{{ route('setting.statistics.countLogin') }}",
+            type: "GET",
+            data: formData,
+            beforeSend: () => {
+                $('#loginChart').addClass('chart-loading');
+            },
+            success: response => {
+                if (response.success) {
+                    this.updateGeneralStatistics(response.data);
+                }
+            },
+            complete: () => {
+                $('#loginChart').removeClass('chart-loading');
+            },
+            error: (xhr, status, error) => {
+                console.error(error);
+                Swal.fire('Error', 'No se pudieron cargar las estadísticas', 'error');
+            }
+        });
+    }
+    
+    updateGeneralStatistics(data) {
+        // Actualizar tarjetas
+        $('#totalLogins').text(data.totalLogins.toLocaleString());
+        $('#activeUsers').text(data.activeUsers.toLocaleString());
+        $('#invoiceConsultations').text(data.invoiceConsultations.toLocaleString());
+        
+        // Actualizar gráfico
+        this.loginChart.updateOptions({
+            series: [{
+                name: 'Inicios de Sesión',
+                data: data.loginStats.monthlyCounts
+            }],
+            xaxis: {
+                categories: data.loginStats.months
+            }
+        });
+    }
+    
+    loadUserActivity() {
+        const formData = $('#userTrackingForm').serialize();
+        
+        $.ajax({
+            url: "{{ route('setting.statistics.filter') }}",
+            type: "GET",
+            data: formData,
+            beforeSend: () => {
+                $('#userActivityChart').addClass('chart-loading');
+            $('#userActionsTable tbody').html('<tr><td colspan="4" class="text-center">Cargando...</td></tr>');
+            },
+            success: response => {
+                if (response.success) {
+                    this.updateUserActivity(response.data);
+                }
+            },
+            complete: () => {
+                $('#userActivityChart').removeClass('chart-loading');
+            },
+            error: (xhr, status, error) => {
+                console.error(error);
+                Swal.fire('Error', 'No se pudo cargar la actividad del usuario', 'error');
+            }
+        });
+    }
+    
+    updateUserActivity(data) {
+        // Actualizar gráfico de actividad
+        this.userActivityChart.updateOptions({
+            series: [{
+                data: data.activityStats.data
+            }],
+            xaxis: {
+                categories: data.activityStats.labels
+            }
+        });
+        
+        // Actualizar tabla de acciones
+        let rows = '';
+        if (data.recentActions.length > 0) {
+            data.recentActions.forEach(action => {
+                rows += `
+                    <tr>
+                        <td>${action.date}</td>
+                        <td>${action.type}</td>
+                        <td>${action.detail || 'N/A'}</td>
+                        <td>${action.ip}</td>
+                    </tr>
+                `;
+            });
+        } else {
+            rows = '<tr><td colspan="4" class="text-center">No se encontraron acciones</td></tr>';
+        }
+        
+        $('#userActionsTable tbody').html(rows);
+    }
 }
 
-
-
-
+// Inicializar dashboard cuando el DOM esté listo
+$(document).ready(() => {
+    new StatisticsDashboard();
+});
