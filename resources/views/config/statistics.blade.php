@@ -88,18 +88,36 @@
     }
     /* Estilos para Select2 */
     .select2-container .select2-selection--single {
-        height: 38px !important;
+        height: 44px !important;
         border: 1px solid #e1e5ef !important;
         border-radius: 5px !important;
     }
     
     .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 36px !important;
+        line-height: 42px !important;
         color: #5b6e88 !important;
+        font-size: 14px;
     }
     
     .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 36px !important;
+        height: 42px !important;
+    }
+
+    .select2-container {
+        min-height: 44px !important;
+        width: 100% !important;
+    }
+
+    .select2-container--default .select2-selection--single {
+        padding-left: 8px;
+    }
+
+    .select2-container--default {
+        width: 100% !important;
+    }
+
+    .select2-container--open .select2-dropdown {
+        min-width: 100% !important;
     }
     
     .select2-dropdown {
