@@ -7,7 +7,7 @@ let ajaxCountLoginHome = function (url){
         },
         url: url,
         success: function (response) {
-
+            
             let datos = response.data
             if (response.success == true) {
 
@@ -15,20 +15,28 @@ let ajaxCountLoginHome = function (url){
                 plantilla = `
                             <div class="row">
                                 <div class="col">
-                                    <h3 class="mb-2 fw-semibold">${datos}</h3>
+                                    <h3 class="mb-2 fw-semibold">${datos.totalLogins || 0}</h3>
                                     <p class="text-muted fs-13 mb-0">TOTAL INICIO SESSION</p>
                                 </div>
                                 <div class="col col-auto top-icn dash">
                                     <div class="counter-icon bg-danger-gradient box-shadow-danger">
-                                                                <i class="fe fe-trending-up text-white"></i>
-                                                            </div>
+                                        <i class="fe fe-trending-up text-white"></i>
+                                    </div>
                                 </div>
                             </div>
-
                                 `
                 $('#count').append(plantilla)
             }
-            chartMostConsultedActions(response.login_per_day)
+            
+            // Preparar datos para la gráfica
+            let loginPerDay = [];
+            if (datos.loginStats && datos.loginStats.months && datos.loginStats.monthlyCounts) {
+                loginPerDay = datos.loginStats.months.map((month, index) => ({
+                    month: month,
+                    total: datos.loginStats.monthlyCounts[index]
+                }));
+            }
+            chartMostConsultedActions(loginPerDay)
         },
         error: function (error) {
             Swal.fire({

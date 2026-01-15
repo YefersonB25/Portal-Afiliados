@@ -1293,7 +1293,7 @@
     <script src={{ asset('anychart-package-8.11.0/js/anychart-base.min.js') }}></script>
     <script src={{ asset('anychart-package-8.11.0/js/anychart-exports.min.js') }}></script>
     <script src={{ asset('anychart-package-8.11.0/js/anychart-ui.min.js') }}></script>
-    <script src={{ asset('views/js/statistics/statisticsHome.js') }}></script>
+    <script src="{{ asset('views/js/statistics/statisticsHome.js') }}?v={{ time() }}"></script>
 
     @if (Session::has('message'))
         <script>

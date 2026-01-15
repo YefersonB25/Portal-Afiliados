@@ -269,11 +269,18 @@ class ConsultarAfiliadoController extends Controller
             $response = OracleRestErp::procurementGetSuppliers($params);
             $res = $response->json();
             //? Validanos que nos traiga el proveedor
-            if ($res['count'] == 0) {
-                // return response()->json(['message' => 'No se encontro el proveedor'], 404);
+            if (!isset($res['count']) || $res['count'] == 0 || !isset($res['items']) || empty($res['items'])) {
+                Log::warning(__METHOD__ . '. No se encontró el proveedor para el documento: ' . $document);
                 session()->flash('message', 'No se encontro el proveedor');
                 return back();
             }
+            
+            if (!isset($res['items'][0]['SupplierNumber'])) {
+                Log::error(__METHOD__ . '. SupplierNumber no encontrado en la respuesta');
+                session()->flash('message', 'No se pudo obtener el número de proveedor');
+                return back();
+            }
+            
             $SupplierNumber =  (float)$res['items'][0]['SupplierNumber'];
 
             return response()->json(['success' => true, 'data' => $SupplierNumber]);
