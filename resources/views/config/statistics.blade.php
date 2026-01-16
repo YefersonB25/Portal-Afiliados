@@ -369,6 +369,11 @@
             const select = document.getElementById('yearSelect');
             const currentYear = new Date().getFullYear();
 
+            const placeholderOption = document.createElement('option');
+            placeholderOption.value = '';
+            placeholderOption.text = 'Seleccionar año';
+            select.appendChild(placeholderOption);
+
             for (let year = 2023; year <= currentYear; year++) {
                 const option = document.createElement('option');
                 option.value = year;
