@@ -126,6 +126,8 @@
 <!-- JQUERY JS -->
 <script src={{ asset('assets/js/jquery.min.js') }}></script>
 
+<script src={{ asset('views/js/invoice/helpers.js') }}></script>
+
 <!-- BOOTSTRAP JS -->
 <script src={{ asset('assets/plugins/bootstrap/js/popper.min.js') }}></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>

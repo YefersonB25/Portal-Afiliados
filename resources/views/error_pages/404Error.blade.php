@@ -15,9 +15,9 @@
             <div class="page-content error-page error2">
                 <div class="container text-center">
                     <div class="error-template">
-                        <h2 class="text-white mb-2">401<span class="fs-20">error</span></h2>
+                        <h2 class="text-white mb-2">404<span class="fs-20">error</span></h2>
                         <h5 class="error-details text-white">
-							Oops! Se ha producido un error, no se ha encontrado la página solicitada, ya que el afilidado no se encuentra registrado en ninguno de nuestros sistemas de gestion de facturas.
+							Oops! Se ha producido un error, no se ha encontrado la página solicitada, ya que el afiliado no se encuentra registrado en ninguno de nuestros sistemas de gestión de facturas.
                         </h5>
                         <div class="text-center">
                             <a href="{{ url('logout') }}" class="btn btn-primary mt-5 mb-5"

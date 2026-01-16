@@ -639,8 +639,32 @@ class AuthController extends Controller
     #[QueryParam("shipmentXid", "Transport invoice identifier", "int", required: true)]
     public function getShipmentDetalle(Request $request)
     {
-        $response = ReporteRestOtm::manifiestoSoapOtmReport($request->shipmentXid);
-        return response()->json(['success' => true, 'data' => $response]);
+        try {
+            $shipmentXid = $request->input('shipmentXid');
+            if (empty($shipmentXid)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Identificador del manifiesto requerido.'
+                ], 422);
+            }
+
+            $response = ReporteRestOtm::manifiestoSoapOtmReport($shipmentXid);
+
+            if (is_array($response) && array_key_exists('success', $response) && $response['success'] === false) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $response['message'] ?? 'No fue posible obtener el detalle del manifiesto.'
+                ], 502);
+            }
+
+            return response()->json(['success' => true, 'data' => $response]);
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'No fue posible obtener el detalle del manifiesto.'
+            ], 500);
+        }
     }
 
     #[QueryParam("Token", "Authorization", "string", required: true)]

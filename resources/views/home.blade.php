@@ -1430,7 +1430,9 @@
     // }
 
     if (typeof updateOpacity === 'function' && typeof intervalDuration !== 'undefined') {
-        setInterval(updateOpacity, intervalDuration);
+        if (typeof updateOpacity === 'function' && typeof intervalDuration !== 'undefined') {
+            setInterval(updateOpacity, intervalDuration);
+        }
     }
     </script>
     @can('/usuario.index')
@@ -2248,13 +2250,14 @@
             });
             // Fin
 
-
             // consulta y carga de visualizar de facturas individuales
             let obtener_data = function(tbody, table) {
                 $(tbody).on("click", "button.ver", function() {
                     // Activar el spiner de cargar al momento de visualizar la factura
                     // document.getElementById("global-loader3").style.display = "";
-                    LoaderView();
+                    InvoiceHelpers.setInvoiceModalLoading();
+                    swal.close();
+                    $('#exampleModalToggle').modal('show');
                     //Fin
 
                     // Cargamos los datos de la factura al modal
@@ -2272,20 +2275,20 @@
                             InvoiceId: invoice.InvoiceId
                         },
                         success: function(response) {
+                            InvoiceHelpers.removeInvoiceLoading();
                             let invoice = response.data.invoiceData[0]
-                            let lines = response.data.invoiceLines
-                            let fPago = response.data.invoiceFechaPago[0].PaymentDate
-                            let holds = response.data.holds[0]
+                            let lines = Array.isArray(response.data.invoiceLines) ? response.data.invoiceLines : []
+                            let fPago = response.data.invoiceFechaPago && response.data.invoiceFechaPago[0]
+                                ? response.data.invoiceFechaPago[0].PaymentDate
+                                : null
+                            const rawHolds = response.data.holds || [];
+                            let holds = [];
+                            if (Array.isArray(rawHolds)) {
+                                holds = Array.isArray(rawHolds[0]) ? rawHolds[0] : rawHolds;
+                            }
                             let div = document.getElementById('Bloqueos');
 
-                            const formatterDolar = new Intl.NumberFormat('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            })
-
-                            let InvoiceAmount = formatterDolar.format(invoice.InvoiceAmount);
+                            let InvoiceAmount = InvoiceHelpers.formatCurrency(invoice.InvoiceAmount, 'USD');
 
                             if (response.success == true) {
                                 $('#date').html('')
@@ -2294,24 +2297,24 @@
                                 <div class="col-md-4 align-self-center">
                                     <img src="{{ asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
                                     {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
-                                    <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
+                                    <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ InvoiceHelpers.safeText(invoice.Description) }.</p>                                                             </div><!--end col-->
                                 </div><!--end col-->
 
                                 <div class="col-md-4 ms-auto">
                                     <ul class="list-inline mb-0 contact-detail float-right">
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${invoice.Supplier} </h6>
+                                                <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${InvoiceHelpers.safeText(invoice.Supplier)} </h6>
                                             </div>
                                         </li>
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h6 class="mb-0"><b>@lang('locale.Invoice Number') : </b>${invoice.InvoiceNumber} </h6>
+                                                <h6 class="mb-0"><b>@lang('locale.Invoice Number') : </b>${InvoiceHelpers.safeText(invoice.InvoiceNumber)} </h6>
                                             </div>
                                         </li>
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h6 class="mb-0"><b>@lang('locale.Invoice Date') : </b>${invoice.InvoiceDate} </h6>
+                                                <h6 class="mb-0"><b>@lang('locale.Invoice Date') : </b>${InvoiceHelpers.formatDateValue(invoice.InvoiceDate)} </h6>
                                             </div>
                                         </li>
                                         <li class="list-inline-item">
@@ -2340,39 +2343,41 @@
 
                                 <tr>
                                     <td >
-                                        <p class="mb-0 text-muted">${ invoice.InvoiceType }</p>
+                                        <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(invoice.InvoiceType) }</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${ invoice.PaidStatus }</p>
+                                        <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(invoice.PaidStatus) }</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${ invoice.ValidationStatus }</p>
+                                        <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(invoice.ValidationStatus) }</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${ invoice.invoiceInstallments[0]['BankAccount'] }</p>
+                                        <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(invoice.invoiceInstallments && invoice.invoiceInstallments[0] ? invoice.invoiceInstallments[0]['BankAccount'] : null) }</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${ invoice.AccountingDate }</p>
+                                        <p class="mb-0 text-muted">${ InvoiceHelpers.formatDateValue(invoice.AccountingDate) }</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${ invoice.invoiceInstallments[0]['DueDate'] }</p>
+                                        <p class="mb-0 text-muted">${ InvoiceHelpers.formatDateValue(invoice.invoiceInstallments && invoice.invoiceInstallments[0] ? invoice.invoiceInstallments[0]['DueDate'] : null) }</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${ fPago }</p>
+                                        <p class="mb-0 text-muted">${ InvoiceHelpers.formatDateValue(fPago) }</p>
                                     </td>
                                 </tr><!--end tr-->
                             `
                                 $('#row1').append(plantillarow1)
 
                                 $('#row2').html('')
+                                let hasLines = false;
                                 lines.forEach(line => {
-                                    var LineAmount = formatterDolar.format(line.LineAmount);
+                                    var LineAmount = InvoiceHelpers.formatCurrency(line.LineAmount, 'USD');
                                     if (line.LineAmount != 0) {
+                                        hasLines = true;
                                         plantillarow2 = `
                                         <tr>
                                             <td >
-                                                <h5 class="mt-0 mb-1">${ line.LineType }</h5>
-                                                <p class="mb-0 text-muted">${ line.Description }.</p>
+                                                <h5 class="mt-0 mb-1">${ InvoiceHelpers.safeText(line.LineType) }</h5>
+                                                <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(line.Description) }.</p>
                                             </td>
                                             <td> ${ LineAmount }</td>
                                         </tr><!--end tr-->
@@ -2381,7 +2386,7 @@
                                         plantillarow2 = `
                                         <tr>
                                             <td >
-                                                <h5 class="mt-0 mb-1">${ line.LineType }</h5>
+                                                <h5 class="mt-0 mb-1">${ InvoiceHelpers.safeText(line.LineType) }</h5>
                                             </td>
                                             <td> ${ LineAmount }</td>
                                         </tr><!--end tr-->
@@ -2391,27 +2396,44 @@
                                     }
                                 });
 
-                                $('#row3').html('')
-                                holds.forEach(hold => {
-                                    const date = hold.HoldDate.split('T')[0];
+                                if (!hasLines) {
+                                    $('#row2').append(`
+                                        <tr>
+                                            <td colspan="2" class="text-center text-muted">Sin detalles de la factura.</td>
+                                        </tr>
+                                    `)
+                                }
 
-                                    plantillarow3 = `
+                                $('#row3').html('')
+                                if (Array.isArray(holds) && holds.length) {
+                                    holds.forEach(hold => {
+                                        const date = InvoiceHelpers.formatDateValue(hold.HoldDate);
+
+                                        plantillarow3 = `
                                     <tr>
-                                        <td >${ hold.HoldName }</td>
-                                        <td> ${ hold.HoldReason }</td>
-                                        <td> ${ hold.HeldBy }</td>
+                                        <td >${ InvoiceHelpers.safeText(hold.HoldName) }</td>
+                                        <td> ${ InvoiceHelpers.safeText(hold.HoldReason) }</td>
+                                        <td> ${ InvoiceHelpers.safeText(hold.HeldBy) }</td>
                                         <td> ${ date }</td>
                                     </tr><!--end tr-->
                                 `
-                                    div.style.display = ''
-                                    $('#row3').append(plantillarow3)
-                                });
+                                        div.style.display = ''
+                                        $('#row3').append(plantillarow3)
+                                    });
+                                } else {
+                                    $('#row3').append(`
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted">Sin bloqueos registrados.</td>
+                                        </tr>
+                                    `)
+                                }
 
                             }
                             swal.close();
                             $('#exampleModalToggle').modal('show');
                         },
                         error: function(error) {
+                            InvoiceHelpers.removeInvoiceLoading();
                             console.error(error);
                         }
                         //Fin
@@ -2427,7 +2449,9 @@
                 $(tbody).on("click", "button.verT", function() {
 
                     // Activar el spiner de cargar al momento de visualizar la factura
-                    LoaderView();
+                    InvoiceHelpers.setTransportModalLoading();
+                    swal.close();
+                    $('#exampleModalTransporte').modal('show');
                     //Fin
 
                     // Cargamos los datos de la factura al modal
@@ -2458,6 +2482,15 @@
                             }
 
                             let invoice = response.data
+                            if (!invoice || (typeof invoice === 'object' && Object.keys(invoice).length === 0)) {
+                                swal.close();
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Sin datos',
+                                    text: 'No se encontró información del manifiesto.',
+                                });
+                                return;
+                            }
 
                             const traducciones = {
                                 'TCL.ENROUTE_COMPLETED': 'COMPLETADO',
@@ -2487,8 +2520,8 @@
                                     <ul class="list-inline mb-0 contact-detail float-right" >
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h6 class="mb-0"><b>Fecha de creación del Manifiesto : ${invoice.MANIFEST_CREATE_DATE}</b> </h6>
-                                                <h6><b>Numero del Manifiesto:</b> # ${invoice.MANIFEST_ID}</h6>
+                                                <h6 class="mb-0"><b>Fecha de creación del Manifiesto : ${InvoiceHelpers.formatDateValue(invoice.MANIFEST_CREATE_DATE)}</b> </h6>
+                                                <h6><b>Numero del Manifiesto:</b> # ${InvoiceHelpers.safeText(invoice.MANIFEST_ID)}</h6>
                                             </div>
                                         </li>
                                     </ul>
@@ -2499,18 +2532,19 @@
                                 $('#row1_1').html('')
                                 plantillarow1 = `
                                 <tr>
-                                    <td>${ invoice.OWNER_ID }</td>
-                                    <td>${ invoice.OWNER_NAME }</td>
+                                    <td>${ InvoiceHelpers.safeText(invoice.OWNER_ID) }</td>
+                                    <td>${ InvoiceHelpers.safeText(invoice.OWNER_NAME) }</td>
                                 </tr>
                                 `
                                 $('#row1_1').append(plantillarow1)
 
                                 $('#row2_2').html('')
+                                const driverName = [invoice.DRIVER_FIRSTNAME, invoice.DRIVER_LASTNAME].filter(Boolean).join(' ');
                                 plantillarow2 = `
                                 <tr>
-                                    <td>${ invoice.DRIVER_FIRSTNAME + invoice.DRIVER_LASTNAME }</td>
-                                    <td>${ invoice.DRIVER_ID }</td>
-                                    <td>${ invoice.DRIVER_MOBILE_NUMBER }</td>
+                                    <td>${ InvoiceHelpers.safeText(driverName) }</td>
+                                    <td>${ InvoiceHelpers.safeText(invoice.DRIVER_ID) }</td>
+                                    <td>${ InvoiceHelpers.safeText(invoice.DRIVER_MOBILE_NUMBER) }</td>
                                 </tr>
                                 `
                                 $('#row2_2').append(plantillarow2)
@@ -2518,9 +2552,9 @@
                                 $('#row3_3').html('')
                                 plantillarow3 = `
                                 <tr>
-                                    <td>${ invoice.MANIFEST_OPERATION_TYPE }</td>
+                                    <td>${ InvoiceHelpers.safeText(invoice.MANIFEST_OPERATION_TYPE) }</td>
 
-                                    <td>${traducir(invoice.SHIPMENT_STATUS)}</td>
+                                    <td>${ InvoiceHelpers.safeText(traducir(invoice.SHIPMENT_STATUS)) }</td>
                                     <td> SIN ENTREGAR </td>
                                 </tr>
                                 `
@@ -2529,14 +2563,14 @@
                                 $('#row4_4').html('')
                                 plantillarow4 = `
                                 <tr>
-                                    <td> ${ invoice.ORIGIN_CITY } </td>
-                                    <td> ${ invoice.ORIGIN_PROVINCE } </td>
-                                    <td> ${ invoice.ORIGIN_ADDRESS } </td>
-                                    <td> ${ invoice.ROUTE_NAME } </td>
-                                    <td> ${ invoice.ROUTE_VIA } </td>
-                                    <td> ${ invoice.DESTINATION_CITY } </td>
-                                    <td> ${ invoice.DESTINATION_PROVINCE } </td>
-                                    <td> ${ invoice.DESTINATION_ADDRESS } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.ORIGIN_CITY) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.ORIGIN_PROVINCE) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.ORIGIN_ADDRESS) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.ROUTE_NAME) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.ROUTE_VIA) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.DESTINATION_CITY) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.DESTINATION_PROVINCE) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.DESTINATION_ADDRESS) } </td>
                                 </tr>
                                 `
                                 $('#row4_4').append(plantillarow4)
@@ -2544,11 +2578,11 @@
                                 $('#row5_5').html('')
                                 plantillarow5 = `
                                 <tr>
-                                    <td> ${ invoice.VEHICLE_LICENSE_PLATE } </td>
-                                    <td> ${  invoice.VEHICLE_MAKE } </td>
-                                    <td> ${ invoice.VEHICLE_COLOR } </td>
-                                    <td> ${ invoice.VEHICLE_MODEL } </td>
-                                    <td> ${ invoice.VEHICLE_TRAILER_NUMBER } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.VEHICLE_LICENSE_PLATE) } </td>
+                                    <td> ${  InvoiceHelpers.safeText(invoice.VEHICLE_MAKE) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.VEHICLE_COLOR) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.VEHICLE_MODEL) } </td>
+                                    <td> ${ InvoiceHelpers.safeText(invoice.VEHICLE_TRAILER_NUMBER) } </td>
                                 </tr>
                                 `
                                 $('#row5_5').append(plantillarow5)
@@ -2955,7 +2989,9 @@
 
                     // Activar el spiner de cargar al momento de visualizar la factura
                     // document.getElementById("global-loader3").style.display = "";
-                    LoaderView();
+                    InvoiceHelpers.setInvoiceModalLoading();
+                    swal.close();
+                    $('#exampleModalToggle').modal('show');
                     //Fin
 
                     // Cargamos los datos de la factura al modal
@@ -2975,19 +3011,19 @@
                         },
                         success: function(response) {
                             // console.log(response.data);
+                            InvoiceHelpers.removeInvoiceLoading();
                             let invoice = response.data.invoiceData[0]
-                            let lines = response.data.invoiceLines
-                            let fPago = response.data.invoiceFechaPago[0]['PaymentDate']
-                            let holds = response.data.holds[0]
+                            let lines = Array.isArray(response.data.invoiceLines) ? response.data.invoiceLines : []
+                            let fPago = response.data.invoiceFechaPago && response.data.invoiceFechaPago[0]
+                                ? response.data.invoiceFechaPago[0]['PaymentDate']
+                                : null
+                            const rawHolds = response.data.holds || [];
+                            let holds = [];
+                            if (Array.isArray(rawHolds)) {
+                                holds = Array.isArray(rawHolds[0]) ? rawHolds[0] : rawHolds;
+                            }
 
-                            const formatterDolar = new Intl.NumberFormat('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            })
-
-                            let InvoiceAmount = formatterDolar.format(invoice.InvoiceAmount);
+                            let InvoiceAmount = InvoiceHelpers.formatCurrency(invoice.InvoiceAmount, 'USD');
 
                             if (response.success == true) {
                                 $('#date').html('')
@@ -2995,23 +3031,23 @@
                                         <div class="col-md-4 align-self-center">
                                             <img src="{{ asset('assets/images/logos-tractocar/TCL_POS_CMYK-01.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
                                             {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
-                                            <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
+                                            <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ InvoiceHelpers.safeText(invoice.Description) }.</p>                                                             </div><!--end col-->
                                         </div><!--end col-->
                                         <div class="col-md-4 ms-auto">
                                             <ul class="list-inline mb-0 contact-detail float-right">
                                                 <li class="list-inline-item">
                                                     <div class="pl-3">
-                                                        <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${invoice.Supplier} </h6>
+                                                        <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${InvoiceHelpers.safeText(invoice.Supplier)} </h6>
                                                     </div>
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <div class="pl-3">
-                                                        <h6 class="mb-0"><b>@lang('locale.Invoice Number') : </b>${invoice.InvoiceNumber} </h6>
+                                                        <h6 class="mb-0"><b>@lang('locale.Invoice Number') : </b>${InvoiceHelpers.safeText(invoice.InvoiceNumber)} </h6>
                                                     </div>
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <div class="pl-3">
-                                                        <h6 class="mb-0"><b>@lang('locale.Invoice Date') : </b>${invoice.InvoiceDate} </h6>
+                                                        <h6 class="mb-0"><b>@lang('locale.Invoice Date') : </b>${InvoiceHelpers.formatDateValue(invoice.InvoiceDate)} </h6>
                                                     </div>
                                                 </li>
                                                 <li class="list-inline-item">
@@ -3040,42 +3076,44 @@
 
                                         <tr>
                                             <td >
-                                                <p class="mb-0 text-muted">${ invoice.InvoiceType }</p>
+                                                <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(invoice.InvoiceType) }</p>
                                             </td>
                                             <td >
-                                                <p class="mb-0 text-muted">${ invoice.PaidStatus }</p>
+                                                <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(invoice.PaidStatus) }</p>
                                             </td>
                                             <td >
-                                                <p class="mb-0 text-muted">${ invoice.PaymentMethod }</p>
+                                                <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(invoice.PaymentMethod) }</p>
                                             </td>
                                             <td >
-                                                <p class="mb-0 text-muted">${ invoice.ValidationStatus }</p>
+                                                <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(invoice.ValidationStatus) }</p>
                                             </td>
                                             <td >
-                                                <p class="mb-0 text-muted">${ invoice.invoiceInstallments[0]['BankAccount'] }</p>
+                                                <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(invoice.invoiceInstallments && invoice.invoiceInstallments[0] ? invoice.invoiceInstallments[0]['BankAccount'] : null) }</p>
                                             </td>
                                             <td >
-                                                <p class="mb-0 text-muted">${ invoice.AccountingDate }</p>
+                                                <p class="mb-0 text-muted">${ InvoiceHelpers.formatDateValue(invoice.AccountingDate) }</p>
                                             </td>
                                             <td >
-                                                <p class="mb-0 text-muted">${ invoice.invoiceInstallments[0]['DueDate'] }</p>
+                                                <p class="mb-0 text-muted">${ InvoiceHelpers.formatDateValue(invoice.invoiceInstallments && invoice.invoiceInstallments[0] ? invoice.invoiceInstallments[0]['DueDate'] : null) }</p>
                                             </td>
                                             <td >
-                                                <p class="mb-0 text-muted">${ fPago }</p>
+                                                <p class="mb-0 text-muted">${ InvoiceHelpers.formatDateValue(fPago) }</p>
                                             </td>
                                         </tr><!--end tr-->
                                     `
                                 $('#row1').append(plantillarow1)
 
                                 $('#row2').html('')
+                                let hasLines = false;
                                 lines.forEach(line => {
-                                    var LineAmount = formatterDolar.format(line.LineAmount);
+                                    var LineAmount = InvoiceHelpers.formatCurrency(line.LineAmount, 'USD');
                                     if (line.LineAmount != 0) {
+                                        hasLines = true;
                                         plantillarow2 = `
                                                 <tr>
                                                     <td >
-                                                        <h5 class="mt-0 mb-1">${ line.LineType }</h5>
-                                                        <p class="mb-0 text-muted">${ line.Description }.</p>
+                                                        <h5 class="mt-0 mb-1">${ InvoiceHelpers.safeText(line.LineType) }</h5>
+                                                        <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(line.Description) }.</p>
                                                     </td>
                                                     <td> ${ LineAmount }</td>
                                                 </tr><!--end tr-->
@@ -3084,20 +3122,36 @@
                                     }
                                 });
 
-                                $('#row3').html('')
-                                holds.forEach(hold => {
-                                    const date = hold.HoldDate.split('T')[0];
+                                if (!hasLines) {
+                                    $('#row2').append(`
+                                        <tr>
+                                            <td colspan="2" class="text-center text-muted">Sin detalles de la factura.</td>
+                                        </tr>
+                                    `)
+                                }
 
-                                    plantillarow3 = `
+                                $('#row3').html('')
+                                if (Array.isArray(holds) && holds.length) {
+                                    holds.forEach(hold => {
+                                        const date = InvoiceHelpers.formatDateValue(hold.HoldDate);
+
+                                        plantillarow3 = `
                                             <tr>
-                                                <td >${ hold.HoldName }</td>
-                                                <td> ${ hold.HoldReason }</td>
-                                                <td> ${ hold.HeldBy }</td>
+                                                <td >${ InvoiceHelpers.safeText(hold.HoldName) }</td>
+                                                <td> ${ InvoiceHelpers.safeText(hold.HoldReason) }</td>
+                                                <td> ${ InvoiceHelpers.safeText(hold.HeldBy) }</td>
                                                 <td> ${ date }</td>
                                             </tr><!--end tr-->
                                         `
-                                    $('#row3').append(plantillarow3)
-                                });
+                                        $('#row3').append(plantillarow3)
+                                    });
+                                } else {
+                                    $('#row3').append(`
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted">Sin bloqueos registrados.</td>
+                                        </tr>
+                                    `)
+                                }
 
                             }
                             swal.close();
@@ -3105,6 +3159,7 @@
                             $('#exampleModalToggle').modal('show');
                         },
                         error: function(error) {
+                            InvoiceHelpers.removeInvoiceLoading();
                             console.error(error);
                         }
                         //Fin

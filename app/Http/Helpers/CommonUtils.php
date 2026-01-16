@@ -11,7 +11,20 @@ class CommonUtils
     {
         $setting = DB::table('portal_settings')->where('name', $name)->first();
         if (!empty($setting)) {
-            return ($setting->isEncrypt == 1) ? Crypt::decryptString($setting->val) : $setting->val;
+            $value = $setting->val;
+            if ($setting->isEncrypt == 1) {
+                return Crypt::decryptString($value);
+            }
+
+            if (is_string($value) && $value !== '') {
+                try {
+                    return Crypt::decryptString($value);
+                } catch (\Throwable $th) {
+                    return $value;
+                }
+            }
+
+            return $value;
         }
         return "";
     }

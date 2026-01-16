@@ -10,6 +10,7 @@ use App\Http\Helpers\SendEmailRequestNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Pusher\Pusher;
 
 use function PHPSTORM_META\type;
@@ -48,29 +49,66 @@ class HomeController extends Controller
                 ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
                 ->where('relationship.user_assigne_id',  Auth::user()->id)
                 ->where('relationship.deleted_at', '=', null)
-                ->select('users.number_id')
+                ->select('users.number_id', 'users.document_type')
                 ->first();
 
             $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
+            $documentType = $user == null ? Auth::user()->document_type : $user->document_type;
 
-            $document = (Auth::user()->document_type == "NIT") ? RequestNit::getNit($number_id) : $number_id;
+            $document = ($documentType == "NIT") ? RequestNit::getNit($number_id) : $number_id;
 
-            $params = [
-                'q'        => "(TaxpayerId = '{$document}')",
-                'limit'    => '200',
-                'fields'   => 'SupplierNumber',
-                'onlyData' => 'true'
-            ];
+            $documentCandidates = [(string) $document];
+            $normalizedNumberId = preg_replace('/\D+/', '', (string) $number_id);
 
-            $response = OracleRestErp::procurementGetSuppliers($params);
+            if ($documentType == "NIT") {
+                if ($normalizedNumberId !== '') {
+                    $withDv = RequestNit::getNit($normalizedNumberId);
+                    if ($withDv && !in_array($withDv, $documentCandidates, true)) {
+                        $documentCandidates[] = $withDv;
+                    }
+                }
 
-            $res = $response->json();
-
-            if ($res['items'] == []) {
-                return redirect()->route('error404');
+                if (str_contains($document, '-')) {
+                    $withoutDv = str_replace('-', '', $document);
+                    if (!in_array($withoutDv, $documentCandidates, true)) {
+                        $documentCandidates[] = $withoutDv;
+                    }
+                }
             }
 
-            $SupplierNumber =  (int)$res['items'][0]['SupplierNumber'];
+            $SupplierNumber = null;
+            Log::info(__METHOD__ . '. TaxpayerId candidates', [
+                'user_id' => Auth::user()->id,
+                'document_type' => $documentType,
+                'number_id' => $number_id,
+                'candidates' => $documentCandidates,
+            ]);
+            foreach ($documentCandidates as $candidate) {
+                $params = [
+                    'q'        => "(TaxpayerId = '{$candidate}')",
+                    'limit'    => '200',
+                    'fields'   => 'SupplierNumber',
+                    'onlyData' => 'true'
+                ];
+
+                $response = OracleRestErp::procurementGetSuppliers($params);
+                $res = $response->json();
+
+                Log::info(__METHOD__ . '. Supplier lookup', [
+                    'candidate' => $candidate,
+                    'status' => $response->status(),
+                    'count' => is_array($res) && array_key_exists('count', $res) ? $res['count'] : null,
+                ]);
+
+                if (is_array($res) && !empty($res['items']) && isset($res['items'][0]['SupplierNumber'])) {
+                    $SupplierNumber = (int) $res['items'][0]['SupplierNumber'];
+                    break;
+                }
+            }
+
+            if ($SupplierNumber === null) {
+                return redirect()->route('error404');
+            }
 
             return view('home', [
                 'SupplierNumber' => $SupplierNumber,

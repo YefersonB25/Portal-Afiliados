@@ -8,9 +8,18 @@ class RequestNit
 {
     public static function getNit($document)
     {
+        $document = trim((string) $document);
+
+        if ($document === '') {
+            return $document;
+        }
+
+        if (str_contains($document, '-')) {
+            return $document;
+        }
 
         if (!is_numeric($document)) {
-            return false;
+            return $document;
         }
         $arr = array(
             1 => 3, 4 => 17, 7 => 29, 10 => 43, 13 => 59, 2 => 7, 5 => 19,

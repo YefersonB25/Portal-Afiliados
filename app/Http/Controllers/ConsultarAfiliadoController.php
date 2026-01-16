@@ -253,35 +253,55 @@ class ConsultarAfiliadoController extends Controller
                 ->leftJoin('users', 'users.id', '=', 'relationship.user_id')
                 ->where('relationship.user_assigne_id',  Auth::user()->id)
                 ->where('relationship.deleted_at', '=', null)
-                ->select('users.number_id')
+                ->select('users.number_id', 'users.document_type')
                 ->first();
 
             $number_id  = $user == null ? Auth::user()->number_id : $user->number_id;
+            $documentType = $user == null ? Auth::user()->document_type : $user->document_type;
 
-            $document = (Auth::user()->document_type == "NIT") ? RequestNit::getNit($number_id) : $number_id;
+            $document = ($documentType == "NIT") ? RequestNit::getNit($number_id) : $number_id;
 
-            $params = [
-                'q'        => "(TaxpayerId = '{$document}')",
-                'limit'    => '200',
-                'fields'   => 'SupplierNumber',
-                'onlyData' => 'true'
-            ];
-            $response = OracleRestErp::procurementGetSuppliers($params);
-            $res = $response->json();
-            //? Validanos que nos traiga el proveedor
-            if (!isset($res['count']) || $res['count'] == 0 || !isset($res['items']) || empty($res['items'])) {
-                Log::warning(__METHOD__ . '. No se encontró el proveedor para el documento: ' . $document);
-                session()->flash('message', 'No se encontro el proveedor');
-                return back();
-            }
-            
-            if (!isset($res['items'][0]['SupplierNumber'])) {
-                Log::error(__METHOD__ . '. SupplierNumber no encontrado en la respuesta');
-                session()->flash('message', 'No se pudo obtener el número de proveedor');
-                return back();
-            }
-            
-            $SupplierNumber =  (float)$res['items'][0]['SupplierNumber'];
+                $documentCandidates = [(string) $document];
+                $normalizedNumberId = preg_replace('/\D+/', '', (string) $number_id);
+
+                if ($documentType == "NIT") {
+                    if ($normalizedNumberId !== '') {
+                        $withDv = RequestNit::getNit($normalizedNumberId);
+                        if ($withDv && !in_array($withDv, $documentCandidates, true)) {
+                            $documentCandidates[] = $withDv;
+                        }
+                    }
+
+                    if (str_contains($document, '-')) {
+                        $withoutDv = str_replace('-', '', $document);
+                        if (!in_array($withoutDv, $documentCandidates, true)) {
+                            $documentCandidates[] = $withoutDv;
+                        }
+                    }
+                }
+
+                $SupplierNumber = null;
+                foreach ($documentCandidates as $candidate) {
+                    $params = [
+                        'q'        => "(TaxpayerId = '{$candidate}')",
+                        'limit'    => '200',
+                        'fields'   => 'SupplierNumber',
+                        'onlyData' => 'true'
+                    ];
+                    $response = OracleRestErp::procurementGetSuppliers($params);
+                    $res = $response->json();
+
+                    if (is_array($res) && !empty($res['items']) && isset($res['items'][0]['SupplierNumber'])) {
+                        $SupplierNumber = (float) $res['items'][0]['SupplierNumber'];
+                        break;
+                    }
+                }
+
+                if ($SupplierNumber === null) {
+                    Log::warning(__METHOD__ . '. No se encontró el proveedor para el documento: ' . $document);
+                    session()->flash('message', 'No se encontro el proveedor');
+                    return back();
+                }
 
             return response()->json(['success' => true, 'data' => $SupplierNumber]);
         } catch (\Throwable $th) {
@@ -396,6 +416,9 @@ class ConsultarAfiliadoController extends Controller
     {
         try {
             $userData = User::find($id);
+            if (!$userData) {
+                return redirect()->route('usuario.index')->with('error', 'Usuario no encontrado.');
+            }
             $document = ($userData->document_type == "NIT") ? RequestNit::getNit($userData->number_id) : $userData->number_id;
 
             $arrayResultLocal = [
@@ -416,10 +439,16 @@ class ConsultarAfiliadoController extends Controller
             $response = OracleRestOtm::getLocationsCustomers($document, $params);
             if ($response->successful()) {
                 $result          = $response->object();
+                if (!is_object($result)) {
+                    $result = null;
+                }
                 
                 $result_contacts = null;
-                if (isset($result->contacts->items) && is_array($result->contacts->items) && count($result->contacts->items) > 0) {
-                    $result_contacts = $result->contacts->items[0];
+                $contactItems = $result->contacts->items ?? null;
+                if (is_array($contactItems) && count($contactItems) > 0) {
+                    $result_contacts = $contactItems[0];
+                } elseif (is_object($contactItems)) {
+                    $result_contacts = $contactItems;
                 }
 
                 $arrayResultOtm = [
@@ -450,16 +479,16 @@ class ConsultarAfiliadoController extends Controller
 
             $responseErp = OracleRestErp::procurementGetSuppliers($paramsErp);
             $responseDataArrayErp = $responseErp->object();
-            if ($responseDataArrayErp->count > 0) {
-                $resultErp = $responseDataArrayErp->items[0];
-                $resultAddressErp = $resultErp->addresses[0];
+            if (is_object($responseDataArrayErp) && isset($responseDataArrayErp->count) && $responseDataArrayErp->count > 0) {
+                $resultErp = data_get($responseDataArrayErp, 'items.0');
+                $resultAddressErp = data_get($resultErp, 'addresses.0');
                 $arrayResultErp =
                     [
-                        'TaxpayerId'   => $resultErp->TaxpayerId,
-                        'fullName'     => $resultErp->Supplier,
-                        'isActive'     => $resultAddressErp->Status,
-                        'emailAddress' => $resultAddressErp->Email,
-                        'phone'        => $resultAddressErp->PhoneNumber
+                        'TaxpayerId'   => data_get($resultErp, 'TaxpayerId'),
+                        'fullName'     => data_get($resultErp, 'Supplier'),
+                        'isActive'     => data_get($resultAddressErp, 'Status'),
+                        'emailAddress' => data_get($resultAddressErp, 'Email'),
+                        'phone'        => data_get($resultAddressErp, 'PhoneNumber')
                     ];
             } else {
                 $arrayResultErp =
@@ -550,33 +579,34 @@ class ConsultarAfiliadoController extends Controller
 
     // protected function getShipmentStatusOtm($shipmentGid)
     // {
-    //     try {
-    //         $params = self::parametros();
-    //         $params['q'] = 'statusValueGid eq "TCL.MANIFIESTO_CUMPL_NO"';
-    //         $request = OracleRestOtm::getShipmentStatus($shipmentGid, $params);
-    //         return $request->object();
-    //     } catch (Exception $e) {
-    //         Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
-    //         return  $e->getMessage();
-    //     }
     // }
 
     public function getShipmentDetalle(Request $request)
     {
         try {
-            $response = ReporteRestOtm::manifiestoSoapOtmReport($request->invoice);
-            if (is_array($response) && isset($response['_error'])) {
+            $shipmentXid = $request->input('invoice');
+            if (empty($shipmentXid)) {
                 return response()->json([
                     'success' => false,
-                    'message' => $response['_error']
+                    'message' => 'Identificador del manifiesto requerido.'
+                ], 422);
+            }
+
+            $response = ReporteRestOtm::manifiestoSoapOtmReport($shipmentXid);
+
+            if (is_array($response) && array_key_exists('success', $response) && $response['success'] === false) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $response['message'] ?? 'No fue posible obtener el detalle del manifiesto.'
                 ], 502);
             }
+
             return response()->json(['success' => true, 'data' => $response]);
         } catch (Exception $e) {
             Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'No fue posible consultar el detalle del manifiesto'
+                'message' => 'No fue posible obtener el detalle del manifiesto.'
             ], 500);
         }
     }

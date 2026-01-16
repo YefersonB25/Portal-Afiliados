@@ -1,3 +1,69 @@
+const UI_BLOCK_SELECTORS = [
+    "#btnFiltr",
+    "#btnPrFiltr",
+    "#por-pagar",
+    "#pagadas-con-novedad",
+    "#Fullfacturas-all",
+    "#en-transporte"
+];
+
+let setLoadingState = function (isLoading) {
+    UI_BLOCK_SELECTORS.forEach((selector) => {
+        const $el = $(selector);
+        if ($el.length) {
+            $el.prop('disabled', isLoading);
+            $el.toggleClass('disabled', isLoading);
+        }
+    });
+}
+
+let showLoader = function (message) {
+    setLoadingState(true);
+    Swal.fire({
+        title: message,
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading()
+            const b = Swal.getHtmlContainer().querySelector('b')
+        },
+    })
+}
+
+let hideLoader = function () {
+    setLoadingState(false);
+    swal.close();
+}
+
+let toggleCardView = function (cardSelector) {
+    if (!cardSelector) return;
+    const sections = [
+        "#oculto-por-pagar",
+        "#oculto-pagadas-con-novedad",
+        "#FacturasGenerales",
+        "#facturas-en-transporte"
+    ];
+
+    sections.forEach((section) => {
+        if ($(section).length === 0) return;
+
+        if (section === cardSelector) {
+            if ($(section).css("display") == 'none')
+                $(section).show("slow");
+            else
+                $(section).hide("slow");
+        } else if ($(section).css("display") != 'none') {
+            $(section).hide("slow");
+        }
+    });
+}
+
+const formatDateValue = (value, fallback = 'N/D') => window.InvoiceHelpers.formatDateValue(value, fallback);
+const safeText = (value, fallback = 'N/D') => window.InvoiceHelpers.safeText(value, fallback);
+const formatCurrency = (value, currency = 'USD', locale = 'en-US') => window.InvoiceHelpers.formatCurrency(value, currency, locale);
+const setInvoiceModalLoading = () => window.InvoiceHelpers.setInvoiceModalLoading();
+const setTransportModalLoading = () => window.InvoiceHelpers.setTransportModalLoading();
+const removeInvoiceLoading = () => window.InvoiceHelpers.removeInvoiceLoading();
+
 // Funccion de consulta validaciones y carga de datos Datatable
 let LoadData = function (PaidStatus, CanceledFlag, TableName, InvoiceType, ValidationStatus, Card, startDate,
     endDate, InvoiceLimit) {
@@ -25,12 +91,11 @@ success: function(response) {
         tblColectionData.clear().draw();
         tblColectionData.rows.add(datos).draw();
 
-        validacionButton(Card);
+        toggleCardView(Card);
 
-        swal.close();
+        hideLoader();
     } else {
-        swal.close();
-        Loader();
+        hideLoader();
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -39,8 +104,7 @@ success: function(response) {
     }
 },
 error: function(error) {
-    swal.close();
-    Loader();
+    hideLoader();
     Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -53,7 +117,10 @@ error: function(error) {
 
 let LoadDataShipment = function (TableName, Card, ShipmentsLimit) {
     // let start = performance.now();
-    tblColectionData = $(TableName).DataTable({
+    if ($.fn.dataTable.isDataTable(TableName)) {
+        tblColectionData = $(TableName).DataTable();
+    } else {
+        tblColectionData = $(TableName).DataTable({
 
         retrieve: true,
 
@@ -126,7 +193,7 @@ let LoadDataShipment = function (TableName, Card, ShipmentsLimit) {
         columns: [{
             title: "Accion",
             data: null,
-            defaultContent: "<button type='button' class='verT btn btn-success' width='25px'><i class='fa fa-eye' aria-hidden='true'></i></button>"
+            defaultContent: "<button type='button' class='verT btn btn-success' width='25px' aria-label='Ver manifiesto' title='Ver manifiesto'><i class='fa fa-eye' aria-hidden='true'></i></button>"
         },
         {
             title: "ID",
@@ -175,15 +242,7 @@ let LoadDataShipment = function (TableName, Card, ShipmentsLimit) {
         {
             title: "Costo Total",
             data: function (d) {
-
-                const formatterDolar = new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'COP',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                })
-
-                return formatterDolar.format(d.totalActualCost['value']);
+                return formatCurrency(d.totalActualCost['value'], 'COP');
             }
         },
         {
@@ -219,73 +278,7 @@ let LoadDataShipment = function (TableName, Card, ShipmentsLimit) {
         },
         ],
 
-    });
-    let validacionButton = function (Card) {
-        if (Card == "#oculto-por-pagar") {
-
-            if ($("#oculto-por-pagar").css("display") == 'none')
-                $("#oculto-por-pagar").show("slow");
-            else
-                $("#oculto-por-pagar").hide("slow");
-
-            // validamos que no se muestren todas al tiempo
-            if ($("#oculto-pagadas-con-novedad").css("display") != 'none')
-                $("#oculto-pagadas-con-novedad").hide("slow");
-
-            if ($("#facturas-en-transporte").css("display") != 'none')
-                $("#facturas-en-transporte").hide("slow");
-
-            if ($("#FacturasGenerales").css("display") != 'none')
-                $("#FacturasGenerales").hide("slow");
-        } else if (Card == "#oculto-pagadas-con-novedad") {
-
-            if ($("#oculto-pagadas-con-novedad").css("display") == 'none')
-                $("#oculto-pagadas-con-novedad").show("slow");
-            else
-                $("#oculto-pagadas-con-novedad").hide("slow");
-
-            // validamos que no se muestren todas al tiempo
-            if ($("#oculto-por-pagar").css("display") != 'none')
-                $("#oculto-por-pagar").hide("slow");
-
-            if ($("#facturas-en-transporte").css("display") != 'none')
-                $("#facturas-en-transporte").hide("slow");
-
-            if ($("#FacturasGenerales").css("display") != 'none')
-                $("#FacturasGenerales").hide("slow");
-        } else if (Card == "#FacturasGenerales") {
-            if ($("#FacturasGenerales").css("display") == 'none')
-                $("#FacturasGenerales").show("slow");
-            else
-                $("#FacturasGenerales").hide("slow");
-
-            // validamos que no se muestren todas al tiempo
-            if ($("#oculto-pagadas-con-novedad").css("display") != 'none')
-                $("#oculto-pagadas-con-novedad").hide("slow");
-
-            if ($("#oculto-por-pagar").css("display") != 'none')
-                $("#oculto-por-pagar").hide("slow");
-
-            if ($("#facturas-en-transporte").css("display") != 'none')
-                $("#facturas-en-transporte").hide("slow");
-
-        } else if (Card == "#facturas-en-transporte") {
-            if ($("#facturas-en-transporte").css("display") == 'none')
-                $("#facturas-en-transporte").show("slow");
-            else
-                $("#facturas-en-transporte").hide("slow");
-
-            // validamos que no se muestren todas al tiempo
-            if ($("#oculto-pagadas-con-novedad").css("display") != 'none')
-                $("#oculto-pagadas-con-novedad").hide("slow");
-
-            if ($("#FacturasGenerales").css("display") != 'none')
-                $("#FacturasGenerales").hide("slow");
-
-            if ($("#oculto-por-pagar").css("display") != 'none')
-                $("#oculto-por-pagar").hide("slow");
-
-        }
+        });
     }
     $.ajax({
         type: 'POST',
@@ -303,12 +296,11 @@ success: function(response) {
         tblColectionData.clear().draw();
         tblColectionData.rows.add(datos).draw();
 
-        validacionButton(Card);
+        toggleCardView(Card);
 
-        swal.close();
+        hideLoader();
     } else {
-        swal.close();
-        Loader();
+        hideLoader();
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -318,8 +310,7 @@ success: function(response) {
     }
 },
 error: function(error) {
-    swal.close();
-    Loader();
+    hideLoader();
     Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -334,40 +325,19 @@ error: function(error) {
 
 // load inicial, se visualiza al seleccionar un opcion de las facturas
 let Loader = function () {
-    Swal.fire({
-        title: 'Cargando las 20 facturas mas recientes!',
-        timerProgressBar: true,
-        didOpen: () => {
-            Swal.showLoading()
-            const b = Swal.getHtmlContainer().querySelector('b')
-        },
-    })
+    showLoader('Cargando las 20 facturas mas recientes!');
 }
 // Fin
 
 // load inicial, se visualiza al seleccionar un opcion de las facturas
 let Load = function (cant) {
-    Swal.fire({
-        title: 'Cargando las ' + cant + ' facturas mas recientes!',
-        timerProgressBar: true,
-        didOpen: () => {
-            Swal.showLoading()
-            const b = Swal.getHtmlContainer().querySelector('b')
-        },
-    })
+    showLoader('Cargando las ' + cant + ' facturas mas recientes!');
 }
 // Fin
 
 // load secundario, se visualiza al momento pasas de una opcion de facturas a otro siempre y cuando se estan visualizando la tabla de facturas
 let LoaderView = function () {
-    Swal.fire({
-        title: 'Cargando visualización!',
-        timerProgressBar: true,
-        didOpen: () => {
-            Swal.showLoading()
-            const b = Swal.getHtmlContainer().querySelector('b')
-        },
-    })
+    showLoader('Cargando visualización!');
 }
 // Fin
 
@@ -512,7 +482,9 @@ let obtener_data = function (tbody, table) {
     $(tbody).on("click", "button.ver", function () {
         // Activar el spiner de cargar al momento de visualizar la factura
         // document.getElementById("global-loader3").style.display = "";
-        LoaderView();
+        setInvoiceModalLoading();
+        hideLoader();
+        $('#exampleModalToggle').modal('show');
         //Fin
 
         // Cargamos los datos de la factura al modal
@@ -532,42 +504,42 @@ let obtener_data = function (tbody, table) {
             },
             success: function (response) {
                 let invoice = response.data.invoiceData[0]
-                let lines = response.data.invoiceLines
-                let fPago = response.data.invoiceFechaPago[0].PaymentDate
-                let holds = response.data.holds[0]
+                let lines = Array.isArray(response.data.invoiceLines) ? response.data.invoiceLines : []
+                let fPago = response.data.invoiceFechaPago && response.data.invoiceFechaPago[0]
+                    ? response.data.invoiceFechaPago[0].PaymentDate
+                    : null
+                const rawHolds = response.data.holds || [];
+                let holds = [];
+                if (Array.isArray(rawHolds)) {
+                    holds = Array.isArray(rawHolds[0]) ? rawHolds[0] : rawHolds;
+                }
 
-                const formatterDolar = new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                })
-
-                let InvoiceAmount = formatterDolar.format(invoice.InvoiceAmount);
+                let InvoiceAmount = formatCurrency(invoice.InvoiceAmount, 'USD');
 
                 if (response.success == true) {
+                    removeInvoiceLoading();
                     $('#date').html('')
                     plantillaDate = `
                                 <div class="col-md-4 align-self-center">
                                     <img src="{{ asset('assets/images/logos-tractocar/negative-blue-small.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
                                     {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
-                                    <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${invoice.Description}.</p>                                                             </div><!--end col-->
+                                    <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${safeText(invoice.Description)}.</p>                                                             </div><!--end col-->
                                 </div><!--end col-->
                                 <div class="col-md-4 ms-auto">
                                     <ul class="list-inline mb-0 contact-detail float-right">
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${invoice.Supplier} </h6>
+                                                <h6 class="mb-0"><b>@lang('locale.Supplier') : </b>${safeText(invoice.Supplier)}</h6>
                                             </div>
                                         </li>
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h6 class="mb-0"><b>@lang('locale.Invoice Number') : </b>${invoice.InvoiceNumber} </h6>
+                                                <h6 class="mb-0"><b>@lang('locale.Invoice Number') : </b>${safeText(invoice.InvoiceNumber)} </h6>
                                             </div>
                                         </li>
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h6 class="mb-0"><b>@lang('locale.Invoice Date') : </b>${invoice.InvoiceDate} </h6>
+                                                <h6 class="mb-0"><b>@lang('locale.Invoice Date') : </b>${formatDateValue(invoice.InvoiceDate)} </h6>
                                             </div>
                                         </li>
                                         <li class="list-inline-item">
@@ -596,39 +568,41 @@ let obtener_data = function (tbody, table) {
 
                                 <tr>
                                     <td >
-                                        <p class="mb-0 text-muted">${invoice.InvoiceType}</p>
+                                        <p class="mb-0 text-muted">${safeText(invoice.InvoiceType)}</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${invoice.PaidStatus}</p>
+                                        <p class="mb-0 text-muted">${safeText(invoice.PaidStatus)}</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${invoice.ValidationStatus}</p>
+                                        <p class="mb-0 text-muted">${safeText(invoice.ValidationStatus)}</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${invoice.invoiceInstallments[0]['BankAccount']}</p>
+                                        <p class="mb-0 text-muted">${safeText(invoice.invoiceInstallments && invoice.invoiceInstallments[0] ? invoice.invoiceInstallments[0]['BankAccount'] : null)}</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${invoice.AccountingDate}</p>
+                                        <p class="mb-0 text-muted">${formatDateValue(invoice.AccountingDate)}</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${invoice.invoiceInstallments[0]['DueDate']}</p>
+                                        <p class="mb-0 text-muted">${formatDateValue(invoice.invoiceInstallments && invoice.invoiceInstallments[0] ? invoice.invoiceInstallments[0]['DueDate'] : null)}</p>
                                     </td>
                                     <td >
-                                        <p class="mb-0 text-muted">${fPago}</p>
+                                        <p class="mb-0 text-muted">${formatDateValue(fPago)}</p>
                                     </td>
                                 </tr><!--end tr-->
                             `
                     $('#row1').append(plantillarow1)
 
                     $('#row2').html('')
+                    let hasLines = false;
                     lines.forEach(line => {
-                        var LineAmount = formatterDolar.format(line.LineAmount);
+                        var LineAmount = formatCurrency(line.LineAmount, 'USD');
                         if (line.LineAmount != 0) {
+                            hasLines = true;
                             plantillarow2 = `
                                         <tr>
                                             <td >
-                                                <h5 class="mt-0 mb-1">${line.LineType}</h5>
-                                                <p class="mb-0 text-muted">${line.Description}.</p>
+                                                <h5 class="mt-0 mb-1">${safeText(line.LineType)}</h5>
+                                                <p class="mb-0 text-muted">${safeText(line.Description)}.</p>
                                             </td>
                                             <td> ${LineAmount}</td>
                                         </tr><!--end tr-->
@@ -637,26 +611,49 @@ let obtener_data = function (tbody, table) {
                         }
                     });
 
-                    $('#row3').html('')
-                    holds.forEach(hold => {
-                        const date = hold.HoldDate.split('T')[0];
-
-                        plantillarow3 = `
+                    if (!hasLines) {
+                        $('#row2').append(`
                                     <tr>
-                                        <td >${hold.HoldName}</td>
-                                        <td> ${hold.HoldReason}</td>
-                                        <td> ${hold.HeldBy}</td>
+                                        <td colspan="2" class="text-center text-muted">Sin detalles de la factura.</td>
+                                    </tr>
+                                `)
+                    }
+
+                    $('#row3').html('')
+                    if (Array.isArray(holds) && holds.length) {
+                        holds.forEach(hold => {
+                            const date = formatDateValue(hold.HoldDate);
+
+                            plantillarow3 = `
+                                    <tr>
+                                        <td >${safeText(hold.HoldName)}</td>
+                                        <td> ${safeText(hold.HoldReason)}</td>
+                                        <td> ${safeText(hold.HeldBy)}</td>
                                         <td> ${date}</td>
                                     </tr><!--end tr-->
                                 `
-                        $('#row3').append(plantillarow3)
-                    });
+                            $('#row3').append(plantillarow3)
+                        });
+                    } else {
+                        $('#row3').append(`
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">Sin bloqueos registrados.</td>
+                                    </tr>
+                                `)
+                    }
 
                 }
-                swal.close();
+                hideLoader();
                 $('#exampleModalToggle').modal('show');
             },
             error: function (error) {
+                removeInvoiceLoading();
+                hideLoader();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: (error.responseJSON && error.responseJSON.message) ? error.responseJSON.message : 'No fue posible cargar el detalle de la factura',
+                });
                 console.error(error);
             }
             //Fin
@@ -672,7 +669,9 @@ let obtener_dataTransporte = function (tbody, table) {
     $(tbody).on("click", "button.verT", function () {
 
         // Activar el spiner de cargar al momento de visualizar la factura
-        LoaderView();
+        setTransportModalLoading();
+        hideLoader();
+        $('#exampleModalTransporte').modal('show');
         //Fin
 
         // Cargamos los datos de la factura al modal
@@ -688,7 +687,7 @@ let obtener_dataTransporte = function (tbody, table) {
             },
             success: function (response) {
                 if (response.success !== true) {
-                    swal.close();
+                    hideLoader();
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -696,100 +695,97 @@ let obtener_dataTransporte = function (tbody, table) {
                     });
                     return;
                 }
-                let invoice = response.data
-                // console.log(invoice);
-                if (response.success == true) {
-                    $('#date_1').html('')
-                    plantillaDate = `
-                                <div class="col-md-4 align-self-center">
-                                    <img src="{{ asset('assets/images/logos-tractocar/negative-blue-small.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
-                                    {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
-                                </div><!--end col-->
-                                </div><!--end col-->
-                                <div class="col-md-4 ms-auto">
-                                    <ul class="list-inline mb-0 contact-detail float-right" >
-                                        <li class="list-inline-item">
-                                            <div class="pl-3">
-                                                <h6 class="mb-0"><b>Fecha de creación del Manifiesto : ${invoice.MANIFEST_CREATE_DATE}</b> </h6>
-                                                <h6><b>Numero del Manifiesto:</b> # ${invoice.MANIFEST_ID}</h6>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div><!--end col-->
-                            `
-                    $('#date_1').append(plantillaDate)
+                const data = response.data || {};
+                const detalle = Array.isArray(data) ? data[0] : data;
 
-                    $('#row1_1').html('')
-                    plantillarow1 = `
-                                <div class="col-md-4">
-                                    <div class="float-left">
-                                        <address class="font-13">
-                                            <strong class="font-14">Informacion del Propietario:</strong><br>
-                                            Nombre : ${invoice.OWNER_NAME}<br>
-                                            ID : ${invoice.OWNER_ID}<br>
-                                            Correo : ${invoice.OWNER_EMAIL}<br>
-                                            Telefono : ${invoice.OWNER_PHONE_NUMBER}<br>
-                                        </address>
-
-                                        <address class="font-13">
-                                            <strong class="font-14">Informacion del Conductor:</strong><br>
-                                            Nombre : ${invoice.DRIVER_FIRSTNAME + invoice.DRIVER_LASTNAME}<br>
-                                            ID : ${invoice.DRIVER_ID}<br>
-                                            Correo : ${invoice.TRANSPORTER_EMAIL}<br>
-                                            Telefono : ${invoice.DRIVER_MOBILE_NUMBER}<br>
-                                        </address>
-
-                                        <div class="float-left">
-                                            <h6><b>Tipo de Operacion :</b>
-                                                ${invoice.MANIFEST_OPERATION_TYPE
-                        }
-                                            </h6>
-                                            <h6><b>Estado del Envío : </b>
-                                                ${invoice.SHIPMENT_STATUS
-                        }
-                                            </h6>
-                                            <h6> <b>Estado Anticipo : </b>
-                                                MANIFIESTO_CUMPLIDO_NUEVO
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </div><!--end col-->
-                                <div class="col-md-2">
-
-                                </div><!--end col-->
-
-                                <div class="col-md-6">
-                                    <div class="text-left bg-light p-3 mb-3">
-                                        <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
-                                        <h6 class="font-13">Ciudad Origen : ${invoice.ORIGIN_CITY}</h6>
-                                        <h6 class="font-13">Provincia : ${invoice.ORIGIN_PROVINCE}</h6>
-                                        <h6 class="font-13">Direccion Origen : ${invoice.ORIGIN_ADDRESS}</h6>
-                                        <h6 class="font-13">Ruta : ${invoice.ROUTE_NAME}</h6>
-                                        <h6 class="font-13">Via : ${invoice.ROUTE_VIA}</h6>
-                                        <h6 class="font-13">Ciudad Destino : ${invoice.DESTINATION_CITY}</h6>
-                                        <h6 class="font-13">Provincia : ${invoice.DESTINATION_PROVINCE}</h6>
-                                        <h6 class="font-13">Direccion Destino : ${invoice.DESTINATION_ADDRESS}</h6>
-
-                                    </div>
-
-                                    <div class="text-left bg-light p-3 mb-3">
-                                        <h5 class="bg-success mt-0 p-2 text-white d-sm-inline-block">Información del Vehículo</h5>
-                                        <h6 class="font-13">Matrícula : ${invoice.VEHICLE_LICENSE_PLATE}</h6>
-                                        <h6 class="font-13">Marca : ${invoice.VEHICLE_MAKE}</h6>
-                                        <h6 class="font-13">Color : ${invoice.VEHICLE_COLOR}</h6>
-                                        <h6 class="font-13">Modelo : ${invoice.VEHICLE_MODEL}</h6>
-                                        <h6 class="font-13"> Numero Trailer : ${invoice.VEHICLE_TRAILER_NUMBER}</h6>
-                                    </div>
-                                </div><!--end col-->
-                            `
-                    $('#row1_1').append(plantillarow1)
-
+                if (!detalle || (typeof detalle === 'object' && Object.keys(detalle).length === 0)) {
+                    hideLoader();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Sin datos',
+                        text: 'No se encontró información del manifiesto.',
+                    });
+                    return;
                 }
-                swal.close();
+
+                const safe = (value, fallback = 'No definido') => {
+                    if (value === null || typeof value === 'undefined' || value === '') {
+                        return fallback;
+                    }
+                    return value;
+                };
+
+                const driverName = [detalle.DRIVER_FIRSTNAME, detalle.DRIVER_LASTNAME].filter(Boolean).join(' ');
+                const advanceStatus = detalle.ADVANCE_STATUS || detalle.ADVANCE_STATUS_GID || 'MANIFIESTO_CUMPLIDO_NUEVO';
+
+                $('#date_1').html('');
+                plantillaDate = `
+                            <div class="col-md-4 align-self-center">
+                                <img src="{{ asset('assets/images/logos-tractocar/negative-blue-small.png') }}" alt="logo-small" class="logo-sm mr-2" height="56">
+                            </div><!--end col-->
+                            <div class="col-md-4 ms-auto">
+                                <ul class="list-inline mb-0 contact-detail float-right">
+                                    <li class="list-inline-item">
+                                        <div class="pl-3">
+                                            <h6 class="mb-0"><b>Fecha de creación del Manifiesto:</b> ${formatDateValue(detalle.MANIFEST_CREATE_DATE)}</h6>
+                                            <h6><b>Numero del Manifiesto:</b> # ${safe(detalle.MANIFEST_ID, 'N/D')}</h6>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!--end col-->
+                        `;
+                $('#date_1').append(plantillaDate);
+
+                $('#row1_1').html(`
+                        <tr>
+                            <td>${safe(detalle.OWNER_ID, 'N/D')}</td>
+                            <td>${safe(detalle.OWNER_NAME, 'N/D')}</td>
+                        </tr>
+                    `);
+
+                $('#row2_2').html(`
+                        <tr>
+                            <td>${safe(detalle.DRIVER_ID, 'N/D')}</td>
+                            <td>${safe(driverName, 'N/D')}</td>
+                            <td>${safe(detalle.DRIVER_MOBILE_NUMBER, 'N/D')}</td>
+                        </tr>
+                    `);
+
+                $('#row3_3').html(`
+                        <tr>
+                            <td>${safe(detalle.MANIFEST_OPERATION_TYPE, 'N/D')}</td>
+                            <td>${safe(detalle.SHIPMENT_STATUS, 'N/D')}</td>
+                            <td>${safe(advanceStatus, 'N/D')}</td>
+                        </tr>
+                    `);
+
+                $('#row4_4').html(`
+                        <tr>
+                            <td>${safe(detalle.ORIGIN_CITY, 'N/D')}</td>
+                            <td>${safe(detalle.ORIGIN_PROVINCE, 'N/D')}</td>
+                            <td>${safe(detalle.ORIGIN_ADDRESS, 'N/D')}</td>
+                            <td>${safe(detalle.ROUTE_NAME, 'N/D')}</td>
+                            <td>${safe(detalle.ROUTE_VIA, 'N/D')}</td>
+                            <td>${safe(detalle.DESTINATION_CITY, 'N/D')}</td>
+                            <td>${safe(detalle.DESTINATION_PROVINCE, 'N/D')}</td>
+                            <td>${safe(detalle.DESTINATION_ADDRESS, 'N/D')}</td>
+                        </tr>
+                    `);
+
+                $('#row5_5').html(`
+                        <tr>
+                            <td>${safe(detalle.VEHICLE_LICENSE_PLATE, 'N/D')}</td>
+                            <td>${safe(detalle.VEHICLE_MAKE, 'N/D')}</td>
+                            <td>${safe(detalle.VEHICLE_COLOR, 'N/D')}</td>
+                            <td>${safe(detalle.VEHICLE_MODEL, 'N/D')}</td>
+                            <td>${safe(detalle.VEHICLE_TRAILER_NUMBER, 'N/D')}</td>
+                        </tr>
+                    `);
+                hideLoader();
                 $('#exampleModalTransporte').modal('show');
             },
             error: function (error) {
-                swal.close();
+                hideLoader();
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',

@@ -932,7 +932,9 @@
             $(tbody).on("click", "button.ver", function(){
                 // Activar el spiner de cargar al momento de visualizar la factura
                 // document.getElementById("global-loader3").style.display = "";
-                LoaderView();
+                InvoiceHelpers.setInvoiceModalLoading();
+                swal.close();
+                $('#exampleModalToggle').modal('show');
                 //Fin
 
                 // Cargamos los datos de la factura al modal
@@ -949,6 +951,7 @@
                         invoice: invoice
                     },
                     success : function(response) {
+                        InvoiceHelpers.removeInvoiceLoading();
                         let invoice = response.data.invoiceData
                         let lines = response.data.invoiceLines
 
@@ -959,19 +962,19 @@
                                 <div class="col-md-4 align-self-center">
                                     <img src="{{asset('assets/images/logos-tractocar/negative-blue-small.png')}}" alt="logo-small" class="logo-sm mr-2" height="56">
                                     {{-- <img src="{{asset('assets/images/logos-tractocar/negative-blue-tiny.png')}}" alt="logo-large" class="logo-lg logo-light" height="16"> --}}
-                                    <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ invoice.Description }.</p>                                                             </div><!--end col-->
+                                    <p class="mt-2 mb-0 text-muted">@lang('locale.Description') : ${ InvoiceHelpers.safeText(invoice.Description) }.</p>                                                             </div><!--end col-->
                                 </div><!--end col-->
                                 <div class="col-md-4 ms-auto">
                                     <ul class="list-inline mb-0 contact-detail float-right" >
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h6 class="mb-0"><b>@lang('locale.Invoice Date') : ${invoice.InvoiceDate}</b> </h6>
-                                                <h6><b>@lang('locale.Invoice Number'):</b> # ${invoice.InvoiceId}</h6>
+                                                <h6 class="mb-0"><b>@lang('locale.Invoice Date') : ${InvoiceHelpers.formatDateValue(invoice.InvoiceDate)}</b> </h6>
+                                                <h6><b>@lang('locale.Invoice Number'):</b> # ${InvoiceHelpers.safeText(invoice.InvoiceId)}</h6>
                                             </div>
                                         </li>
                                         <li class="list-inline-item">
                                             <div class="pl-3">
-                                                <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> $${invoice.InvoiceAmount}</h5>
+                                                <h5><i class="mdi mdi-cash-multiple"></i><b> :</b> ${InvoiceHelpers.formatCurrency(invoice.InvoiceAmount, 'USD')}</h5>
                                             </div>
                                         </li>
                                     </ul>
@@ -996,13 +999,13 @@
                                     <div class="float-left">
                                         <address class="font-13">
                                             <strong class="font-14"> @lang('locale.Supplier') :</strong><br>
-                                            ${ invoice.Supplier }<br>
-                                            ${ invoice.SupplierSite }<br>
+                                            ${ InvoiceHelpers.safeText(invoice.Supplier) }<br>
+                                            ${ InvoiceHelpers.safeText(invoice.SupplierSite) }<br>
                                         </address>
                                         <address class="font-13">
                                             <strong class="font-14">@lang('locale.Third-party sites'):</strong><br>
-                                            ${ invoice.Party }<br>
-                                            ${ invoice.PartySite }<br>
+                                            ${ InvoiceHelpers.safeText(invoice.Party) }<br>
+                                            ${ InvoiceHelpers.safeText(invoice.PartySite) }<br>
                                         </address>
                                     </div>
                                 </div><!--end col-->
@@ -1011,16 +1014,16 @@
                                     <div class="float-left">
                                         <h6><b>@lang('locale.Invoice Type') :</b>
                                             ${
-                                                invoice.InvoiceType
+                                                InvoiceHelpers.safeText(invoice.InvoiceType)
                                             }
                                         </h6>
                                         <h6 class="mb-0"><b>@lang('locale.Payment status') : </b>
-                                            ${  invoice.PaidStatus
+                                            ${  InvoiceHelpers.safeText(invoice.PaidStatus)
                                             }
                                         </h6>
                                         <h6><b>@lang('locale.Validation Status') :</b>
                                             ${
-                                                invoice.ValidationStatus
+                                                InvoiceHelpers.safeText(invoice.ValidationStatus)
                                             }
                                         </h6>
                                     </div>
@@ -1029,37 +1032,48 @@
                                 <div class="col-md-4">
                                     <div class="text-left bg-light p-3 mb-3">
                                         <h5 class="bg-info mt-0 p-2 text-white d-sm-inline-block">@lang('locale.Additional Information')</h5>
-                                        <h6 class="font-13">@lang('locale.Accounting Date') : ${ invoice.AccountingDate }</h6>
+                                        <h6 class="font-13">@lang('locale.Accounting Date') : ${ InvoiceHelpers.formatDateValue(invoice.AccountingDate) }</h6>
                                         <h6 class="font-13">@lang('locale.Document Category') :
                                             ${
                                                 invoice.DocumentCategory = "Prepayment Invoices" ? 'Facturas de anticipo' : 'Facturas Estandar'
                                             }
                                             </h6>
-                                        <h6 class="font-13">@lang('locale.Document Sequence') : ${ invoice.DocumentSequence }</h6>
+                                        <h6 class="font-13">@lang('locale.Document Sequence') : ${ InvoiceHelpers.safeText(invoice.DocumentSequence) }</h6>
                                     </div>
                                 </div><!--end col-->
                             `
                             $('#row1').append(plantillarow1)
 
                             $('#row2').html('')
+                            let hasLines = false;
                             lines.forEach(line => {
+                                hasLines = true;
                                 plantillarow2 = `
                                     <tr>
                                         <td >
-                                            <h5 class="mt-0 mb-1">${ line.LineType }</h5>
-                                            <p class="mb-0 text-muted">${ line.Description }.</p>
+                                            <h5 class="mt-0 mb-1">${ InvoiceHelpers.safeText(line.LineType) }</h5>
+                                            <p class="mb-0 text-muted">${ InvoiceHelpers.safeText(line.Description) }.</p>
                                         </td>
-                                        <td>$ ${ line.LineAmount }</td>
+                                        <td>${ InvoiceHelpers.formatCurrency(line.LineAmount, 'USD') }</td>
                                     </tr><!--end tr-->
                                 `
                                 $('#row2').append(plantillarow2)
                             });
+
+                            if (!hasLines) {
+                                $('#row2').append(`
+                                    <tr>
+                                        <td colspan="2" class="text-center text-muted">Sin detalles de la factura.</td>
+                                    </tr>
+                                `)
+                            }
 
                         }
                         swal.close();
                         $('#exampleModalToggle').modal('show');
                     },
                     error: function(error){
+                    InvoiceHelpers.removeInvoiceLoading();
                     console.error(error);
                 }
                 //Fin

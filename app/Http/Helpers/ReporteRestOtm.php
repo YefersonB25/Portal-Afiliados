@@ -60,8 +60,16 @@ class ReporteRestOtm
     public static function manifiestoSoapOtmReport($shipmentXid = null)
     {
         try {
+            if (empty($shipmentXid)) {
+                return ['success' => false, 'message' => 'Identificador del manifiesto requerido.'];
+            }
+
             $otm  = self::getDataAccess();
-            $server        = $otm['server'];
+            $server = $otm['server'] ?? null;
+            if (empty($server)) {
+                return ['success' => false, 'message' => 'Servidor OTM no configurado.'];
+            }
+
             $client = new SoapClient(
                 $server,
                 array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1, 'encoding' => 'UTF-8')
@@ -73,22 +81,31 @@ class ReporteRestOtm
             $par = ReporteRestOtm::getReporteParams($params, $paths);
 
             $response = $client->__soapCall('runReport', array($par));
-            $xmlString = $response->runReportReturn->reportBytes ?? null;
-            if (!$xmlString) {
-                Log::error(__METHOD__ . '. Empty reportBytes for shipment: ' . $shipmentXid);
-                return ['_error' => 'Reporte vacío o no disponible'];
+            $xmlString = $response->runReportReturn->reportBytes ?? '';
+
+            if (empty($xmlString)) {
+                return ['success' => false, 'message' => 'Respuesta vacía del reporte.'];
             }
+
+            $trimmedXml = ltrim($xmlString);
+            if (strpos($trimmedXml, '<') !== 0) {
+                $decoded = base64_decode($xmlString, true);
+                if ($decoded !== false) {
+                    $xmlString = $decoded;
+                }
+            }
+
             $xml = simplexml_load_string($xmlString);
             if ($xml === false) {
-                Log::error(__METHOD__ . '. Invalid XML response for shipment: ' . $shipmentXid);
-                return ['_error' => 'Respuesta XML inválida'];
+                return ['success' => false, 'message' => 'No fue posible leer la respuesta del reporte.'];
             }
+
             $reportData = json_decode(json_encode($xml), true);
             $data = Arr::get($reportData, 'DATA', []);
             return $data;
         } catch (Exception $e) {
-            Log::error(__METHOD__ . '. SOAP error: ' . $e->getMessage());
-            return ['_error' => 'No fue posible consultar el reporte'];
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return ['success' => false, 'message' => 'Error al consultar el manifiesto.'];
         }
     }
 }

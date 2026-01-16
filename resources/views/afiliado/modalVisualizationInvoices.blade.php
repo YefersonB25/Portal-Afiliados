@@ -1,13 +1,13 @@
 <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 mx-auto">
                     <div class="modal-content">
                         <div class="card">
                             <div class="card-body invoice-head">
-                                <div class="row" id="date">
+                                <div class="row gy-2 align-items-center" id="date">
 
                                 </div>
                                 <!--end row-->
@@ -20,8 +20,8 @@
                                         </h5> --}}
                                         <h5 class="bg-info col-lg-12 mt-0 p-2 text-center text-white d-sm-inline-block">
                                             Resumen</h5>
-                                        <div class="table-responsive project-invoice">
-                                            <table class="table table-bordered mb-0">
+                                        <div class="table-responsive project-invoice" style="max-height: 320px; overflow-y: auto;">
+                                            <table class="table table-bordered table-sm align-middle mb-0">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>Tipo de factura</th>
@@ -56,7 +56,7 @@
                                             Descripción </h5>
 
                                         <div class="table-responsive project-invoice">
-                                            <table class="table table-bordered mb-0">
+                                            <table class="table table-bordered table-sm align-middle mb-0">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>@lang('locale.Description')</th>
@@ -84,7 +84,7 @@
                                             Bloqueos </h5>
 
                                         <div class="table-responsive project-invoice">
-                                            <table class="table table-bordered mb-0">
+                                            <table class="table table-bordered table-sm align-middle mb-0">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>Nombre Retencion</th>

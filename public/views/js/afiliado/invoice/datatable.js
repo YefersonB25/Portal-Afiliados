@@ -1,4 +1,9 @@
 let LoadData = function (TableName) {
+    if ($.fn.dataTable.isDataTable(TableName)) {
+        tblColectionData = $(TableName).DataTable();
+        return;
+    }
+
     tblColectionData = $(TableName).DataTable({
 
         retrieve: true,
@@ -84,6 +89,9 @@ let LoadData = function (TableName) {
             title: "Valor Factura",
             data: function (d) {
 
+                if (window.InvoiceHelpers) {
+                    return window.InvoiceHelpers.formatCurrency(d.InvoiceAmount, 'USD');
+                }
                 const formatterDolar = new Intl.NumberFormat('en-US', {
                     style: 'currency',
                     currency: 'USD',
@@ -98,7 +106,12 @@ let LoadData = function (TableName) {
         {
             title: "Saldo",
             data: function (d) {
-
+                const unpaidAmount = d.invoiceInstallments && d.invoiceInstallments[0]
+                    ? d.invoiceInstallments[0]["UnpaidAmount"]
+                    : null;
+                if (window.InvoiceHelpers) {
+                    return window.InvoiceHelpers.formatCurrency(unpaidAmount, 'USD');
+                }
                 const formatterDolar = new Intl.NumberFormat('en-US', {
                     style: 'currency',
                     currency: 'USD',
@@ -106,13 +119,16 @@ let LoadData = function (TableName) {
                     maximumFractionDigits: 2
                 })
 
-                return formatterDolar.format(d.invoiceInstallments[0]["UnpaidAmount"]);
+                return formatterDolar.format(unpaidAmount || 0);
             }
         },
 
         {
             title: "Monto Pagado",
             data: function (d) {
+                if (window.InvoiceHelpers) {
+                    return window.InvoiceHelpers.formatCurrency(d.AmountPaid, 'USD');
+                }
                 const formatterDolar = new Intl.NumberFormat('en-US', {
                     style: 'currency',
                     currency: 'USD',
@@ -141,7 +157,10 @@ let LoadData = function (TableName) {
                 // `getFullYear()` returns the full year
                 var year = today.getFullYear();
 
-                var date1 = new Date(d.invoiceInstallments[0]["DueDate"]);
+                const dueDateValue = d.invoiceInstallments && d.invoiceInstallments[0]
+                    ? d.invoiceInstallments[0]["DueDate"]
+                    : null;
+                var date1 = new Date(dueDateValue);
                 var date2 = new Date(`${year}-${month}-${day}`);
                 var dateDefined = date1 - date2;
                 var dias = dateDefined / (1000 * 60 * 60 * 24);
@@ -158,7 +177,12 @@ let LoadData = function (TableName) {
 
         {
             title: "Fecha Factura",
-            data: "InvoiceDate"
+            data: function (d) {
+                if (window.InvoiceHelpers) {
+                    return window.InvoiceHelpers.formatDateValue(d.InvoiceDate);
+                }
+                return d.InvoiceDate;
+            }
         },
 
         ],
