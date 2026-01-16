@@ -329,7 +329,7 @@
 
 @section('scripts')
 
-<script src="http://momentjs.com/downloads/moment.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
 <script>
     // Funccion de consulta validaciones y carga de datos Datatable
         let LoadData = function(PaidStatus, FlagStatus, TableName, InvoiceType,ValidationStatus, Card, startDate, endDate ) {

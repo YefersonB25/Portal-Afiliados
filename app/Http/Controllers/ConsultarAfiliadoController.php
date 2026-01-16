@@ -563,7 +563,21 @@ class ConsultarAfiliadoController extends Controller
 
     public function getShipmentDetalle(Request $request)
     {
-        $response = ReporteRestOtm::manifiestoSoapOtmReport($request->invoice);
-        return response()->json(['success' => true, 'data' => $response]);
+        try {
+            $response = ReporteRestOtm::manifiestoSoapOtmReport($request->invoice);
+            if (is_array($response) && isset($response['_error'])) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $response['_error']
+                ], 502);
+            }
+            return response()->json(['success' => true, 'data' => $response]);
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. General error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'No fue posible consultar el detalle del manifiesto'
+            ], 500);
+        }
     }
 }

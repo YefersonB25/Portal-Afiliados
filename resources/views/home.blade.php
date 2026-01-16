@@ -1288,7 +1288,7 @@
     </body>
 @endsection
 @section('scripts')
-    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src={{ asset('anychart-package-8.11.0/js/anychart-bundle.min.js') }}></script>
     <script src={{ asset('anychart-package-8.11.0/js/anychart-base.min.js') }}></script>
     <script src={{ asset('anychart-package-8.11.0/js/anychart-exports.min.js') }}></script>
@@ -1429,7 +1429,9 @@
     //     image.style.opacity = opacity;
     // }
 
-    setInterval(updateOpacity, intervalDuration);
+    if (typeof updateOpacity === 'function' && typeof intervalDuration !== 'undefined') {
+        setInterval(updateOpacity, intervalDuration);
+    }
     </script>
     @can('/usuario.index')
         <script>
@@ -2445,6 +2447,16 @@
                             invoice: invoice.shipmentXid
                         },
                         success: function(response) {
+                            if (response.success !== true) {
+                                swal.close();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: response.message || 'No fue posible cargar el detalle del manifiesto',
+                                });
+                                return;
+                            }
+
                             let invoice = response.data
 
                             const traducciones = {
@@ -2546,6 +2558,12 @@
                             $('#exampleModalTransporte').modal('show');
                         },
                         error: function(error) {
+                            swal.close();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: (error.responseJSON && error.responseJSON.message) ? error.responseJSON.message : 'Algo falló con la respuesta',
+                            });
                             console.error(error);
                         }
                         //Fin

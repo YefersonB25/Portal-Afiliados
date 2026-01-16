@@ -687,6 +687,15 @@ let obtener_dataTransporte = function (tbody, table) {
                 invoice: invoice.shipmentXid
             },
             success: function (response) {
+                if (response.success !== true) {
+                    swal.close();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.message || 'No fue posible cargar el detalle del manifiesto',
+                    });
+                    return;
+                }
                 let invoice = response.data
                 // console.log(invoice);
                 if (response.success == true) {
@@ -780,6 +789,12 @@ let obtener_dataTransporte = function (tbody, table) {
                 $('#exampleModalTransporte').modal('show');
             },
             error: function (error) {
+                swal.close();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: (error.responseJSON && error.responseJSON.message) ? error.responseJSON.message : 'Algo falló con la respuesta',
+                });
                 console.error(error);
             }
             //Fin

@@ -59,23 +59,36 @@ class ReporteRestOtm
 
     public static function manifiestoSoapOtmReport($shipmentXid = null)
     {
-        $otm  = self::getDataAccess();
-        $server        = $otm['server'];
-        $client = new SoapClient(
-            $server,
-            array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1, 'encoding' => 'UTF-8')
-        );
-        $params = [
-            'P_SHIPMENT_XID'   => $shipmentXid,
-        ];
-        $paths = '/Custom/OTM-Monitor/Reportes/ShipmentReport.xdo';
-        $par = ReporteRestOtm::getReporteParams($params, $paths);
+        try {
+            $otm  = self::getDataAccess();
+            $server        = $otm['server'];
+            $client = new SoapClient(
+                $server,
+                array('cache_wsdl' => WSDL_CACHE_NONE, 'soap_version' => SOAP_1_1, 'encoding' => 'UTF-8')
+            );
+            $params = [
+                'P_SHIPMENT_XID'   => $shipmentXid,
+            ];
+            $paths = '/Custom/OTM-Monitor/Reportes/ShipmentReport.xdo';
+            $par = ReporteRestOtm::getReporteParams($params, $paths);
 
-        $response = $client->__soapCall('runReport', array($par));
-        $xmlString = $response->runReportReturn->reportBytes;
-        $xml = simplexml_load_string($xmlString);
-        $reportData = json_decode(json_encode($xml), true);
-        $data = Arr::get($reportData, 'DATA', []);
-        return $data;
+            $response = $client->__soapCall('runReport', array($par));
+            $xmlString = $response->runReportReturn->reportBytes ?? null;
+            if (!$xmlString) {
+                Log::error(__METHOD__ . '. Empty reportBytes for shipment: ' . $shipmentXid);
+                return ['_error' => 'Reporte vacío o no disponible'];
+            }
+            $xml = simplexml_load_string($xmlString);
+            if ($xml === false) {
+                Log::error(__METHOD__ . '. Invalid XML response for shipment: ' . $shipmentXid);
+                return ['_error' => 'Respuesta XML inválida'];
+            }
+            $reportData = json_decode(json_encode($xml), true);
+            $data = Arr::get($reportData, 'DATA', []);
+            return $data;
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '. SOAP error: ' . $e->getMessage());
+            return ['_error' => 'No fue posible consultar el reporte'];
+        }
     }
 }
