@@ -121,7 +121,7 @@ class UsuarioController extends Controller
             'name'     => 'required',
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'indisposable'],
             'number_id' => ['required', 'numeric', 'unique:users',],
-            'phone' => ['required', 'numeric'],
+            'phone' => ['required', 'digits_between:7,11'],
             'document_type' => ['required'],
             'password' => 'required|same:confirm-password',
             'roles'    => 'required'

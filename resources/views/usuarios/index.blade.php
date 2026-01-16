@@ -366,7 +366,7 @@
     </body>
 @endsection
 @section('scripts')
-<script src={{ asset('views/js/users/metods.js') }}></script>
+<script src={{ asset('views/js/users/metods.js') }}?v={{ time() }}></script>
 
     @if (Session::has('message'))
         <script>

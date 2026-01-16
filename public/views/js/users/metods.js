@@ -345,6 +345,9 @@ let alinks = document.getElementsByClassName('aImg')
 for (const alink of alinks) {
     alink.addEventListener('click', function(e) {
         e.preventDefault()
+        if (!this.children[0] || !this.children[0].attributes || !this.children[0].attributes[0]) {
+            return;
+        }
         let url = this.children[0].attributes[0].nodeValue
         document.getElementById('foto').attributes[1].nodeValue = url
     })
@@ -356,9 +359,16 @@ for (const alinkPdf of alinksPdf) {
     alinkPdf.addEventListener('click', function(e) {
         e.preventDefault()
         let url = this.dataset && this.dataset.url ? this.dataset.url : null;
-        if (!url && this.children[0] && this.children[0].attributes && this.children[0].attributes[0]) {
-            url = this.children[0].attributes[0].nodeValue;
+        const pdfEmbed = document.getElementById('pdfdoc');
+        if (!url) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Archivo no disponible',
+                text: 'No se encontró la ruta del PDF.',
+            });
+            return;
         }
-        document.getElementById('pdfdoc').attributes[1].nodeValue = url
+        pdfEmbed.setAttribute('src', '');
+        pdfEmbed.setAttribute('src', url);
     })
 }

@@ -67,7 +67,7 @@
                                                 </div>
                                                 <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-3">
                                                     <div class="wrap-input100 validate-input">
-                                                        <input id="phone" type="number"
+                                                        <input id="phone" type="text" inputmode="numeric" pattern="[0-9]{7,11}" maxlength="11"
                                                             class="form-control input100{{ $errors->has('phone') ? ' is-invalid' : '' }}"
                                                             name="phone"
                                                             tabindex="1" placeholder="phone" value="{{ old('phone') }}"

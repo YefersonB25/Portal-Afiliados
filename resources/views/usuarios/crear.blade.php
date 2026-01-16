@@ -51,7 +51,7 @@
                                         <div class="col-xs-12 col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label for="phone">Phone</label>
-                                                {!! Form::text('phone', null, ['class' => 'form-control']) !!}
+                                                {!! Form::text('phone', null, ['class' => 'form-control', 'maxlength' => 11, 'pattern' => '[0-9]{7,11}', 'inputmode' => 'numeric']) !!}
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-4">
