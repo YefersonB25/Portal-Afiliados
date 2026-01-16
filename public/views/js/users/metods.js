@@ -355,7 +355,10 @@ let alinksPdf = document.getElementsByClassName('aPdf')
 for (const alinkPdf of alinksPdf) {
     alinkPdf.addEventListener('click', function(e) {
         e.preventDefault()
-        let url = this.children[0].attributes[0].nodeValue
+        let url = this.dataset && this.dataset.url ? this.dataset.url : null;
+        if (!url && this.children[0] && this.children[0].attributes && this.children[0].attributes[0]) {
+            url = this.children[0].attributes[0].nodeValue;
+        }
         document.getElementById('pdfdoc').attributes[1].nodeValue = url
     })
 }

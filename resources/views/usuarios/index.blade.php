@@ -121,6 +121,33 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($usuarios as $usuario)
+                                                @php
+                                                    $photoPath = $usuario->photo ?? '';
+                                                    if (!empty($photoPath)) {
+                                                        if (\Illuminate\Support\Str::startsWith($photoPath, ['http://', 'https://'])) {
+                                                            $photoUrl = $photoPath;
+                                                        } elseif (\Illuminate\Support\Str::startsWith($photoPath, ['storage/', 'public/'])) {
+                                                            $photoUrl = asset($photoPath);
+                                                        } else {
+                                                            $photoUrl = asset('storage/' . $photoPath);
+                                                        }
+                                                    } else {
+                                                        $photoUrl = '';
+                                                    }
+
+                                                    $docPath = $usuario->photo_id ?? '';
+                                                    if (!empty($docPath)) {
+                                                        if (\Illuminate\Support\Str::startsWith($docPath, ['http://', 'https://'])) {
+                                                            $docUrl = $docPath;
+                                                        } elseif (\Illuminate\Support\Str::startsWith($docPath, ['storage/', 'public/'])) {
+                                                            $docUrl = asset($docPath);
+                                                        } else {
+                                                            $docUrl = asset('storage/' . $docPath);
+                                                        }
+                                                    } else {
+                                                        $docUrl = '';
+                                                    }
+                                                @endphp
                                                 <tr>
                                                     <td class="text-center">
                                                         @if ($usuario->photo == '')
@@ -129,7 +156,7 @@
                                                             </div>
                                                         @else
                                                         <div class="avatar avatar-md text-white rounded-circle" style="overflow: hidden;">
-                                                            <img src="{{ asset('storage/' . $usuario->photo) }}" alt="" style="width: 100%; height: auto;"/>
+                                                            <img src="{{ $photoUrl }}" alt="" style="width: 100%; height: auto;"/>
                                                         </div>
                                                         @endif
                                                     </td>
@@ -151,8 +178,8 @@
                                                         @if (!empty($usuario->photo_id))
                                                             <span>
                                                                 <a href="" data-bs-toggle="modal"
-                                                                    data-bs-target="#exampleModalPdf" class="aPdf">
-                                                                    <i src="{{ asset('storage/' . $usuario->photo_id) }}"></i>
+                                                                    data-bs-target="#exampleModalPdf" class="aPdf" data-url="{{ $docUrl }}">
+                                                                    <i></i>
                                                                     <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                                                                         <path fill="currentColor"
                                                                             d="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M15,18V16H6V18H15M18,14V12H6V14H18Z" />
