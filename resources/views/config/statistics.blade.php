@@ -316,6 +316,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Fecha</th>
+                                                                    <th>Usuario</th>
                                                                     <th>Acción</th>
                                                                     <th>Detalle</th>
                                                                     <th>IP</th>
@@ -325,6 +326,9 @@
                                                                 <!-- Datos se cargarán via AJAX -->
                                                             </tbody>
                                                         </table>
+                                                        <nav class="mt-3" aria-label="Paginación últimas acciones">
+                                                            <ul class="pagination justify-content-end" id="userActionsPagination"></ul>
+                                                        </nav>
                                                     </div>
                                                 </div>
                                             </div>
@@ -353,6 +357,9 @@
     <script src={{ asset('anychart-package-8.11.0/js/anychart-ui.min.js') }}></script>
     <script src="{{ asset('views/js/statistics/statistics.js') }}?v={{ time() }}"></script>
     <script>
+        let userActionsPage = 1;
+        const userActionsPerPage = 10;
+
         $(document).ready(function() {
             // Verificar que Select2 esté disponible
             let select2Available = typeof $.fn.select2 !== 'undefined';
@@ -480,6 +487,7 @@
                 }
                 $('#userTrackingForm input[name="dateRange"]').val(rangeValue);
 
+                userActionsPage = 1;
                 loadUserActivity();
             });
 
@@ -565,27 +573,14 @@
     function loadUserActivity() {
         const userId = $('#customerCode').val();
         
-        if (!userId) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Atención',
-                text: 'Por favor seleccione un usuario',
-                toast: true,
-                position: 'top-end',
-                timer: 3000,
-                showConfirmButton: false
-            });
-            return;
-        }
-        
         $.ajax({
             url: "{{ route('setting.statistics.filter') }}",
             type: "GET",
-            data: $('#userTrackingForm').serialize(),
+            data: $('#userTrackingForm').serialize() + `&page=${userActionsPage}&perPage=${userActionsPerPage}`,
             success: function(response) {
                 if (response.success) {
                     updateUserActivityChart(response.data.activityStats);
-                    updateUserActionsTable(response.data.recentActions);
+                    updateUserActionsTable(response.data.recentActions, response.data.pagination);
                 }
             },
             error: function(xhr) {
@@ -604,7 +599,7 @@
     }
 
     function updateLoginChart(data) {
-        if (!data || !data.months || !data.monthlyCounts) {
+        if (!data) {
             console.warn('No hay datos para mostrar en el gráfico');
             return;
         }
@@ -613,10 +608,12 @@
             // Limpiar contenedor
             document.getElementById('loginChart').innerHTML = '';
 
-            // Preparar datos
-            const chartData = data.months.map((month, index) => {
-                return [month, data.monthlyCounts[index]];
-            });
+            let chartData = [];
+            if (data.byUser && data.byUser.length) {
+                chartData = data.byUser.map((item) => [item.name, item.count]);
+            } else if (data.months && data.monthlyCounts) {
+                chartData = data.months.map((month, index) => [month, data.monthlyCounts[index]]);
+            }
 
             // Crear gráfico de columnas
             var chart = anychart.column();
@@ -697,7 +694,7 @@
             
             // Configurar tooltip
             chart.tooltip()
-                .format('Acciones: {%value}');
+                .format(data.mode === 'users' ? 'Acciones: {%value}' : 'Acciones: {%value}');
             
             // Configurar leyenda
             chart.legend()
@@ -716,23 +713,77 @@
         });
     }
 
-    function updateUserActionsTable(data) {
-        if (!data || data.length === 0) {
-            $('#userActionsTable tbody').html('<tr><td colspan="4" class="text-center text-muted">No hay acciones registradas</td></tr>');
+    function updateUserActionsTable(actions, pagination) {
+        const $tbody = $('#userActionsTable tbody');
+        $tbody.html('');
+
+        if (!actions || actions.length === 0) {
+            $tbody.html('<tr><td colspan="5" class="text-center text-muted">No hay acciones para este rango</td></tr>');
+            $('#userActionsPagination').html('');
             return;
         }
-        
-        // Actualizar tabla de acciones recientes
-        var rows = '';
-        $.each(data, function(index, action) {
-            rows += '<tr>'+
-                '<td><small>'+action.date+'</small></td>'+
-                '<td><span class="badge bg-primary">'+action.type+'</span></td>'+
-                '<td>'+action.detail+'</td>'+
-                '<td><code>'+action.ip+'</code></td>'+
-            '</tr>';
+
+        actions.forEach(action => {
+            $tbody.append(`
+                <tr>
+                    <td>${action.date}</td>
+                    <td>${action.user || '-'}</td>
+                    <td>${action.type}</td>
+                    <td>${action.detail}</td>
+                    <td>${action.ip}</td>
+                </tr>
+            `);
         });
-        $('#userActionsTable tbody').html(rows);
+
+        renderUserActionsPagination(pagination);
     }
+
+    function renderUserActionsPagination(pagination) {
+        const $pagination = $('#userActionsPagination');
+        $pagination.html('');
+
+        if (!pagination || pagination.totalPages <= 1) {
+            return;
+        }
+
+        const prevDisabled = pagination.page <= 1 ? 'disabled' : '';
+        const nextDisabled = pagination.page >= pagination.totalPages ? 'disabled' : '';
+
+        $pagination.append(`
+            <li class="page-item ${prevDisabled}">
+                <button class="page-link" data-page="${pagination.page - 1}">Anterior</button>
+            </li>
+        `);
+
+        const maxPagesToShow = 5;
+        let start = Math.max(1, pagination.page - Math.floor(maxPagesToShow / 2));
+        let end = Math.min(pagination.totalPages, start + maxPagesToShow - 1);
+        if (end - start < maxPagesToShow - 1) {
+            start = Math.max(1, end - maxPagesToShow + 1);
+        }
+
+        for (let page = start; page <= end; page++) {
+            const active = page === pagination.page ? 'active' : '';
+            $pagination.append(`
+                <li class="page-item ${active}">
+                    <button class="page-link" data-page="${page}">${page}</button>
+                </li>
+            `);
+        }
+
+        $pagination.append(`
+            <li class="page-item ${nextDisabled}">
+                <button class="page-link" data-page="${pagination.page + 1}">Siguiente</button>
+            </li>
+        `);
+
+        $('#userActionsPagination .page-link').off('click').on('click', function() {
+            const targetPage = Number($(this).data('page'));
+            if (Number.isNaN(targetPage)) return;
+            userActionsPage = targetPage;
+            loadUserActivity();
+        });
+    }
+
     </script>
 @endsection

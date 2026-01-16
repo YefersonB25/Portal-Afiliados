@@ -261,7 +261,7 @@ class Configs extends Controller
                 DB::raw('COUNT(*) AS count')
             )
             ->where('action', 'INICIO SESSION')
-            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereBetween('user_tracking.created_at', [$startDate, $endDate])
             ->groupBy('month', 'month_number')
             ->orderBy('month_number')
             ->get();
@@ -275,18 +275,40 @@ class Configs extends Controller
             $counts[] = $data->count;
         }
 
+        $byUser = DB::table('user_tracking')
+            ->leftJoin('users', 'users.id', '=', 'user_tracking.user_id')
+            ->select(
+                'users.name as user_name',
+                DB::raw('COUNT(*) as count')
+            )
+            ->where('action', 'INICIO SESSION')
+            ->whereBetween('user_tracking.created_at', [$startDate, $endDate])
+            ->groupBy('users.name')
+            ->orderBy('count', 'desc')
+            ->limit(10)
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'name' => $row->user_name ?? '-',
+                    'count' => $row->count
+                ];
+            });
+
         return [
             'total' => $total,
             'months' => $months,
-            'monthlyCounts' => $counts
+            'monthlyCounts' => $counts,
+            'byUser' => $byUser
         ];
     }
 
     public function filter(Request $request)
     {
         $request->validate([
-            'numberId' => 'required|integer|exists:users,id',
-            'dateRange' => 'nullable|string'
+            'numberId' => 'nullable|integer|exists:users,id',
+            'dateRange' => 'nullable|string',
+            'page' => 'nullable|integer|min:1',
+            'perPage' => 'nullable|integer|min:1|max:100'
         ]);
 
         $userId = $request->numberId;
@@ -304,19 +326,35 @@ class Configs extends Controller
         // Obtener estadísticas de actividad
         $activityStats = $this->getUserActivityStats($userId, $startDate, $endDate);
 
+        $page = (int) ($request->page ?? 1);
+        $perPage = (int) ($request->perPage ?? 10);
+
+        $baseQuery = DB::table('user_tracking')
+            ->leftJoin('users', 'users.id', '=', 'user_tracking.user_id')
+            ->when($userId, function ($query) use ($userId) {
+                return $query->where('user_id', $userId);
+            })
+            ->whereBetween('user_tracking.created_at', [$startDate, $endDate])
+            ->select(
+                'user_tracking.*',
+                'users.name as user_name'
+            );
+
+        $totalActions = (clone $baseQuery)->count();
+
         // Obtener acciones recientes
-        $recentActions = DB::table('user_tracking')
-            ->where('user_id', $userId)
-            ->whereBetween('created_at', [$startDate, $endDate])
+        $recentActions = $baseQuery
             ->orderBy('created_at', 'desc')
-            ->limit(50)
+            ->skip(($page - 1) * $perPage)
+            ->take($perPage)
             ->get()
             ->map(function($item) {
                 return [
                     'date' => Carbon::parse($item->created_at)->format('d/m/Y H:i:s'),
                     'type' => $item->action,
                     'detail' => $item->detail ?? '-',
-                    'ip' => $item->ip ?? '-'
+                    'ip' => $item->ip ?? '-',
+                    'user' => $item->user_name ?? '-'
                 ];
             });
 
@@ -324,7 +362,13 @@ class Configs extends Controller
             'success' => true,
             'data' => [
                 'activityStats' => $activityStats,
-                'recentActions' => $recentActions
+                'recentActions' => $recentActions,
+                'pagination' => [
+                    'page' => $page,
+                    'perPage' => $perPage,
+                    'total' => $totalActions,
+                    'totalPages' => (int) ceil($totalActions / $perPage)
+                ]
             ]
         ]);
     }
@@ -332,29 +376,59 @@ class Configs extends Controller
     protected function getUserActivityStats($userId, $startDate = null, $endDate = null)
     {
         $query = DB::table('user_tracking')
+            ->when($userId, function ($query) use ($userId) {
+                return $query->where('user_id', $userId);
+            })
+            ->when($startDate && $endDate, function($query) use ($startDate, $endDate) {
+                return $query->whereBetween('user_tracking.created_at', [$startDate, $endDate]);
+            });
+
+        if ($userId) {
+            $actions = $query
+                ->select(
+                    'action',
+                    DB::raw('COUNT(*) as count')
+                )
+                ->groupBy('action')
+                ->orderBy('count', 'desc')
+                ->get();
+
+            $labels = [];
+            $data = [];
+
+            foreach ($actions as $action) {
+                $labels[] = $action->action;
+                $data[] = $action->count;
+            }
+
+            return [
+                'mode' => 'actions',
+                'labels' => $labels,
+                'data' => $data
+            ];
+        }
+
+        $users = $query
+            ->leftJoin('users', 'users.id', '=', 'user_tracking.user_id')
             ->select(
-                'action',
+                'users.name as user_name',
                 DB::raw('COUNT(*) as count')
             )
-            ->where('user_id', $userId)
-            ->when($startDate && $endDate, function($query) use ($startDate, $endDate) {
-                return $query->whereBetween('created_at', [$startDate, $endDate]);
-            })
-            ->groupBy('action')
-            ->orderBy('count', 'desc');
+            ->groupBy('users.name')
+            ->orderBy('count', 'desc')
+            ->limit(10)
+            ->get();
 
-        $actions = $query->get();
-
-        // Preparar datos para gráfico
         $labels = [];
         $data = [];
-        
-        foreach ($actions as $action) {
-            $labels[] = $action->action;
-            $data[] = $action->count;
+
+        foreach ($users as $user) {
+            $labels[] = $user->user_name ?? '-';
+            $data[] = $user->count;
         }
 
         return [
+            'mode' => 'users',
             'labels' => $labels,
             'data' => $data
         ];
